@@ -161,12 +161,12 @@ rt.summary.condition.data <- rt.behavioral.subject.data %>%
   group_by(relation, condition) %>%
   summarize(M=mean(rt), SE=sd(rt)/sqrt(n()))
 
-ggplot(rt.summary.condition.data, aes(x=relation, fill=condition, color=condition, y=M, ymax=M+SE, ymin=M-SE, group=condition))+
+ggplot(rt.summary.condition.data, aes(x=relation, color=condition, y=M, ymax=M+SE, ymin=M-SE, group=condition))+
   geom_point(size=5)+
   geom_line()+
   geom_errorbar(width=0.2)+
   scale_color_manual(values=c("orange2","royalblue4"))+
-  labs(x="Statement Type", y="Accuracy", color=NULL)+
+  labs(x="Statement Type", y="Response Time (ms)", color=NULL)+
   theme_classic()
 ```
 
