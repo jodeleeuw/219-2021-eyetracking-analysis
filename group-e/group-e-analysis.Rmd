@@ -1,0 +1,143 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(ggplot2)
+```
+
+Loading data and converting it to a tibble
+
+```{r}
+data.files <- list.files('data', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+Excluding Subjects
+
+```{r}
+all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6" & subject_id!="5ce1372c55fe0d001869c8d8" & subject_id!="5f47d860b56e68220cb86be1" & subject_id!="607eaf87ac02229ef4fa8f4a" & subject_id!="5d30857eb2f0ad00163470f3" & subject_id!="5e272684f205790453c2c4b8" & subject_id!="5f5b5881b17fa72756b8ff2a" & subject_id!="5fae5291ec402509e2885604")
+```
+
+Convert data to long format for gaze measurements
+
+```{r}
+task.data <- all.data %>%
+  filter(response=="a" | response=="d") %>%
+  select(subject_id, study_id, time_elapsed, trial_index, response, rt, webgazer_data, webgazer_targets) %>%
+  unnest(webgazer_data) %>%
+  unpack(webgazer_targets) %>%
+  unpack(c('#face1', '#face2'), names_sep = ".")
+```
+
+Add condition information
+
+```{r}
+task.data <- task.data %>%
+  mutate(task = if_else(study_id == '60748d36577623e2677865c6', "Attractiveness", "Roundness"))
+```
+
+Compute average trial length
+
+```{r}
+response.time.data <- all.data %>%
+  filter(response=="a" | response=="d") %>%
+  select(subject_id, study_id, trial_index, response, rt)
+```
+
+```{r}
+rt.summary <- response.time.data %>%
+  summarize(M=mean(rt), SD=sd(rt))
+
+cutoff.time <- rt.summary$M - rt.summary$SD
+#cutoff.time <- 1670
+
+rt.summary
+```
+
+
+# Eye Gaze Analysis
+
+Normalize time to time until decision
+
+```{r}
+task.data <- task.data %>%
+  mutate(time_until_decision = rt - t)
+```
+
+Normalize t measurement to time before decision
+
+```{r}
+task.data <- task.data %>%
+  filter(time_until_decision <= cutoff.time)
+```
+
+Add in-the-box info
+
+```{r}
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+```
+
+```{r}
+task.data <- task.data %>%
+  mutate(in.left.box = in.box(x,y,`#face1.left`,`#face1.right`,`#face1.top`,`#face1.bottom`,0)) %>%
+  mutate(in.right.box = in.box(x,y,`#face2.left`,`#face2.right`,`#face2.top`,`#face2.bottom`,0)) %>%
+  mutate(in.target.box = if_else(response == 'a', in.left.box, in.right.box)) %>%
+  mutate(in.other.box = if_else(response == 'a', in.right.box, in.left.box))
+```
+
+Bin the time by 50ms
+
+```{r}
+task.data <- task.data %>%
+  mutate(time.window = floor(time_until_decision/50)*50)
+```
+
+Summarize by time window
+
+```{r}
+summary.gaze.view.subject <- task.data %>%
+  filter(in.target.box == TRUE | in.other.box == TRUE) %>%
+  group_by(subject_id, time.window, task) %>%
+  summarize(prop.in.target.subject = mean(in.target.box))
+```
+```{r}
+summary.gaze.view <- summary.gaze.view.subject %>%
+  group_by(time.window, task) %>%
+  summarize(prop.in.target = mean(prop.in.target.subject), se = sd(prop.in.target.subject)/sqrt(n()))
+```
+
+KS Test?
+
+```{r}
+ks.test(summary.gaze.view %>% filter(task == "Attractiveness") %>% pull(prop.in.target),
+         summary.gaze.view %>% filter(task == "Roundness") %>% pull(prop.in.target))
+```
+
+
+```{r}
+ggplot(summary.gaze.view, aes(x=time.window, y=prop.in.target, ymin=prop.in.target-se, ymax=prop.in.target+se, color=task, fill=task))+
+  geom_ribbon(color=NA, alpha=0.3)+
+  geom_line()+
+  scale_x_reverse()+
+  theme_classic()+
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task")
+```
+
+Fit sigmoid curve
+
+```{r}
+attractiveness.curve <- summary.gaze.view %>% filter(roundness_task == FALSE)
+fit <- nls(prop.in.target ~ MaxP + (MinP - MaxP)/(1+(time.window/InfP)^Slope), data = attractiveness.curve, start=list(MaxP=0.9,MinP=0.5,InfP=-500,Slope=-1))
+```

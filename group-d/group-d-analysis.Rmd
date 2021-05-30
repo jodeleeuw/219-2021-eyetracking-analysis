@@ -1,0 +1,306 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Setup
+
+```{r message=FALSE, warning=FALSE}
+library(jsonlite)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(lmerTest)
+```
+
+# Load Data
+
+```{r}
+data.files <- list.files('data/run-2', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+# Extract Relevant Data
+
+Start with getting the trials we care about for the main analysis.
+
+```{r}
+task.data <- all.data %>%
+  filter(compatibility != 'NA', compatibility != 'filler') %>%
+  select(subject, trial_index, rt, images, webgazer_data, mouse_events, compatibility, audio, target_instrument, target_animal, webgazer_targets)
+```
+
+Add a column that uniquely identifies the combination of images and audio shown on the screen
+
+```{r}
+trialID.data <- task.data %>%
+  group_by(audio, images) %>%
+  slice(1) %>%
+  select(audio, images) %>%
+  ungroup() %>%
+  mutate(trialID = 1:n())
+
+task.data <- task.data %>%
+  left_join(trialID.data)
+```
+
+
+```{r}
+eyetracking.data <- task.data %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c(`#jspsych-free-sort-draggable-0`, `#jspsych-free-sort-draggable-1`, `#jspsych-free-sort-draggable-2`, `#jspsych-free-sort-draggable-3`), names_sep=".") %>%
+  unnest(webgazer_data)
+
+mousetracking.data <- task.data %>%
+  unnest(mouse_events)
+```
+
+# Analyze Mouse Move Data
+
+Is the first object that the mouse moves over biased by the verb compatibility? 
+
+First, create a data set with each trial, adding column for which object the mouse moves over first.
+
+# WTF IS HAPPENING with TRIAL ID??
+
+```{r}
+first.move <- mousetracking.data %>%
+  select(subject, trialID, object, type, compatibility, target_instrument, target_animal, images) %>%
+  group_by(subject, trialID) %>%
+  filter(type=="enter") %>%
+  slice(1) %>%
+  rowwise() %>%
+  mutate(which_loc = which(images == object)-1) %>%
+  ungroup() %>%
+  mutate(instrument_loc = str_sub(target_instrument, start=-1, end=-1)) %>%
+  mutate(animal_loc = str_sub(target_animal, start=-1, end=-1)) %>%
+  mutate(first.move.type = case_when(
+    which_loc == instrument_loc ~ 'instrument',
+    which_loc == animal_loc ~ 'animal',
+    TRUE ~ 'other')) %>%
+  mutate(is.mouse.instrument = if_else(first.move.type == 'instrument', 1, 0)) %>%
+  mutate(compatibility = factor(compatibility))
+```
+
+Summarize the data by subject, calculating proportion of trials the the first move was to the animal, instrument, or other.
+
+```{r}
+first.move.subject.summary <- first.move %>%
+  group_by(subject, compatibility) %>%
+  summarize(prop.animal = mean(first.move.type == 'animal'),
+            prop.instrument = mean(first.move.type == 'instrument'),
+            prop.other = mean(first.move.type == 'other')) %>%
+  pivot_longer(c('prop.animal', 'prop.instrument', 'prop.other'), names_to="target_type", values_to="proportion")
+```
+
+Summarize the condition-level data for a barplot.
+
+```{r}
+first.move.summary <- first.move.subject.summary %>%
+  group_by(compatibility, target_type) %>%
+  summarize(M=mean(proportion), SE=sd(proportion)/sqrt(n()))
+```
+
+```{r}
+ggplot(first.move.summary, aes(x=compatibility, fill=target_type, y=M, ymin=M-SE,ymax=M+SE))+
+  geom_col(position=position_dodge(width=0.9))+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
+  theme_classic()
+```
+
+Run the mixed-effects logistic regression model to predict whether the first movement is on the instrument.
+
+```{r}
+contrasts(first.move$compatibility) <- cbind(c(1/3, -2/3, 1/3), c(-1/2, 0, 1/2))
+
+model <- glmer(is.mouse.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=first.move, family="binomial")
+summary(model)
+```
+
+
+# Analyze Eye Movement Data
+
+First figure out which object they are looking at.
+
+Define a function for determining if `x,y` value falls in box.
+
+```{r}
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+```
+
+Calculate gaze in ROIs.
+
+```{r}
+eyetracking.data.with.roi <- eyetracking.data %>%
+  #filter(!subject %in% bad.eyetracking.data.subjects) %>% 
+  mutate(in.roi.0 = in.box(x,y,`#jspsych-free-sort-draggable-0.left`, `#jspsych-free-sort-draggable-0.right`, `#jspsych-free-sort-draggable-0.top`, `#jspsych-free-sort-draggable-0.bottom`, 100)) %>%
+  mutate(in.roi.1 = in.box(x,y,`#jspsych-free-sort-draggable-1.left`, `#jspsych-free-sort-draggable-1.right`, `#jspsych-free-sort-draggable-1.top`, `#jspsych-free-sort-draggable-1.bottom`, 100)) %>%
+  mutate(in.roi.2 = in.box(x,y,`#jspsych-free-sort-draggable-2.left`, `#jspsych-free-sort-draggable-2.right`, `#jspsych-free-sort-draggable-2.top`, `#jspsych-free-sort-draggable-2.bottom`, 100)) %>%
+  mutate(in.roi.3 = in.box(x,y,`#jspsych-free-sort-draggable-3.left`, `#jspsych-free-sort-draggable-3.right`, `#jspsych-free-sort-draggable-3.top`, `#jspsych-free-sort-draggable-3.bottom`, 100)) %>%
+  mutate(in.roi.instrument = case_when(
+    target_instrument == '#jspsych-free-sort-draggable-0' | target_instrument == '#jspsych-freesort-draggable-0'  ~ in.roi.0,
+    target_instrument == '#jspsych-free-sort-draggable-1' | target_instrument == '#jspsych-freesort-draggable-1' ~ in.roi.1,
+    target_instrument == '#jspsych-free-sort-draggable-2' | target_instrument == '#jspsych-freesort-draggable-2' ~ in.roi.2,
+    target_instrument == '#jspsych-free-sort-draggable-3' | target_instrument == '#jspsych-freesort-draggable-3' ~ in.roi.3
+  )) %>%
+  mutate(in.roi.animal = case_when(
+    target_animal == '#jspsych-free-sort-draggable-0' | target_animal == '#jspsych-freesort-draggable-0' ~ in.roi.0,
+    target_animal == '#jspsych-free-sort-draggable-1' | target_animal == '#jspsych-freesort-draggable-1' ~ in.roi.1,
+    target_animal == '#jspsych-free-sort-draggable-2' | target_animal == '#jspsych-freesort-draggable-2' ~ in.roi.2,
+    target_animal == '#jspsych-free-sort-draggable-3' | target_animal == '#jspsych-freesort-draggable-3' ~ in.roi.3
+  )) 
+```
+
+Add time window
+
+```{r}
+eyetracking.data.with.roi <- eyetracking.data.with.roi %>%
+  mutate(t.window = floor(t/50)*50)
+```
+
+
+Load audio info
+```{r message=FALSE}
+audio.info <- read_csv('info/audio_timing.csv')
+```
+
+Calculate average animal onset
+```{r}
+animal.onset <- audio.info %>% pull(onset_noun) %>% mean()
+instrument.onset <- audio.info %>% pull(onset_instrument) %>% mean()
+```
+
+Summarize data for plotting
+```{r}
+eyetracking.figure.2.data <- eyetracking.data.with.roi %>%
+  filter(t.window <= 4000) %>%
+  group_by(subject, compatibility, t.window) %>%
+  summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
+  pivot_longer(c('p.animal', 'p.instrument'), names_to="object_type", values_to="prop_fixations") %>%
+  #mutate(prop_fixations = if_else(is.na(prop_fixations), 0, prop_fixations)) %>%
+  group_by(compatibility, t.window, object_type) %>%
+  summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
+```
+
+```{r}
+ggplot(eyetracking.figure.2.data, aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, shape=object_type))+
+  geom_ribbon(color=NA, alpha=0.3)+
+  geom_line(size=1)+
+  theme_classic() +
+  geom_vline(xintercept = animal.onset) + 
+  geom_vline(xintercept = instrument.onset) + 
+  facet_wrap(~object_type)
+```
+```{r}
+ggplot(eyetracking.figure.2.data, aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, shape=object_type))+
+  geom_point(size=3)+
+  theme_classic()
+```
+
+Merge in audio timing information
+
+```{r}
+eyetracking.data.with.roi <- eyetracking.data.with.roi %>%
+  mutate(sound = str_split(audio, pattern="/", simplify = T)[,4])
+
+eyetracking.data.with.roi <- eyetracking.data.with.roi %>%
+  left_join(audio.info, by="sound")
+```
+
+Add time window information
+
+```{r}
+eyetracking.data.with.time.windows <- eyetracking.data.with.roi %>%
+  mutate(time.window = case_when(
+    t < onset_verb + 200 ~ "pre-verb-onset",
+    t <= onset_noun + 200~ "post-verb-onset-pre-animal-onset",
+    t <= onset_instrument + 200 ~ "post-animal-onset-pre-instrument-onset",
+    t <= onset_instrument + 1500 + 200 ~ "post-instrument-onset",
+    TRUE ~ "end"
+  ))
+```
+
+Summarize fixations on target and instrument
+
+```{r}
+eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
+  group_by(subject, trialID, sound, compatibility, time.window) %>%
+  summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
+            prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
+  mutate(compatibility = factor(compatibility))
+```
+
+Add orthogonal contrasts to model
+
+```{r}
+contrasts(eyetracking.window.summary.by.trial$compatibility) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1/2, 1/2))
+```
+
+# First time window: verb onset to animal onset
+
+Fixations to the animal
+
+```{r}
+data.time.window.1 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-verb-onset-pre-animal-onset")
+
+model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.1)
+
+summary(model.time.window.1)
+```
+
+Fixations to the instrument
+
+```{r}
+model.time.window.1 <- lmer(prop.fixations.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.1)
+
+summary(model.time.window.1)
+```
+
+# Second time window: animal onset to instrument onset
+
+Animal
+
+```{r}
+data.time.window.2 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-animal-onset-pre-instrument-onset")
+
+model.time.window.2 <- lmer(prop.fixations.animal ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.2)
+
+summary(model.time.window.2)
+```
+
+Instrument
+
+```{r}
+model.time.window.2 <- lmer(prop.fixations.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.2)
+
+summary(model.time.window.2)
+```
+
+# Third window: post-instrument onset
+
+Animal
+
+```{r}
+data.time.window.3 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-instrument-onset")
+
+model.time.window.3 <- lmer(prop.fixations.animal ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.3)
+summary(model.time.window.3)
+```
+
+Instrument
+
+```{r}
+model.time.window.3 <- lmer(prop.fixations.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.3)
+summary(model.time.window.3)
+```
+
+

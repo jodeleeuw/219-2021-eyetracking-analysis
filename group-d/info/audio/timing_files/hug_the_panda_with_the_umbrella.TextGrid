@@ -1,0 +1,174 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 2.507143
+tiers? <exists> 
+size = 3
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "ORT-MAU"
+        xmin = 0
+        xmax = 2.507143
+        intervals: size = 7
+        intervals [1]:
+            xmin = 0.000000
+            xmax = 0.280000
+            text = "hug"
+        intervals [2]:
+            xmin = 0.280000
+            xmax = 0.420000
+            text = "the"
+        intervals [3]:
+            xmin = 0.420000
+            xmax = 1.040000
+            text = "panda"
+        intervals [4]:
+            xmin = 1.040000
+            xmax = 1.480000
+            text = "with"
+        intervals [5]:
+            xmin = 1.480000
+            xmax = 1.620000
+            text = "the"
+        intervals [6]:
+            xmin = 1.620000
+            xmax = 2.360000
+            text = "umbrella"
+        intervals [7]:
+            xmin = 2.360000
+            xmax = 2.507143
+            text = ""
+    item [2]:
+        class = "IntervalTier"
+        name = "KAN-MAU"
+        xmin = 0
+        xmax = 2.507143
+        intervals: size = 7
+        intervals [1]:
+            xmin = 0.000000
+            xmax = 0.280000
+            text = "h V g"
+        intervals [2]:
+            xmin = 0.280000
+            xmax = 0.420000
+            text = "D V"
+        intervals [3]:
+            xmin = 0.420000
+            xmax = 1.040000
+            text = "p { n d V"
+        intervals [4]:
+            xmin = 1.040000
+            xmax = 1.480000
+            text = "w I D"
+        intervals [5]:
+            xmin = 1.480000
+            xmax = 1.620000
+            text = "D V"
+        intervals [6]:
+            xmin = 1.620000
+            xmax = 2.360000
+            text = "V m b R E l V"
+        intervals [7]:
+            xmin = 2.360000
+            xmax = 2.507143
+            text = ""
+    item [3]:
+        class = "IntervalTier"
+        name = "MAU"
+        xmin = 0
+        xmax = 2.507143
+        intervals: size = 23
+        intervals [1]:
+            xmin = 0.000000
+            xmax = 0.100000
+            text = "h"
+        intervals [2]:
+            xmin = 0.100000
+            xmax = 0.190000
+            text = "V"
+        intervals [3]:
+            xmin = 0.190000
+            xmax = 0.280000
+            text = "g"
+        intervals [4]:
+            xmin = 0.280000
+            xmax = 0.380000
+            text = "D"
+        intervals [5]:
+            xmin = 0.380000
+            xmax = 0.420000
+            text = "V"
+        intervals [6]:
+            xmin = 0.420000
+            xmax = 0.660000
+            text = "p"
+        intervals [7]:
+            xmin = 0.660000
+            xmax = 0.800000
+            text = "{"
+        intervals [8]:
+            xmin = 0.800000
+            xmax = 0.870000
+            text = "n"
+        intervals [9]:
+            xmin = 0.870000
+            xmax = 0.910000
+            text = "d"
+        intervals [10]:
+            xmin = 0.910000
+            xmax = 1.040000
+            text = "V"
+        intervals [11]:
+            xmin = 1.040000
+            xmax = 1.290000
+            text = "w"
+        intervals [12]:
+            xmin = 1.290000
+            xmax = 1.350000
+            text = "I"
+        intervals [13]:
+            xmin = 1.350000
+            xmax = 1.480000
+            text = "T"
+        intervals [14]:
+            xmin = 1.480000
+            xmax = 1.510000
+            text = "D"
+        intervals [15]:
+            xmin = 1.510000
+            xmax = 1.620000
+            text = "V"
+        intervals [16]:
+            xmin = 1.620000
+            xmax = 1.760000
+            text = "V"
+        intervals [17]:
+            xmin = 1.760000
+            xmax = 1.860000
+            text = "m"
+        intervals [18]:
+            xmin = 1.860000
+            xmax = 1.930000
+            text = "b"
+        intervals [19]:
+            xmin = 1.930000
+            xmax = 2.020000
+            text = "R"
+        intervals [20]:
+            xmin = 2.020000
+            xmax = 2.060000
+            text = "E"
+        intervals [21]:
+            xmin = 2.060000
+            xmax = 2.180000
+            text = "l"
+        intervals [22]:
+            xmin = 2.180000
+            xmax = 2.360000
+            text = "V"
+        intervals [23]:
+            xmin = 2.360000
+            xmax = 2.507143
+            text = "<p:>"

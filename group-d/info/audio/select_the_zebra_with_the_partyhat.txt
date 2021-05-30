@@ -1,0 +1,6 @@
+select
+the
+zebra
+with
+the
+partyhat

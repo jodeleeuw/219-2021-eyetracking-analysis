@@ -1,0 +1,331 @@
+---
+title: "Group A"
+output: html_notebook
+---
+
+# Setup
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(ggplot2)
+library(readr)
+library(afex)
+```
+
+# Import Data
+
+Read JSON files and bind together into a tibble.
+
+```{r}
+data.files <- list.files('data', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+Get a list of subject IDs.
+
+```{r}
+subjects <- unique(all.data$subject_id)
+```
+
+# Extract Relevant Data
+
+Get data from critical trials, select relevant columns, unnest/unpack webgazer data to get a tidy tibble,
+and add gaze measurements as a percentage.
+
+```{r}
+task.data <- all.data %>%
+  filter(verb_type %in% c("restricting", "non-restricting")) %>%
+  select(subject_id, stimulus, response, verb_type, webgazer_data, webgazer_targets) %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(`#scenes`) %>%
+  select(-x,-y) %>%
+  unnest(webgazer_data) %>%
+  mutate(gaze.x.percent = (x - left) / width * 100) %>%
+  mutate(gaze.y.percent = (y - top) / height * 100)
+```
+
+# Add Stimulus Info
+
+Merge in info on visual ROIs and audio onsets.
+
+```{r message=FALSE, warning=FALSE}
+ref.image.height <- 1500 # height of images that were measured for ROIs
+ref.image.width <- 1875 # width of images that were measured for ROIs
+padding <- 20 # padding in pixels around the ROIs.
+
+image.data <- read_csv('info/image_measurements.csv') %>%
+  mutate(roi_top = (top_object_distance - padding) / ref.image.height * 100,
+         roi_bottom = (bottom_object_distance + padding) / ref.image.height * 100,
+         roi_left = (left_object_distance - padding) / ref.image.width * 100,
+         roi_right = (right_object_distance + padding) / ref.image.width * 100) %>%
+  mutate(object_class = if_else(object_type %in% c('subject', 'target.object'), object_type, 'distractor')) %>%
+  select(image_name, object_type, object_class, roi_top, roi_bottom, roi_left, roi_right)
+
+audio.data <- read_csv('info/audio_timestamps.csv') %>% filter(!is.na(stimulus))
+
+critical.trials <- task.data %>%
+  left_join(audio.data) %>%
+  left_join(image.data) 
+```
+
+# Compute Gaze in ROI
+
+Define a function for determining if `x,y` value falls in box.
+
+```{r}
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+```
+
+Add a column with boolean value for whether gaze was in the ROI.
+
+```{r}
+critical.trials <- critical.trials %>%
+  mutate(is.fixating = in.box(gaze.x.percent, gaze.y.percent, roi_left, roi_right, roi_top, roi_bottom, 0))
+```
+
+Check the proportion of samples that were in at least one ROI for subjects.
+
+```{r}
+prop.in.roi.by.subject <- critical.trials %>%
+  group_by(subject_id, t, image_name) %>%
+  summarize(fixation.in.roi = any(is.fixating)) %>%
+  group_by(subject_id) %>%
+  summarize(prop.of.samples.in.roi = mean(fixation.in.roi))
+```
+Visualize proportion of samples in ROI by subject.
+
+```{r}
+hist(prop.in.roi.by.subject$prop.of.samples.in.roi, breaks=20)
+```
+Exclude subjects below a threshold?
+
+```{r}
+bad.subjects <- prop.in.roi.by.subject %>%
+  filter(prop.of.samples.in.roi == 0) %>%
+  pull(subject_id)
+
+# to match laila's analysis
+bad.subjects <- c("5f3a76043bb11c6786e731bf", "5f9c6b2def8bdf1102de5338", "607197e359bae0449ac9d4bc", "60142d5718e5943b09fd9298")
+
+critical.trials.filtered <- critical.trials %>%
+  filter(!subject_id %in% bad.subjects)
+```
+
+# Calculating cumulative fixation probability
+
+We start by calculating cumulative fixation probability on the objects after the verb onset. (Any fixations prior to the verb onset are not relevant to the core research questions.)
+
+First, add a column for time relative to verb onset, bin this to 50ms chunks, and filter the data to the 2,000 ms window after verb onset.
+
+```{r}
+cumulative.fixation.data <- critical.trials.filtered %>%
+  mutate(t.relative.to.verb.onset = t - (verb_onset*1000)) %>%
+  filter(t.relative.to.verb.onset >= 0 & t.relative.to.verb.onset <2000) %>%
+  mutate(t.w = floor(t.relative.to.verb.onset/50)*50)
+```
+
+Now check every time window within a trial to account for sparse samples. This calculating is time consuming, so we cache the result in a CSV file, and load from the CSV if it already exists.
+
+```{r}
+cumulative.fixation.calculation <- function(df){
+  time <- seq(0,1950,50)
+  fixations <- logical(length(time))
+  hit.flag <- FALSE
+  for(i in 1:length(fixations)){
+    if(hit.flag){
+      fixations[i] <- TRUE
+    } else {
+      val <- df %>% filter(t.w <= time[i]) %>% pull(is.fixating) %>% any()
+      if(val == TRUE) {
+        hit.flag <- TRUE
+      }
+      fixations[i] <- val
+    }
+  }
+  out <- tibble(t.window = time, has.fixated = fixations)
+  return(out)
+}
+
+if(file.exists("data/generated/cumulative_fixation_data.csv")){
+  cumulative.fixation.windows.data <- read_csv("data/generated/cumulative_fixation_data.csv")
+} else {
+
+  cumulative.fixation.windows.data <- cumulative.fixation.data %>%
+    group_by(subject_id, verb_type, image_name, object_type, object_class) %>%
+    summarize(cumulative.fixation.calculation(cur_data()))
+  
+  write_csv(cumulative.fixation.windows.data, path="data/generated/cumulative_fixation_data.csv")
+}
+```
+
+Then group by object class to calculate fixation probability for each kind of object, normalizing by the number of objects of that type.
+
+```{r}
+cumulative.fixation.windows.grouped.data <- cumulative.fixation.windows.data %>%
+  filter(!subject_id %in% bad.subjects) %>%
+  group_by(subject_id, verb_type, image_name, object_class, t.window) %>%
+  summarize(cumulative.fixation.p = mean(has.fixated)) 
+```
+
+Then collapse over trials to get a cumulative probability for the whole window for each subject
+
+```{r}
+cumulative.fixation.windows.grouped.average.data <- cumulative.fixation.windows.grouped.data %>%
+  group_by(subject_id, verb_type, object_class, t.window) %>%
+  summarize(cumulative.fixation.p = mean(cumulative.fixation.p))
+```
+
+Collapse across subjects to generate the equivalent of the figure from Altmann & Kamide.
+
+```{r}
+cumulative.fixation.data.summary <- cumulative.fixation.windows.grouped.average.data %>%
+  filter(object_class %in% c('target.object', 'distractor')) %>%
+  group_by(t.window, verb_type, object_class) %>%
+  summarize(cumulative.fixation.m = mean(cumulative.fixation.p))
+```
+
+```{r}
+ggplot(cumulative.fixation.data.summary, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
+  scale_fill_grey(start=1.0, end=0.0)+
+  scale_shape_manual(values=c(22,21))+
+  geom_line()+
+  geom_point(size=2)+
+  theme_bw()+
+  theme(panel.grid=element_blank())+
+  scale_y_continuous(limits=c(0,1))+
+  scale_x_continuous(expand=c(0.01,0.01))+
+  labs(x="Time from Verb Onset", y="Probability", shape="Verb Type", fill="Object Type")
+
+```
+
+# Question: Are there more pre-noun first looks to the target object than to the distractors?
+
+First, grab the noun onset times to merge into our cumulative fixation data.
+
+```{r}
+noun.onset.times <- critical.trials.filtered %>%
+  group_by(image_name, verb_type) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(image_name, verb_type, delay_bw_onset_of_verb_and_onset_of_target_noun) %>%
+  mutate(relative.noun.onset = delay_bw_onset_of_verb_and_onset_of_target_noun * 1000) %>%
+  select(-delay_bw_onset_of_verb_and_onset_of_target_noun)
+
+trial.level.cumulative.fixation.data <- cumulative.fixation.windows.grouped.data %>%
+  left_join(noun.onset.times, by=c("image_name", "verb_type"))
+```
+
+Then, grab the last time window before the noun onset for each trial. This is the critical data for this test.
+
+```{r}
+pre.noun.first.looks.data <- trial.level.cumulative.fixation.data %>%
+  group_by(subject_id, image_name, verb_type) %>%
+  filter(t.window < relative.noun.onset) %>%
+  filter(t.window == max(t.window)) %>%
+  filter(object_class %in% c("target.object", "distractor"))
+```
+
+Fit the model, with no covariance between random effects because the model cannot converge with full covariance matrix.
+
+```{r}
+model <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.noun.first.looks.data)
+summary(model)
+```
+
+# Question: Are there more pre-verb-offset first looks to the target object than to the distractors?
+
+Verb offset times
+
+```{r}
+verb.offset.times <- critical.trials.filtered %>%
+  group_by(image_name, verb_type) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(image_name, verb_type, duration_of_verb) %>%
+  mutate(relative.verb.offset = duration_of_verb * 1000) %>%
+  select(-duration_of_verb)
+
+trial.level.cumulative.fixation.data.verb.offset <- cumulative.fixation.windows.grouped.data %>%
+  left_join(verb.offset.times, by=c("image_name", "verb_type"))
+```
+
+```{r}
+pre.verb.offset.first.looks.data <- trial.level.cumulative.fixation.data.verb.offset %>%
+  group_by(subject_id, image_name, verb_type) %>%
+  filter(t.window < relative.verb.offset) %>%
+  filter(t.window == max(t.window)) %>%
+  filter(object_class %in% c("target.object", "distractor"))
+```
+
+
+```{r}
+model <- lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data)
+summary(model)
+```
+
+# Do people look at the target faster after a restricting verb
+
+
+Relative to verb onset, when is the first fixation on the target?
+
+```{r}
+first.fixation.after.verb.onset <- critical.trials.filtered %>%
+  group_by(subject_id, image_name) %>%
+  filter(t >= verb_onset*1000) %>%
+  filter(object_type == "target.object") %>%
+  filter(is.fixating == TRUE) %>%
+  filter(t == min(t)) %>%
+  mutate(relative.t = t - (postverbal_noun_onset*1000))
+```
+
+```{r}
+first.fixation.after.verb.onset.analysis.data <- first.fixation.after.verb.onset %>%
+  ungroup() %>%
+  select(subject_id, image_name, verb_type, relative.t)
+```
+
+```{r}
+first.fixation.after.verb.onset.analysis.data %>%
+  group_by(verb_type, subject_id) %>%
+  summarize(M=mean(relative.t)) %>%
+  ggplot(aes(x=verb_type, y=M, group=subject_id)) +
+  geom_point()+
+  geom_line()
+```
+
+```{r}
+model <- lmer_alt(relative.t ~ verb_type + (verb_type || subject_id) + (verb_type || image_name), data=first.fixation.after.verb.onset.analysis.data)
+
+summary(model)
+```
+
+
+```{r}
+first.fixation.after.verb.onset.subject.summary <- first.fixation.after.verb.onset %>%
+  group_by(subject_id, verb_type) %>%
+  summarize(m.t = mean(relative.t), ct = n())
+
+first.fixation.after.verb.onset.summary <- first.fixation.after.verb.onset.subject.summary %>%
+  group_by(verb_type) %>%
+  summarize(m=mean(m.t), sd=sd(m.t), se=sd/sqrt(n()))
+```
+
+
+```{r}
+ggplot(first.fixation.after.verb.onset.summary, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
+  geom_col()+
+  geom_errorbar(width=0.2)
+```
+
+
+
+
