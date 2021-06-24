@@ -169,3 +169,11 @@ hist(looking.rt.correlations.subjects.filtered$r.to.z)
 ```{r}
 t.test(looking.rt.correlations.subjects.filtered$r.to.z)
 ```
+
+
+Plot of looking score vs. confidence
+
+```{r}
+ggplot(looking.plus.behavioral, aes(x=looking.score, y=response_confidence))+
+  geom_point()
+```

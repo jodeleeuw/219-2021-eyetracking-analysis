@@ -12,6 +12,7 @@ library(jsonlite)
 library(ggplot2)
 library(readr)
 library(afex)
+library(forcats)
 ```
 
 # Import Data
@@ -25,6 +26,13 @@ data.tables <- lapply(data.files, function(file){
   return(data.table)
 })
 all.data <- bind_rows(data.tables)
+```
+
+Mutate value types as needed
+
+```{r}
+all.data <- all.data %>%
+  mutate(subject_id = factor(subject_id))
 ```
 
 Get a list of subject IDs.
@@ -92,6 +100,18 @@ critical.trials <- critical.trials %>%
   mutate(is.fixating = in.box(gaze.x.percent, gaze.y.percent, roi_left, roi_right, roi_top, roi_bottom, 0))
 ```
 
+# Subject Exclusion Criteria
+
+We'll try this two ways. First if we adopt minimal exclusion criteria, removing subjects whose eye tracking data is essentially unusable. Second if we adopt aggressive exclusion criteria, removing subjects with obviously worse eye tracking data.
+
+Set which mode here:
+```{r}
+# 'AGGRESSIVE' or 'MINIMAL'
+exclusion.mode <- 'MINIMAL' 
+```
+
+## Proportion of measured data in an ROI.
+
 Check the proportion of samples that were in at least one ROI for subjects.
 
 ```{r}
@@ -106,19 +126,82 @@ Visualize proportion of samples in ROI by subject.
 ```{r}
 hist(prop.in.roi.by.subject$prop.of.samples.in.roi, breaks=20)
 ```
-Exclude subjects below a threshold?
+Exclude subjects below a threshold
 
 ```{r}
-bad.subjects <- prop.in.roi.by.subject %>%
-  filter(prop.of.samples.in.roi == 0) %>%
-  pull(subject_id)
+if(exclusion.mode == 'AGGRESSIVE') {
+  prop.samples.threshold <- 0.2
+}
+if(exclusion.mode == 'MINIMAL') {
+  prop.samples.threshold <- 0
+}
 
-# to match laila's analysis
-bad.subjects <- c("5f3a76043bb11c6786e731bf", "5f9c6b2def8bdf1102de5338", "607197e359bae0449ac9d4bc", "60142d5718e5943b09fd9298")
+bad.subjects.prop.samples <- prop.in.roi.by.subject %>%
+  filter(prop.of.samples.in.roi <= prop.samples.threshold) %>%
+  pull(subject_id)
+```
+
+## Validation accuracy
+
+```{r}
+validation.accuracy.data <- all.data %>%
+  filter(trial_type == 'webgazer-validate')
+```
+
+What % of subjects needed to recalibrate because of poor initial calibration?
+
+```{r}
+validation.accuracy.data %>% 
+  group_by(subject_id) %>%
+  count() %>%
+  group_by(n) %>%
+  count()
+```
+
+Get final average distance for each subject
+
+```{r}
+validation.percent <- validation.accuracy.data %>%
+  group_by(subject_id) %>%
+  slice_tail() %>%
+  select(subject_id, percent_in_roi) %>%
+  unnest(percent_in_roi) %>%
+  group_by(subject_id) %>%
+  summarise(M = mean(percent_in_roi), MAX = max(percent_in_roi), MIN = min(percent_in_roi)) %>%
+  mutate(subject_id = fct_reorder(subject_id, M))
+```
+
+```{r}
+ggplot(validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
+  geom_pointrange() +
+  theme_classic()
+```
+Set criteria for minimal and aggressive exclusions
+
+```{r}
+if(exclusion.mode == 'AGGRESSIVE') {
+  validation.threshold <- 50
+}
+if(exclusion.mode == 'MINIMAL') {
+  validation.threshold <- 10
+}
+
+bad.subjects.validation <- validation.percent %>%
+  filter(M <= validation.threshold) %>%
+  pull(subject_id) %>%
+  as.character()
+```
+
+
+## Final exclusion data
+
+```{r}
+bad.subjects <- unique(c(bad.subjects.prop.samples, bad.subjects.validation))
 
 critical.trials.filtered <- critical.trials %>%
   filter(!subject_id %in% bad.subjects)
 ```
+
 
 # Calculating cumulative fixation probability
 
@@ -293,14 +376,6 @@ first.fixation.after.verb.onset.analysis.data <- first.fixation.after.verb.onset
   select(subject_id, image_name, verb_type, relative.t)
 ```
 
-```{r}
-first.fixation.after.verb.onset.analysis.data %>%
-  group_by(verb_type, subject_id) %>%
-  summarize(M=mean(relative.t)) %>%
-  ggplot(aes(x=verb_type, y=M, group=subject_id)) +
-  geom_point()+
-  geom_line()
-```
 
 ```{r}
 model <- lmer_alt(relative.t ~ verb_type + (verb_type || subject_id) + (verb_type || image_name), data=first.fixation.after.verb.onset.analysis.data)
