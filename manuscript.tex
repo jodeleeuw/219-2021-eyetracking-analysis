@@ -1,0 +1,427 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  man]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Eye-tracking on the web: lessons learned from replicating 6 experiments},
+  pdfauthor={First Author1 \& Ernst-August Doelle1,2},
+  pdflang={en-EN},
+  pdfkeywords={keywords},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+\shorttitle{Just picked a random title: feel free to change}
+\keywords{keywords\newline\indent Word count: X}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\else
+  \usepackage[main=english]{babel}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\fi
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\title{Eye-tracking on the web: lessons learned from replicating 6 experiments}
+\author{First Author\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
+\date{}
+
+
+\authornote{
+
+Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+Enter author note here.
+
+The authors made the following contributions. First Author: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; Ernst-August Doelle: Writing - Review \& Editing.
+
+Correspondence concerning this article should be addressed to First Author, Postal address. E-mail: \href{mailto:my@email.com}{\nolinkurl{my@email.com}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Wilhelm-Wundt-University\\\textsuperscript{2} Konstanz Business School}
+
+\abstract{
+ADD LATER
+}
+
+
+
+\begin{document}
+\maketitle
+
+Intro stuff:
+
+\begin{itemize}
+\item
+  Eye-tracking as a key method in cognitive science research
+\item
+  Online data collection is more and more popular \& let's us ask new questions
+\item
+  But, concerns over quality + little known about eye-tracking online
+\end{itemize}
+
+\emph{Present work}
+
+In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the \texttt{jsPsych} platform and \texttt{webgazer.js} plug-in. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with ``natural'' scenes). \ldots{}
+
+\hypertarget{experiment-1}{%
+\section{Experiment 1}\label{experiment-1}}
+
+The first study was a replication attempt of Altmann and Kamide (1999).
+
+\hypertarget{methods}{%
+\subsection{Methods}\label{methods}}
+
+All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at \url{https://osf.io/s82kz}. All participants provided informed consent and this study was approved by the Vassar College Institutional Review Board.
+
+\hypertarget{participants}{%
+\subsubsection{Participants}\label{participants}}
+
+Participants for this experiment were sampled from a wide pool of Prolific users who are fluent in English and were paid for their participation. Our sample size of participants was determined by the total run time of our experiment, \textasciitilde10 minutes, and the allotted funding that was endowed to us by the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific, and we ended up with a sample size of 60 participants. For unknown reasons, 2 of the subjects' results were not recorded, so in the analysis, we worked with data collected from 58 participants.
+
+\hypertarget{procedure}{%
+\subsubsection{Procedure}\label{procedure}}
+
+Participants completed the experiment remotely and entirely online on the platform Prolific. During the experiment, the participants viewed a screen and were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. The visual stimuli were created through Canva and depict a subject accompanied by 4 to 5 objects in the scene. 16 of the devised stimuli were critical to our trial, and each of these images have 2 sentences associated with it. One of these sentences is in the restrictive condition, where the verb only applies to one object in the scene, and the other is in the nonrestrictive condition, where the verb could apply to all of the objects in the scene. To illustrate an example, reference Figure 1. This scene depicts a boy alongside a cake, ball, car, and train set. In the case of this particular image, the cake is the target object, so the two corresponding sentences to this image are, ``The boy will eat the cake'' (restrictive) and ``The boy will move the cake'' (nonrestrictive).
+
+\hypertarget{materials}{%
+\subsubsection{Materials}\label{materials}}
+
+Therefore, for the 16 critical images, there are 16 control sentences where the verb does not constrain the target object and 16 restrictive sentences where the verb does constrain the target object. Each participant randomly received one sentence, restrictive or nonrestrictive, per scene. Of the 16 critical trials, each participant got 8 sentences that were restrictive and 8 that were nonrestrictive and the order of these were randomized. Trials were also designed so that participants had to input a keyboard response indicating ``yes'' or ``no'' as to whether the sentence relayed was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment.
+In addition to the 16 critical images, we also devised an additional 16 filler images that are not pertinent to our data collection and analysis. The critical trials were also presented in a randomized order along with these 16 filler trials. Unlike the critical images, the filler images were accompanied by only one sentence that is unfeasible given it's corresponding scene. This was so that when participants were asked whether or not the scene was possible, the filler trials would always elicit the answer, ``no.''
+Despite recording participants' reaction time and keyboard response after each trial, we were specifically measuring for the participant's first fixation to the target object and distractors relative to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
+
+\hypertarget{eye-tracking-calibration-and-validation}{%
+\subsubsection{Eye-Tracking Calibration and Validation}\label{eye-tracking-calibration-and-validation}}
+
+Before initiating the experiment, participants were prompted to complete an eye-tracking calibration and validation procedure to ensure the data collected via the webcam-based eye tracking method was as accurate as possible. In order to allow the software to track where participants are looking, subjects were presented with a series of dots that appeared on the screen. Participants were then instructed to look at each dot as they appeared and click on it. By visually fixating and then clicking on one dot, it would then disappear and a new one would reappear in a different location on the screen. The calibration dots appeared in the central area of the screen where the visual stimuli would appear in order to ensure Web Gazer would be able to track eye movements to the relevant regions of interest. After completing this calibration, participants were then asked to go through the same steps of the calibration, except this time, they would have to just look at, not click, the dots as they appear on the screen in order to measure the accuracy of the calibration. This process completes the Web Gazer calibration and validation process.
+
+\hypertarget{data-pre-processing-and-analysis}{%
+\subsubsection{Data pre-processing and analysis}\label{data-pre-processing-and-analysis}}
+
+We used R {[}Version 4.1.0; R Core Team (2021){]} and the R-package \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]} for all our analyses.
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+\hypertarget{replication}{%
+\subsubsection{Replication}\label{replication}}
+
+\begin{quote}
+here we will describe the analyses that are as close as possible to the original paper
+\end{quote}
+
+\hypertarget{calibration}{%
+\subsubsection{Calibration}\label{calibration}}
+
+\begin{quote}
+here we will describe the analyses that correlate calibration quality with effect size at the individual (Josh H?)
+\end{quote}
+
+\hypertarget{discussion}{%
+\subsection{Discussion}\label{discussion}}
+
+\hypertarget{experiment-2}{%
+\section{Experiment 2}\label{experiment-2}}
+
+The second study was a replication attempt of Johansson and Johansson (2014).
+
+\hypertarget{methods-1}{%
+\subsection{Methods}\label{methods-1}}
+
+\hypertarget{participants-1}{%
+\subsubsection{Participants}\label{participants-1}}
+
+\hypertarget{material}{%
+\subsubsection{Material}\label{material}}
+
+\hypertarget{procedure-1}{%
+\subsubsection{Procedure}\label{procedure-1}}
+
+\hypertarget{data-analysis}{%
+\subsubsection{Data analysis}\label{data-analysis}}
+
+\hypertarget{results-1}{%
+\subsection{Results}\label{results-1}}
+
+\hypertarget{discussion-1}{%
+\subsection{Discussion}\label{discussion-1}}
+
+\hypertarget{experiment-3}{%
+\section{Experiment 3}\label{experiment-3}}
+
+The third study was a replication attempt of (\textbf{Mann?})???.
+
+\hypertarget{methods-2}{%
+\subsection{Methods}\label{methods-2}}
+
+\hypertarget{participants-2}{%
+\subsubsection{Participants}\label{participants-2}}
+
+\hypertarget{material-1}{%
+\subsubsection{Material}\label{material-1}}
+
+\hypertarget{procedure-2}{%
+\subsubsection{Procedure}\label{procedure-2}}
+
+\hypertarget{data-analysis-1}{%
+\subsubsection{Data analysis}\label{data-analysis-1}}
+
+\hypertarget{results-2}{%
+\subsection{Results}\label{results-2}}
+
+\hypertarget{discussion-2}{%
+\subsection{Discussion}\label{discussion-2}}
+
+\hypertarget{experiment-4}{%
+\section{Experiment 4}\label{experiment-4}}
+
+The fourth study was a replication attempt of Ryskin, Qi, Duff, and Brown-Schmidt (2017).
+
+\hypertarget{methods-3}{%
+\subsection{Methods}\label{methods-3}}
+
+\hypertarget{participants-3}{%
+\subsubsection{Participants}\label{participants-3}}
+
+\hypertarget{material-2}{%
+\subsubsection{Material}\label{material-2}}
+
+\hypertarget{procedure-3}{%
+\subsubsection{Procedure}\label{procedure-3}}
+
+\hypertarget{data-analysis-2}{%
+\subsubsection{Data analysis}\label{data-analysis-2}}
+
+\hypertarget{results-3}{%
+\subsection{Results}\label{results-3}}
+
+\hypertarget{discussion-3}{%
+\subsection{Discussion}\label{discussion-3}}
+
+\hypertarget{experiment-5}{%
+\section{Experiment 5}\label{experiment-5}}
+
+The fifth study was a replication attempt of @??.
+
+\hypertarget{methods-4}{%
+\subsection{Methods}\label{methods-4}}
+
+\hypertarget{participants-4}{%
+\subsubsection{Participants}\label{participants-4}}
+
+\hypertarget{material-3}{%
+\subsubsection{Material}\label{material-3}}
+
+\hypertarget{procedure-4}{%
+\subsubsection{Procedure}\label{procedure-4}}
+
+\hypertarget{data-analysis-3}{%
+\subsubsection{Data analysis}\label{data-analysis-3}}
+
+\hypertarget{results-4}{%
+\subsection{Results}\label{results-4}}
+
+\hypertarget{discussion-4}{%
+\subsection{Discussion}\label{discussion-4}}
+
+\hypertarget{experiment-6}{%
+\section{Experiment 6}\label{experiment-6}}
+
+The sixth study was a replication attempt of @??.
+
+\hypertarget{methods-5}{%
+\subsection{Methods}\label{methods-5}}
+
+\hypertarget{participants-5}{%
+\subsubsection{Participants}\label{participants-5}}
+
+\hypertarget{material-4}{%
+\subsubsection{Material}\label{material-4}}
+
+\hypertarget{procedure-5}{%
+\subsubsection{Procedure}\label{procedure-5}}
+
+\hypertarget{data-analysis-4}{%
+\subsubsection{Data analysis}\label{data-analysis-4}}
+
+\hypertarget{results-5}{%
+\subsection{Results}\label{results-5}}
+
+\hypertarget{discussion-5}{%
+\subsection{Discussion}\label{discussion-5}}
+
+\hypertarget{combined-analyses}{%
+\section{Combined Analyses}\label{combined-analyses}}
+
+\hypertarget{general-discussion}{%
+\section{General Discussion}\label{general-discussion}}
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\hypertarget{ref-altmannIncrementalInterpretationVerbs1999}{}%
+Altmann, G. T. M., \& Kamide, Y. (1999). Incremental interpretation at verbs: Restricting the domain of subsequent reference. \emph{Cognition}, \emph{73}(3), 247--264. \url{https://doi.org/10.1016/S0010-0277(99)00059-1}
+
+\leavevmode\hypertarget{ref-R-papaja}{}%
+Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\hypertarget{ref-johanssonLookHereEye2014}{}%
+Johansson, R., \& Johansson, M. (2014). Look {Here}, {Eye Movements Play} a {Functional Role} in {Memory Retrieval}. \emph{Psychological Science}, \emph{25}(1), 236--242. \url{https://doi.org/10.1177/0956797613498260}
+
+\leavevmode\hypertarget{ref-R-base}{}%
+R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-ryskinVerbBiasesAre2017}{}%
+Ryskin, R., Qi, Z., Duff, M. C., \& Brown-Schmidt, S. (2017). Verb biases are shaped through lifelong learning. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{43}(5), 781--794. \url{https://doi.org/10.1037/xlm0000341}
+
+\end{CSLReferences}
+
+\endgroup
+
+
+\end{document}

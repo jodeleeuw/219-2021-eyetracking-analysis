@@ -1,0 +1,256 @@
+---
+title             : "Eye-tracking on the web: lessons learned from replicating 6 experiments"
+shorttitle        : "Just picked a random title: feel free to change"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+      - Writing - Review & Editing
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - Writing - Review & Editing
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  ADD LATER
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+<!-- MAJOR TO DOs: 
+ - get data from in-lab versions of group A (AJ) and group D (RR)
+ - re-run Posner cueing (after we finish analysing the first 5)
+ - replicate group D and ?? in lab
+ 
+ (see bottom for notes from e-mails)
+ -->
+
+Intro stuff:
+
+- Eye-tracking as a key method in cognitive science research
+
+- Online data collection is more and more popular & let's us ask new questions
+
+- But, concerns over quality + little known about eye-tracking online
+
+_Present work_
+
+In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the `jsPsych` platform and `webgazer.js` plug-in. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "natural" scenes). ...
+
+# Experiment 1
+<!-- group a -->
+
+The first study was a replication attempt of @altmannIncrementalInterpretationVerbs1999.
+
+```{r read_groupA_data}
+
+```
+
+
+## Methods
+
+All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at [https://osf.io/s82kz](https://osf.io/s82kz). All participants provided informed consent and this study was approved by the Vassar College Institutional Review Board.
+
+### Participants
+
+Participants for this experiment were sampled from a wide pool of Prolific users who are fluent in English and were paid for their participation. Our sample size of participants was determined by the total run time of our experiment, ~10 minutes, and the allotted funding that was endowed to us by the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific, and we ended up with a sample size of 60 participants. For unknown reasons, 2 of the subjects’ results were not recorded, so in the analysis, we worked with data collected from 58 participants.
+
+### Procedure
+
+Participants completed the experiment remotely and entirely online on the platform Prolific. During the experiment, the participants viewed a screen and were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. The visual stimuli were created through Canva and depict a subject accompanied by 4 to 5 objects in the scene. 16 of the devised stimuli were critical to our trial, and each of these images have 2 sentences associated with it. One of these sentences is in the restrictive condition, where the verb only applies to one object in the scene, and the other is in the nonrestrictive condition, where the verb could apply to all of the objects in the scene. To illustrate an example, reference Figure 1. This scene depicts a boy alongside a cake, ball, car, and train set. In the case of this particular image, the cake is the target object, so the two corresponding sentences to this image are, “The boy will eat the cake” (restrictive) and “The boy will move the cake” (nonrestrictive).
+
+### Materials
+
+Therefore, for the 16 critical images, there are 16 control sentences where the verb does not constrain the target object and 16 restrictive sentences where the verb does constrain the target object. Each participant randomly received one sentence, restrictive or nonrestrictive, per scene. Of the 16 critical trials, each participant got 8 sentences that were restrictive and 8 that were nonrestrictive and the order of these were randomized. Trials were also designed so that participants had to input a keyboard response indicating “yes” or “no” as to whether the sentence relayed was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment.
+In addition to the 16 critical images, we also devised an additional 16 filler images that are not pertinent to our data collection and analysis. The critical trials were also presented in a randomized order along with these 16 filler trials. Unlike the critical images, the filler images were accompanied by only one sentence that is unfeasible given it’s corresponding scene. This was so that when participants were asked whether or not the scene was possible, the filler trials would always elicit the answer, “no.”
+Despite recording participants’ reaction time and keyboard response after each trial, we were specifically measuring for the participant’s first fixation to the target object and distractors relative to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
+
+### Eye-Tracking Calibration and Validation
+Before initiating the experiment, participants were prompted to complete an eye-tracking calibration and validation procedure to ensure the data collected via the webcam-based eye tracking method was as accurate as possible. In order to allow the software to track where participants are looking, subjects were presented with a series of dots that appeared on the screen. Participants were then instructed to look at each dot as they appeared and click on it. By visually fixating and then clicking on one dot, it would then disappear and a new one would reappear in a different location on the screen. The calibration dots appeared in the central area of the screen where the visual stimuli would appear in order to ensure Web Gazer would be able to track eye movements to the relevant regions of interest. After completing this calibration, participants were then asked to go through the same steps of the calibration, except this time, they would have to just look at, not click, the dots as they appear on the screen in order to measure the accuracy of the calibration. This process completes the Web Gazer calibration and validation process.
+
+### Data pre-processing and analysis
+We used `r cite_r("references.bib")` for all our analyses.
+
+## Results
+
+### Replication
+
+> here we will describe the analyses that are as close as possible to the original paper
+
+### Calibration 
+
+> here we will describe the analyses that correlate calibration quality with effect size at the individual (Josh H?)
+
+## Discussion
+
+# Experiment 2
+<!-- group b -->
+
+The second study was a replication attempt of @johanssonLookHereEye2014.
+
+## Methods
+
+
+### Participants
+
+### Material
+
+### Procedure
+
+### Data analysis
+
+## Results
+
+## Discussion
+
+# Experiment 3
+<!-- group c -->
+
+The third study was a replication attempt of @Mann???.
+
+## Methods
+
+### Participants
+
+### Material
+
+### Procedure
+
+### Data analysis
+
+## Results
+
+## Discussion
+
+# Experiment 4
+<!-- group d -->
+
+The fourth study was a replication attempt of @ryskinVerbBiasesAre2017.
+
+## Methods
+
+### Participants
+
+### Material
+
+### Procedure
+
+### Data analysis
+
+## Results
+
+## Discussion
+
+# Experiment 5
+<!-- group e -->
+
+The fifth study was a replication attempt of @??.
+
+## Methods
+
+### Participants
+
+### Material
+
+### Procedure
+
+### Data analysis
+
+## Results
+
+## Discussion
+
+# Experiment 6
+<!-- posner cueing task -->
+
+The sixth study was a replication attempt of @??.
+
+## Methods
+
+### Participants
+
+### Material
+
+### Procedure
+
+### Data analysis
+
+## Results
+
+## Discussion
+
+# Combined Analyses
+
+# General Discussion
+
+<!-- NOTES FROM EMAILS:
+
+JOSH DE LEEUW: For calibration quality, there are a few ways you could go about it.
+
+As a preliminary step filtering the data to trial_type == 'webgazer-validate' should get you a data frame with just the validation trials. We ran a validation trial immediately after calibration. The trial involves showing some set of dots on the screen for a few seconds each and recording all of the samples from webgazer for each dot. Each experiment defined a different set of dots for validation, depending on where the relevant ROIs were. 
+
+The data for each of these trials includes columns for:
+
+raw_gaze: all the raw data points recorded from webgazer, organized by which point was shown on the screen
+percent_in_roi:  The jsPsych plugin also calculates the percentage of samples for each dot that are within some specified radius. I think we used 150px for all of the experiments, but I can verify that.
+average_offset: The average x,y offset of the cloud of points measured for each validation point. Also includes a value r, which is the radius of the circle centered at the midpoint of the cloud that includes half the points. Basically a measure of variance.
+validation_points: coordinates of each of the points on the screen, in the same order as the other columns so that you could see, e.g., if calibration tends to be better on more central points.
+
+We also included a step where if the validation was poor after the first attempt we repeated the calibration and validation procedure one additional time. So some subjects have more validation trials than others. If you look at my R Notebook for group A (just pushed to GH now) you can see some initial attempts to extract validation info and use it to exclude subjects. -->
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
