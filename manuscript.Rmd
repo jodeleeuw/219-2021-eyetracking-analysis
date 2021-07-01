@@ -85,7 +85,8 @@ In the present work, we attempted to replicate six eye-tracking studies from the
 # Experiment 1
 <!-- group a -->
 
-The first study was a replication attempt of @altmannIncrementalInterpretationVerbs1999.
+The first study was a replication attempt of @altmannIncrementalInterpretationVerbs1999. Altmann and Kamide used the visual world eye-tracking paradigm [@tanenhaus1995] to show that meanings of verbs rapidly constrain the set of potential subsequent referents in sentence processing. For example, when looking at the display in Figure 1 and listening to a sentence like “The boy will eat the…,” participants are more likely to look at the cake than when they hear “The boy will move the…,” in which case they tend to look at the train, presumably because cakes are edible and trains are not. Semantic information available at the verb is used to anticipate upcoming linguistic input.
+  
 
 ```{r read_groupA_data}
 
@@ -96,31 +97,54 @@ The first study was a replication attempt of @altmannIncrementalInterpretationVe
 
 All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at [https://osf.io/s82kz](https://osf.io/s82kz). All participants provided informed consent and this study was approved by the Vassar College Institutional Review Board.
 
+<!-- insert Figure 1 -->
+
 ### Participants
 
-Participants for this experiment were sampled from a wide pool of Prolific users who are fluent in English and were paid for their participation. Our sample size of participants was determined by the total run time of our experiment, ~10 minutes, and the allotted funding that was endowed to us by the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific, and we ended up with a sample size of 60 participants. For unknown reasons, 2 of the subjects’ results were not recorded, so in the analysis, we worked with data collected from 58 participants.
+Participants for this experiment were sampled from a wide pool of Prolific users who are fluent in English and were paid for their participation. Our sample size of participants was determined by the total run time of our experiment, ~10 minutes, and the allotted funding that was endowed to us by the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific, and we ended up with a sample size of 60 participants. Note that the sample size of the original study was 24. For unknown reasons, 2 of the subjects’ results were not recorded, so in the analysis, we worked with data collected from 58 participants.
 
 ### Procedure
 
-Participants completed the experiment remotely and entirely online on the platform Prolific. During the experiment, the participants viewed a screen and were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. The visual stimuli were created through Canva and depict a subject accompanied by 4 to 5 objects in the scene. 16 of the devised stimuli were critical to our trial, and each of these images have 2 sentences associated with it. One of these sentences is in the restrictive condition, where the verb only applies to one object in the scene, and the other is in the nonrestrictive condition, where the verb could apply to all of the objects in the scene. To illustrate an example, reference Figure 1. This scene depicts a boy alongside a cake, ball, car, and train set. In the case of this particular image, the cake is the target object, so the two corresponding sentences to this image are, “The boy will eat the cake” (restrictive) and “The boy will move the cake” (nonrestrictive).
+Participants completed the experiment remotely and entirely online on the platform Prolific.
 
-### Materials
+#### Eye-Tracking Calibration and Validation
 
-Therefore, for the 16 critical images, there are 16 control sentences where the verb does not constrain the target object and 16 restrictive sentences where the verb does constrain the target object. Each participant randomly received one sentence, restrictive or nonrestrictive, per scene. Of the 16 critical trials, each participant got 8 sentences that were restrictive and 8 that were nonrestrictive and the order of these were randomized. Trials were also designed so that participants had to input a keyboard response indicating “yes” or “no” as to whether the sentence relayed was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment.
-In addition to the 16 critical images, we also devised an additional 16 filler images that are not pertinent to our data collection and analysis. The critical trials were also presented in a randomized order along with these 16 filler trials. Unlike the critical images, the filler images were accompanied by only one sentence that is unfeasible given it’s corresponding scene. This was so that when participants were asked whether or not the scene was possible, the filler trials would always elicit the answer, “no.”
-Despite recording participants’ reaction time and keyboard response after each trial, we were specifically measuring for the participant’s first fixation to the target object and distractors relative to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
+Before initiating the experiment, participants were prompted to complete an eye-tracking calibration and validation procedure. Participants were first presented with a series of dots that appeared on the screen. They were instructed to look at each dot as it appeared and click on it. Once they visually fixated and clicked on a dot, it would disappear and a new one would appear in a different location on the screen. The calibration dots appeared in the central area of the screen where the visual stimuli would appear in order to ensure Web Gazer would be able to track eye movements to the relevant regions of interest. After the calibration was completed, the validation began. Participants were asked to go through the same steps as the calibration, except this time, they only fixated the dots as they appeared in different locations on the screen. 
 
-### Eye-Tracking Calibration and Validation
-Before initiating the experiment, participants were prompted to complete an eye-tracking calibration and validation procedure to ensure the data collected via the webcam-based eye tracking method was as accurate as possible. In order to allow the software to track where participants are looking, subjects were presented with a series of dots that appeared on the screen. Participants were then instructed to look at each dot as they appeared and click on it. By visually fixating and then clicking on one dot, it would then disappear and a new one would reappear in a different location on the screen. The calibration dots appeared in the central area of the screen where the visual stimuli would appear in order to ensure Web Gazer would be able to track eye movements to the relevant regions of interest. After completing this calibration, participants were then asked to go through the same steps of the calibration, except this time, they would have to just look at, not click, the dots as they appear on the screen in order to measure the accuracy of the calibration. This process completes the Web Gazer calibration and validation process.
+<!-- Qs:
+-what was the threshold for letting people start the experiment? 
+- were they given the option to start over? -->
+
+#### Experiment Procedure
+
+During the experiment, the participants were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. Participants had to input a keyboard response indicating “yes” or “no” as to whether the sentence they heard was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment. Participants’ reaction times, keyboard responses, and looks to objects in the scene were recorded for each trial.
+
+<!-- Qs: 
+-keyboard keys? what was the exact phrasing of the instruction? 
+-Any delay between when visual scene appears and the audio starts? 
+-Does trial end as soon as participant responds?-->
+
+### Materials & Design
+
+The visual stimuli were created through Canva and depicted an agent accompanied by four to five objects in the scene (see Figure 1). On critical trials, participants heard one of two sentences associated with the scene. In the restrictive condition, the sentence (e.g., "The boy will eat the cake") contained a verb (e.g., "eat") which restricts the set of possible subsequent referents (e.g., to edible things). Only the target object (e.g., the cake) was semantically consistent with the verb's meaning. In the non-restrictive condition, the sentence (e.g., "The boy will move the cake") contained a verb (e.g., "move") which does not restrict the set of possible subsequent referents. The target object (e.g., the cake) as well as the distractor objects (e.g., the train, the ball, etc.) were semantically consistent with the verb's meaning. Both sentences were compatible with the scene, such that the correct keyboard response for the critical trials was "yes." Filler trials consisted of scenes that looked similar to critical scenes but were paired with inappropriate sentences. The correct keyboard response for the filler trials was "no."
+
+Each participant was presented with sixteen critical trials (eight in the restrictive condition, eight in the non-restrictive condition) and sixteen fillers for a total of 32 trials. The order of trials and the assignment of critical scene to condition was random on a subject-by-subject basis.<!-- right?-->
+
 
 ### Data pre-processing and analysis
 We used `r cite_r("references.bib")` for all our analyses.
+
+looks to the objects in the scene time-locked to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
 
 ## Results
 
 ### Replication
 
 > here we will describe the analyses that are as close as possible to the original paper
+
+### Comparison to in-lab data
+
+> here we will describe a direct comparison to data collected in the lab
 
 ### Calibration 
 
@@ -173,9 +197,32 @@ The third study was a replication attempt of @mannsVisualPairedcomparisonTask200
 
 ### Participants
 
-### Material
+The participants were volunteers recruited from Prolific who were over 18 years of age and fluent in English. Our initial sample size was 51 participants for the first day of our experiment and 48 of them came back for the second day. We excluded 3 participants due to perfect performance on the recognition memory test, which Manns et
+al. (2000) did as well. Our final sample size was 45 participants.
 
 ### Procedure
+
+The experiment was administered over the course of two consecutive days. It consisted of three sections: a presentation phase, a test phase, and a recognition test. The first two phases occurred on the first day, while the recognition test occurred on the second day.
+There were two modifications we made to the methods of the original experiment. As we are only replicating the declarative memory component of the original experiment, we did not have a “priming group.” Therefore, we followed only the procedure for the “looking group.” Additionally, for each section of the study, the stimuli was presented on a single screen instead of two screens due to the constraints of the online experiment format.
+
+Eye-Tracking Calibration
+
+Before the presentation phase began, participants were instructed to complete a two-part eye-tracking test to calibrate their eye movements with the webcam camera. During the first part of the test, the calibration stage, black dots appeared on the screen one at a time and remained there until the participants clicked it. Each dot appeared at a different location on the screen. There were a total of 7 dots, each presented three times in random order for a total of 21 dots. Their locations were designed to focus calibration on the middle box of the screen and also the two sides of the screen. The second part, which was the validation stage, consisted of a similar design, except participants simply viewed each black dot, which remained on the screen for 2 seconds, instead of clicking on it. There were a total of 3 dots, each presented once. The entire two-stage procedure was then repeated a second time to ensure accurate calibration.
+
+Presentation Phase
+
+During the presentation phase, participants viewed through a computer screen 24 pairs of identical color photographs depicting common objects. Each pair was presented for 5 seconds and an interval of 5 seconds elapsed before the next pair was shown. The order of the photographs was randomized and therefore different for each participant. After completion of the presentation phase, participants were given a 5-minute pause to disengage from the screen. When the pause was over, they were prompted to complete the eye-tracking calibration again to re-calibrate their eye movements. Afterward, the test phase began.
+
+Testing Phase
+
+During this phase, participants again viewed 24 pairs of photographs with the same stimuli and interstimulus durations of 5 seconds. In each pair, one photograph was previously seen before in the presentation phase, while the other was completely new. The test phase had a counterbalanced design, where the pictures that were old or new were counterbalanced across the participants. For half of the participants in each counterbalanced group, the foil and old photographs were reversed.
+
+Recognition Test
+ 
+ After roughly 24 hours, with a leeway interval of 12 hours to accommodate busy schedules, participants were given the recognition test. It consisted of 48 photographs, presented one at a time. Each was shown on the screen for 1 second, followed by a 1 second interstimulus interval. Half of them had been viewed twice on the previous day and were deemed the “targets.” The other half depicted an object with the same name as an object in one of the old photographs, but had not been viewed before, deemed “foils.” Each photograph remained on the screen until the participants indicated whether or not they had seen it before by pressing ‘y’ for yes and ‘n’ for no. After they pressed one of the two keys, a prompt on the screen asked them to rate their confidence in their answer from 1 as a “pure guess” to 5 as “very sure.” by clicking on the corresponding number on the screen. No feedback on their responses was given during the test.
+The experimental design is visually depicted in Figure 1.1
+
+### Materials
 
 ### Data analysis
 
@@ -190,11 +237,27 @@ The fourth study was a replication attempt of @ryskinVerbBiasesAre2017.
 
 ## Methods
 
+The stimuli, experimental code, and data and analysis scripts can be found on the Open Science Framework at the following link, https://osf.io/x3c49/ (https://osf.io/x3c49/). The pre-registration for the study can be found at https://osf.io/3v4pg (https://osf.io/3v4pg).
+ Code
+ 
 ### Participants
 
-### Material
+Our study collected participants from Prolific who were 18 and up. A sample size of 58 was chosen because we wanted to replicate the experiment with greater statistical power.
 
 ### Procedure
+
+When participants began the experiment, they were notified the webcam would be used for eye tracking but no video would be saved. They were asked to remove glasses if possible, close any other tabs or apps, turn off notifications, and have their face lit from the front. The webcam’s view of the participant popped up on the screen, and participants were asked to center their face in the box and keep their head still. The experiment became full screen, and participants began the eye-tracking calibration and validation so the camera on the computer could accurately track the participant’s eye movements. For the calibration, dots appeared on the screen one at a time in different locations, and the participants had to click on each one. The location of the dots created a box (one dot in each corner) with one dot in the center. For the validation, the dots appeared in the same locations as the calibration, but participants simply looked at the dots to test the accuracy.
+After the eye tracking was set up, participants went through an audio test so they could adjust the audio on their computer to a comfortable level. Before beginning the actual experiment, they were given instructions that four objects will appear, an audio prompt will play, and they should do their best to use their mouse to act out the instructions. They then went through three practice trials which were followed by 54 critical trials and 24 filler trials that were randomly presented. For the trials, they were shown four objects (target animal, target instrument, distractor animal, distractor instrument) in each corner of the screen while they heard an audio prompt that contained instructions about the action they needed to act out (see Figure 1). Using their cursor, the participants could act out the instructions by clicking on objects and moving them or motioning over the objects. After the action was completed, the participants were instructed to press the space bar which led to a screen that said “Click Here” in the middle in order to remove bias in the eye and mouse movements from the previous trial. The experiment only allowed the participants to move on to the next trial once the audio was completely done playing and the mouse had entered at least one object. After completing all of the trials, the participants were explained the meaning of the experiment and sent back to Prolific.
+ 
+Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
+
+### Stimuli/Materials
+
+In order to track the eye movements of the participants, the participants’ web cameras on their computers were used with the jsPsych 6.1.3 eye tracking software. The images and audios presented to the participants were the same stimuli used in the original study. The critical trials were divided into modifier-biased, instrument-biased, and equibiased conditions, and the filler trials did not contain ambiguous instructions. Two lists of critical trials were made with different verb and instrument combinations (e.g., “rub” could be paired with “panda” and “crayon” in one list and “panda” and “violin” in the second list). Within each list, the same verb was presented twice but each time with a different target instrument and animal. The lists were randomly assigned to the participants to make sure the effects were not caused by the properties of the animal or instrument images used. The list of verbs used can be found in appendix A of the original study.
+
+### Other
+
+Our experiment differed from the original study in a few ways. Besides the use of webcameras instead of an advanced eye tracker, we also analyzed mouse movement instead of clicking behavior since not all of the audio prompts required clicking. For example, the sentence “locate the camel with the straw” may not involve any clicking but rather only mousing over the camel. We used Javascript with jsPsych packages instead of MatLab’s Psychophysics Toolbox 3, and our experiment was conducted through Prolific instead of in a lab. Lastly, the original study recited the names of objects on the screen at the beginning of each trial, but we took this audio out of our experiment.
 
 ### Data analysis
 
@@ -203,6 +266,10 @@ The fourth study was a replication attempt of @ryskinVerbBiasesAre2017.
 ### Replication
 
 > here we will describe the analyses that are as close as possible to the original paper
+
+### Comparison to in-lab data
+
+> here we will describe a direct comparison to data collected in the lab
 
 ### Calibration 
 
@@ -217,7 +284,7 @@ The fourth study was a replication attempt of @ryskinVerbBiasesAre2017.
 # Experiment 5
 <!-- group e -->
 
-The fifth study was a replication attempt of @??.
+The fifth study was a replication attempt of @shimojoGazeBiasBoth2003.
 
 ## Methods
 
@@ -249,6 +316,14 @@ The sixth study was a replication attempt of @??.
 ### Data analysis
 
 ## Results
+
+### Replication
+
+### Calibration
+
+### ROIs
+
+### Item Numbers
 
 ## Discussion
 
