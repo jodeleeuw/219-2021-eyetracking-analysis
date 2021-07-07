@@ -4,7 +4,7 @@
 %
 \documentclass[
   english,
-  man]{apa6}
+  man,floatsintext]{apa6}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{ifxetex,ifluatex}
@@ -113,12 +113,6 @@
 \makeatother
 \shorttitle{Just picked a random title: feel free to change}
 \keywords{keywords\newline\indent Word count: X}
-\DeclareDelayedFloatFlavor{ThreePartTable}{table}
-\DeclareDelayedFloatFlavor{lltable}{table}
-\DeclareDelayedFloatFlavor*{longtable}{table}
-\makeatletter
-\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
-\makeatother
 \usepackage{lineno}
 
 \linenumbers
@@ -198,44 +192,61 @@ Intro stuff:
 
 \emph{Present work}
 
-In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the \texttt{jsPsych} platform and \texttt{webgazer.js} plug-in. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with ``natural'' scenes). \ldots{}
+In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the eye-tracking plug-in from \texttt{jsPsych}, a Javascript library for running behavioral experiments in a web browser (de Leeuw, 2015). The plug-in relies on the \texttt{webgazer.js} library for webcam eye-tracking (Papoutsaki et al., 2016). The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with ``natural'' scenes). \ldots{}
+
+\hypertarget{general-methods}{%
+\section{General Methods}\label{general-methods}}
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+Participants completed the experiment remotely and were recruited through the Prolific platform. In order to have access to the experiment, participants had to meet the following criteria: 18 years of age or older, fluency in English, and access to a webcam. All participants provided informed consent. The studies were approved by the Vassar College Institutional Review Board.
+
+\hypertarget{eye-tracking-calibration-and-validation}{%
+\subsection{Eye-tracking Calibration and Validation}\label{eye-tracking-calibration-and-validation}}
+
+When participants began the experiment, they were notified the webcam would be used for eye tracking but no video would be saved. They were asked to remove glasses if possible, close any other tabs or apps, turn off notifications, and make sure their face was lit from the front. The webcam's view of the participant popped up on the screen, and participants were asked to center their face in the box and keep their head still. The experiment window then expanded to full screen, and participants began the eye-tracking calibration.
+
+During the calibration, dots appeared on the screen one at a time in different locations, and the participants had to fixate them and click on each one. Once they clicked on a dot, it would disappear and a new one would appear in a different location on the screen. The locations of calibration dots were specific to each experiment (details below) and appeared in the areas of the screen where the visual stimuli would appear during the main task in order to ensure that eye movements were accurately recorded in the relevant regions of interest. After the calibration was completed, the validation began. Participants were asked to go through the same steps as the calibration, except that they only fixated the dots as they appeared in different locations on the screen. If accuracy on the validation was too low (fewer than 50\% of looks landed within a 200 px radius of the validation points), participants were given an opportunity to re-start the calibration and validation steps. If the second attempt also lead to low validation accuracy, participants were informed that they could not participate in the study.
+
+\hypertarget{data-pre-processing}{%
+\subsection{Data pre-processing}\label{data-pre-processing}}
+
+We used R {[}Version 4.1.0; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 0.28.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.6; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.4; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.27.1; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.3; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 1.4.0; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.6.0; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, and \emph{tidyr} {[}Version 1.1.3; Wickham (2021b){]} for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
 
-The first study was a replication attempt of Altmann and Kamide (1999).
+The first study was a replication attempt of Altmann and Kamide (1999). Altmann and Kamide used the visual world eye-tracking paradigm (Tanenhaus, Spivey-Knowlton, Eberhard, \& Sedivy, 1995) to show that meanings of verbs rapidly constrain the set of potential subsequent referents in sentence processing. For example, when looking at the display in Figure XX and listening to a sentence like ``The boy will eat the\ldots,'' participants are more likely to look at the cake than when they hear ``The boy will move the\ldots,'' in which case they tend to look at the train, presumably because cakes are edible and trains are not. Semantic information available at the verb is used to anticipate upcoming linguistic input.
 
 \hypertarget{methods}{%
 \subsection{Methods}\label{methods}}
 
-All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at \url{https://osf.io/s82kz}. All participants provided informed consent and this study was approved by the Vassar College Institutional Review Board.
+All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at \url{https://osf.io/s82kz}.
 
-\hypertarget{participants}{%
-\subsubsection{Participants}\label{participants}}
+\hypertarget{participants-1}{%
+\subsubsection{Participants}\label{participants-1}}
 
-Participants for this experiment were sampled from a wide pool of Prolific users who are fluent in English and were paid for their participation. Our sample size of participants was determined by the total run time of our experiment, \textasciitilde10 minutes, and the allotted funding that was endowed to us by the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific, and we ended up with a sample size of 60 participants. For unknown reasons, 2 of the subjects' results were not recorded, so in the analysis, we worked with data collected from 58 participants.
+60 participants were paid \$XX for their participation. Our sample size of participants was determined by the total run time of our experiment, \textasciitilde10 minutes, and the allotted funding from the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific. Note that the sample size of the original study was 24. For unknown reasons, 2 of the subjects' results were not recorded, so in the analysis, we worked with data collected from 58 participants.
 
 \hypertarget{procedure}{%
 \subsubsection{Procedure}\label{procedure}}
 
-Participants completed the experiment remotely and entirely online on the platform Prolific. During the experiment, the participants viewed a screen and were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. The visual stimuli were created through Canva and depict a subject accompanied by 4 to 5 objects in the scene. 16 of the devised stimuli were critical to our trial, and each of these images have 2 sentences associated with it. One of these sentences is in the restrictive condition, where the verb only applies to one object in the scene, and the other is in the nonrestrictive condition, where the verb could apply to all of the objects in the scene. To illustrate an example, reference Figure 1. This scene depicts a boy alongside a cake, ball, car, and train set. In the case of this particular image, the cake is the target object, so the two corresponding sentences to this image are, ``The boy will eat the cake'' (restrictive) and ``The boy will move the cake'' (nonrestrictive).
+The task began with an -point eye-tracker calibration and validation. During the experiment, the participants were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. Participants had to input a keyboard response indicating ``yes'' or ``no'' as to whether the sentence they heard was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment. Participants' reaction times, keyboard responses, and looks to objects in the scene were recorded for each trial.
 
-\hypertarget{materials}{%
-\subsubsection{Materials}\label{materials}}
+\hypertarget{materials-design}{%
+\subsubsection{Materials \& Design}\label{materials-design}}
 
-Therefore, for the 16 critical images, there are 16 control sentences where the verb does not constrain the target object and 16 restrictive sentences where the verb does constrain the target object. Each participant randomly received one sentence, restrictive or nonrestrictive, per scene. Of the 16 critical trials, each participant got 8 sentences that were restrictive and 8 that were nonrestrictive and the order of these were randomized. Trials were also designed so that participants had to input a keyboard response indicating ``yes'' or ``no'' as to whether the sentence relayed was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment.
-In addition to the 16 critical images, we also devised an additional 16 filler images that are not pertinent to our data collection and analysis. The critical trials were also presented in a randomized order along with these 16 filler trials. Unlike the critical images, the filler images were accompanied by only one sentence that is unfeasible given it's corresponding scene. This was so that when participants were asked whether or not the scene was possible, the filler trials would always elicit the answer, ``no.''
-Despite recording participants' reaction time and keyboard response after each trial, we were specifically measuring for the participant's first fixation to the target object and distractors relative to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
+The visual stimuli were created through Canva and depicted an agent accompanied by four to five objects in the scene (see Figure XX). On critical trials, participants heard one of two sentences associated with the scene. In the restrictive condition, the sentence (e.g., ``The boy will eat the cake'') contained a verb (e.g., ``eat'') which restricts the set of possible subsequent referents (e.g., to edible things). Only the target object (e.g., the cake) was semantically consistent with the verb's meaning. In the non-restrictive condition, the sentence (e.g., ``The boy will move the cake'') contained a verb (e.g., ``move'') which does not restrict the set of possible subsequent referents. The target object (e.g., the cake) as well as the distractor objects (e.g., the train, the ball, etc.) were semantically consistent with the verb's meaning. Both sentences were compatible with the scene, such that the correct keyboard response for the critical trials was ``yes.'' Filler trials consisted of scenes that looked similar to critical scenes but were paired with inappropriate sentences. The correct keyboard response for the filler trials was ``no.''
 
-\hypertarget{eye-tracking-calibration-and-validation}{%
-\subsubsection{Eye-Tracking Calibration and Validation}\label{eye-tracking-calibration-and-validation}}
+Each participant was presented with sixteen critical trials (eight in the restrictive condition, eight in the non-restrictive condition) and sixteen fillers for a total of 32 trials. The order of trials and the assignment of critical scene to condition was random on a subject-by-subject basis.
 
-Before initiating the experiment, participants were prompted to complete an eye-tracking calibration and validation procedure to ensure the data collected via the webcam-based eye tracking method was as accurate as possible. In order to allow the software to track where participants are looking, subjects were presented with a series of dots that appeared on the screen. Participants were then instructed to look at each dot as they appeared and click on it. By visually fixating and then clicking on one dot, it would then disappear and a new one would reappear in a different location on the screen. The calibration dots appeared in the central area of the screen where the visual stimuli would appear in order to ensure Web Gazer would be able to track eye movements to the relevant regions of interest. After completing this calibration, participants were then asked to go through the same steps of the calibration, except this time, they would have to just look at, not click, the dots as they appear on the screen in order to measure the accuracy of the calibration. This process completes the Web Gazer calibration and validation process.
+\emph{TO DO:} add figure
 
 \hypertarget{data-pre-processing-and-analysis}{%
 \subsubsection{Data pre-processing and analysis}\label{data-pre-processing-and-analysis}}
 
-We used R {[}Version 4.1.0; R Core Team (2021){]} and the R-package \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]} for all our analyses.
+Looks to the objects in the scene were time-locked to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
@@ -243,16 +254,30 @@ We used R {[}Version 4.1.0; R Core Team (2021){]} and the R-package \emph{papaja
 \hypertarget{replication}{%
 \subsubsection{Replication}\label{replication}}
 
-\begin{quote}
-here we will describe the analyses that are as close as possible to the original paper
-\end{quote}
+\begin{itemize}
+\item
+  here we will describe the analyses that are as close as possible to the original paper with a minimal validation cutoff
+\item
+  same analysis but with stricter validation cutoff
+\end{itemize}
+
+\hypertarget{comparison-to-in-lab-data}{%
+\subsubsection{Comparison to in-lab data}\label{comparison-to-in-lab-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  here we will describe a direct comparison to data collected in the lab
+\end{itemize}
 
 \hypertarget{calibration}{%
 \subsubsection{Calibration}\label{calibration}}
 
-\begin{quote}
-here we will describe the analyses that correlate calibration quality with effect size at the individual
-\end{quote}
+\begin{itemize}
+\tightlist
+\item
+  here we will describe the analyses that correlate calibration quality with effect size at the individual level
+\end{itemize}
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -260,27 +285,28 @@ here we will describe the analyses that correlate calibration quality with effec
 \hypertarget{experiment-2}{%
 \section{Experiment 2}\label{experiment-2}}
 
-The second study was a replication attempt of Johansson and Johansson (2014).
+The second study was a replication attempt of Johansson and Johansson (2014). They examined how visuospatial information is integrated into memories for objects. They found that, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located during encoding (see Spivey \& Geng, 2001) and that this spatial reinstatement facilitates retrieval of the picture.
 
 \hypertarget{methods-1}{%
 \subsection{Methods}\label{methods-1}}
 
-\hypertarget{participants-1}{%
-\subsubsection{Participants}\label{participants-1}}
+\hypertarget{participants-2}{%
+\subsubsection{Participants}\label{participants-2}}
 
-Participants for this study were recruiting using the website Prolific. Specifically, participants had to be older than 18 and fluent in English, but aside from that, there was no restriction on demographic; participation was also anonymous. The only technology-based restriction was that each participant had to have a working webcam; we were able to accommodate for different screen sizes during data analysis. We analyzed the data of 59 participants, a number that was limited by budget constraints, but still 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). We ended up excluding the data of 1 participant whose eye tracking data seemed to be blank, rendering us unable to analyze it.
-
-\hypertarget{material}{%
-\subsubsection{Material}\label{material}}
+60 participants were paid \$XX for their participation . We analyzed the data of 59 participants, a number that was limited by budget constraints, but still 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). We ended up excluding the data of 1 participant whose eye tracking data seemed to be blank, rendering us unable to analyze it.
 
 \hypertarget{procedure-1}{%
 \subsubsection{Procedure}\label{procedure-1}}
 
-After a participant began the study, they would encounter an alert that the study would use their webcam to track eye movements, then initiate Webgazer, a program that logs predicted eye positions. There were two possible conditions they could begin with---the free-viewing condition and the fixed-viewing condition---which they were randomly assigned to. For both conditions, participants began with the encoding phase before moving to the recall phase. After going through both conditions, participants were asked a few survey questions and the experiment ended.
-For the encoding phase, participants were asked to remember the contents of the four quadrants of a grid, each with six distinct items themed around a certain category (we used humanoids, household objects, animals, and methods of transportation, as inspired by the example in Johansson \& Johansson's original experiment). To do so, each of the four quadrants was presented to the participant one at a time. First, a list of the items in the quadrant were shown, then the items in the actual quadrant were shown. For each item in a quadrant, an audio file would play, asking the participant to use their arrow keys to identify which direction each item was facing (every item was facing a distinct direction to allow for statements like ``The chair is facing left'' to be viable). After the participant identified the direction of each item, they would have an additional 30 seconds to study and remember the name and orientation of each item in the quadrant. Then, after repeating this for each quadrant, the participant was shown the full grid of 24 items (six per grid) and had sixty seconds to further encode the name and orientation of each item.
-For the recall phase, participants had to respond to statements presented via audio files. Each statement was a true or false statement that fell into either an interobject or intraobject condition. Interobject statements were those that compared two different items in the grid (e.g.~``The skeleton is to the left of the robot''), while intraobject statements were those that asked about the orientation of a single item (e.g.~``The bus is facing right''). There were 48 total statements, with 24 interobject and 24 intraobject statements split evenly among the four quadrants. Participants were able to respond by pressing the `F' key for false statements and `T' for true ones.
-The difference between the free-viewing and fixed-viewing conditions was in what a participant could see on screen during the recall phase. During fixed-viewing, participants could only see a small cross in the center of the screen, and were asked at the start of the recall phase to focus their vision on just the cross. During free-viewing, participants saw an empty screen and were allowed to look wherever they wanted, without any particular instruction telling them where to look. In both cases, the mouse was obscured from the screen, making it so that the only visual stimulus for either condition was the cross in the fixed-viewing one. After a participant finished the first condition, they then moved on to repeating the experiment under the second condition, this time with a new grid of images. After completing this second condition, the participant was finished, and was asked to answer a few survey questions (such as whether they wore glasses or encountered any distractions).
-The methodology of this replication differed from Johansson \& Johansson's original study in two key ways. First, the original study included two more conditions that were omitted from this replication for efficiency concerns. Those two conditions involved prompting the participant to look to an area on screen that matched one of the original quadrants while they responded to each statement, with the key here being that sometimes the prompt was in the same quadrant as the information being recalled, while sometimes it wasn't. We ended up not replicating this aspect of the study because it felt like too big of a task to program and playtest in the amount of time we had. The second major way this study differed from the original was that the original was conducted in- person and used an iView Red500 eye tracker, which was able to track eye movements incredibly closely. Due to obvious pandemic-related reasons, we conducted our replication online through Prolific, while using Webgazer, a software that tracks eye movements based on a participant's webcam. There were a few other minor ways in which our study differed (we used different grids of objects and different instructions), but we tried to remain as faithful as possible in terms of variables like timing, the physical appearance of the grids, and the style of the images.
+The task began with an -point eye-tracker calibration and validation. The experiment consisted of two blocks each composed of an encoding phase and a recall phase. During the encoding phase, participants saw a grid indicating the four quadrants of the screen. Each quadrant contained six images of items belonging to the same category (see Figure XX). The four possible categories were humanoids, household objects, animals, and methods of transportation. Participants were asked to remember the contents of the four quadrants. Different images were used in each block.
+
+Each of the four quadrants was presented one at a time. First, a list of the items in the quadrant were shown, then the items in the actual quadrant were shown (??). For each item, an audio file would play (``???'') asking the participant to use their arrow keys to identify which direction each item was facing (every item was facing either left or right (right??)). After the participant identified the direction of each item, they would have an additional 30 seconds to encode the name and orientation of each item in the quadrant. Then, after all four quadrants were presented in this way, the participant was shown the full grid of 24 items and had 60 seconds to further encode the name and orientation of each item.
+
+During the recall phase, participants listened to statements and responded by pressing the `F' key for false statements and `T' for true ones. Each statement fell into either an interobject or intraobject condition. Interobject statements were those that compared two different items in the grid (e.g.~``The skeleton is to the left of the robot''), while intraobject statements were those that asked about the orientation of a single item (e.g.~``The bus is facing right''). There were 48 total statements, with 24 interobject and 24 intraobject statements split evenly among the four quadrants. While listening to these statements, in the free-viewing block, participants saw a blank screen and were allowed to freely gaze around the screen. During the fixed-viewing block, participants were asked to fixate a small cross in the center of the screen throughout the recall phase. In both cases, the mouse was obscured from the screen. Participants were randomly assigned to see the fixed-viewing or free-viewing block first.
+
+After completing both encoding-recall blocks, participants were asked to answer a few survey questions (such as whether they wore glasses or encountered any distractions).
+
+The primary methodological difference between this replication and Johansson and Johansson's study was that the original study included two additional viewing conditions that were omitted from this replication due to time constraints. In those two conditions, participant were prompted to look to a specific quadrant (rather than free viewing or central fixation) which either matched or mismatched the original location of the to-be-remembered item.
 
 \hypertarget{data-analysis}{%
 \subsubsection{Data analysis}\label{data-analysis}}
@@ -291,16 +317,21 @@ The methodology of this replication differed from Johansson \& Johansson's origi
 \hypertarget{replication-1}{%
 \subsubsection{Replication}\label{replication-1}}
 
-\begin{quote}
-here we will describe the analyses that are as close as possible to the original paper
-\end{quote}
+\begin{itemize}
+\item
+  here we will describe the analyses that are as close as possible to the original paper
+\item
+  same but stricter validation cutoff
+\end{itemize}
 
 \hypertarget{calibration-1}{%
 \subsubsection{Calibration}\label{calibration-1}}
 
-\begin{quote}
-here we will describe the analyses that correlate calibration quality with effect size at the individual
-\end{quote}
+\begin{itemize}
+\tightlist
+\item
+  here we will describe the analyses that correlate calibration quality with effect size at the individual level
+\end{itemize}
 
 \hypertarget{discussion-1}{%
 \subsection{Discussion}\label{discussion-1}}
@@ -308,19 +339,35 @@ here we will describe the analyses that correlate calibration quality with effec
 \hypertarget{experiment-3}{%
 \section{Experiment 3}\label{experiment-3}}
 
-The third study was a replication attempt of Manns, Stark, and Squire (2000).
+The third study was a replication attempt of Manns, Stark, and Squire (2000) which aimed to show that the visual paired-comparison task, widely used in the patient literature, tapped into declarative memory. In the visual paired-comparison task, two identical pictures were presented side by side for a brief viewing period. After a delay, one of the previously viewed pictures was presented along with a new picture. Individuals looked more at the new picture than the old picture and the time spent looking was correlated with later recognition memory performance. On the other hand perceptual priming, thought to recruit non-declarative memory, was not linked to later recognition. (The perceptual priming arm of the design was not included in this replication.)
 
 \hypertarget{methods-2}{%
 \subsection{Methods}\label{methods-2}}
 
-\hypertarget{participants-2}{%
-\subsubsection{Participants}\label{participants-2}}
+\hypertarget{participants-3}{%
+\subsubsection{Participants}\label{participants-3}}
 
-\hypertarget{material-1}{%
-\subsubsection{Material}\label{material-1}}
+Our initial sample size was 51 participants for the first day of our experiment and 48 of them came back for the second day. Following Manns et al., we excluded 3 participants due to perfect performance on the recognition memory test. Our final sample size was 45 participants.
 
 \hypertarget{procedure-2}{%
 \subsubsection{Procedure}\label{procedure-2}}
+
+The task began with a 7-point eye-tracker calibration (each point was presented 3 times in a random order) and validation with 3 points (each presented once). The point locations were designed to focus calibration on the center of the screen and the middle of the left and right halves of the screen. The experiment was administered over the course of two consecutive days. It consisted of three sections: a presentation phase, a test phase, and a recognition test. The first two phases occurred on the first day, while the recognition test occurred on the second day.
+
+During the presentation phase, participants viewed 24 pairs of identical color photographs depicting common objects. Each pair was presented for 5 seconds and an interval of 5 seconds elapsed before the next pair was shown. The order of the photographs was randomized and different for each participant. After completion of the presentation phase, participants were given a 5-minute break during which they could look away from the screen.
+
+After the break, they were prompted to complete the eye-tracking calibration again before beginning the test phase. During this phase, participants again viewed 24 pairs of photographs with an interstimulus duration of 5 seconds. In each pair, one photograph was previously seen during the presentation phase, while the other was new. Which pictures were old or new was counterbalanced across participants. For half of the participants in each counterbalancing group, the new and old photographs were reversed.
+
+Approximately 24 hours after completing the first session, with a leeway interval of 12 hours to accommodate busy schedules, participants were given the recognition test. It consisted of 48 photographs, presented one at a time. Each was shown on the screen for 1 second, followed by a 1 second interstimulus interval. Half of the pohotographs had been viewed twice on the previous day and were deemed the ``targets.'' The other half depicted an object with the same name as an object in one of the old photographs, but had not been viewed before, deemed ``foils.'' Each photograph remained on the screen until the participants indicated whether or not they had seen it before by pressing `y' for yes and `n' for no. After they pressed one of the two keys, a prompt on the screen asked them to rate their confidence in their answer from 1 as a ``pure guess'' to 5 as ``very sure.'' by clicking on the corresponding number on the screen. No feedback on their responses was given during the test.
+
+The experimental design is visually depicted in Figure XX
+
+\hypertarget{materials}{%
+\subsubsection{Materials}\label{materials}}
+
+Images were selected XXX\ldots{}
+
+There were two modifications we made to the methods of the original experiment. As we are only replicating the declarative memory component of the original experiment, we did not have a ``priming group.'' Therefore, we followed only the procedure for the ``looking group.'' Additionally, for each section of the study, the stimuli was presented on a single screen instead of two screens due to the constraints of the online experiment format.
 
 \hypertarget{data-analysis-1}{%
 \subsubsection{Data analysis}\label{data-analysis-1}}
@@ -334,22 +381,38 @@ The third study was a replication attempt of Manns, Stark, and Squire (2000).
 \hypertarget{experiment-4}{%
 \section{Experiment 4}\label{experiment-4}}
 
-The fourth study was a replication attempt of Ryskin, Qi, Duff, and Brown-Schmidt (2017).
+The fourth study was a replication attempt of Experiment 1 in Ryskin, Qi, Duff, and Brown-Schmidt (2017), which was closely modeled on Snedeker and Trueswell (2004). These studies used the visual world paradigm to show that listeners use knowledge of the co-occurrence statistics of verbs and syntactic structures to resolve ambiguity. For example, in a sentence like ``Feel the frog with the feather,'' the phrase ``with the feather'' could be describing the frog, or it could be describing the instrument that should be used to do the ``feeling.'' When both options (a frog holding a feather and a feather by itself) are available in the visual display, listeners rely on the verb's ``bias'' (statistical co-occurrence either in norming or corpora) to rapidly choose an action while the sentence is unfolding.
+.
 
 \hypertarget{methods-3}{%
 \subsection{Methods}\label{methods-3}}
 
-\hypertarget{participants-3}{%
-\subsubsection{Participants}\label{participants-3}}
+The stimuli, experimental code, and data and analysis scripts can be found on the Open Science Framework at the following link, \url{https://osf.io/x3c49/} (\url{https://osf.io/x3c49/}). The pre-registration for the study can be found at \url{https://osf.io/3v4pg} (\url{https://osf.io/3v4pg}).
 
-\hypertarget{material-2}{%
-\subsubsection{Material}\label{material-2}}
+\hypertarget{participants-4}{%
+\subsubsection{Participants}\label{participants-4}}
+
+58 (??) participants were paid \$XX for their participation . A sample size of 58 was chosen because we wanted to replicate the experiment with greater statistical power. Note that the original study had a sample size of 24.
 
 \hypertarget{procedure-3}{%
 \subsubsection{Procedure}\label{procedure-3}}
 
-\hypertarget{data-analysis-2}{%
-\subsubsection{Data analysis}\label{data-analysis-2}}
+\begin{itemize}
+\tightlist
+\item
+  \emph{TO DO:} add details of calibration point locations
+\end{itemize}
+
+After the eye-tracking calibration, participants went through an audio test so they could adjust the audio on their computer to a comfortable level. Before beginning the experiment, they were given instructions that four objects would appear, an audio prompt would play, and they should do their best to use their mouse to act out the instructions. They then went through three practice trials which were followed by 54 critical trials and 24 filler trials presented in a random order.
+
+During a trial, four pictures were displayed (target animal, target instrument, distractor animal, distractor instrument), one in each corner of the screen, and participants heard an audio prompt that contained instructions about the action they needed to act out (e.g., ``Rub the butterfly with the crayon''; see Figure XX)\footnote{In the original study, the pictures appeared one by one on the screen and their names were played as they appeared. We removed this introductory portion of the trial to save time}. Using their cursor, participants could act out the instructions by clicking on objects and moving them or motioning over the objects\footnote{ As opposed to the original study we recorded mouse movement instead of clicking behavior since not all of the audio prompts required clicking. For example, the sentence ``locate the camel with the straw'' may not involve any clicking but rather only mousing over the camel.}. After the action was completed, the participants were instructed to press the space bar which led to a screen that said ``Click Here'' in the middle in order to remove bias in the eye and mouse movements from the previous trial. The experiment only allowed the participants to move on to the next trial once the audio was completely done playing and the mouse had been moved over at least one object.
+
+\emph{TO DO}: ADD FIGURES Figure 1: An example of a critical trial for the sentence ``Rub the butterfly with the crayon.'' The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
+
+\hypertarget{materials-1}{%
+\subsubsection{Materials}\label{materials-1}}
+
+The images and audios presented to the participants were the same stimuli used in the original study (available here ). The critical trials were divided into modifier-biased, instrument-biased, and equibiased conditions, and the filler trials did not contain ambiguous instructions. Two lists of critical trials were made with different verb and instrument combinations (e.g., ``rub'' could be paired with ``panda'' and ``crayon'' in one list and ``panda'' and ``violin'' in the second list). Within each list, the same verb was presented twice but each time with a different target instrument and animal. The lists were randomly assigned to the participants to make sure the effects were not caused by the properties of the animal or instrument images used. The list of verbs used can be found in Appendix A of the original study.
 
 \hypertarget{results-3}{%
 \subsection{Results}\label{results-3}}
@@ -357,23 +420,52 @@ The fourth study was a replication attempt of Ryskin, Qi, Duff, and Brown-Schmid
 \hypertarget{replication-2}{%
 \subsubsection{Replication}\label{replication-2}}
 
-\begin{quote}
-here we will describe the analyses that are as close as possible to the original paper
-\end{quote}
+The location of initial mouse movements was used to assess whether the final interpretation of ambiguous sentences was biased by the verb. Figure \ref{fig:E4-mouse-moves-fig} suggests that listeners were more likely to move their mouse first over the target instrument when the verb was equi-biased than when the verb was modifier-biased and even more so when the verb was instrument-biased. The opposite graded pattern can be observed for mouse movements over the target animal.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf}
+\caption{\label{fig:E4-mouse-moves-fig}Proportion of first mouse movements by location and verb bias.}
+\end{figure}
+
+A mixed-effects logistic regression model was used to predict whether the first movement was on the target instrument with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts with by-participant varying slopes for verb bias condition\footnote{\texttt{lme4} syntax: \texttt{glmer(is.mouse.over.instrument\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ family="binomial",\ data=d)}}. Participants were more likely to first move their mouse over target instruments in the instrument-biased condition relative to the equi-biased and modifier-biased condition (\emph{b} = -1.50, \emph{SE} = 0.25, \emph{p} \textless{} 0.01). Further, participants were more likely to first move their mouse over target instruments in the equi-biased condition relative to the modifier-biased condition (\emph{b} = -1.10, \emph{SE} = 0.29, \emph{p} \textless{} 0.01)
+
+Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. Figure \ref{fig:E4-gaze-timecourse-fig} suggests that the participants made more fixations to the target animal when the verb was modifier-biased\ldots{}
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf}
+\caption{\label{fig:E4-gaze-timecourse-fig}Timecourse of eye-gaze to target animal and target instrument by verb bias condition. vertical lines indicate average onsets of animal and instrument offset by 200ms.}
+\end{figure}
+
+In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Mixed-effects linear regression models were used to predict the proportions of fixations to the target animal within each time window with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts\footnote{\texttt{lme4} syntax: \texttt{lmer(prop.fix.target.animal\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ data=d)}. A model with by-participant varying slopes for verb bias condition was first attempted but did not converge.}. In the \emph{verb-to-noun} window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs.~Equi and Modifier: \emph{b} = -0.01, \emph{SE} = 0.02, \emph{p} = 0.59; Equi vs.~Modifier: \emph{b} = 0, \emph{SE} = 0.02, \emph{p} = 1 ). In the \emph{noun-to-instrument} window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.01, \emph{p} \textless{} 0.01) and in the equi-biased relative to the instrument-biased condition ( \emph{b} = 0.02, \emph{SE} = 0.01, \emph{p} \textless{} 0.05). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) but not significantly so in the equi-biased relative to the instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.02, \emph{p} = 0.59).
+
+\hypertarget{comparison-to-in-lab-data-1}{%
+\subsubsection{Comparison to in-lab data}\label{comparison-to-in-lab-data-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  here we will describe a direct comparison to data collected in the lab
+\end{itemize}
 
 \hypertarget{calibration-2}{%
 \subsubsection{Calibration}\label{calibration-2}}
 
-\begin{quote}
-here we will describe the analyses that correlate calibration quality with effect size at the individual
-\end{quote}
+\begin{itemize}
+\tightlist
+\item
+  here we will describe the analyses that correlate calibration quality with effect size at the level of the individual
+\end{itemize}
 
 \hypertarget{effects-of-rois}{%
 \subsubsection{Effects of ROIs}\label{effects-of-rois}}
 
-\begin{quote}
-here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
-\end{quote}
+\begin{itemize}
+\tightlist
+\item
+  here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
+\end{itemize}
 
 \hypertarget{discussion-3}{%
 \subsection{Discussion}\label{discussion-3}}
@@ -381,22 +473,36 @@ here we will describe how results change depending on the size of the ROIs (usin
 \hypertarget{experiment-5}{%
 \section{Experiment 5}\label{experiment-5}}
 
-The fifth study was a replication attempt of @??.
+The fifth study was a replication attempt of Shimojo, Simion, Shimojo, and Scheier (2003), which found that human gaze is actively involved in preference formation. Participants were shown pairs of human faces and were asked to choose the face which they found more attractive. Prior to making their explicit selection, participants spent more time looking at the face that was ultimately judged more attractive. This bias was not as large when the task was face shape discrimination rather than a preference-based choice.
 
 \hypertarget{methods-4}{%
 \subsection{Methods}\label{methods-4}}
 
-\hypertarget{participants-4}{%
-\subsubsection{Participants}\label{participants-4}}
+All stimuli, experiment scripts, data, and analysis scripts are available on the Open Science Framework at \url{https://osf.io/eubsc/} (\url{https://osf.io/eubsc/}). The study pre-registration is available at \url{https://osf.io/tv57s} (\url{https://osf.io/tv57s}).
 
-\hypertarget{material-3}{%
-\subsubsection{Material}\label{material-3}}
+\hypertarget{participants-5}{%
+\subsubsection{Participants}\label{participants-5}}
 
-\hypertarget{procedure-4}{%
-\subsubsection{Procedure}\label{procedure-4}}
+27 participants were recruited on Prolific to participate in stimulus norming (for attractiveness). They were paid \$XX for completing the experiment. Data from 3 participants was excluded because their mode response made up more than 50\% of their total responses , for a total of 24 participants in the norming.
 
-\hypertarget{data-analysis-3}{%
-\subsubsection{Data analysis}\label{data-analysis-3}}
+50 participants for the main task were recruited on Prolific and were paid \$XX. 8 subjects, 4 from the attractiveness task group and 4 from the roundness task group, were excluded for incorrect validations. After this data exclusion, we ended up with 21 participants each for the attractiveness task and the roundness task.The original sample size in Shimojo et al.~(2003) was 10 participants total.
+
+\hypertarget{procedure-and-design}{%
+\subsubsection{Procedure and Design}\label{procedure-and-design}}
+
+At the beginning of the experimental task, participants completed a 9-point eye-tracker calibration (each point appeared 3 times in random order) and 3-point validation. The validation point appeared once at center, middle left, and middle right locations in random order.
+
+During each trial of the main task, two faces were displayed on the two halves of the screen, one on the left and one on the right (as in Figure XX). Participants were randomly assigned to one of two tasks: attractiveness or shape judgment. In the attractiveness task, participants were asked to chose the more attractice face in the pair and in the shape judgment task participants were asked to pick the face that appeared rounder. They pressed the ``a'' key on their keyboard to select the face on the left and the ``d'' key to select the face on the right. A fixation cross appeared in the center of the screen between each set of faces. Participants were asked to look at this fixation cross in order to reset their gaze in between trials (???). The order of the 19 face pairs was random for each participant.
+
+\hypertarget{materials-and-norming}{%
+\subsubsection{Materials and Norming}\label{materials-and-norming}}
+
+The faces in our replication were selected from a set of 1,000 faces within the Flickr-Faces-HQ Dataset. (The face images used in Shimojo et al.~were from the Ekman face database and the AR face database.) These images were chosen because the person in each image was looking at the camera with a fairly neutral facial expression and appeared to be over the age of 18. Participants in the norming study viewed 172 faces and were asked to rate them on a scale from 1 (less attractive) to 7 (more attractive) using a slider. Faces were presented one at a time and in a random order for each participant. Following Shimojo et al., 19 face pairs were made by matching two faces that had a difference in mean attractiveness ratings that was 0.25 points or lower and that matched in gender, race, and age group (young adult, adult, or older adult).
+
+\hypertarget{data-analysis-2}{%
+\subsubsection{Data analysis}\label{data-analysis-2}}
+
+In the original study, a video-based eye tracker was used. The eye movements of participants were recorded with a digital camera, and eye position was then tracked using MediaAnalyzer software. This eye tracker was able to collect 30 samples per second. In our study, the camera on the device used by the participant and the jsPsych WebGazer package were used to determine where a participant's gaze was directed. Since our eye tracking method did not have the same sample collection rate as the eye tracker in Shimojo et al., time windows of 50 milliseconds were used when looking at the likelihood of gazing at the chosen face at a given point between a cutoff time and when the decision was made.
 
 \hypertarget{results-4}{%
 \subsection{Results}\label{results-4}}
@@ -407,31 +513,46 @@ The fifth study was a replication attempt of @??.
 \hypertarget{experiment-6}{%
 \section{Experiment 6}\label{experiment-6}}
 
-The sixth study was a replication attempt of @??.
+The sixth study was a replication attempt of Posner et al.~??.
 
 \hypertarget{methods-5}{%
 \subsection{Methods}\label{methods-5}}
 
-\hypertarget{participants-5}{%
-\subsubsection{Participants}\label{participants-5}}
+\hypertarget{participants-6}{%
+\subsubsection{Participants}\label{participants-6}}
 
-\hypertarget{material-4}{%
-\subsubsection{Material}\label{material-4}}
+\hypertarget{procedure-and-design-1}{%
+\subsubsection{Procedure and Design}\label{procedure-and-design-1}}
 
-\hypertarget{procedure-5}{%
-\subsubsection{Procedure}\label{procedure-5}}
-
-\hypertarget{data-analysis-4}{%
-\subsubsection{Data analysis}\label{data-analysis-4}}
+\hypertarget{data-analysis-3}{%
+\subsubsection{Data analysis}\label{data-analysis-3}}
 
 \hypertarget{results-5}{%
 \subsection{Results}\label{results-5}}
+
+\hypertarget{replication-3}{%
+\subsubsection{Replication}\label{replication-3}}
+
+\hypertarget{calibration-3}{%
+\subsubsection{Calibration}\label{calibration-3}}
+
+\hypertarget{rois}{%
+\subsubsection{ROIs}\label{rois}}
+
+\hypertarget{item-numbers}{%
+\subsubsection{Item Numbers}\label{item-numbers}}
 
 \hypertarget{discussion-5}{%
 \subsection{Discussion}\label{discussion-5}}
 
 \hypertarget{combined-analyses}{%
 \section{Combined Analyses}\label{combined-analyses}}
+
+\begin{itemize}
+\tightlist
+\item
+  Pooling data from all experiments we can look at patterns in the calibration and validation data
+\end{itemize}
 
 \hypertarget{general-discussion}{%
 \section{General Discussion}\label{general-discussion}}
@@ -453,17 +574,74 @@ Altmann, G. T. M., \& Kamide, Y. (1999). Incremental interpretation at verbs: Re
 \leavevmode\hypertarget{ref-R-papaja}{}%
 Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
 
+\leavevmode\hypertarget{ref-R-Matrix}{}%
+Bates, D., \& Maechler, M. (2021). \emph{Matrix: Sparse and dense matrix classes and methods}. Retrieved from \url{https://CRAN.R-project.org/package=Matrix}
+
+\leavevmode\hypertarget{ref-R-lme4}{}%
+Bates, D., Mächler, M., Bolker, B., \& Walker, S. (2015). Fitting linear mixed-effects models using {lme4}. \emph{Journal of Statistical Software}, \emph{67}(1), 1--48. \url{https://doi.org/10.18637/jss.v067.i01}
+
+\leavevmode\hypertarget{ref-R-broom.mixed}{}%
+Bolker, B., \& Robinson, D. (2020). \emph{Broom.mixed: Tidying methods for mixed models}. Retrieved from \url{https://CRAN.R-project.org/package=broom.mixed}
+
+\leavevmode\hypertarget{ref-R-shiny}{}%
+Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y., \ldots{} Borges, B. (2021). \emph{Shiny: Web application framework for r}. Retrieved from \url{https://CRAN.R-project.org/package=shiny}
+
+\leavevmode\hypertarget{ref-deleeuwJsPsychJavaScriptLibrary2015}{}%
+de Leeuw, J. R. (2015). {jsPsych}: {A JavaScript} library for creating behavioral experiments in a {Web} browser. \emph{Behavior Research Methods}, \emph{47}(1), 1--12. \url{https://doi.org/10.3758/s13428-014-0458-y}
+
 \leavevmode\hypertarget{ref-johanssonLookHereEye2014}{}%
 Johansson, R., \& Johansson, M. (2014). Look {Here}, {Eye Movements Play} a {Functional Role} in {Memory Retrieval}. \emph{Psychological Science}, \emph{25}(1), 236--242. \url{https://doi.org/10.1177/0956797613498260}
 
+\leavevmode\hypertarget{ref-R-lmerTest}{}%
+Kuznetsova, A., Brockhoff, P. B., \& Christensen, R. H. B. (2017). {lmerTest} package: Tests in linear mixed effects models. \emph{Journal of Statistical Software}, \emph{82}(13), 1--26. \url{https://doi.org/10.18637/jss.v082.i13}
+
 \leavevmode\hypertarget{ref-mannsVisualPairedcomparisonTask2000}{}%
 Manns, J. R., Stark, C. E. L., \& Squire, L. R. (2000). The visual paired-comparison task as a measure of declarative memory. \emph{Proceedings of the National Academy of Sciences}, \emph{97}(22), 12375--12379. \url{https://doi.org/10.1073/pnas.220398097}
+
+\leavevmode\hypertarget{ref-R-jsonlite}{}%
+Ooms, J. (2014). The jsonlite package: A practical and consistent mapping between JSON data and r objects. \emph{arXiv:1403.2805 {[}Stat.CO{]}}. Retrieved from \url{https://arxiv.org/abs/1403.2805}
+
+\leavevmode\hypertarget{ref-papoutsaki2016webgazer}{}%
+Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. In \emph{Proceedings of the 25th international joint conference on artificial intelligence ({IJCAI})} (pp. 3839--3845). {AAAI}.
 
 \leavevmode\hypertarget{ref-R-base}{}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
 
 \leavevmode\hypertarget{ref-ryskinVerbBiasesAre2017}{}%
 Ryskin, R., Qi, Z., Duff, M. C., \& Brown-Schmidt, S. (2017). Verb biases are shaped through lifelong learning. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{43}(5), 781--794. \url{https://doi.org/10.1037/xlm0000341}
+
+\leavevmode\hypertarget{ref-shimojoGazeBiasBoth2003}{}%
+Shimojo, S., Simion, C., Shimojo, E., \& Scheier, C. (2003). Gaze bias both reflects and influences preference. \emph{Nature Neuroscience}, \emph{6}(12), 1317--1322. \url{https://doi.org/10.1038/nn1150}
+
+\leavevmode\hypertarget{ref-R-afex}{}%
+Singmann, H., Bolker, B., Westfall, J., Aust, F., \& Ben-Shachar, M. S. (2021). \emph{Afex: Analysis of factorial experiments}. Retrieved from \url{https://CRAN.R-project.org/package=afex}
+
+\leavevmode\hypertarget{ref-snedekerDevelopingConstraintsParsing2004a}{}%
+Snedeker, J., \& Trueswell, J. C. (2004). The developing constraints on parsing decisions: {The} role of lexical-biases and referential scenes in child and adult sentence processing. \emph{Cognitive Psychology}, \emph{49}(3), 238--299. \url{https://doi.org/10.1016/j.cogpsych.2004.03.001}
+
+\leavevmode\hypertarget{ref-spiveyOculomotorMechanismsActivated2001}{}%
+Spivey, M. J., \& Geng, J. J. (2001). Oculomotor mechanisms activated by imagery and memory: Eye movements to absent objects. \emph{Psychological Research}, \emph{65}(4), 235--241. \url{https://doi.org/10.1007/s004260100059}
+
+\leavevmode\hypertarget{ref-tanenhaus1995}{}%
+Tanenhaus, M. K., Spivey-Knowlton, M. J., Eberhard, K. M., \& Sedivy, J. C. (1995). Integration of visual and linguistic information in spoken language comprehension. \emph{Science}, \emph{268}(5217), 1632--1634.
+
+\leavevmode\hypertarget{ref-R-ggplot2}{}%
+Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. Retrieved from \url{https://ggplot2.tidyverse.org}
+
+\leavevmode\hypertarget{ref-R-stringr}{}%
+Wickham, H. (2019). \emph{Stringr: Simple, consistent wrappers for common string operations}. Retrieved from \url{https://CRAN.R-project.org/package=stringr}
+
+\leavevmode\hypertarget{ref-R-forcats}{}%
+Wickham, H. (2021a). \emph{Forcats: Tools for working with categorical variables (factors)}. Retrieved from \url{https://CRAN.R-project.org/package=forcats}
+
+\leavevmode\hypertarget{ref-R-tidyr}{}%
+Wickham, H. (2021b). \emph{Tidyr: Tidy messy data}. Retrieved from \url{https://CRAN.R-project.org/package=tidyr}
+
+\leavevmode\hypertarget{ref-R-dplyr}{}%
+Wickham, H., François, R., Henry, L., \& Müller, K. (2021). \emph{Dplyr: A grammar of data manipulation}. Retrieved from \url{https://CRAN.R-project.org/package=dplyr}
+
+\leavevmode\hypertarget{ref-R-readr}{}%
+Wickham, H., \& Hester, J. (2020). \emph{Readr: Read rectangular text data}. Retrieved from \url{https://CRAN.R-project.org/package=readr}
 
 \end{CSLReferences}
 

@@ -1,0 +1,23 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:E4-mouse-moves-analysis_table}Estimates of fixed effects from Experiment 4}
+
+\begin{tabular}{lllll}
+\toprule
+term & \multicolumn{1}{c}{estimate} & \multicolumn{1}{c}{std.error} & \multicolumn{1}{c}{statistic} & \multicolumn{1}{c}{p.value}\\
+\midrule
+(Intercept) & -1.15 & 0.22 & -5.20 & 0.00\\
+compatibility1 & -1.50 & 0.25 & -6.00 & 0.00\\
+compatibility2 & -1.09 & 0.29 & -3.78 & 0.00\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table*}
