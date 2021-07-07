@@ -38,7 +38,7 @@ wordcount         : "X"
 
 bibliography      : ["references.bib"]
 
-floatsintext      : no
+floatsintext      : yes
 figurelist        : no
 tablelist         : no
 footnotelist      : no
@@ -51,8 +51,18 @@ classoption       : "man"
 output            : papaja::apa6_pdf
 ---
 
-```{r setup, include = FALSE}
-library("papaja")
+```{r setup, include = FALSE, message=FALSE, warning=FALSE}
+library(papaja)
+library(jsonlite)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(lmerTest)
+library(afex)
+library(forcats)
+library(broom.mixed)
 r_refs("references.bib")
 ```
 
@@ -60,6 +70,14 @@ r_refs("references.bib")
 # Seed for random number generation
 set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+```{r in-box-function}
+#Define a function for determining if `x,y` value falls in box.
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
 ```
 
 <!-- MAJOR TO DOs: 
@@ -80,12 +98,29 @@ Intro stuff:
 
 _Present work_
 
-In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the `jsPsych` platform and `webgazer.js` plug-in. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "natural" scenes). ...
+In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the eye-tracking plug-in from `jsPsych`, a Javascript library for running behavioral experiments in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. The plug-in relies on the `webgazer.js` library for webcam eye-tracking [@papoutsaki2016webgazer]. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "natural" scenes). ...
+
+# General Methods
+
+
+## Participants
+
+Participants completed the experiment remotely and were recruited through the Prolific platform. In order to have access to the experiment, participants had to meet the following criteria: 18 years of age or older, fluency in English, and access to a webcam. All participants provided informed consent. The studies were approved by the Vassar College Institutional Review Board.
+
+## Eye-tracking Calibration and Validation
+<!--took paragraph below from group D's methods -->
+When participants began the experiment, they were notified the webcam would be used for eye tracking but no video would be saved. They were asked to remove glasses if possible, close any other tabs or apps, turn off notifications, and make sure their face was lit from the front. The webcam’s view of the participant popped up on the screen, and participants were asked to center their face in the box and keep their head still. The experiment window then expanded to full screen, and participants began the eye-tracking calibration. 
+
+During the calibration, dots appeared on the screen one at a time in different locations, and the participants had to fixate them and click on each one. Once they clicked on a dot, it would disappear and a new one would appear in a different location on the screen. The locations of calibration dots were specific to each experiment (details below) and appeared in the areas of the screen where the visual stimuli would appear during the main task in order to ensure that eye movements were accurately recorded in the relevant regions of interest. After the calibration was completed, the validation began. Participants were asked to go through the same steps as the calibration, except that they only fixated the dots as they appeared in different locations on the screen. If accuracy on the validation was too low (fewer than 50% of looks landed within a 200 px radius of the validation points<!--check!-->), participants were given an opportunity to re-start the calibration and validation steps. If the second attempt also lead to low validation accuracy, participants were informed that they could not participate in the study.
+
+
+## Data pre-processing
+We used `r cite_r("references.bib")` for all our analyses.
 
 # Experiment 1
 <!-- group a -->
 
-The first study was a replication attempt of @altmannIncrementalInterpretationVerbs1999. Altmann and Kamide used the visual world eye-tracking paradigm [@tanenhaus1995] to show that meanings of verbs rapidly constrain the set of potential subsequent referents in sentence processing. For example, when looking at the display in Figure 1 and listening to a sentence like “The boy will eat the…,” participants are more likely to look at the cake than when they hear “The boy will move the…,” in which case they tend to look at the train, presumably because cakes are edible and trains are not. Semantic information available at the verb is used to anticipate upcoming linguistic input.
+The first study was a replication attempt of @altmannIncrementalInterpretationVerbs1999. Altmann and Kamide used the visual world eye-tracking paradigm [@tanenhaus1995] to show that meanings of verbs rapidly constrain the set of potential subsequent referents in sentence processing. For example, when looking at the display in Figure XX and listening to a sentence like “The boy will eat the…,” participants are more likely to look at the cake than when they hear “The boy will move the…,” in which case they tend to look at the train, presumably because cakes are edible and trains are not. Semantic information available at the verb is used to anticipate upcoming linguistic input.
   
 
 ```{r read_groupA_data}
@@ -94,30 +129,18 @@ The first study was a replication attempt of @altmannIncrementalInterpretationVe
 
 
 ## Methods
+<!-- since there are not the analysis scripts we're using, I'm not sure about the best way to link to this -->
+All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at [https://osf.io/s82kz](https://osf.io/s82kz). 
 
-All stimuli, experiment scrips, data, analysis scripts, and pre-registration are available on the Open Science Framework at [https://osf.io/s82kz](https://osf.io/s82kz). All participants provided informed consent and this study was approved by the Vassar College Institutional Review Board.
-
-<!-- insert Figure 1 -->
 
 ### Participants
 
-Participants for this experiment were sampled from a wide pool of Prolific users who are fluent in English and were paid for their participation. Our sample size of participants was determined by the total run time of our experiment, ~10 minutes, and the allotted funding that was endowed to us by the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific, and we ended up with a sample size of 60 participants. Note that the sample size of the original study was 24. For unknown reasons, 2 of the subjects’ results were not recorded, so in the analysis, we worked with data collected from 58 participants.
+60 participants were paid $XX for their participation. Our sample size of participants was determined by the total run time of our experiment, ~10 minutes, and the allotted funding from the Vassar College Cognitive Science Department. From this information, we calculated a reasonable number of participants we could afford to compensate on Prolific. Note that the sample size of the original study was 24. For unknown reasons, 2 of the subjects’ results were not recorded, so in the analysis, we worked with data collected from 58 participants.
 
 ### Procedure
 
-Participants completed the experiment remotely and entirely online on the platform Prolific.
 
-#### Eye-Tracking Calibration and Validation
-
-Before initiating the experiment, participants were prompted to complete an eye-tracking calibration and validation procedure. Participants were first presented with a series of dots that appeared on the screen. They were instructed to look at each dot as it appeared and click on it. Once they visually fixated and clicked on a dot, it would disappear and a new one would appear in a different location on the screen. The calibration dots appeared in the central area of the screen where the visual stimuli would appear in order to ensure Web Gazer would be able to track eye movements to the relevant regions of interest. After the calibration was completed, the validation began. Participants were asked to go through the same steps as the calibration, except this time, they only fixated the dots as they appeared in different locations on the screen. 
-
-<!-- Qs:
--what was the threshold for letting people start the experiment? 
-- were they given the option to start over? -->
-
-#### Experiment Procedure
-
-During the experiment, the participants were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. Participants had to input a keyboard response indicating “yes” or “no” as to whether the sentence they heard was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment. Participants’ reaction times, keyboard responses, and looks to objects in the scene were recorded for each trial.
+The task began with an <number of points>-point eye-tracker calibration and validation. During the experiment, the participants were simultaneously presented with a visual image and a corresponding audio recording of a spoken sentence. Participants had to input a keyboard response indicating “yes” or “no” as to whether the sentence they heard was feasible given the visual image. There were two practice trials to ensure that participants had a sound understanding of the instructions before they undertook the main portion of the experiment. Participants’ reaction times, keyboard responses, and looks to objects in the scene were recorded for each trial.
 
 <!-- Qs: 
 -keyboard keys? what was the exact phrasing of the instruction? 
@@ -126,53 +149,60 @@ During the experiment, the participants were simultaneously presented with a vis
 
 ### Materials & Design
 
-The visual stimuli were created through Canva and depicted an agent accompanied by four to five objects in the scene (see Figure 1). On critical trials, participants heard one of two sentences associated with the scene. In the restrictive condition, the sentence (e.g., "The boy will eat the cake") contained a verb (e.g., "eat") which restricts the set of possible subsequent referents (e.g., to edible things). Only the target object (e.g., the cake) was semantically consistent with the verb's meaning. In the non-restrictive condition, the sentence (e.g., "The boy will move the cake") contained a verb (e.g., "move") which does not restrict the set of possible subsequent referents. The target object (e.g., the cake) as well as the distractor objects (e.g., the train, the ball, etc.) were semantically consistent with the verb's meaning. Both sentences were compatible with the scene, such that the correct keyboard response for the critical trials was "yes." Filler trials consisted of scenes that looked similar to critical scenes but were paired with inappropriate sentences. The correct keyboard response for the filler trials was "no."
+The visual stimuli were created through Canva and depicted an agent accompanied by four to five objects in the scene (see Figure XX). On critical trials, participants heard one of two sentences associated with the scene. In the restrictive condition, the sentence (e.g., "The boy will eat the cake") contained a verb (e.g., "eat") which restricts the set of possible subsequent referents (e.g., to edible things). Only the target object (e.g., the cake) was semantically consistent with the verb's meaning. In the non-restrictive condition, the sentence (e.g., "The boy will move the cake") contained a verb (e.g., "move") which does not restrict the set of possible subsequent referents. The target object (e.g., the cake) as well as the distractor objects (e.g., the train, the ball, etc.) were semantically consistent with the verb's meaning. Both sentences were compatible with the scene, such that the correct keyboard response for the critical trials was "yes." Filler trials consisted of scenes that looked similar to critical scenes but were paired with inappropriate sentences. The correct keyboard response for the filler trials was "no."
 
 Each participant was presented with sixteen critical trials (eight in the restrictive condition, eight in the non-restrictive condition) and sixteen fillers for a total of 32 trials. The order of trials and the assignment of critical scene to condition was random on a subject-by-subject basis.<!-- right?-->
 
+*TO DO:* add figure
 
 ### Data pre-processing and analysis
-We used `r cite_r("references.bib")` for all our analyses.
 
-looks to the objects in the scene time-locked to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
+Looks to the objects in the scene were time-locked to the onset of the verb, the offset of the verb, onset of the post-verbal determiner, and onset of the target noun.
 
 ## Results
 
 ### Replication
 
-> here we will describe the analyses that are as close as possible to the original paper
+* here we will describe the analyses that are as close as possible to the original paper with a minimal validation cutoff
+
+* same analysis but with stricter validation cutoff
 
 ### Comparison to in-lab data
 
-> here we will describe a direct comparison to data collected in the lab
+* here we will describe a direct comparison to data collected in the lab
 
 ### Calibration 
 
-> here we will describe the analyses that correlate calibration quality with effect size at the individual 
+* here we will describe the analyses that correlate calibration quality with effect size at the individual level
 
 ## Discussion
 
 # Experiment 2
 <!-- group b -->
 
-The second study was a replication attempt of @johanssonLookHereEye2014.
+The second study was a replication attempt of @johanssonLookHereEye2014. They examined how visuospatial information is integrated into memories for objects. They found that, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located during encoding [see @spiveyOculomotorMechanismsActivated2001] and that this spatial reinstatement facilitates retrieval of the picture.
+
 
 ## Methods
 
 
 ### Participants
 
-Participants for this study were recruiting using the website Prolific. Specifically, participants had to be older than 18 and fluent in English, but aside from that, there was no restriction on demographic; participation was also anonymous. The only technology-based restriction was that each participant had to have a working webcam; we were able to accommodate for different screen sizes during data analysis. We analyzed the data of 59 participants, a number that was limited by budget constraints, but still 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). We ended up excluding the data of 1 participant whose eye tracking data seemed to be blank, rendering us unable to analyze it.
-
-### Material
+60 participants were paid $XX for their participation <!--right?-->. We analyzed the data of 59 participants, a number that was limited by budget constraints, but still 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). We ended up excluding the data of 1 participant whose eye tracking data seemed to be blank, rendering us unable to analyze it.
 
 ### Procedure
 
-After a participant began the study, they would encounter an alert that the study would use their webcam to track eye movements, then initiate Webgazer, a program that logs predicted eye positions. There were two possible conditions they could begin with—the free-viewing condition and the fixed-viewing condition—which they were randomly assigned to. For both conditions, participants began with the encoding phase before moving to the recall phase. After going through both conditions, participants were asked a few survey questions and the experiment ended.
-For the encoding phase, participants were asked to remember the contents of the four quadrants of a grid, each with six distinct items themed around a certain category (we used humanoids, household objects, animals, and methods of transportation, as inspired by the example in Johansson & Johansson’s original experiment). To do so, each of the four quadrants was presented to the participant one at a time. First, a list of the items in the quadrant were shown, then the items in the actual quadrant were shown. For each item in a quadrant, an audio file would play, asking the participant to use their arrow keys to identify which direction each item was facing (every item was facing a distinct direction to allow for statements like “The chair is facing left” to be viable). After the participant identified the direction of each item, they would have an additional 30 seconds to study and remember the name and orientation of each item in the quadrant. Then, after repeating this for each quadrant, the participant was shown the full grid of 24 items (six per grid) and had sixty seconds to further encode the name and orientation of each item.
-For the recall phase, participants had to respond to statements presented via audio files. Each statement was a true or false statement that fell into either an interobject or intraobject condition. Interobject statements were those that compared two different items in the grid (e.g. “The skeleton is to the left of the robot”), while intraobject statements were those that asked about the orientation of a single item (e.g. “The bus is facing right”). There were 48 total statements, with 24 interobject and 24 intraobject statements split evenly among the four quadrants. Participants were able to respond by pressing the ‘F’ key for false statements and ‘T’ for true ones.
-The difference between the free-viewing and fixed-viewing conditions was in what a participant could see on screen during the recall phase. During fixed-viewing, participants could only see a small cross in the center of the screen, and were asked at the start of the recall phase to focus their vision on just the cross. During free-viewing, participants saw an empty screen and were allowed to look wherever they wanted, without any particular instruction telling them where to look. In both cases, the mouse was obscured from the screen, making it so that the only visual stimulus for either condition was the cross in the fixed-viewing one. After a participant finished the first condition, they then moved on to repeating the experiment under the second condition, this time with a new grid of images. After completing this second condition, the participant was finished, and was asked to answer a few survey questions (such as whether they wore glasses or encountered any distractions).
-The methodology of this replication differed from Johansson & Johansson’s original study in two key ways. First, the original study included two more conditions that were omitted from this replication for efficiency concerns. Those two conditions involved prompting the participant to look to an area on screen that matched one of the original quadrants while they responded to each statement, with the key here being that sometimes the prompt was in the same quadrant as the information being recalled, while sometimes it wasn’t. We ended up not replicating this aspect of the study because it felt like too big of a task to program and playtest in the amount of time we had. The second major way this study differed from the original was that the original was conducted in- person and used an iView Red500 eye tracker, which was able to track eye movements incredibly closely. Due to obvious pandemic-related reasons, we conducted our replication online through Prolific, while using Webgazer, a software that tracks eye movements based on a participant’s webcam. There were a few other minor ways in which our study differed (we used different grids of objects and different instructions), but we tried to remain as faithful as possible in terms of variables like timing, the physical appearance of the grids, and the style of the images.
+The task began with an <number of points>-point eye-tracker calibration and validation. The experiment consisted of two blocks each composed of an encoding phase and a recall phase. During the encoding phase, participants saw a grid indicating the four quadrants of the screen. Each quadrant contained six images of items belonging to the same category (see Figure XX). The four possible categories were humanoids, household objects, animals, and methods of transportation. Participants were asked to remember the contents of the four quadrants. Different images were used in each block.
+
+Each of the four quadrants was presented one at a time. First, a list of the items in the quadrant were shown, then the items in the actual quadrant were shown (??). For each item, an audio file would play ("???") asking the participant to use their arrow keys to identify which direction each item was facing (every item was facing either left or right (right??)). After the participant identified the direction of each item, they would have an additional 30 seconds to encode the name and orientation of each item in the quadrant. Then, after all four quadrants were presented in this way, the participant was shown the full grid of 24 items and had 60 seconds to further encode the name and orientation of each item.
+
+
+During the recall phase, participants listened to statements and responded by pressing the ‘F’ key for false statements and ‘T’ for true ones. Each statement fell into either an interobject or intraobject condition. Interobject statements were those that compared two different items in the grid (e.g. “The skeleton is to the left of the robot”), while intraobject statements were those that asked about the orientation of a single item (e.g. “The bus is facing right”). There were 48 total statements, with 24 interobject and 24 intraobject statements split evenly among the four quadrants. While listening to these statements, in the free-viewing block, participants saw a blank screen and were allowed to freely gaze around the screen. During the fixed-viewing block, participants were asked to fixate a small cross in the center of the screen throughout the recall phase. In both cases, the mouse was obscured from the screen. Participants were randomly assigned to see the fixed-viewing or free-viewing block first.
+
+ After completing both encoding-recall blocks, participants were asked to answer a few survey questions (such as whether they wore glasses or encountered any distractions).
+
+
+The primary methodological difference between this replication and Johansson and Johansson’s study was that the original study included two additional viewing conditions that were omitted from this replication due to time constraints. In those two conditions, participant were prompted to look to a specific quadrant (rather than free viewing or central fixation) which either matched or mismatched the original location of the to-be-remembered item.  
 
 ### Data analysis
 
@@ -180,49 +210,45 @@ The methodology of this replication differed from Johansson & Johansson’s orig
 
 ### Replication
 
-> here we will describe the analyses that are as close as possible to the original paper
+* here we will describe the analyses that are as close as possible to the original paper
+
+* same but stricter validation cutoff
 
 ### Calibration 
 
-> here we will describe the analyses that correlate calibration quality with effect size at the individual 
+* here we will describe the analyses that correlate calibration quality with effect size at the individual level
 
 ## Discussion
 
 # Experiment 3
 <!-- group c -->
 
-The third study was a replication attempt of @mannsVisualPairedcomparisonTask2000.
+The third study was a replication attempt of @mannsVisualPairedcomparisonTask2000 which aimed to show that the visual paired-comparison task, widely used in the patient literature, tapped into declarative memory. In the visual paired-comparison task, two identical pictures were presented side by side for a brief viewing period. After a delay, one of the previously viewed pictures was presented along with a new picture. Individuals looked more at the new picture than the old picture and the time spent looking was correlated with later recognition memory performance. On the other hand perceptual priming, thought to recruit non-declarative memory, was not linked to later recognition. (The perceptual priming arm of the design was not included in this replication.)
 
 ## Methods
 
 ### Participants
 
-The participants were volunteers recruited from Prolific who were over 18 years of age and fluent in English. Our initial sample size was 51 participants for the first day of our experiment and 48 of them came back for the second day. We excluded 3 participants due to perfect performance on the recognition memory test, which Manns et
-al. (2000) did as well. Our final sample size was 45 participants.
+ Our initial sample size was 51 participants for the first day of our experiment and 48 of them came back for the second day. Following Manns et al., we excluded 3 participants due to perfect performance on the recognition memory test. Our final sample size was 45 participants.
 
 ### Procedure
 
-The experiment was administered over the course of two consecutive days. It consisted of three sections: a presentation phase, a test phase, and a recognition test. The first two phases occurred on the first day, while the recognition test occurred on the second day.
-There were two modifications we made to the methods of the original experiment. As we are only replicating the declarative memory component of the original experiment, we did not have a “priming group.” Therefore, we followed only the procedure for the “looking group.” Additionally, for each section of the study, the stimuli was presented on a single screen instead of two screens due to the constraints of the online experiment format.
+The task began with a 7-point eye-tracker calibration (each point was presented 3 times in a random order) and validation with 3 points (each presented once). The point locations were designed to focus calibration on the center of the screen and the middle of the left and right halves of the screen. The experiment was administered over the course of two consecutive days. It consisted of three sections: a presentation phase, a test phase, and a recognition test. The first two phases occurred on the first day, while the recognition test occurred on the second day.
 
-Eye-Tracking Calibration
+During the presentation phase, participants viewed 24 pairs of identical color photographs depicting common objects. Each pair was presented for 5 seconds and an interval of 5 seconds elapsed before the next pair was shown. The order of the photographs was randomized and different for each participant. After completion of the presentation phase, participants were given a 5-minute break during which they could look away from the screen. 
 
-Before the presentation phase began, participants were instructed to complete a two-part eye-tracking test to calibrate their eye movements with the webcam camera. During the first part of the test, the calibration stage, black dots appeared on the screen one at a time and remained there until the participants clicked it. Each dot appeared at a different location on the screen. There were a total of 7 dots, each presented three times in random order for a total of 21 dots. Their locations were designed to focus calibration on the middle box of the screen and also the two sides of the screen. The second part, which was the validation stage, consisted of a similar design, except participants simply viewed each black dot, which remained on the screen for 2 seconds, instead of clicking on it. There were a total of 3 dots, each presented once. The entire two-stage procedure was then repeated a second time to ensure accurate calibration.
+After the break, they were prompted to complete the eye-tracking calibration again before beginning the test phase. During this phase, participants again viewed 24 pairs of photographs with an interstimulus duration of 5 seconds. In each pair, one photograph was previously seen during the presentation phase, while the other was new. Which pictures were old or new was counterbalanced across participants.<!-- 2 lists?--> For half of the participants in each counterbalancing group, the new and old photographs were reversed.<!-- not sure what that last sentence means: is it about the side of the screen? or still just describing that there were 2 lists-->
 
-Presentation Phase
-
-During the presentation phase, participants viewed through a computer screen 24 pairs of identical color photographs depicting common objects. Each pair was presented for 5 seconds and an interval of 5 seconds elapsed before the next pair was shown. The order of the photographs was randomized and therefore different for each participant. After completion of the presentation phase, participants were given a 5-minute pause to disengage from the screen. When the pause was over, they were prompted to complete the eye-tracking calibration again to re-calibrate their eye movements. Afterward, the test phase began.
-
-Testing Phase
-
-During this phase, participants again viewed 24 pairs of photographs with the same stimuli and interstimulus durations of 5 seconds. In each pair, one photograph was previously seen before in the presentation phase, while the other was completely new. The test phase had a counterbalanced design, where the pictures that were old or new were counterbalanced across the participants. For half of the participants in each counterbalanced group, the foil and old photographs were reversed.
-
-Recognition Test
  
- After roughly 24 hours, with a leeway interval of 12 hours to accommodate busy schedules, participants were given the recognition test. It consisted of 48 photographs, presented one at a time. Each was shown on the screen for 1 second, followed by a 1 second interstimulus interval. Half of them had been viewed twice on the previous day and were deemed the “targets.” The other half depicted an object with the same name as an object in one of the old photographs, but had not been viewed before, deemed “foils.” Each photograph remained on the screen until the participants indicated whether or not they had seen it before by pressing ‘y’ for yes and ‘n’ for no. After they pressed one of the two keys, a prompt on the screen asked them to rate their confidence in their answer from 1 as a “pure guess” to 5 as “very sure.” by clicking on the corresponding number on the screen. No feedback on their responses was given during the test.
-The experimental design is visually depicted in Figure 1.1
+ Approximately 24 hours after completing the first session, with a leeway interval of 12 hours to accommodate busy schedules, participants were given the recognition test. It consisted of 48 photographs, presented one at a time. Each was shown on the screen for 1 second, followed by a 1 second interstimulus interval. Half of the pohotographs had been viewed twice on the previous day and were deemed the “targets.” The other half depicted an object with the same name as an object in one of the old photographs, but had not been viewed before, deemed “foils.” Each photograph remained on the screen until the participants indicated whether or not they had seen it before by pressing ‘y’ for yes and ‘n’ for no. After they pressed one of the two keys, a prompt on the screen asked them to rate their confidence in their answer from 1 as a “pure guess” to 5 as “very sure.” by clicking on the corresponding number on the screen. No feedback on their responses was given during the test.
+ 
+The experimental design is visually depicted in Figure XX
 
 ### Materials
+
+Images were selected XXX...
+
+There were two modifications we made to the methods of the original experiment. As we are only replicating the declarative memory component of the original experiment, we did not have a “priming group.” Therefore, we followed only the procedure for the “looking group.” Additionally, for each section of the study, the stimuli was presented on a single screen instead of two screens due to the constraints of the online experiment format.
 
 ### Data analysis
 
@@ -233,68 +259,325 @@ The experimental design is visually depicted in Figure 1.1
 # Experiment 4
 <!-- group d -->
 
-The fourth study was a replication attempt of @ryskinVerbBiasesAre2017.
+The fourth study was a replication attempt of Experiment 1 in @ryskinVerbBiasesAre2017, which was closely modeled on @snedekerDevelopingConstraintsParsing2004a. These studies used the visual world paradigm to show that listeners use knowledge of the co-occurrence statistics of verbs and syntactic structures to resolve ambiguity. For example, in a sentence like “Feel the frog with the feather,” the phrase “with the feather” could be describing the frog, or it could be describing the instrument that should be used to do the “feeling.” When both options (a frog holding a feather and a feather by itself) are available in the visual display, listeners rely on the verb’s “bias” (statistical co-occurrence either in norming or corpora) to rapidly choose an action while the sentence is unfolding.
+.
 
 ## Methods
 
 The stimuli, experimental code, and data and analysis scripts can be found on the Open Science Framework at the following link, https://osf.io/x3c49/ (https://osf.io/x3c49/). The pre-registration for the study can be found at https://osf.io/3v4pg (https://osf.io/3v4pg).
- Code
+
  
 ### Participants
 
-Our study collected participants from Prolific who were 18 and up. A sample size of 58 was chosen because we wanted to replicate the experiment with greater statistical power.
+58 (??) participants were paid $XX for their participation <!--right?-->. A sample size of 58 was chosen because we wanted to replicate the experiment with greater statistical power. Note that the original study had a sample size of 24.
+
 
 ### Procedure
 
-When participants began the experiment, they were notified the webcam would be used for eye tracking but no video would be saved. They were asked to remove glasses if possible, close any other tabs or apps, turn off notifications, and have their face lit from the front. The webcam’s view of the participant popped up on the screen, and participants were asked to center their face in the box and keep their head still. The experiment became full screen, and participants began the eye-tracking calibration and validation so the camera on the computer could accurately track the participant’s eye movements. For the calibration, dots appeared on the screen one at a time in different locations, and the participants had to click on each one. The location of the dots created a box (one dot in each corner) with one dot in the center. For the validation, the dots appeared in the same locations as the calibration, but participants simply looked at the dots to test the accuracy.
-After the eye tracking was set up, participants went through an audio test so they could adjust the audio on their computer to a comfortable level. Before beginning the actual experiment, they were given instructions that four objects will appear, an audio prompt will play, and they should do their best to use their mouse to act out the instructions. They then went through three practice trials which were followed by 54 critical trials and 24 filler trials that were randomly presented. For the trials, they were shown four objects (target animal, target instrument, distractor animal, distractor instrument) in each corner of the screen while they heard an audio prompt that contained instructions about the action they needed to act out (see Figure 1). Using their cursor, the participants could act out the instructions by clicking on objects and moving them or motioning over the objects. After the action was completed, the participants were instructed to press the space bar which led to a screen that said “Click Here” in the middle in order to remove bias in the eye and mouse movements from the previous trial. The experiment only allowed the participants to move on to the next trial once the audio was completely done playing and the mouse had entered at least one object. After completing all of the trials, the participants were explained the meaning of the experiment and sent back to Prolific.
+- *TO DO:* add details of calibration point locations
+
+After the eye-tracking calibration, participants went through an audio test so they could adjust the audio on their computer to a comfortable level. Before beginning the experiment, they were given instructions that four objects would appear, an audio prompt would play, and they should do their best to use their mouse to act out the instructions. They then went through three practice trials which were followed by 54 critical trials and 24 filler trials presented in a random order. 
+
+During a trial, four pictures were displayed (target animal, target instrument, distractor animal, distractor instrument), one in each corner of the screen, and participants heard an audio prompt that contained instructions about the action they needed to act out (e.g., "Rub the butterfly with the crayon"; see Figure XX)^[In the original study, the pictures appeared one by one on the screen and their names were played as they appeared. We removed this introductory portion of the trial to save time]. Using their cursor, participants could act out the instructions by clicking on objects and moving them or motioning over the objects^[ As opposed to the original study we recorded mouse movement instead of clicking behavior since not all of the audio prompts required clicking. For example, the sentence “locate the camel with the straw” may not involve any clicking but rather only mousing over the camel.]. After the action was completed, the participants were instructed to press the space bar which led to a screen that said “Click Here” in the middle in order to remove bias in the eye and mouse movements from the previous trial. The experiment only allowed the participants to move on to the next trial once the audio was completely done playing and the mouse had been moved over at least one object. 
  
-Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
+*TO DO*: ADD FIGURES Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
 
-### Stimuli/Materials
+### Materials
 
-In order to track the eye movements of the participants, the participants’ web cameras on their computers were used with the jsPsych 6.1.3 eye tracking software. The images and audios presented to the participants were the same stimuli used in the original study. The critical trials were divided into modifier-biased, instrument-biased, and equibiased conditions, and the filler trials did not contain ambiguous instructions. Two lists of critical trials were made with different verb and instrument combinations (e.g., “rub” could be paired with “panda” and “crayon” in one list and “panda” and “violin” in the second list). Within each list, the same verb was presented twice but each time with a different target instrument and animal. The lists were randomly assigned to the participants to make sure the effects were not caused by the properties of the animal or instrument images used. The list of verbs used can be found in appendix A of the original study.
-
-### Other
-
-Our experiment differed from the original study in a few ways. Besides the use of webcameras instead of an advanced eye tracker, we also analyzed mouse movement instead of clicking behavior since not all of the audio prompts required clicking. For example, the sentence “locate the camel with the straw” may not involve any clicking but rather only mousing over the camel. We used Javascript with jsPsych packages instead of MatLab’s Psychophysics Toolbox 3, and our experiment was conducted through Prolific instead of in a lab. Lastly, the original study recited the names of objects on the screen at the beginning of each trial, but we took this audio out of our experiment.
-
-### Data analysis
+The images and audios presented to the participants were the same stimuli used in the original study (available here <link>). The critical trials were divided into modifier-biased, instrument-biased, and equibiased conditions, and the filler trials did not contain ambiguous instructions. Two lists of critical trials were made with different verb and instrument combinations (e.g., “rub” could be paired with “panda” and “crayon” in one list and “panda” and “violin” in the second list). Within each list, the same verb was presented twice but each time with a different target instrument and animal. The lists were randomly assigned to the participants to make sure the effects were not caused by the properties of the animal or instrument images used. The list of verbs used can be found in Appendix A of the original study.
 
 ## Results
 
+```{r E4-load-data}
+data.files <- list.files('group-d/data/run-2', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
 ### Replication
 
-> here we will describe the analyses that are as close as possible to the original paper
+```{r E4-filter-data-for-replication-analysis}
+task.data <- all.data %>%
+  dplyr::filter(compatibility != 'NA', compatibility != 'filler') %>%
+  dplyr::select(subject, trial_index, rt, images, webgazer_data, mouse_events, compatibility, audio, target_instrument, target_animal, webgazer_targets)
+
+# Add a column that uniquely identifies the combination of images and audio shown on the screen
+trialID.data <- task.data %>%
+  group_by(audio, images) %>%
+  slice(1) %>%
+  select(audio, images) %>%
+  ungroup() %>%
+  mutate(trialID = 1:n())
+
+task.data <- task.data %>%
+  left_join(trialID.data)
+
+eyetracking.data <- task.data %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c(`#jspsych-free-sort-draggable-0`, `#jspsych-free-sort-draggable-1`, `#jspsych-free-sort-draggable-2`, `#jspsych-free-sort-draggable-3`), names_sep=".") %>%
+  unnest(webgazer_data)
+
+mousetracking.data <- task.data %>%
+  unnest(mouse_events)
+```
+
+The location of initial mouse movements was used to assess whether the final interpretation of ambiguous sentences was biased by the verb. Figure \@ref(fig:E4-mouse-moves-fig) suggests that listeners were more likely to move their mouse first over the target instrument when the verb was equi-biased than when the verb was modifier-biased and even more so when the verb was instrument-biased. The opposite graded pattern can be observed for mouse movements over the target animal. 
+
+
+```{r E4-categorizing-first-mouse-moves}
+#First, create a data set with each trial, adding column for which object the mouse moves over first.
+# WTF IS HAPPENING with TRIAL ID?? 
+first.move <- mousetracking.data %>%
+  select(subject, trialID, object, type, compatibility, target_instrument, target_animal, images) %>%
+  group_by(subject, trialID) %>%
+  filter(type=="enter") %>%
+  slice(1) %>%
+  rowwise() %>%
+  mutate(which_loc = which(images == object)-1) %>%
+  ungroup() %>%
+  mutate(instrument_loc = str_sub(target_instrument, start=-1, end=-1)) %>%
+  mutate(animal_loc = str_sub(target_animal, start=-1, end=-1)) %>%
+  mutate(first.move.type = case_when(
+    which_loc == instrument_loc ~ 'instrument',
+    which_loc == animal_loc ~ 'animal',
+    TRUE ~ 'other')) %>%
+  mutate(is.mouse.instrument = if_else(first.move.type == 'instrument', 1, 0)) %>%
+  mutate(compatibility = factor(compatibility))
+```
+
+
+```{r E4-summarizing-first-mouse-moves-for-plotting}
+# Summarize the data by subject, calculating proportion of trials the the first move was to the animal, instrument, or other.
+first.move.subject.summary <- first.move %>%
+  group_by(subject, compatibility) %>%
+  summarize(prop.animal = mean(first.move.type == 'animal'),
+            prop.instrument = mean(first.move.type == 'instrument'),
+            prop.other = mean(first.move.type == 'other')) %>%
+  pivot_longer(c('prop.animal', 'prop.instrument', 'prop.other'), names_to="target_type", values_to="proportion")
+
+# Summarize the condition-level data for a barplot.
+first.move.summary <- first.move.subject.summary %>%
+  group_by(compatibility, target_type) %>%
+  summarize(M=mean(proportion), SE=sd(proportion)/sqrt(n())) %>% 
+  mutate(bias = factor(compatibility, levels = c("instrument", "equibiased", "modifier") ))
+```
+
+
+```{r E4-mouse-moves-fig, fig.cap = "Proportion of first mouse movements by location and verb bias."}
+
+ggplot(first.move.summary, aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE))+
+  geom_col(position=position_dodge(width=0.9), color = "black")+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
+  theme_classic()+
+  labs(y = "Proportion of first mouse movements")
+```
+
+```{r E4-mouse-moves-analysis}
+contrasts(first.move$compatibility) <- cbind(c(1/3, -2/3, 1/3), c(-1/2, 0, 1/2))
+
+E4_mouse_moves_model <- glmer(is.mouse.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=first.move, family="binomial",
+                              glmerControl(optimizer = "bobyqa"))
+
+```
+
+```{r E4-mouse-moves-analysis-table}
+E4_mouse_moves_model_tab = broom.mixed::tidy(E4_mouse_moves_model) 
+E4_mouse_moves_model_c1 = E4_mouse_moves_model_tab %>% filter(term == "compatibility1")
+E4_mouse_moves_model_c2 = E4_mouse_moves_model_tab %>% filter(term == "compatibility2")
+```
+
+A mixed-effects logistic regression model was used to predict whether the first movement was on the target instrument with the verb bias condition as an orthogonally contrast-coded (instrument vs. equi & modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs. modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts with by-participant varying slopes for verb bias condition^[`lme4` syntax: `glmer(is.mouse.over.instrument ~ verb_bias + (1 + verb_bias | participant) + (1 | item), family="binomial", data=d)`]. Participants were more likely to first move their mouse over target instruments in the instrument-biased condition relative to the equi-biased and modifier-biased condition (_b_ =  `r E4_mouse_moves_model_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_mouse_moves_model_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01). Further, participants were more likely to first move their mouse over target instruments in the equi-biased condition relative to the modifier-biased condition (_b_ =  `r E4_mouse_moves_model_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_mouse_moves_model_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01)
+
+
+Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. Figure \@ref(fig:E4-gaze-timecourse-fig) suggests that the participants made more fixations to the target animal when the verb was modifier-biased...
+
+
+```{r E4-categorizing-gaze-location}
+#First figure out which object they are looking at.
+#Calculate gaze in ROIs.
+eyetracking.data.with.roi <- eyetracking.data %>%
+  #filter(!subject %in% bad.eyetracking.data.subjects) %>% 
+  mutate(in.roi.0 = in.box(x,y,`#jspsych-free-sort-draggable-0.left`, `#jspsych-free-sort-draggable-0.right`, `#jspsych-free-sort-draggable-0.top`, `#jspsych-free-sort-draggable-0.bottom`, 100)) %>%
+  mutate(in.roi.1 = in.box(x,y,`#jspsych-free-sort-draggable-1.left`, `#jspsych-free-sort-draggable-1.right`, `#jspsych-free-sort-draggable-1.top`, `#jspsych-free-sort-draggable-1.bottom`, 100)) %>%
+  mutate(in.roi.2 = in.box(x,y,`#jspsych-free-sort-draggable-2.left`, `#jspsych-free-sort-draggable-2.right`, `#jspsych-free-sort-draggable-2.top`, `#jspsych-free-sort-draggable-2.bottom`, 100)) %>%
+  mutate(in.roi.3 = in.box(x,y,`#jspsych-free-sort-draggable-3.left`, `#jspsych-free-sort-draggable-3.right`, `#jspsych-free-sort-draggable-3.top`, `#jspsych-free-sort-draggable-3.bottom`, 100)) %>%
+  mutate(in.roi.instrument = case_when(
+    target_instrument == '#jspsych-free-sort-draggable-0' | target_instrument == '#jspsych-freesort-draggable-0'  ~ in.roi.0,
+    target_instrument == '#jspsych-free-sort-draggable-1' | target_instrument == '#jspsych-freesort-draggable-1' ~ in.roi.1,
+    target_instrument == '#jspsych-free-sort-draggable-2' | target_instrument == '#jspsych-freesort-draggable-2' ~ in.roi.2,
+    target_instrument == '#jspsych-free-sort-draggable-3' | target_instrument == '#jspsych-freesort-draggable-3' ~ in.roi.3
+  )) %>%
+  mutate(in.roi.animal = case_when(
+    target_animal == '#jspsych-free-sort-draggable-0' | target_animal == '#jspsych-freesort-draggable-0' ~ in.roi.0,
+    target_animal == '#jspsych-free-sort-draggable-1' | target_animal == '#jspsych-freesort-draggable-1' ~ in.roi.1,
+    target_animal == '#jspsych-free-sort-draggable-2' | target_animal == '#jspsych-freesort-draggable-2' ~ in.roi.2,
+    target_animal == '#jspsych-free-sort-draggable-3' | target_animal == '#jspsych-freesort-draggable-3' ~ in.roi.3
+  )) 
+```
+
+
+```{r E4-load-audio-timing-data, message=FALSE}
+# load audio data
+audio.info <- read_csv('group-d/info/audio_timing.csv')
+```
+
+
+```{r E4-average-onsets-of-critical-words}
+#Calculate average animal onset
+animal.onset <- audio.info %>% pull(onset_noun) %>% mean()
+instrument.onset <- audio.info %>% pull(onset_instrument) %>% mean()
+```
+
+```{r E4-timelocking-gaze-data}
+# Merge in audio timing information
+eyetracking.data.with.roi <- eyetracking.data.with.roi %>%
+  mutate(sound = str_split(audio, pattern="/", simplify = T)[,4])
+
+eyetracking.data.with.roi <- eyetracking.data.with.roi %>%
+  left_join(audio.info, by="sound")
+
+# Add time window information
+eyetracking.data.with.time.windows <- eyetracking.data.with.roi %>%
+  mutate(time.window = case_when(
+    t < onset_verb + 200 ~ "pre-verb-onset",
+    t <= onset_noun + 200 ~ "post-verb-onset-pre-animal-onset",
+    t <= onset_instrument + 200 ~ "post-animal-onset-pre-instrument-onset",
+    t <= onset_instrument + 1500 + 200 ~ "post-instrument-onset",
+    TRUE ~ "end"
+  ),
+  time.from.verb = t - onset_verb)
+```
+
+
+```{r E4-downsampling-gaze-data-for-plotting}
+#Add time window
+eyetracking.data.with.time.windows <- eyetracking.data.with.time.windows %>%
+  mutate(t.window = floor(time.from.verb/50)*50)
+```
+
+```{r E4-summarizing-gaze-data-for-plotting}
+#Summarize data for plotting
+eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
+  filter(between(t.window , -200, 4000)) %>%
+  group_by(subject, compatibility, t.window) %>%
+  summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
+  pivot_longer(c('p.animal', 'p.instrument'), names_to="object_type", values_to="prop_fixations") %>%
+  #mutate(prop_fixations = if_else(is.na(prop_fixations), 0, prop_fixations)) %>%
+  group_by(compatibility, t.window, object_type) %>%
+  summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
+```
+
+```{r E4-gaze-timecourse-fig, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. vertical lines indicate average onsets of animal and instrument offset by 200ms."}
+
+ggplot(eyetracking.figure.2.data, aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, linetype=object_type))+
+  geom_ribbon(color=NA, alpha=0.3)+
+  geom_line(size=1)+
+  theme_classic() +
+  geom_vline(xintercept = animal.onset + 200) + 
+  geom_vline(xintercept = instrument.onset + 200)+
+  labs(y = "Proportion of fixations", x = "Time window relative to verb onset (ms)")
+```
+
+```{r E4-compute-proportion-gaze-data-by-trial}
+#Summarize fixations on target and instrument
+eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
+  group_by(subject, trialID, sound, compatibility, time.window) %>%
+  summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
+            prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
+  mutate(compatibility = factor(compatibility))
+```
+
+```{r E4-set-contrasts-for-ET-analysis}
+# Add orthogonal contrasts to model
+contrasts(eyetracking.window.summary.by.trial$compatibility) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1/2, 1/2))
+```
+
+
+```{r E4-ET-analysis-verb-to-animal-window}
+data.time.window.1 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-verb-onset-pre-animal-onset")
+
+model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.1,
+                            control = lmerControl(optimizer = "bobyqa",
+                                                  optCtrl = list(maxfun = 2e6)))
+
+```
+```{r E4-ET-analysis-animal-to-inst-window}
+data.time.window.2 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-animal-onset-pre-instrument-onset")
+
+model.time.window.2 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.2)
+```
+
+```{r E4-ET-analysis-post-inst-window}
+data.time.window.3 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-instrument-onset")
+
+model.time.window.3 <- lmer(prop.fixations.animal ~ compatibility + (1 | subject) + (1 | trialID), data=data.time.window.3)
+```
+```{r E4-ET-analysis-tables}
+E4_ET_model1_tab = broom.mixed::tidy(model.time.window.1) 
+E4_ET_model2_tab = broom.mixed::tidy(model.time.window.2) 
+E4_ET_model3_tab = broom.mixed::tidy(model.time.window.3) 
+
+E4_ET_model1_c1 = E4_ET_model1_tab %>% filter(term == "compatibility1")
+E4_ET_model1_c2 = E4_ET_model1_tab %>% filter(term == "compatibility2")
+
+E4_ET_model2_c1 = E4_ET_model2_tab %>% filter(term == "compatibility1")
+E4_ET_model2_c2 = E4_ET_model2_tab %>% filter(term == "compatibility2")
+
+E4_ET_model3_c1 = E4_ET_model3_tab %>% filter(term == "compatibility1")
+E4_ET_model3_c2 = E4_ET_model3_tab %>% filter(term == "compatibility2")
+```
+
+
+In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Mixed-effects linear regression models were used to predict the proportions of fixations to the target animal within each time window with the verb bias condition as an orthogonally contrast-coded (instrument vs. equi & modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs. modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts^[`lme4` syntax: `lmer(prop.fix.target.animal ~ verb_bias + (1 + verb_bias | participant) + (1 | item), data=d)`. A model with by-participant varying slopes for verb bias condition was first attempted but did not converge.]. In the _verb-to-noun_ window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs. Equi and Modifier: _b_ =  `r E4_ET_model1_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model1_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model1_c1 %>% pull(p.value) %>% round(digits = 2)`; Equi vs. Modifier: _b_ =  `r E4_ET_model1_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model1_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model1_c2 %>% pull(p.value) %>% round(digits = 2)` ). In the _noun-to-instrument_ window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( _b_ =  `r E4_ET_model2_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model2_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) and in the equi-biased relative to the instrument-biased condition ( _b_ =  `r E4_ET_model2_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model2_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.05). In the _post-instrument_ window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( _b_ =  `r E4_ET_model3_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) but not significantly so in the equi-biased relative to the instrument-biased condition ( _b_ =  `r E4_ET_model3_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model1_c1 %>% pull(p.value) %>% round(digits = 2)`). 
 
 ### Comparison to in-lab data
 
-> here we will describe a direct comparison to data collected in the lab
+* here we will describe a direct comparison to data collected in the lab
 
 ### Calibration 
 
-> here we will describe the analyses that correlate calibration quality with effect size at the individual 
+* here we will describe the analyses that correlate calibration quality with effect size at the level of the individual 
 
 ### Effects of ROIs 
 
-> here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
+* here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
 
 ## Discussion
 
 # Experiment 5
 <!-- group e -->
 
-The fifth study was a replication attempt of @shimojoGazeBiasBoth2003.
+The fifth study was a replication attempt of @shimojoGazeBiasBoth2003, which found that human gaze is actively involved in preference formation. Participants were shown pairs of human faces and were asked to choose the face which they found more attractive. Prior to making their explicit selection, participants spent more time looking at the face that was ultimately judged more attractive. This bias was not as large when the task was face shape discrimination rather than a preference-based choice.
+
 
 ## Methods
 
+All stimuli, experiment scripts, data, and analysis scripts are available on the Open Science Framework at https://osf.io/eubsc/ (https://osf.io/eubsc/). The study pre-registration is available at https://osf.io/tv57s (https://osf.io/tv57s). 
+
 ### Participants
 
-### Material
+27 participants were recruited on Prolific to participate in stimulus norming (for attractiveness). They were paid $XX for completing the experiment. Data from 3 participants was excluded because their mode response made up more than 50% of their total responses <!-- is this a cutoff from Shimojo?-->, for a total of 24 participants in the norming.
 
-### Procedure
+50 participants for the main task were recruited on Prolific and were paid $XX. 8 subjects, 4 from the attractiveness task group and 4 from the roundness task group, were excluded for incorrect validations. <!-- they were able to proceed despite bad validation?--> After this data exclusion, we ended up with 21 participants each for the attractiveness task and the roundness task.The original sample size in Shimojo et al. (2003) was 10 participants total. 
+
+
+### Procedure and Design
+
+At the beginning of the experimental task, participants completed a 9-point eye-tracker calibration (each point appeared 3 times in random order) and 3-point validation. The validation point appeared once at center, middle left, and middle right locations in random order. 
+<!-- does 9 points here mean that there were actually only 3 calibration points but each was shown 3 times so 9 total or is it 9 points shown 3 times so 27 total? If the latter, why is the coverage denser than for Experiment 4? -->
+
+During each trial of the main task, two faces were displayed on the two halves of the screen, one on the left and one on the right (as in Figure XX). Participants were randomly assigned to one of two tasks: attractiveness or shape judgment. In the attractiveness task, participants were asked to chose the more attractice face in the pair and in the shape judgment task participants were asked to pick the face that appeared rounder. They pressed the "a" key on their keyboard to select the face on the left and the “d” key to select the face on the right. A fixation cross appeared in the center of the screen between each set of faces. Participants were asked to look at this fixation cross in order to reset their gaze in between trials (???). The order of the 19 face pairs was random for each participant. 
+
+### Materials and Norming
+
+The faces in our replication were selected from a set of 1,000 faces within the Flickr-Faces-HQ Dataset. (The face images used in Shimojo et al. were from the Ekman face database and the AR face database.) These images were chosen because the person in each image was looking at the camera with a fairly neutral facial expression and appeared to be over the age of 18. Participants in the norming study viewed 172 faces and were asked to rate them on a scale from 1 (less attractive) to 7 (more attractive) using a slider. Faces were presented one at a time and in a random order for each participant. Following Shimojo et al., 19 face pairs were made by matching two faces that had a difference in mean attractiveness ratings that was 0.25 points or lower and that matched in gender, race, and age group (young adult, adult, or older adult). 
 
 ### Data analysis
+
+In the original study, a video-based eye tracker was used. The eye movements of participants were recorded with a digital camera, and eye position was then tracked using MediaAnalyzer software. This eye tracker was able to collect 30 samples per second. In our study, the camera on the device used by the participant and the jsPsych WebGazer package were used to determine where a participant’s gaze was directed. Since our eye tracking method did not have the same sample collection rate as the eye tracker in Shimojo et al., time windows of 50 milliseconds were used when looking at the likelihood of gazing at the chosen face at a given point between a cutoff time and when the decision was made.
 
 ## Results
 
@@ -303,15 +586,13 @@ The fifth study was a replication attempt of @shimojoGazeBiasBoth2003.
 # Experiment 6
 <!-- posner cueing task -->
 
-The sixth study was a replication attempt of @??.
+The sixth study was a replication attempt of Posner et al. ??.
 
 ## Methods
 
 ### Participants
 
-### Material
-
-### Procedure
+### Procedure and Design
 
 ### Data analysis
 
@@ -328,6 +609,8 @@ The sixth study was a replication attempt of @??.
 ## Discussion
 
 # Combined Analyses
+
+- Pooling data from all experiments we can look at patterns in the calibration and validation data
 
 # General Discussion
 
