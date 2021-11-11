@@ -174,7 +174,7 @@ Looks to the objects in the scene were time-locked to the onset of the verb, the
 # Experiment 2
 <!-- group b -->
 
-The second study was a replication attempt of @johanssonLookHereEye2014. They examined how visuospatial information is integrated into memories for objects. They found that, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located during encoding [see @spiveyOculomotorMechanismsActivated2001] and that this spatial reinstatement facilitates retrieval of the picture.
+The second study was a replication attempt of @johanssonLookHereEye2014, which examined how visuospatial information is integrated into memory for objects. They found that, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located during encoding [see @spiveyOculomotorMechanismsActivated2001] and that this spatial reinstatement facilitates retrieval of the picture.
 
 
 ## Methods
@@ -182,11 +182,11 @@ The second study was a replication attempt of @johanssonLookHereEye2014. They ex
 
 ### Participants
 
-60 participants were paid $XX for their participation <!--right?-->. We analyzed the data of 59 participants, a number that was limited by budget constraints, but still 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). We ended up excluding the data of 1 participant whose eye tracking data seemed to be blank, rendering us unable to analyze it.
+60 participants were paid $XX for their participation <!--right?-->. The sample size was motivated in part by budget constraints, but was nonetheless 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). Data from 1 participant were not properly recorded due to unknown technical issues, so data from 59 participants were included in all analyses to follow.
 
 ### Procedure
 
-The task began with an <number of points>-point eye-tracker calibration and validation. The experiment consisted of two blocks each composed of an encoding phase and a recall phase. During the encoding phase, participants saw a grid indicating the four quadrants of the screen. Each quadrant contained six images of items belonging to the same category (see Figure XX). The four possible categories were humanoids, household objects, animals, and methods of transportation. Participants were asked to remember the contents of the four quadrants. Different images were used in each block.
+The experiment consisted of two blocks each composed of an encoding phase and a recall phase. During the encoding phase, participants saw a grid indicating the four quadrants of the screen. Each quadrant contained six images of items belonging to the same category (see Figure XX). The four categories were humanoids, household objects, animals, and methods of transportation. Participants were asked to remember the contents of the four quadrants. Different images were used in each block.
 
 Each of the four quadrants was presented one at a time. First, a list of the items in the quadrant were shown, then the items in the actual quadrant were shown (??). For each item, an audio file would play ("???") asking the participant to use their arrow keys to identify which direction each item was facing (every item was facing either left or right (right??)). After the participant identified the direction of each item, they would have an additional 30 seconds to encode the name and orientation of each item in the quadrant. Then, after all four quadrants were presented in this way, the participant was shown the full grid of 24 items and had 60 seconds to further encode the name and orientation of each item.
 

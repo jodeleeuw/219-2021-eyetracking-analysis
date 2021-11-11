@@ -1,0 +1,204 @@
+---
+title: "Group B Analysis"
+output: html_notebook
+---
+
+```{r message=FALSE}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+#library(ez)
+```
+
+# Import Data
+
+Read JSON files and bind together into a tibble.
+
+```{r}
+data.files <- list.files('data', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+
+# Extract relevant data
+
+```{r}
+task.data <- all.data %>%
+  filter(!is.na(relation)) %>%
+  select(subject_id, trial_index, stimulus, relation, quadrant, rt, correct_response, response, webgazer_data, webgazer_targets) %>%
+  unpack(webgazer_targets) %>%
+  unpack(`#screen`) %>%
+  select(-top,-left,-x,-y,-bottom,-right)
+```
+
+Need to add condition information to the `task.data`
+
+```{r}
+condition.subject.info <- all.data %>%
+  filter(!is.na(condition)) %>%
+  select(subject_id, condition) %>%
+  group_by(subject_id) %>%
+  mutate(block = c(1,2)) %>%
+  ungroup()
+
+task.data <- task.data %>%
+  group_by(subject_id) %>%
+  mutate(block = c(rep(1,n()/2),rep(2,n()/2))) %>%
+  left_join(condition.subject.info, by=c("subject_id", "block"))
+```
+
+# Question: Do people look more at the critical quadrant during free viewing?
+
+Grab the relevant data, unnesting webgazer observations
+
+```{r}
+free.view.data <- task.data %>%
+  filter(condition == "free") %>%
+  unnest(webgazer_data)
+```
+
+Add quadrant information to each observation
+
+```{r}
+free.view.data <- free.view.data %>%
+  mutate(x.percent = x / width * 100, y.percent = y / height * 100) %>%
+  mutate(view_quadrant = case_when(
+    x.percent <= 50 & y.percent <= 50 ~ 'top.left',
+    x.percent > 50 & y.percent <= 50 ~ 'top.right',
+    x.percent <= 50 & y.percent > 50 ~ 'bottom.left',
+    x.percent > 50 & y.percent > 50 ~ 'bottom.right'
+  )) %>%
+  mutate(normalized_quadrant = case_when(
+    quadrant == 1 & view_quadrant == 'top.left' ~ 'critical',
+    quadrant == 1 & view_quadrant == 'top.right' ~ 'first',
+    quadrant == 1 & view_quadrant == 'bottom.right' ~ 'second',
+    quadrant == 1 & view_quadrant == 'bottom.left' ~ 'third',
+    
+    quadrant == 2 & view_quadrant == 'top.left' ~ 'third',
+    quadrant == 2 & view_quadrant == 'top.right' ~ 'critical',
+    quadrant == 2 & view_quadrant == 'bottom.right' ~ 'first',
+    quadrant == 2 & view_quadrant == 'bottom.left' ~ 'second',
+    
+    quadrant == 3 & view_quadrant == 'top.left' ~ 'first',
+    quadrant == 3 & view_quadrant == 'top.right' ~ 'second',
+    quadrant == 3 & view_quadrant == 'bottom.right' ~ 'third',
+    quadrant == 3 & view_quadrant == 'bottom.left' ~ 'critical',
+    
+    quadrant == 4 & view_quadrant == 'top.left' ~ 'second',
+    quadrant == 4 & view_quadrant == 'top.right' ~ 'third',
+    quadrant == 4 & view_quadrant == 'bottom.right' ~ 'critical',
+    quadrant == 4 & view_quadrant == 'bottom.left' ~ 'first'
+  ))
+```
+
+Summarize proportion of views in each quadrant for each trial
+```{r}
+free.view.summary.trial.data <- free.view.data %>%
+  group_by(subject_id, trial_index, relation) %>%
+  summarize(critical = sum(normalized_quadrant == 'critical')/n(),
+            first = sum(normalized_quadrant == 'first')/n(),
+            second = sum(normalized_quadrant == 'second')/n(),
+            third = sum(normalized_quadrant == 'third')/n()) %>%
+  pivot_longer(c("critical", "first", "second", "third"), names_to = "normalized_quadrant", values_to = "proportion")
+```
+Summarize by subject
+```{r}
+free.view.summary.subject.data <- free.view.summary.trial.data %>%
+  group_by(subject_id,relation,normalized_quadrant) %>%
+  summarize(proportion = mean(proportion))
+```
+
+Summarize by condition 
+```{r}
+free.view.summary.condition.data <- free.view.summary.subject.data %>%
+  group_by(normalized_quadrant, relation) %>%
+  summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
+```
+```{r}
+ggplot(free.view.summary.condition.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill=relation)) +
+  geom_col(position=position_dodge())+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
+  theme_classic()
+```
+
+Goal: ANOVA with quadrant and statement type as factors, gaze proportion as DV
+
+```{r}
+free.view.anova <- ezANOVA(free.view.summary.subject.data, wid=subject_id, dv=proportion, within=c(relation,normalized_quadrant))
+free.view.anova$ANOVA
+```
+# Behavioral Analysis
+
+First, extract relevant data and compute `correct` column
+
+```{r}
+behavioral.data <- task.data %>%
+  select(subject_id, trial_index, relation, rt, response, correct_response, condition) %>%
+  mutate(correct = response == correct_response)
+```
+
+Goal: ANOVA with RT as DV, condition, statement as IVs
+
+```{r}
+rt.behavioral.subject.data <- behavioral.data %>%
+  group_by(subject_id, relation, condition) %>%
+  filter(correct == TRUE) %>%
+  summarize(rt = mean(rt))
+```
+
+```{r}
+rt.anova <- ezANOVA(rt.behavioral.subject.data, dv=rt, wid=subject_id, within = c(relation, condition))
+rt.anova$ANOVA
+```
+
+```{r}
+rt.summary.condition.data <- rt.behavioral.subject.data %>%
+  group_by(relation, condition) %>%
+  summarize(M=mean(rt), SE=sd(rt)/sqrt(n()))
+
+ggplot(rt.summary.condition.data, aes(x=relation, color=condition, y=M, ymax=M+SE, ymin=M-SE, group=condition))+
+  geom_point(size=5)+
+  geom_line()+
+  geom_errorbar(width=0.2)+
+  scale_color_manual(values=c("orange2","royalblue4"))+
+  labs(x="Statement Type", y="Response Time (ms)", color=NULL)+
+  theme_classic()
+```
+
+Goal: ANOVA with ACC as DV, condition, statement as IVs
+
+*note that paper computer accuracy as hit rate - false alarm rate*
+```{r}
+acc.behavioral.subject.data <- behavioral.data %>%
+  group_by(subject_id, relation, condition) %>%
+  summarize(hit.rate = sum(correct == TRUE & response == 't') / sum(correct_response == 't'),
+            fa.rate = sum(correct == FALSE & response == 't') / sum(correct_response == 'f')) %>%
+  mutate(accuracy = hit.rate - fa.rate)
+```
+
+```{r}
+acc.anova <- ezANOVA(acc.behavioral.subject.data, dv=accuracy, wid=subject_id, within = c(relation, condition))
+acc.anova$ANOVA
+```
+
+Recreate figure from paper
+
+```{r}
+acc.summary.condition.data <- acc.behavioral.subject.data %>%
+  group_by(relation, condition) %>%
+  summarize(M=mean(accuracy), SE=sd(accuracy)/sqrt(n()))
+
+ggplot(acc.summary.condition.data, aes(x=relation, color=condition, y=M, ymax=M+SE, ymin=M-SE, group=condition))+
+  geom_point(size=5)+
+  geom_line()+
+  geom_errorbar(width=0.2)+
+  scale_color_manual(values=c("orange2","royalblue4"))+
+  coord_cartesian(ylim=c(0.3,0.8)) +
+  labs(x="Statement Type", y="Accuracy", color=NULL)+
+  theme_classic()
+```
