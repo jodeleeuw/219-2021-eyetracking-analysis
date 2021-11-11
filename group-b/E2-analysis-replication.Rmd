@@ -1,6 +1,6 @@
 ---
 title: "Group B Analysis"
-output: html_notebook
+output: pdf
 ---
 
 ```{r message=FALSE}
@@ -11,9 +11,9 @@ library(ggplot2)
 #library(ez)
 ```
 
-# Import Data
 
-Read JSON files and bind together into a tibble.
+
+<!--Read JSON files and bind together into a tibble.-->
 
 ```{r}
 data.files <- list.files('data', full.names = TRUE, pattern=".json")
@@ -24,8 +24,7 @@ data.tables <- lapply(data.files, function(file){
 all.data <- bind_rows(data.tables)
 ```
 
-
-# Extract relevant data
+<!--Extract relevant data-->
 
 ```{r}
 task.data <- all.data %>%
@@ -36,7 +35,7 @@ task.data <- all.data %>%
   select(-top,-left,-x,-y,-bottom,-right)
 ```
 
-Need to add condition information to the `task.data`
+<!-- add condition information to the `task.data`-->
 
 ```{r}
 condition.subject.info <- all.data %>%
@@ -52,9 +51,9 @@ task.data <- task.data %>%
   left_join(condition.subject.info, by=c("subject_id", "block"))
 ```
 
-# Question: Do people look more at the critical quadrant during free viewing?
+<!-- Question: Do people look more at the critical quadrant during free viewing?-->
 
-Grab the relevant data, unnesting webgazer observations
+<!--Grab the relevant data, unnesting webgazer observations-->
 
 ```{r}
 free.view.data <- task.data %>%
@@ -62,7 +61,7 @@ free.view.data <- task.data %>%
   unnest(webgazer_data)
 ```
 
-Add quadrant information to each observation
+<!--Add quadrant information to each observation-->
 
 ```{r}
 free.view.data <- free.view.data %>%
@@ -96,7 +95,7 @@ free.view.data <- free.view.data %>%
   ))
 ```
 
-Summarize proportion of views in each quadrant for each trial
+<!--Summarize proportion of views in each quadrant for each trial-->
 ```{r}
 free.view.summary.trial.data <- free.view.data %>%
   group_by(subject_id, trial_index, relation) %>%
@@ -106,24 +105,49 @@ free.view.summary.trial.data <- free.view.data %>%
             third = sum(normalized_quadrant == 'third')/n()) %>%
   pivot_longer(c("critical", "first", "second", "third"), names_to = "normalized_quadrant", values_to = "proportion")
 ```
-Summarize by subject
+<!--Summarize by subject-->
 ```{r}
 free.view.summary.subject.data <- free.view.summary.trial.data %>%
   group_by(subject_id,relation,normalized_quadrant) %>%
   summarize(proportion = mean(proportion))
 ```
 
-Summarize by condition 
+<!--Summarize by between condition -->
+```{r}
+free.view.summary.condition1.data <- free.view.summary.subject.data %>%
+  group_by(normalized_quadrant) %>%
+  summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
+```
+
+```{r}
+fig<-ggplot(free.view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill = normalized_quadrant == "critical" )) +
+  geom_col(position=position_dodge(), color = "black")+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
+  scale_fill_brewer(palette="Set1",)+
+  theme_classic()+
+  labs(x = "Quadrant", y = "Mean proportion of looks")+
+  theme(legend.position = "none")
+fig
+```
+```{r, eval=FALSE}
+saveRDS(fig, "output/ETfig.rds")
+
+```
+
+
+<!--Summarize by between and within conditions -->
 ```{r}
 free.view.summary.condition.data <- free.view.summary.subject.data %>%
   group_by(normalized_quadrant, relation) %>%
   summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
 ```
+
 ```{r}
 ggplot(free.view.summary.condition.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill=relation)) +
-  geom_col(position=position_dodge())+
+  geom_col(position=position_dodge(), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
-  theme_classic()
+  theme_classic()+
+  labs(x = "Quadrant", y = "Mean proportion of looks")
 ```
 
 Goal: ANOVA with quadrant and statement type as factors, gaze proportion as DV

@@ -21,7 +21,7 @@ displayD<-ggplot() + background_image(image_read('expt-example-displays/expt-exa
 displayE<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.005.jpeg'))+coord_fixed() + ggtitle('E')
   
 figA<-read_rds('../group-d/output/ETfig.rds')
-figB<-read_rds('../group-d/output/ETfig.rds')
+figB<-read_rds('../group-b/output/ETfig.rds')
 figC<-read_rds('../group-d/output/ETfig.rds')
 figD<-read_rds('../group-d/output/ETfig.rds')
 figE<-read_rds('../group-d/output/ETfig.rds')
@@ -30,10 +30,10 @@ figE<-read_rds('../group-d/output/ETfig.rds')
 
 ```{r}
 A <- displayA + figA 
-B <- displayA + figB 
-C <- displayA + figC 
+B <- displayB + figB 
+C <- displayC + figC 
 D <- displayD + figD 
-E <- displayA + figE 
+E <- displayE + figE 
 
 ```
 
@@ -43,7 +43,7 @@ E <- displayA + figE
 
 
 ```{r}
-ggsave('CDS-abstract-figure.pdf', scale = 1, width = 11, height = 7)
+ggsave('CDS-abstract-figure.pdf', scale = 1, width = 12, height = 7)
 
 ```
 
