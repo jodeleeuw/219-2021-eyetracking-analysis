@@ -209,15 +209,28 @@ eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
   summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
 ```
 
-```{r E4-gaze-timecourse-fig, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. vertical lines indicate average onsets of animal and instrument offset by 200ms."}
+```{r E4-gaze-timecourse-fig, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms."}
 
-ggplot(eyetracking.figure.2.data, aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, linetype=object_type))+
+fig2<-ggplot(eyetracking.figure.2.data %>% 
+  mutate(compatibility = factor(compatibility, 
+                                levels = c("modifier", "equibiased", "instrument" ), 
+                                labels = c("Modifier", "Equi-biased", "Instrument" ))), 
+  aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, linetype=object_type))+
   geom_ribbon(color=NA, alpha=0.3)+
   geom_line(size=1)+
+  scale_color_brewer(palette = "Set1")+
+  scale_fill_brewer(palette = "Set1")+
+  scale_linetype(labels = c("Animal", "Instrument") )+
   theme_classic() +
   geom_vline(xintercept = animal.onset + 200) + 
   geom_vline(xintercept = instrument.onset + 200)+
-  labs(y = "Proportion of fixations", x = "Time window relative to verb onset (ms)")
+  labs(y = "Proportion of looks", x = "Time relative to verb onset (ms)")+
+  guides(color = guide_legend("Verb bias"),fill = guide_legend("Verb bias"), linetype = guide_legend("Gaze location"))
+fig2
+```
+```{r, eval=FALSE}
+saveRDS(fig2, "output/ETfig.rds")
+
 ```
 
 ```{r E4-compute-proportion-gaze-data-by-trial}

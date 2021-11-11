@@ -5,10 +5,14 @@
 \documentclass[
   english,
   man,floatsintext]{apa6}
+\title{Eye-tracking on the web: lessons learned from replicating 6 experiments}
+\author{First Author\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
+\date{}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -70,6 +74,29 @@
   \let\oldsubparagraph\subparagraph
   \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -117,7 +144,7 @@
 
 \linenumbers
 \usepackage{csquotes}
-\ifxetex
+\ifXeTeX
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[]{english}
@@ -127,33 +154,9 @@
 \let\LanguageShortHands\languageshorthands
 \def\languageshorthands#1{}
 \fi
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-  % set entry spacing
-  \ifnum #2 > 0
-  \setlength{\parskip}{#2\baselineskip}
-  \fi
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-
-\title{Eye-tracking on the web: lessons learned from replicating 6 experiments}
-\author{First Author\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
-\date{}
 
 
 \authornote{
@@ -212,7 +215,7 @@ During the calibration, dots appeared on the screen one at a time in different l
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R {[}Version 4.1.0; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 0.28.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.6; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.4; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.27.1; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.3; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 1.4.0; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.6.0; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, and \emph{tidyr} {[}Version 1.1.3; Wickham (2021b){]} for all our analyses.
+We used R {[}Version 4.1.2; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 1.0.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.7; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.5; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.27.1; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.4; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 2.0.2; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.7.1; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, and \emph{tidyr} {[}Version 1.1.4; Wickham (2021b){]} for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -568,79 +571,79 @@ The sixth study was a replication attempt of Posner et al.~??.
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\hypertarget{ref-altmannIncrementalInterpretationVerbs1999}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-altmannIncrementalInterpretationVerbs1999}{}}%
 Altmann, G. T. M., \& Kamide, Y. (1999). Incremental interpretation at verbs: Restricting the domain of subsequent reference. \emph{Cognition}, \emph{73}(3), 247--264. \url{https://doi.org/10.1016/S0010-0277(99)00059-1}
 
-\leavevmode\hypertarget{ref-R-papaja}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
 Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
 
-\leavevmode\hypertarget{ref-R-Matrix}{}%
-Bates, D., \& Maechler, M. (2021). \emph{Matrix: Sparse and dense matrix classes and methods}. Retrieved from \url{https://CRAN.R-project.org/package=Matrix}
-
-\leavevmode\hypertarget{ref-R-lme4}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-lme4}{}}%
 Bates, D., Mächler, M., Bolker, B., \& Walker, S. (2015). Fitting linear mixed-effects models using {lme4}. \emph{Journal of Statistical Software}, \emph{67}(1), 1--48. \url{https://doi.org/10.18637/jss.v067.i01}
 
-\leavevmode\hypertarget{ref-R-broom.mixed}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-Matrix}{}}%
+Bates, D., \& Maechler, M. (2021). \emph{Matrix: Sparse and dense matrix classes and methods}. Retrieved from \url{https://CRAN.R-project.org/package=Matrix}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-broom.mixed}{}}%
 Bolker, B., \& Robinson, D. (2020). \emph{Broom.mixed: Tidying methods for mixed models}. Retrieved from \url{https://CRAN.R-project.org/package=broom.mixed}
 
-\leavevmode\hypertarget{ref-R-shiny}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-shiny}{}}%
 Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y., \ldots{} Borges, B. (2021). \emph{Shiny: Web application framework for r}. Retrieved from \url{https://CRAN.R-project.org/package=shiny}
 
-\leavevmode\hypertarget{ref-deleeuwJsPsychJavaScriptLibrary2015}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-deleeuwJsPsychJavaScriptLibrary2015}{}}%
 de Leeuw, J. R. (2015). {jsPsych}: {A JavaScript} library for creating behavioral experiments in a {Web} browser. \emph{Behavior Research Methods}, \emph{47}(1), 1--12. \url{https://doi.org/10.3758/s13428-014-0458-y}
 
-\leavevmode\hypertarget{ref-johanssonLookHereEye2014}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-johanssonLookHereEye2014}{}}%
 Johansson, R., \& Johansson, M. (2014). Look {Here}, {Eye Movements Play} a {Functional Role} in {Memory Retrieval}. \emph{Psychological Science}, \emph{25}(1), 236--242. \url{https://doi.org/10.1177/0956797613498260}
 
-\leavevmode\hypertarget{ref-R-lmerTest}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-lmerTest}{}}%
 Kuznetsova, A., Brockhoff, P. B., \& Christensen, R. H. B. (2017). {lmerTest} package: Tests in linear mixed effects models. \emph{Journal of Statistical Software}, \emph{82}(13), 1--26. \url{https://doi.org/10.18637/jss.v082.i13}
 
-\leavevmode\hypertarget{ref-mannsVisualPairedcomparisonTask2000}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-mannsVisualPairedcomparisonTask2000}{}}%
 Manns, J. R., Stark, C. E. L., \& Squire, L. R. (2000). The visual paired-comparison task as a measure of declarative memory. \emph{Proceedings of the National Academy of Sciences}, \emph{97}(22), 12375--12379. \url{https://doi.org/10.1073/pnas.220398097}
 
-\leavevmode\hypertarget{ref-R-jsonlite}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-jsonlite}{}}%
 Ooms, J. (2014). The jsonlite package: A practical and consistent mapping between JSON data and r objects. \emph{arXiv:1403.2805 {[}Stat.CO{]}}. Retrieved from \url{https://arxiv.org/abs/1403.2805}
 
-\leavevmode\hypertarget{ref-papoutsaki2016webgazer}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-papoutsaki2016webgazer}{}}%
 Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. In \emph{Proceedings of the 25th international joint conference on artificial intelligence ({IJCAI})} (pp. 3839--3845). {AAAI}.
 
-\leavevmode\hypertarget{ref-R-base}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
 
-\leavevmode\hypertarget{ref-ryskinVerbBiasesAre2017}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ryskinVerbBiasesAre2017}{}}%
 Ryskin, R., Qi, Z., Duff, M. C., \& Brown-Schmidt, S. (2017). Verb biases are shaped through lifelong learning. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{43}(5), 781--794. \url{https://doi.org/10.1037/xlm0000341}
 
-\leavevmode\hypertarget{ref-shimojoGazeBiasBoth2003}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-shimojoGazeBiasBoth2003}{}}%
 Shimojo, S., Simion, C., Shimojo, E., \& Scheier, C. (2003). Gaze bias both reflects and influences preference. \emph{Nature Neuroscience}, \emph{6}(12), 1317--1322. \url{https://doi.org/10.1038/nn1150}
 
-\leavevmode\hypertarget{ref-R-afex}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-afex}{}}%
 Singmann, H., Bolker, B., Westfall, J., Aust, F., \& Ben-Shachar, M. S. (2021). \emph{Afex: Analysis of factorial experiments}. Retrieved from \url{https://CRAN.R-project.org/package=afex}
 
-\leavevmode\hypertarget{ref-snedekerDevelopingConstraintsParsing2004a}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-snedekerDevelopingConstraintsParsing2004a}{}}%
 Snedeker, J., \& Trueswell, J. C. (2004). The developing constraints on parsing decisions: {The} role of lexical-biases and referential scenes in child and adult sentence processing. \emph{Cognitive Psychology}, \emph{49}(3), 238--299. \url{https://doi.org/10.1016/j.cogpsych.2004.03.001}
 
-\leavevmode\hypertarget{ref-spiveyOculomotorMechanismsActivated2001}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-spiveyOculomotorMechanismsActivated2001}{}}%
 Spivey, M. J., \& Geng, J. J. (2001). Oculomotor mechanisms activated by imagery and memory: Eye movements to absent objects. \emph{Psychological Research}, \emph{65}(4), 235--241. \url{https://doi.org/10.1007/s004260100059}
 
-\leavevmode\hypertarget{ref-tanenhaus1995}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-tanenhaus1995}{}}%
 Tanenhaus, M. K., Spivey-Knowlton, M. J., Eberhard, K. M., \& Sedivy, J. C. (1995). Integration of visual and linguistic information in spoken language comprehension. \emph{Science}, \emph{268}(5217), 1632--1634.
 
-\leavevmode\hypertarget{ref-R-ggplot2}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
 Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. Retrieved from \url{https://ggplot2.tidyverse.org}
 
-\leavevmode\hypertarget{ref-R-stringr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-stringr}{}}%
 Wickham, H. (2019). \emph{Stringr: Simple, consistent wrappers for common string operations}. Retrieved from \url{https://CRAN.R-project.org/package=stringr}
 
-\leavevmode\hypertarget{ref-R-forcats}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-forcats}{}}%
 Wickham, H. (2021a). \emph{Forcats: Tools for working with categorical variables (factors)}. Retrieved from \url{https://CRAN.R-project.org/package=forcats}
 
-\leavevmode\hypertarget{ref-R-tidyr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-tidyr}{}}%
 Wickham, H. (2021b). \emph{Tidyr: Tidy messy data}. Retrieved from \url{https://CRAN.R-project.org/package=tidyr}
 
-\leavevmode\hypertarget{ref-R-dplyr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-dplyr}{}}%
 Wickham, H., François, R., Henry, L., \& Müller, K. (2021). \emph{Dplyr: A grammar of data manipulation}. Retrieved from \url{https://CRAN.R-project.org/package=dplyr}
 
-\leavevmode\hypertarget{ref-R-readr}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-R-readr}{}}%
 Wickham, H., \& Hester, J. (2020). \emph{Readr: Read rectangular text data}. Retrieved from \url{https://CRAN.R-project.org/package=readr}
 
 \end{CSLReferences}

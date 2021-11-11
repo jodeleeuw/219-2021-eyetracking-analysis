@@ -1,0 +1,49 @@
+---
+title: "CDS-abstract-figure"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(patchwork)
+library(magick)
+library(ggpubr)
+```
+
+
+```{r }
+
+displayA<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.001.jpeg'))+coord_fixed() + ggtitle('A')
+displayB<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.002.jpeg'))+coord_fixed() + ggtitle('B')
+displayC<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.003.jpeg'))+coord_fixed() + ggtitle('C')
+displayD<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.004.jpeg'))+coord_fixed() + ggtitle('D')
+displayE<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.005.jpeg'))+coord_fixed() + ggtitle('E')
+  
+figA<-read_rds('../group-d/output/ETfig.rds')
+figB<-read_rds('../group-d/output/ETfig.rds')
+figC<-read_rds('../group-d/output/ETfig.rds')
+figD<-read_rds('../group-d/output/ETfig.rds')
+figE<-read_rds('../group-d/output/ETfig.rds')
+
+```
+
+```{r}
+A <- displayA + figA 
+B <- displayA + figB 
+C <- displayA + figC 
+D <- displayD + figD 
+E <- displayA + figE 
+
+```
+
+```{r}
+(A | B)/(C | D ) / ( E | (grid::textGrob('Figure 1. ADD CAPTION HERE')) ) 
+```
+
+
+```{r}
+ggsave('CDS-abstract-figure.pdf', scale = 1, width = 11, height = 7)
+
+```
+
