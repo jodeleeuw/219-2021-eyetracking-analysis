@@ -110,8 +110,10 @@ first.move.summary <- first.move.subject.summary %>%
 ggplot(first.move.summary, aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE))+
   geom_col(position=position_dodge(width=0.9), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
+  scale_fill_brewer(palette = "Set1")+
   theme_classic()+
-  labs(y = "Proportion of first mouse movements")
+  labs(y = "Proportion of first mouse movements")+
+  guides(color = guide_legend("Click location"))
 ```
 
 ```{r E4-mouse-moves-analysis}

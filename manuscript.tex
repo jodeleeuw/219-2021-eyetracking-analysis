@@ -288,7 +288,7 @@ Looks to the objects in the scene were time-locked to the onset of the verb, the
 \hypertarget{experiment-2}{%
 \section{Experiment 2}\label{experiment-2}}
 
-The second study was a replication attempt of Johansson and Johansson (2014). They examined how visuospatial information is integrated into memories for objects. They found that, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located during encoding (see Spivey \& Geng, 2001) and that this spatial reinstatement facilitates retrieval of the picture.
+The second study was a replication attempt of Johansson and Johansson (2014), which examined how visuospatial information is integrated into memory for objects. They found that, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located during encoding (see Spivey \& Geng, 2001) and that this spatial reinstatement facilitates retrieval of the picture.
 
 \hypertarget{methods-1}{%
 \subsection{Methods}\label{methods-1}}
@@ -296,12 +296,12 @@ The second study was a replication attempt of Johansson and Johansson (2014). Th
 \hypertarget{participants-2}{%
 \subsubsection{Participants}\label{participants-2}}
 
-60 participants were paid \$XX for their participation . We analyzed the data of 59 participants, a number that was limited by budget constraints, but still 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). We ended up excluding the data of 1 participant whose eye tracking data seemed to be blank, rendering us unable to analyze it.
+60 participants were paid \$XX for their participation . The sample size was motivated in part by budget constraints, but was nonetheless 2.5x larger than the original sample size of 24, as suggested by Simonsohn (2015). Data from 1 participant were not properly recorded due to unknown technical issues, so data from 59 participants were included in all analyses to follow.
 
 \hypertarget{procedure-1}{%
 \subsubsection{Procedure}\label{procedure-1}}
 
-The task began with an -point eye-tracker calibration and validation. The experiment consisted of two blocks each composed of an encoding phase and a recall phase. During the encoding phase, participants saw a grid indicating the four quadrants of the screen. Each quadrant contained six images of items belonging to the same category (see Figure XX). The four possible categories were humanoids, household objects, animals, and methods of transportation. Participants were asked to remember the contents of the four quadrants. Different images were used in each block.
+The experiment consisted of two blocks each composed of an encoding phase and a recall phase. During the encoding phase, participants saw a grid indicating the four quadrants of the screen. Each quadrant contained six images of items belonging to the same category (see Figure XX). The four categories were humanoids, household objects, animals, and methods of transportation. Participants were asked to remember the contents of the four quadrants. Different images were used in each block.
 
 Each of the four quadrants was presented one at a time. First, a list of the items in the quadrant were shown, then the items in the actual quadrant were shown (??). For each item, an audio file would play (``???'') asking the participant to use their arrow keys to identify which direction each item was facing (every item was facing either left or right (right??)). After the participant identified the direction of each item, they would have an additional 30 seconds to encode the name and orientation of each item in the quadrant. Then, after all four quadrants were presented in this way, the participant was shown the full grid of 24 items and had 60 seconds to further encode the name and orientation of each item.
 
@@ -319,6 +319,26 @@ The primary methodological difference between this replication and Johansson and
 
 \hypertarget{replication-1}{%
 \subsubsection{Replication}\label{replication-1}}
+
+\textbf{Eye-gaze}. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled ``first,'' ``second,'' third'' (e.g., when the critical quadrant was in the top left, the ``first'' quadrant was the top right quadrant, but when the critical quadrant was in the top right, ``first'' corresponded to bottom right, etc.). In the free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \ref{fig:E2-gaze-fig}).
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E2-gaze-fig-1.pdf}
+\caption{\label{fig:E2-gaze-fig}Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval.}
+\end{figure}
+
+The proportion of looks across quadrant was analyzed in linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(proportion\ \textasciitilde{}\ quadrant\ +\ (1+quadrant\textbar{}subject\_id))}. Among other limitations, this approach may violate the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.} Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: \emph{b} = -0.06, \emph{SE} = 0.01, \emph{p}\textless0.001, second: \emph{b} = -0.08, \emph{SE} = 0.01, \emph{p}\textless0.001, third: \emph{b} = -0.05, \emph{SE} = 0.01, \emph{p}\textless0.001 )
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf}
+\caption{\label{fig:E2-rt-acc-fig}Accuracy and response times during memory retrieval.}
+\end{figure}
+
+\textbf{Response Time and Accuracy}. Participants' response times and accuracies on memory questions are summarized in Figure \ref{fig:E2-rt-acc-fig}. Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing\_condition (fixed = -0.5, free=0.5) and their interaction as the predictors. The model included random intercepts for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(DV\ \textasciitilde{}\ relation\_type*viewing\_condition\ +\ (1\textbar{}subject\_id))}}. Response times were slower for interobject (e.g., ``The train is to the right of the taxi.'') than intraobject (e.g., ``The train is facing right.'') questions (\emph{b} = -555.60, \emph{SE} = 105.24, \emph{p}\textless0.001). Response times were slower in the free viewing condition than the fixed condition (\emph{b} = , \emph{SE} = , \emph{p}\textless0.001). Accuracy did not differ significantly between interobject and intraobject questions (\emph{b} = -0.05, \emph{SE} = 0.03, \emph{p}=0.05). Participants were less accurate in the free viewing condition than the fixed condition (\emph{b} = -0.06, \emph{SE} = 0.03, \emph{p}=0.03). The interaction ws not a signficant predictor for response times or accuracy.
+
+\emph{Q: Can we recover item IDs to do crossed random effects}
 
 \begin{itemize}
 \item
@@ -438,7 +458,7 @@ Gaze fixations were time-locked to the auditory stimulus on a trial by trial bas
 \begin{figure}
 \centering
 \includegraphics{manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf}
-\caption{\label{fig:E4-gaze-timecourse-fig}Timecourse of eye-gaze to target animal and target instrument by verb bias condition. vertical lines indicate average onsets of animal and instrument offset by 200ms.}
+\caption{\label{fig:E4-gaze-timecourse-fig}Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms.}
 \end{figure}
 
 In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Mixed-effects linear regression models were used to predict the proportions of fixations to the target animal within each time window with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts\footnote{\texttt{lme4} syntax: \texttt{lmer(prop.fix.target.animal\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ data=d)}. A model with by-participant varying slopes for verb bias condition was first attempted but did not converge.}. In the \emph{verb-to-noun} window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs.~Equi and Modifier: \emph{b} = -0.01, \emph{SE} = 0.02, \emph{p} = 0.59; Equi vs.~Modifier: \emph{b} = 0, \emph{SE} = 0.02, \emph{p} = 1 ). In the \emph{noun-to-instrument} window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.01, \emph{p} \textless{} 0.01) and in the equi-biased relative to the instrument-biased condition ( \emph{b} = 0.02, \emph{SE} = 0.01, \emph{p} \textless{} 0.05). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) but not significantly so in the equi-biased relative to the instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.02, \emph{p} = 0.59).

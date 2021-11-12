@@ -202,7 +202,9 @@ The primary methodological difference between this replication and Johansson and
 
 ## Results
 
-### Replication
+```{r E2-analysis-replication, child='group-b/E2-analysis-replication.Rmd'}
+
+```
 
 * here we will describe the analyses that are as close as possible to the original paper
 
