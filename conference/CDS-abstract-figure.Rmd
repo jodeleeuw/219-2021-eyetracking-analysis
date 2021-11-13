@@ -53,7 +53,7 @@ E <- displayE + figE + plot_layout(widths = c(1.5,1)) & theme(plot.margin = marg
 
 
 ```{r}
-ggsave('CDS-abstract-figure.pdf', width = 11.5, height = 7)
+ggsave('CDS-abstract-figure.png', width = 11.5, height = 7)
 
 ```
 
