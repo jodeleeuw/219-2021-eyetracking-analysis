@@ -34,8 +34,8 @@ task.data <- all.data %>%
   filter(response=="a" | response=="d") %>%
   select(subject_id, study_id, time_elapsed, trial_index, response, rt, webgazer_data, webgazer_targets) %>%
   unnest(webgazer_data) %>%
-  unpack(webgazer_targets) %>%
-  unpack(c('#face1', '#face2'), names_sep = ".")
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c('#face1', '#face2'), names_sep = ".")
 ```
 
 Add condition information
