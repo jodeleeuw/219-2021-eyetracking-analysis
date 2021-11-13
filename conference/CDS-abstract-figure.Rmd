@@ -20,20 +20,30 @@ displayC<-ggplot() + background_image(image_read('expt-example-displays/expt-exa
 displayD<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.004.jpeg'))+coord_fixed() + ggtitle('D')
 displayE<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.005.jpeg'))+coord_fixed() + ggtitle('E')
   
-figA<-read_rds('../group-d/output/ETfig.rds')
+figA<-read_rds('../group-a/output/exp1_plot.rds')
 figB<-read_rds('../group-b/output/ETfig.rds')
-figC<-read_rds('../group-d/output/ETfig.rds')
+figC<-read_rds('../group-c/output/exp3_plot.rds')+scale_color_brewer(palette = "Set1")
 figD<-read_rds('../group-d/output/ETfig.rds')
-figE<-read_rds('../group-d/output/ETfig.rds')
+figE<-read_rds('../group-e/output/exp5_plot.rds')+scale_color_brewer(palette = "Set1")
 
+
+figA.1<-ggplot(figA$data, 
+               aes(x=t.window, y=cumulative.fixation.m, shape = object_class, color = verb_type))+
+  geom_point(size=1)+
+  geom_line()+
+  scale_color_brewer(palette = "Set1", name = "Verb type")+
+  scale_shape_manual(name = "Gaze location", values = c(1,4), labels = c("distractor", "target"))+
+  theme_classic()+
+  labs(x = "Time from Verb Onset", y="Cumulative Look Probability")
+figA.1
 ```
 
 ```{r}
-A <- displayA + figA 
-B <- displayB + figB 
-C <- displayC + figC 
-D <- displayD + figD 
-E <- displayE + figE 
+A <- displayA + figA.1 + plot_layout(widths = c(1.5,1)) & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"))
+B <- displayB + figB + plot_layout(widths = c(1.5,1)) & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"))
+C <- displayC + figC + plot_layout(widths = c(1.5,1)) & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"))
+D <- displayD + figD + plot_layout(widths = c(1.5,1)) & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"))
+E <- displayE + figE + plot_layout(widths = c(1.5,1)) & theme(plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"))
 
 ```
 
@@ -43,7 +53,7 @@ E <- displayE + figE
 
 
 ```{r}
-ggsave('CDS-abstract-figure.pdf', scale = 1, width = 12, height = 7)
+ggsave('CDS-abstract-figure.pdf', width = 11.5, height = 7)
 
 ```
 
