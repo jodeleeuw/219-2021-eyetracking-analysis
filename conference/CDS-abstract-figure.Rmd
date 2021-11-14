@@ -47,8 +47,13 @@ E <- displayE + figE + plot_layout(widths = c(1.5,1)) & theme(plot.margin = marg
 
 ```
 
-```{r}
-(A | B)/(C | D ) / ( E | (grid::textGrob('Figure 1. ADD CAPTION HERE')) ) 
+```{r} 
+caption<-"Figure 1. Schematic of trials and key figures for 5 replications attempts. (A) E1: Participants'\ncumulative proportion of looks to the target (e.g. cake) and distractor (e.g., train) do not differ\nsignificantly by verb type. (B) E2: When free viewing a blank screen during memory retrieval,\nparticipants look more to the critical quadrant where the to-be-remembered object was during\nencoding. (C) E3: Participants did not look significantly more to the side of the screen with\na new image (vs. old). (D) E4: Participants looked least at the target animal and most at the\ninstrument when the verb was syntactically biased toward an instrument interpretation.\n(E) E5: Participants' bias to look at the chosen face was not signficantly higher in the\nattractiveness condition (vs. roundness)."
+
+(A | B)/(C | D ) / ( E | (ggpubr::text_grob(caption,
+                                            hjust = "left",
+                                            vjust = "top",
+                                            size = 10)) ) 
 ```
 
 
