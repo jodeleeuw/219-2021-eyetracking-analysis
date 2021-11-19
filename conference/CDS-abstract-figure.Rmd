@@ -14,15 +14,21 @@ library(ggpubr)
 
 ```{r }
 
-displayA<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.001.jpeg'))+coord_fixed() + ggtitle('A')
-displayB<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.002.jpeg'))+coord_fixed() + ggtitle('B')
-displayC<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.003.jpeg'))+coord_fixed() + ggtitle('C')
-displayD<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.004.jpeg'))+coord_fixed() + ggtitle('D')
-displayE<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.005.jpeg'))+coord_fixed() + ggtitle('E')
+displayA<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.001.jpeg'))+coord_fixed() + 
+  ggtitle('A') + theme(plot.title=element_text(hjust = 0.15))
+displayB<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.002.jpeg'))+coord_fixed() + 
+  ggtitle('B')+ theme(plot.title=element_text(hjust = 0.15))
+displayC<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.003.jpeg'))+coord_fixed() + 
+  ggtitle('C')+ theme(plot.title=element_text(hjust = 0.15))
+displayD<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.004.jpeg'))+coord_fixed() + 
+  ggtitle('D')+ theme(plot.title=element_text(hjust = 0.15))
+displayE<-ggplot() + background_image(image_read('expt-example-displays/expt-example-displays.005.jpeg'))+coord_fixed() + 
+  ggtitle('E')+ theme(plot.title=element_text(hjust = 0.15))
   
 figA<-read_rds('../group-a/output/exp1_plot.rds')
 figB<-read_rds('../group-b/output/ETfig.rds')
-figC<-read_rds('../group-c/output/exp3_plot.rds')+scale_color_brewer(palette = "Set1")
+figC<-read_rds('../group-c/output/exp3_plot.rds')+scale_color_brewer(palette = "Set1")+
+  theme(plot.title=element_text(margin=margin(t=20,b=-15)))
 figD<-read_rds('../group-d/output/ETfig.rds')
 figE<-read_rds('../group-e/output/exp5_plot.rds')+scale_color_brewer(palette = "Set1")
 
@@ -35,7 +41,7 @@ figA.1<-ggplot(figA$data,
   scale_shape_manual(name = "Gaze location", values = c(1,4), labels = c("distractor", "target"))+
   theme_classic()+
   labs(x = "Time from Verb Onset", y="Cumulative Look Probability")
-figA.1
+figC
 ```
 
 ```{r}
@@ -48,12 +54,12 @@ E <- displayE + figE + plot_layout(widths = c(1.5,1)) & theme(plot.margin = marg
 ```
 
 ```{r} 
-caption<-"Figure 1. Schematic of trials and key figures for 5 replications attempts. (A) E1: Participants'\ncumulative proportion of looks to the target (e.g. cake) and distractor (e.g., train) do not differ\nsignificantly by verb type. (B) E2: When free viewing a blank screen during memory retrieval,\nparticipants look more to the critical quadrant where the to-be-remembered object was during\nencoding. (C) E3: Participants did not look significantly more to the side of the screen with\na new image (vs. old). (D) E4: Participants looked least at the target animal and most at the\ninstrument when the verb was syntactically biased toward an instrument interpretation.\n(E) E5: Participants' bias to look at the chosen face was not signficantly higher in the\nattractiveness condition (vs. roundness)."
+caption<-"Figure 1. Schematic of trials and key figures for 5 replications attempts. (A) AK99:\nParticipants' cumulative proportion of looks to the target (e.g. cake) and distractor\n(e.g., train) do not differ significantly by verb type. (B) JJ14: When free viewing a\nblank screen during memory retrieval, participants look more to the critical quadrant\nwhere the to-be-remembered object was during encoding. (C) M00: Participants did\nnot look significantly more to the side of the screen with a new image (vs. old).\n(D) ST04: Participants looked least at the target animal and most at the instrument\nwhen the verb was syntactically biased toward an instrument interpretation. (E) S03:\nParticipants' bias to look at the chosen face was not signficantly higher in the\nattractiveness condition (vs. roundness)."
 
 (A | B)/(C | D ) / ( E | (ggpubr::text_grob(caption,
                                             hjust = "left",
                                             vjust = "top",
-                                            size = 10)) ) 
+                                            size = 11)) ) 
 ```
 
 

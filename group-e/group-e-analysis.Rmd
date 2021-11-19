@@ -135,6 +135,7 @@ ggplot(summary.gaze.view, aes(x=time.window, y=prop.in.target, ymin=prop.in.targ
   labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task")
 ```
 
+
 Fit sigmoid curve
 
 ```{r}
