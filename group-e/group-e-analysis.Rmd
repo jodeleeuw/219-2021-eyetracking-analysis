@@ -125,6 +125,7 @@ ks.test(summary.gaze.view %>% filter(task == "Attractiveness") %>% pull(prop.in.
          summary.gaze.view %>% filter(task == "Roundness") %>% pull(prop.in.target))
 ```
 
+<!--re-reading the paper, I think the KS test is over fitted parameters? -RR-->
 
 ```{r}
 ggplot(summary.gaze.view, aes(x=time.window, y=prop.in.target, ymin=prop.in.target-se, ymax=prop.in.target+se, color=task, fill=task))+
@@ -141,4 +142,25 @@ Fit sigmoid curve
 ```{r}
 attractiveness.curve <- summary.gaze.view %>% filter(roundness_task == FALSE)
 fit <- nls(prop.in.target ~ MaxP + (MinP - MaxP)/(1+(time.window/InfP)^Slope), data = attractiveness.curve, start=list(MaxP=0.9,MinP=0.5,InfP=-500,Slope=-1))
+```
+
+
+alternative analyses with mixed effects models:
+<!--added these when working on CDS abstract -RR-->
+
+```{r}
+summary.gaze.view.subject$time.window.c<-scale(summary.gaze.view.subject$time.window, center=T, scale=F )
+summary(lmer(prop.in.target.subject ~ task*time.window.c + (1 + time.window.c|subject_id), data = summary.gaze.view.subject))
+```
+
+regression with lag predictor
+
+```{r}
+summary.gaze.view.subject = summary.gaze.view.subject %>% 
+  group_by(subject_id,task) %>% 
+  mutate(lag1_prop = lag(prop.in.target.subject))
+```
+
+```{r}
+summary(lmer(prop.in.target.subject ~ task + lag1_prop + (1 + lag1_prop |subject_id), data = summary.gaze.view.subject))
 ```
