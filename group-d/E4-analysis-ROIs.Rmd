@@ -6,11 +6,7 @@ output: pdf_document
 ```{r , include=FALSE}
 library(papaja)
 library(jsonlite)
-library(dplyr)
-library(readr)
-library(tidyr)
-library(ggplot2)
-library(stringr)
+library(tidyverse)
 library(lmerTest)
 library(afex)
 library(forcats)
@@ -74,13 +70,15 @@ Coordinates need to be fixed!
 ```{r E4-categorizing-gaze-location-ROIs}
 #First figure out which object they are looking at.
 #Calculate gaze in ROIs.
+
 eyetracking.data.with.roi <- eyetracking.data %>%
   left_join(screen.data, by = 'subject') %>% 
   #filter(!subject %in% bad.eyetracking.data.subjects) %>% 
-  mutate(in.roi.0 = in.box(x,y, 0, screen_width/2, 0, screen_height/2, 0)) %>%
-  mutate(in.roi.1 = in.box(x,y, screen_width/2, screen_width, 0, screen_height/2, 0)) %>%
-  mutate(in.roi.2 = in.box(x,y, 0, screen_width/2, screen_height/2 , screen_height, 0)) %>%
-  mutate(in.roi.3 = in.box(x,y, screen_width/2, screen_width, screen_height/2 , screen_height, 0)) %>% 
+  filter(x >= 0, y >= 0) %>% # negative values indicate something's incorrect (drops about 12,000 rows!!)
+  mutate(in.roi.0 = in.box(x,y, left = 0, right = screen_width/2, top = 0, bottom = screen_height/2, padding = -25)) %>%
+  mutate(in.roi.1 = in.box(x,y, left = screen_width/2, right = screen_width, top = 0, bottom = screen_height/2, padding = -25)) %>%
+  mutate(in.roi.2 = in.box(x,y, left = 0, right = screen_width/2, top = screen_height/2 , bottom = screen_height, padding = -25)) %>%
+  mutate(in.roi.3 = in.box(x,y, left = screen_width/2, right = screen_width, top = screen_height/2 , bottom = screen_height, padding = -25)) %>% 
   mutate(in.roi.instrument = case_when(
     target_instrument == '#jspsych-free-sort-draggable-0' | target_instrument == '#jspsych-freesort-draggable-0'  ~ in.roi.0,
     target_instrument == '#jspsych-free-sort-draggable-1' | target_instrument == '#jspsych-freesort-draggable-1' ~ in.roi.1,
@@ -92,9 +90,26 @@ eyetracking.data.with.roi <- eyetracking.data %>%
     target_animal == '#jspsych-free-sort-draggable-1' | target_animal == '#jspsych-freesort-draggable-1' ~ in.roi.1,
     target_animal == '#jspsych-free-sort-draggable-2' | target_animal == '#jspsych-freesort-draggable-2' ~ in.roi.2,
     target_animal == '#jspsych-free-sort-draggable-3' | target_animal == '#jspsych-freesort-draggable-3' ~ in.roi.3
-  )) 
+  )) %>% 
+  #sample_n(100) %>% 
+  rowwise() %>% 
+  mutate(roi_vec = list(c(in.roi.0, in.roi.1, in.roi.2, in.roi.3)),
+         which_roi = ifelse(sum(roi_vec)==1, which(unlist(roi_vec) == TRUE), 99 ) ) 
 ```
 
+```{r}
+
+ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
+  geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
+  scale_y_reverse()
+```
+```{r}
+
+ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
+  geom_point(aes(x = x, y = y, color = as.factor(which_roi)), alpha = 0.5)+
+  facet_grid(compatibility~target_animal)+
+  scale_y_reverse()
+```
 
 ```{r E4-load-audio-timing-data-ROIs, message=FALSE}
 # load audio data
@@ -118,6 +133,8 @@ eyetracking.data.with.roi <- eyetracking.data.with.roi %>%
 
 # Add time window information
 eyetracking.data.with.time.windows <- eyetracking.data.with.roi %>%
+  ungroup() %>% 
+  #dplyr::slice_sample(n=100) %>% 
   mutate(time.window = case_when(
     t < onset_verb + 200 ~ "pre-verb-onset",
     t <= onset_noun + 200 ~ "post-verb-onset-pre-animal-onset",
@@ -126,6 +143,17 @@ eyetracking.data.with.time.windows <- eyetracking.data.with.roi %>%
     TRUE ~ "end"
   ),
   time.from.verb = t - onset_verb)
+```
+
+```{r}
+
+ggplot(eyetracking.data.with.time.windows %>% filter( time.window == "post-animal-onset-pre-instrument-onset"))+
+  geom_vline(aes(xintercept=screen_width/2))+
+  geom_hline(aes(yintercept=screen_height/2))+
+  geom_point(aes(x = x, y = y, color = as.factor(in.roi.animal)), alpha=0.5)+
+  facet_grid(compatibility~target_animal)+
+  scale_y_reverse()
+```
 ```
 
 
