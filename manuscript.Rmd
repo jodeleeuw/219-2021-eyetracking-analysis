@@ -290,7 +290,7 @@ The images and audios presented to the participants were the same stimuli used i
 
 ### Comparison to in-lab data
 
-```{r E4-analysis-comparsion-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
+```{r E4-analysis-comparison-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
 
 ```
 
@@ -298,9 +298,18 @@ The images and audios presented to the participants were the same stimuli used i
 
 * here we will describe the analyses that correlate calibration quality with effect size at the level of the individual 
 
+```{r E4-analysis-calibration, child='group-d/E4-analysis-calibration.Rmd'}
+
+```
+
+
 ### Effects of ROIs 
 
 * here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
+
+```{r E4-analysis-ROIs, child='group-d/E4-analysis-ROIs.Rmd'}
+
+```
 
 ## Discussion
 

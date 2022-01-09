@@ -31,7 +31,7 @@ eyetracking.window.summary.by.trial = read_csv( "output/E4_eye-tracking_data.csv
 
 first.move.orig = read_tsv("original_study_data/Experiment1_clickData.txt") 
 
-eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_FirstTimeWindow.txt") %>% 
+eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_verb.txt") %>% 
   mutate(subject = as.character(subj), 
          prop.fixations.animal = TA/(TA+TI+CA+CI),
          #sum_dur = TA+TI+CA+CI,
@@ -40,7 +40,7 @@ eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experi
          study = "original") %>% 
   select(subject, trialID, condition, time.window, prop.fixations.animal, study)
 
-eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_SecondTimeWindow.txt")%>% 
+eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_animal.txt")%>% 
   mutate(subject = as.character(subj), 
          prop.fixations.animal = TA/(TA+TI+CA+CI),
          condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
@@ -48,7 +48,7 @@ eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experi
          study = "original") %>% 
   select(subject, trialID, condition, time.window, prop.fixations.animal, study)
 
-eyetracking.window3.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_ThirdTimeWindow.txt")%>% 
+eyetracking.window3.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_instrument.txt")%>% 
   mutate(subject = as.character(subj), 
          prop.fixations.animal = TA/(TA+TI+CA+CI),
          condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
@@ -129,15 +129,47 @@ eyetracking.window.summary.by.subj.both = bind_rows(eyetracking.window1.summary.
 
 ggplot(eyetracking.window.summary.by.subj.both)+
   stat_summary(aes(x=time.window, fill=condition, y = M, alpha = study), 
-               geom = 'point', fun = 'mean', shape = 21, size = 5)+
+               geom = 'point', fun = 'mean', shape = 21, size = 3)+
   stat_summary(aes(x=as.numeric(time.window), fill=condition, y = M, linetype = study), geom = 'line', fun = 'mean', alpha = 0.5)+
   #facet_wrap(~time.window)+
   #geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
   #scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
   scale_alpha_manual(values = c(0.5,1))+
   scale_linetype_manual(values = c("dashed","solid"))+
-  coord_cartesian(ylim = c(0,1))+
+  coord_cartesian(ylim = c(0,.8))+
   theme_classic()+
   labs(y = "Proportion of fixations", x = NULL)
 ```
 Something funky going on with this graph...
+
+```{r}
+orig.data.time.window.1 <- eyetracking.window1.summary.by.trial.orig %>% 
+  filter(condition != "filler") %>% 
+  mutate(condition = fct_drop(condition))
+contrasts(orig.data.time.window.1$condition) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1/2, 1/2))
+
+model.time.window.1 <- lmer(prop.fixations.animal ~ condition + (1 | subject) + (1 | trialID), data=orig.data.time.window.1 )
+summary(model.time.window.1)
+```
+
+```{r}
+orig.data.time.window.2 <- eyetracking.window2.summary.by.trial.orig %>% 
+  filter(condition != "filler") %>% 
+  mutate(condition = fct_drop(condition))
+contrasts(orig.data.time.window.2$condition) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1/2, 1/2))
+
+model.time.window.2 <- lmer(prop.fixations.animal ~ condition + (1 | subject) + (1 | trialID), data=orig.data.time.window.2 )
+summary(model.time.window.2)
+```
+
+```{r}
+orig.data.time.window.3 <- eyetracking.window3.summary.by.trial.orig %>% 
+  filter(condition != "filler") %>% 
+  mutate(condition = fct_drop(condition))
+contrasts(orig.data.time.window.3$condition) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1/2, 1/2))
+
+model.time.window.3 <- lmer(prop.fixations.animal ~ condition + (1 | subject) + (1 | trialID), data=orig.data.time.window.3 )
+summary(model.time.window.3)
+```
+```
+
