@@ -21,15 +21,58 @@ library(broom.mixed)
 
 ```{r E4-load-web-data}
 first.move = read_csv("output/E4_mouse_data.csv")
-eyetracking.window.summary.by.trial = read_csv( "output/E4_eye-tracking_data.csv")
+eyetracking.window.summary.by.trial = read_csv( "output/E4_eye-tracking_data.csv") %>% 
+  rename("condition" = compatibility) %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal) %>% 
+  mutate(study = "web")
 ```
 
 ```{r load-data-from-original-study}
 
-first.move.orig = read_tsv("original_study_data/Experiment1_clickData.txt")
-eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_FirstTimeWindow.txt")
-eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_SecondTimeWindow.txt")
-eyetracking.window3.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_ThirdTimeWindow.txt")
+first.move.orig = read_tsv("original_study_data/Experiment1_clickData.txt") 
+
+eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_FirstTimeWindow.txt") %>% 
+  mutate(subject = as.character(subj), 
+         prop.fixations.animal = TA/(TA+TI+CA+CI),
+         #sum_dur = TA+TI+CA+CI,
+         condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
+         time.window = "post-verb-onset-pre-animal-onset",
+         study = "original") %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal, study)
+
+eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_SecondTimeWindow.txt")%>% 
+  mutate(subject = as.character(subj), 
+         prop.fixations.animal = TA/(TA+TI+CA+CI),
+         condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
+         time.window = "post-animal-onset-pre-instrument-onset",
+         study = "original") %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal, study)
+
+eyetracking.window3.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_ThirdTimeWindow.txt")%>% 
+  mutate(subject = as.character(subj), 
+         prop.fixations.animal = TA/(TA+TI+CA+CI),
+         condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
+         time.window = "post-instrument-onset",
+         study = "original") %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal, study)
+
+```
+
+```{r E4-summarizing-first-mouse-moves-for-plotting-web}
+# Summarize the data by subject, calculating proportion of trials the the first move was to the animal, instrument, or other.
+first.move.web.subject.summary <- first.move %>%
+  group_by(subject, compatibility) %>%
+  summarize(prop.animal = mean(first.move.type == 'animal'),
+            prop.instrument = mean(first.move.type == 'instrument'),
+            prop.other = mean(first.move.type == 'other')) %>%
+  pivot_longer(c('prop.animal', 'prop.instrument', 'prop.other'), names_to="target_type", values_to="proportion")
+
+# Summarize the condition-level data for a barplot.
+first.move.web.summary <- first.move.web.subject.summary %>%
+  group_by(compatibility, target_type) %>%
+  summarize(M=mean(proportion), SE=sd(proportion)/sqrt(n())) %>% 
+  mutate(bias = factor(compatibility, levels = c("instrument", "equibiased", "modifier") ),
+         study = "web")
 ```
 
 ```{r E4-summarizing-first-mouse-moves-for-plotting-orig}
@@ -45,17 +88,56 @@ first.move.orig.subject.summary <- first.move.orig %>%
 first.move.orig.summary <- first.move.orig.subject.summary %>%
   group_by(condition, target_type) %>%
   summarize(M=mean(proportion), SE=sd(proportion)/sqrt(n())) %>% 
-  mutate(bias = factor(condition, levels = c("Inst", "Equi", "mod") ))
+  mutate(bias = factor(condition, levels = c("Inst", "Equi", "mod"), labels = c("instrument", "equibiased", "modifier") ),
+         study = "original")
 ```
 
-```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in original dataset (Ryskin et al., 2017) ."}
+In addition to qualitatively replicating the action and eye-tracking results, the quantitative patterns were similar to those observed in the dataset which was the target of replication.
 
-ggplot(first.move.orig.summary, aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE))+
+
+```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online."}
+
+ggplot(bind_rows(first.move.orig.summary, first.move.web.summary), 
+       aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE, alpha = study))+
   geom_col(position=position_dodge(width=0.9), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
   scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
+  scale_alpha_manual(values = c(0.5,1))+
   coord_cartesian(ylim = c(0,1))+
   theme_classic()+
-  labs(y = "Proportion of first mouse movements", x = NULL)
+  labs(y = "Proportion of first mouse movements", x = "Bias")
 ```
 
+
+```{r}
+eyetracking.window.summary.by.trial.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial) %>% 
+   filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" )
+```
+
+```{r}
+eyetracking.window.summary.by.subj.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial) %>% 
+   filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" ) %>% 
+  group_by(study, condition, time.window, subject) %>% 
+  summarize(M = mean(prop.fixations.animal)) %>% 
+  mutate(time.window = factor(time.window, 
+                            levels = c("post-verb-onset-pre-animal-onset",
+                                       "post-animal-onset-pre-instrument-onset",
+                                       "post-instrument-onset")))
+```
+
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online."}
+
+ggplot(eyetracking.window.summary.by.subj.both)+
+  stat_summary(aes(x=time.window, fill=condition, y = M, alpha = study), 
+               geom = 'point', fun = 'mean', shape = 21, size = 5)+
+  stat_summary(aes(x=as.numeric(time.window), fill=condition, y = M, linetype = study), geom = 'line', fun = 'mean', alpha = 0.5)+
+  #facet_wrap(~time.window)+
+  #geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
+  #scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
+  scale_alpha_manual(values = c(0.5,1))+
+  scale_linetype_manual(values = c("dashed","solid"))+
+  coord_cartesian(ylim = c(0,1))+
+  theme_classic()+
+  labs(y = "Proportion of fixations", x = NULL)
+```
+Something funky going on with this graph...
