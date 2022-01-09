@@ -1,9 +1,9 @@
 ---
-title             : "Eye-tracking on the web: lessons learned from replicating 6 experiments"
+title             : "Eye-tracking on the web: lessons learned from replicating 5 experiments"
 shorttitle        : "Just picked a random title: feel free to change"
 
 author: 
-  - name          : "First Author"
+  - name          : "Josh de Leeuw"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
     address       : "Postal address"
@@ -12,16 +12,16 @@ author:
       - Conceptualization
       - Writing - Original Draft Preparation
       - Writing - Review & Editing
-  - name          : "Ernst-August Doelle"
+  - name          : "et al."
     affiliation   : "1,2"
     role:
       - Writing - Review & Editing
 
 affiliation:
   - id            : "1"
-    institution   : "Wilhelm-Wundt-University"
+    institution   : "Vassar College"
   - id            : "2"
-    institution   : "Konstanz Business School"
+    institution   : "XX"
 
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
@@ -76,8 +76,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 <!-- MAJOR TO DOs: 
  - get data from in-lab versions of group A (AJ) and group D (RR)
- - re-run Posner cueing (after we finish analysing the first 5)
- - replicate group D and ?? in lab
+ - replicate group D and A in lab
  
  (see bottom for notes from e-mails)
  -->
@@ -86,13 +85,13 @@ Intro stuff:
 
 - Eye-tracking as a key method in cognitive science research
 
-- Online data collection is more and more popular & let's us ask new questions
+- Online data collection is more and more popular & let's us ask new questions, test more diverse populations
 
 - But, concerns over quality + little known about eye-tracking online
 
 _Present work_
 
-In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the eye-tracking plug-in from `jsPsych`, a Javascript library for running behavioral experiments in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. The plug-in relies on the `webgazer.js` library for webcam eye-tracking [@papoutsaki2016webgazer]. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "natural" scenes). ...
+In the present work, we attempted to replicate five eye-tracking studies from the cognitive science literature using the eye-tracking plug-in from `jsPsych`, a Javascript library for running behavioral experiments in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. The plug-in relies on the `webgazer.js` library for webcam eye-tracking [@papoutsaki2016webgazer]. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "natural" scenes). ...
 
 # General Methods
 
@@ -291,7 +290,9 @@ The images and audios presented to the participants were the same stimuli used i
 
 ### Comparison to in-lab data
 
-* here we will describe a direct comparison to data collected in the lab
+```{r E4-analysis-comparsion-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
+
+```
 
 ### Calibration 
 

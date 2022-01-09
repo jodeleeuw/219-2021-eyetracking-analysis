@@ -5,8 +5,8 @@
 \documentclass[
   english,
   man,floatsintext]{apa6}
-\title{Eye-tracking on the web: lessons learned from replicating 6 experiments}
-\author{First Author\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
+\title{Eye-tracking on the web: lessons learned from replicating 5 experiments}
+\author{Josh de Leeuw\textsuperscript{1} \& et al.\textsuperscript{1,2}}
 \date{}
 
 \usepackage{amsmath,amssymb}
@@ -41,8 +41,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Eye-tracking on the web: lessons learned from replicating 6 experiments},
-  pdfauthor={First Author1 \& Ernst-August Doelle1,2},
+  pdftitle={Eye-tracking on the web: lessons learned from replicating 5 experiments},
+  pdfauthor={Josh de Leeuw1 \& et al.1,2},
   pdflang={en-EN},
   pdfkeywords={keywords},
   hidelinks,
@@ -165,13 +165,13 @@ Add complete departmental affiliations for each author here. Each new line herei
 
 Enter author note here.
 
-The authors made the following contributions. First Author: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; Ernst-August Doelle: Writing - Review \& Editing.
+The authors made the following contributions. Josh de Leeuw: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; et al.: Writing - Review \& Editing.
 
-Correspondence concerning this article should be addressed to First Author, Postal address. E-mail: \href{mailto:my@email.com}{\nolinkurl{my@email.com}}
+Correspondence concerning this article should be addressed to Josh de Leeuw, Postal address. E-mail: \href{mailto:my@email.com}{\nolinkurl{my@email.com}}
 
 }
 
-\affiliation{\vspace{0.5cm}\textsuperscript{1} Wilhelm-Wundt-University\\\textsuperscript{2} Konstanz Business School}
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Vassar College\\\textsuperscript{2} XX}
 
 \abstract{
 ADD LATER
@@ -188,14 +188,14 @@ Intro stuff:
 \item
   Eye-tracking as a key method in cognitive science research
 \item
-  Online data collection is more and more popular \& let's us ask new questions
+  Online data collection is more and more popular \& let's us ask new questions, test more diverse populations
 \item
   But, concerns over quality + little known about eye-tracking online
 \end{itemize}
 
 \emph{Present work}
 
-In the present work, we attempted to replicate six eye-tracking studies from the cognitive science literature using the eye-tracking plug-in from \texttt{jsPsych}, a Javascript library for running behavioral experiments in a web browser (de Leeuw, 2015). The plug-in relies on the \texttt{webgazer.js} library for webcam eye-tracking (Papoutsaki et al., 2016). The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with ``natural'' scenes). \ldots{}
+In the present work, we attempted to replicate five eye-tracking studies from the cognitive science literature using the eye-tracking plug-in from \texttt{jsPsych}, a Javascript library for running behavioral experiments in a web browser (de Leeuw, 2015). The plug-in relies on the \texttt{webgazer.js} library for webcam eye-tracking (Papoutsaki et al., 2016). The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. The studies were chosen to cover a variety of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with ``natural'' scenes). \ldots{}
 
 \hypertarget{general-methods}{%
 \section{General Methods}\label{general-methods}}
@@ -466,11 +466,11 @@ In order to assess how verb bias impacted sentence disambiguation as the sentenc
 \hypertarget{comparison-to-in-lab-data-1}{%
 \subsubsection{Comparison to in-lab data}\label{comparison-to-in-lab-data-1}}
 
-\begin{itemize}
-\tightlist
-\item
-  here we will describe a direct comparison to data collected in the lab
-\end{itemize}
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf}
+\caption{\label{fig:E4-mouse-moves-fig-web-and-orig}Proportion of first mouse movements by location and verb bias in original dataset (Ryskin et al., 2017) .}
+\end{figure}
 
 \hypertarget{calibration-2}{%
 \subsubsection{Calibration}\label{calibration-2}}

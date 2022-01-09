@@ -1,0 +1,61 @@
+---
+title: "E4-analysis-comparison-to-original"
+author: "Rachel Ryskin"
+output: pdf_document
+---
+
+```{r , include=FALSE}
+library(papaja)
+library(jsonlite)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(lmerTest)
+library(afex)
+library(forcats)
+library(broom.mixed)
+```
+
+
+```{r E4-load-web-data}
+first.move = read_csv("output/E4_mouse_data.csv")
+eyetracking.window.summary.by.trial = read_csv( "output/E4_eye-tracking_data.csv")
+```
+
+```{r load-data-from-original-study}
+
+first.move.orig = read_tsv("original_study_data/Experiment1_clickData.txt")
+eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_FirstTimeWindow.txt")
+eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_SecondTimeWindow.txt")
+eyetracking.window3.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_ThirdTimeWindow.txt")
+```
+
+```{r E4-summarizing-first-mouse-moves-for-plotting-orig}
+# Summarize the data by subject, calculating proportion of trials the the first move was to the animal, instrument, or other.
+first.move.orig.subject.summary <- first.move.orig %>%
+  group_by(subject, condition) %>%
+  summarize(prop.animal = mean(clickedTargetAnimalFirst),
+            prop.instrument = mean(clickedTargetInstrumentFirst),
+            prop.other = mean(clickedTargetAnimalFirst == 0 & clickedTargetInstrumentFirst == 0 )) %>%
+  pivot_longer(c('prop.animal', 'prop.instrument', 'prop.other'), names_to="target_type", values_to="proportion")
+
+# Summarize the condition-level data for a barplot.
+first.move.orig.summary <- first.move.orig.subject.summary %>%
+  group_by(condition, target_type) %>%
+  summarize(M=mean(proportion), SE=sd(proportion)/sqrt(n())) %>% 
+  mutate(bias = factor(condition, levels = c("Inst", "Equi", "mod") ))
+```
+
+```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in original dataset (Ryskin et al., 2017) ."}
+
+ggplot(first.move.orig.summary, aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE))+
+  geom_col(position=position_dodge(width=0.9), color = "black")+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
+  scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
+  coord_cartesian(ylim = c(0,1))+
+  theme_classic()+
+  labs(y = "Proportion of first mouse movements", x = NULL)
+```
+

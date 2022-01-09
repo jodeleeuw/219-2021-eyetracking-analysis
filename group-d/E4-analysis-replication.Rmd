@@ -110,10 +110,14 @@ first.move.summary <- first.move.subject.summary %>%
 ggplot(first.move.summary, aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE))+
   geom_col(position=position_dodge(width=0.9), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
-  scale_fill_brewer(palette = "Set1")+
+  scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
+  coord_cartesian(ylim = c(0,1))+
   theme_classic()+
-  labs(y = "Proportion of first mouse movements")+
-  guides(color = guide_legend("Click location"))
+  labs(y = "Proportion of first mouse movements", x = NULL)
+```
+
+```{r, eval=FALSE}
+write_csv(first.move, "output/E4_mouse_data.csv")
 ```
 
 ```{r E4-mouse-moves-analysis}
@@ -242,6 +246,10 @@ eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
   summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
             prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
   mutate(compatibility = factor(compatibility))
+```
+
+```{r, eval=FALSE}
+write_csv(eyetracking.window.summary.by.trial, "output/E4_eye-tracking_data.csv")
 ```
 
 ```{r E4-set-contrasts-for-ET-analysis}
