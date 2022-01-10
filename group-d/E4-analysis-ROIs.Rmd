@@ -65,7 +65,6 @@ mousetracking.data <- task.data %>%
   unnest(mouse_events)
 ```
 
-Coordinates need to be fixed!
 
 ```{r E4-categorizing-gaze-location-ROIs}
 #First figure out which object they are looking at.
@@ -74,11 +73,37 @@ Coordinates need to be fixed!
 eyetracking.data.with.roi <- eyetracking.data %>%
   left_join(screen.data, by = 'subject') %>% 
   #filter(!subject %in% bad.eyetracking.data.subjects) %>% 
-  filter(x >= 0, y >= 0) %>% # negative values indicate something's incorrect (drops about 12,000 rows!!)
-  mutate(in.roi.0 = in.box(x,y, left = 0, right = screen_width/2, top = 0, bottom = screen_height/2, padding = -25)) %>%
-  mutate(in.roi.1 = in.box(x,y, left = screen_width/2, right = screen_width, top = 0, bottom = screen_height/2, padding = -25)) %>%
-  mutate(in.roi.2 = in.box(x,y, left = 0, right = screen_width/2, top = screen_height/2 , bottom = screen_height, padding = -25)) %>%
-  mutate(in.roi.3 = in.box(x,y, left = screen_width/2, right = screen_width, top = screen_height/2 , bottom = screen_height, padding = -25)) %>% 
+  #filter(x >= 0, y >= 0) %>% # negative values indicate something's incorrect (drops about 12,000 rows!!)
+  mutate(in.roi.0 = in.box(x,y,`#jspsych-free-sort-draggable-0.left`, `#jspsych-free-sort-draggable-0.right`, `#jspsych-free-sort-draggable-0.top`, `#jspsych-free-sort-draggable-0.bottom`, 100)) %>%
+  mutate(in.roi.1 = in.box(x,y,`#jspsych-free-sort-draggable-1.left`, `#jspsych-free-sort-draggable-1.right`, `#jspsych-free-sort-draggable-1.top`, `#jspsych-free-sort-draggable-1.bottom`, 100)) %>%
+  mutate(in.roi.2 = in.box(x,y,`#jspsych-free-sort-draggable-2.left`, `#jspsych-free-sort-draggable-2.right`, `#jspsych-free-sort-draggable-2.top`, `#jspsych-free-sort-draggable-2.bottom`, 100)) %>%
+  mutate(in.roi.3 = in.box(x,y,`#jspsych-free-sort-draggable-3.left`, `#jspsych-free-sort-draggable-3.right`, `#jspsych-free-sort-draggable-3.top`, `#jspsych-free-sort-draggable-3.bottom`, 100)) %>% 
+  mutate(in.roi.instrument = case_when(
+    target_instrument == '#jspsych-free-sort-draggable-0' | target_instrument == '#jspsych-freesort-draggable-0'  ~ in.roi.0,
+    target_instrument == '#jspsych-free-sort-draggable-1' | target_instrument == '#jspsych-freesort-draggable-1' ~ in.roi.1,
+    target_instrument == '#jspsych-free-sort-draggable-2' | target_instrument == '#jspsych-freesort-draggable-2' ~ in.roi.2,
+    target_instrument == '#jspsych-free-sort-draggable-3' | target_instrument == '#jspsych-freesort-draggable-3' ~ in.roi.3
+  )) %>%
+  mutate(in.roi.animal = case_when(
+    target_animal == '#jspsych-free-sort-draggable-0' | target_animal == '#jspsych-freesort-draggable-0' ~ in.roi.0,
+    target_animal == '#jspsych-free-sort-draggable-1' | target_animal == '#jspsych-freesort-draggable-1' ~ in.roi.1,
+    target_animal == '#jspsych-free-sort-draggable-2' | target_animal == '#jspsych-freesort-draggable-2' ~ in.roi.2,
+    target_animal == '#jspsych-free-sort-draggable-3' | target_animal == '#jspsych-freesort-draggable-3' ~ in.roi.3
+  )) %>% 
+  #sample_n(100) %>% 
+  rowwise() %>% 
+  mutate(roi_vec = list(c(in.roi.0, in.roi.1, in.roi.2, in.roi.3)),
+         which_roi = ifelse(sum(roi_vec)==1, which(unlist(roi_vec) == TRUE), 99 ) ) 
+
+padding = -50
+eyetracking.data.with.quadrant.roi <- eyetracking.data %>%
+  left_join(screen.data, by = 'subject') %>% 
+  #filter(!subject %in% bad.eyetracking.data.subjects) %>% 
+  #filter(x >= 0, y >= 0) %>% # negative values indicate something's incorrect (drops about 12,000 rows!!)
+  mutate(in.roi.0 = in.box(x,y, left = 0, right = screen_width/2, top = 0, bottom = screen_height/2, padding )) %>%
+  mutate(in.roi.1 = in.box(x,y, left = screen_width/2, right = screen_width, top = 0, bottom = screen_height/2, padding )) %>%
+  mutate(in.roi.2 = in.box(x,y, left = screen_width/2, right = screen_width, top = screen_height/2 , bottom = screen_height, padding )) %>%
+  mutate(in.roi.3 = in.box(x,y, left = 0, right = screen_width/2, top = screen_height/2 , bottom = screen_height, padding )) %>% 
   mutate(in.roi.instrument = case_when(
     target_instrument == '#jspsych-free-sort-draggable-0' | target_instrument == '#jspsych-freesort-draggable-0'  ~ in.roi.0,
     target_instrument == '#jspsych-free-sort-draggable-1' | target_instrument == '#jspsych-freesort-draggable-1' ~ in.roi.1,
@@ -97,9 +122,27 @@ eyetracking.data.with.roi <- eyetracking.data %>%
          which_roi = ifelse(sum(roi_vec)==1, which(unlist(roi_vec) == TRUE), 99 ) ) 
 ```
 
+
 ```{r}
 
 ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
+  geom_text(aes(x = `#jspsych-free-sort-draggable-0.x`, y = `#jspsych-free-sort-draggable-0.y`), color = "red", label = "0")+
+  geom_text(aes(x = `#jspsych-free-sort-draggable-1.x`, y = `#jspsych-free-sort-draggable-1.y`), color = "blue", label = "1")+
+  geom_text(aes(x = `#jspsych-free-sort-draggable-2.x`, y = `#jspsych-free-sort-draggable-2.y`), color = "green", label = "2")+
+  geom_text(aes(x = `#jspsych-free-sort-draggable-3.x`, y = `#jspsych-free-sort-draggable-3.y`), color = "black", , label = "3")+
+  scale_y_reverse()
+```
+
+```{r}
+
+ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
+  geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
+  scale_y_reverse()
+```
+
+```{r}
+
+ggplot(eyetracking.data.with.quadrant.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
   geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
   scale_y_reverse()
 ```
@@ -142,20 +185,42 @@ eyetracking.data.with.time.windows <- eyetracking.data.with.roi %>%
     t <= onset_instrument + 1500 + 200 ~ "post-instrument-onset",
     TRUE ~ "end"
   ),
-  time.from.verb = t - onset_verb)
+  time.from.verb = t - onset_verb, 
+  time.window = factor(time.window, levels = c("pre-verb-onset", "post-verb-onset-pre-animal-onset","post-animal-onset-pre-instrument-onset","post-instrument-onset", "end")))
+```
+
+```{r E4-timelocking-gaze-data-quadrant-ROIs}
+# Merge in audio timing information
+eyetracking.data.with.quadrant.roi <- eyetracking.data.with.quadrant.roi %>%
+  mutate(sound = str_split(audio, pattern="/", simplify = T)[,4]) %>%
+  left_join(audio.info, by="sound")
+
+# Add time window information
+eyetracking.data.with.time.windows.quadrant <- eyetracking.data.with.quadrant.roi %>%
+  ungroup() %>% 
+  #dplyr::slice_sample(n=100) %>% 
+  mutate(time.window = case_when(
+    t < onset_verb + 200 ~ "pre-verb-onset",
+    t <= onset_noun + 200 ~ "post-verb-onset-pre-animal-onset",
+    t <= onset_instrument + 200 ~ "post-animal-onset-pre-instrument-onset",
+    t <= onset_instrument + 1500 + 200 ~ "post-instrument-onset",
+    TRUE ~ "end"
+  ),
+  time.from.verb = t - onset_verb, 
+  time.window = factor(time.window, levels = c("pre-verb-onset", "post-verb-onset-pre-animal-onset","post-animal-onset-pre-instrument-onset","post-instrument-onset", "end")))
 ```
 
 ```{r}
 
-ggplot(eyetracking.data.with.time.windows %>% filter( time.window == "post-animal-onset-pre-instrument-onset"))+
+ggplot(eyetracking.data.with.time.windows.quadrant %>%filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>75,]$subject) %>%
+         filter(in.roi.animal)) +
+                # calib_by_subj comes from the calibration analysis rmd          
   geom_vline(aes(xintercept=screen_width/2))+
   geom_hline(aes(yintercept=screen_height/2))+
-  geom_point(aes(x = x, y = y, color = as.factor(in.roi.animal)), alpha=0.5)+
-  facet_grid(compatibility~target_animal)+
+  geom_point(aes(x = x, y = y), alpha=0.2)+
+  facet_grid(time.window~target_animal)+
   scale_y_reverse()
 ```
-```
-
 
 ```{r E4-downsampling-gaze-data-for-plotting-ROIs}
 #Add time window
@@ -163,9 +228,16 @@ eyetracking.data.with.time.windows <- eyetracking.data.with.time.windows %>%
   mutate(t.window = floor(time.from.verb/50)*50)
 ```
 
+```{r E4-downsampling-gaze-data-for-plotting-quadrants}
+#Add time window
+eyetracking.data.with.time.windows.quadrant <- eyetracking.data.with.time.windows.quadrant %>%
+  mutate(t.window = floor(time.from.verb/50)*50)
+```
+
 ```{r E4-summarizing-gaze-data-for-plotting-ROIs}
 #Summarize data for plotting
 eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
+               filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>50,]$subject) %>% # calib_by_subj comes from the calibration analysis rmd %>%
   filter(between(t.window , -200, 4000)) %>%
   group_by(subject, compatibility, t.window) %>%
   summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
@@ -195,9 +267,42 @@ fig2<-ggplot(eyetracking.figure.2.data %>%
 fig2
 ```
 
+```{r E4-summarizing-gaze-data-for-plotting-quadrants}
+#Summarize data for plotting
+eyetracking.figure.3.data <- eyetracking.data.with.time.windows.quadrant %>%
+               filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>50,]$subject) %>% # calib_by_subj comes from the calibration analysis rmd
+  filter(between(t.window , -200, 4000)) %>%
+  group_by(subject, compatibility, t.window) %>%
+  summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
+  pivot_longer(c('p.animal', 'p.instrument'), names_to="object_type", values_to="prop_fixations") %>%
+  #mutate(prop_fixations = if_else(is.na(prop_fixations), 0, prop_fixations)) %>%
+  group_by(compatibility, t.window, object_type) %>%
+  summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
+```
+
+```{r E4-gaze-timecourse-fig-ROIs, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms."}
+
+fig3<-ggplot(eyetracking.figure.3.data %>% 
+  mutate(compatibility = factor(compatibility, 
+                                levels = c("modifier", "equibiased", "instrument" ), 
+                                labels = c("Modifier", "Equi-biased", "Instrument" ))), 
+  aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, linetype=object_type))+
+  geom_ribbon(color=NA, alpha=0.3)+
+  geom_line(size=1)+
+  scale_color_brewer(palette = "Set1")+
+  scale_fill_brewer(palette = "Set1")+
+  scale_linetype(labels = c("Animal", "Instrument") )+
+  theme_classic() +
+  geom_vline(xintercept = animal.onset + 200) + 
+  geom_vline(xintercept = instrument.onset + 200)+
+  labs(y = "Proportion of looks", x = "Time relative to verb onset (ms)")+
+  guides(color = guide_legend("Verb bias"),fill = guide_legend("Verb bias"), linetype = guide_legend("Gaze location"))
+fig3
+```
+
 ```{r }
 #Summarize fixations on target and instrument
-eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
+eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows.quadrant %>%
   group_by(subject, trialID, sound, compatibility, time.window) %>%
   summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
             prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
@@ -219,19 +324,25 @@ model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1  | subjec
                             control = lmerControl(optimizer = "bobyqa",
                                                   optCtrl = list(maxfun = 2e6)))
 
+summary(model.time.window.1)
 ```
 
 ```{r }
 data.time.window.2 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-animal-onset-pre-instrument-onset")
 
 model.time.window.2 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.2)
+
+summary(model.time.window.2)
 ```
 
 ```{r }
 data.time.window.3 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-instrument-onset")
 
 model.time.window.3 <- lmer(prop.fixations.animal ~ compatibility + (1 | subject) + (1 | trialID), data=data.time.window.3)
+
+summary(model.time.window.3)
 ```
+
 ```{r E4-ET-analysis-tables}
 E4_ET_model1_tab = broom.mixed::tidy(model.time.window.1) 
 E4_ET_model2_tab = broom.mixed::tidy(model.time.window.2) 
