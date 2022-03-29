@@ -1,0 +1,165 @@
+---
+title: "Experiment 3: Replication Analysis"
+output: html_notebook
+---
+
+```{r E3 load libraries, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(ggplot2)
+```
+
+```{r E3 load all data, include=FALSE}
+data.files <- list.files('data', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  data.table$response <- as.character(data.table$response)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+```{r Split into day 1 and day 2, include=FALSE}
+study.id.day.1.group.1 <- "6062337f1a63a6788185d0e3"
+study.id.day.1.group.2 <- "607de170bb44b7e25174421f"
+study.id.day.2.group.1 <- "606233c0e42b980319b6a18e"
+study.id.day.2.group.2 <- "607de2837874a824e2e8c6ec"
+
+all.data <- all.data %>%
+  mutate(day = if_else(study_id %in% c(study.id.day.1.group.1, study.id.day.1.group.2), 1, 2)) %>%
+  mutate(group = if_else(study_id %in% c(study.id.day.1.group.1, study.id.day.2.group.1), 1, 2))
+
+data.day.1 <- all.data %>% filter(day == 1)
+data.day.2 <- all.data %>% filter(day == 2)
+```
+
+```{r Select eyetracking data, include=FALSE}
+eyetracking.data <- data.day.1 %>%
+  filter(phase == "part2") %>%
+  select(subject_id, webgazer_data, webgazer_targets, left_image_new, right_image_new, right_image, left_image) %>%
+  unpack(webgazer_targets) %>%
+  unpack(c("#left-img", "#right-img"), names_sep=".") %>%
+  unnest(webgazer_data)
+```
+
+```{r Add ROI information, include=FALSE}
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+
+eyetracking.data <- eyetracking.data %>%
+  mutate(in.left.roi = in.box(x, y,`#left-img.left`, `#left-img.right`, `#left-img.top`, `#left-img.bottom`, 50))%>%
+  mutate(in.right.roi = in.box(x, y,`#right-img.left`, `#right-img.right`, `#right-img.top`, `#right-img.bottom`, 50))%>%
+  mutate(in.target.roi = if_else(left_image_new == TRUE, in.left.roi, in.right.roi))%>%
+  mutate(in.distractor.roi = if_else(left_image_new == TRUE, in.right.roi, in.left.roi))
+```
+
+```{r Calculate looking score, include=FALSE}
+looking.score.data <- eyetracking.data %>% 
+  group_by(subject_id, right_image, left_image, right_image_new, left_image_new) %>%
+  summarise(looking.score = if_else(sum(in.target.roi, in.distractor.roi) == 0, 0, sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi))) %>%
+  mutate(image = if_else(right_image_new, left_image, right_image))
+```
+
+```{r Day 1 t-test looking scores, include=FALSE}
+t.test.data1 <- looking.score.data %>%
+  group_by(subject_id) %>%
+  summarize(M.looking.score = mean(looking.score))
+
+t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
+```
+
+#### Day 1
+
+During day 1 of the experiment, participants viewed pairs of images, one of which was always familiar and the other unfamiliar. We calculated a looking score for each participant, defined as the proportion of gaze samples in the ROI of the unfamiliar image out of all the gaze samples that were in either ROI. Gaze samples that were not in either ROI were not included in this analysis. A looking score of 0.5 indicates that participants looked equally often at the familiar and unfamiliar images, while a looking score above 0.5 indicates a preference for the unfamiliar object and a looking score below 0.5 indicate a preference for the familiar object. The mean looking score was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was not significantly different from 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
+
+#### Day 2
+
+```{r Prepare Day 2 data, include=FALSE}
+day2.test.data <- data.day.2 %>%
+  filter(task %in% c("recognition", "confidence")) %>%
+  select(subject_id, image, old_or_new, correct, rt, response, task) %>%
+  pivot_wider(names_from=task, values_from=c(correct, response, rt)) %>%
+  select(-correct_confidence) %>%
+  mutate(response_confidence = as.numeric(response_confidence)) %>%
+```
+
+```{r Calculate accuracy of subjects, include=FALSE}
+day2.accuracy <- day2.test.data %>%
+  group_by(subject_id) %>%
+  filter(rt_recognition <= 10000) %>%
+  summarize(accuracy = mean(correct_recognition))
+```
+
+```{r Compute confidence data, include=FALSE}
+confidence.test.data <- day2.test.data %>%
+  filter(rt_recognition <= 10000) %>%
+  group_by(subject_id, correct_recognition) %>%
+  summarize(M.confidence = mean(response_confidence))
+
+subjects.100.percent.accurate <- day2.test.data %>%
+  filter(rt_recognition <= 10000) %>%
+  group_by(subject_id) %>%
+  summarize(accuracy = mean(correct_recognition)) %>%
+  filter(accuracy == 1) %>%
+  pull(subject_id)
+
+confidence.test.data.filtered <- confidence.test.data %>%
+  filter(!subject_id %in% subjects.100.percent.accurate)
+
+confidence.t.test <- t.test(M.confidence ~ correct_recognition, data=confidence.test.data.filtered, paired=T)
+```
+
+```{r Compute RT data, include=FALSE}
+rt.test.data <- day2.test.data %>%
+  filter(rt_recognition <= 10000) %>%
+  group_by(subject_id, correct_recognition) %>%
+  summarize(M.rt = mean(rt_recognition))
+
+rt.test.data.filtered <- rt.test.data %>%
+  filter(!subject_id %in% subjects.100.percent.accurate)
+
+rt.t.test <- t.test(M.rt ~ correct_recognition, data=rt.test.data.filtered, paired=T)
+```
+
+In all of these analyses, we excluded the `r day2.test.data %>% filter(rt_recognition > 10000) %>% nrow()` (out of `r day2.test.data %>% nrow()`) trials where the response time for the recognition judgment was greater than 10 seconds. 
+
+Participants correctly identified whether the image was familiar or unfamiliar `r mean(day2.accuracy$accuracy)*100`% (*SD* = `r sd(day2.accuracy$accuracy*100)`) of the time. After excluding the `r length(subjects.100.percent.accurate)` participants who responded correctly to all images, the average confidence rating for correct responses (M = `r confidence.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.confidence) %>% mean()`; SD = `r confidence.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.confidence) %>% sd()`) was significantly higher than their average confidence ratings for incorrect responses (M = `r confidence.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.confidence) %>% mean()`; SD = `r confidence.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.confidence) %>% sd()`), t(`r confidence.t.test$parameter`) = `r confidence.t.test$statistic`, p = `r confidence.t.test$p.value` . Among the same subset of participants, response times for correct responses (M = `r rt.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.rt) %>% mean()`, SD = `r rt.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.rt) %>% sd()`) were also significantly faster than for incorrect responses (M = `r rt.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.rt) %>% mean()`, SD = `r rt.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.rt) %>% sd()`), t(`r rt.t.test$parameter`) = `r rt.t.test$statistic` , p = `r rt.t.test$p.value`.
+
+```{r Calculate Looking Score Correlations, include=FALSE}
+looking.plus.behavioral <- left_join(looking.score.data, day2.test.data)
+
+looking.confidence.correlations.subjects <- looking.plus.behavioral %>%
+  filter(correct_recognition == TRUE) %>%
+  filter(rt_recognition <= 10000) %>%
+  group_by(subject_id) %>%
+  summarize(pearson.r = cor(looking.score, response_confidence)) %>%
+  mutate(r.to.z = .5*(log(1+pearson.r) - log(1 - pearson.r)))
+
+looking.confidence.correlations.subjects.filtered <- looking.confidence.correlations.subjects %>%
+  filter(!is.na(pearson.r))
+
+looking.confidence.correlation.t.test <- t.test(looking.confidence.correlations.subjects.filtered$r.to.z)
+
+looking.rt.correlations.subjects <- looking.plus.behavioral %>%
+  filter(correct_recognition == TRUE) %>%
+  filter(rt_recognition <= 10000) %>%
+  group_by(subject_id) %>%
+  summarize(pearson.r = cor(looking.score, rt_recognition)) %>%
+  mutate(r.to.z = .5*(log(1+pearson.r) - log(1 - pearson.r)))
+
+looking.rt.correlations.subjects.filtered <- looking.rt.correlations.subjects %>%
+  filter(!is.na(pearson.r))
+
+looking.rt.correlation.t.test <-t.test(looking.rt.correlations.subjects.filtered$r.to.z)
+```
+
+To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on day 2, we computed the correlation coefficient between day 1 looking scores and day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, we found no significant different from 0 for the correlation between looking score and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looking score and RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
+
+```{r Plot Looking Score Correlations, echo=FALSE}
+ggplot(looking.plus.behavioral %>% filter(rt_recognition < 10000), aes(x=looking.score, y=rt_recognition))+
+  geom_point()+
+  theme_bw()
+```
