@@ -92,7 +92,9 @@ first.move.orig.summary <- first.move.orig.subject.summary %>%
          study = "original")
 ```
 
-In addition to qualitatively replicating the action and eye-tracking results, the quantitative patterns were similar to those observed in the dataset which was the target of replication.
+The web version of the study qualitatively replicates the action and eye-tracking results of the original dataset [@ryskinVerbBiasesAre2017]. 
+The mouse click results from both studies are summarized in Figure \@ref(fig:E4-mouse-moves-fig-web-and-orig).
+The quantitative patterns of clicks were similar to those observed in the original dataset, though for Instrument-biased verbs, clicks were closer to evenly split between the animal and the instrument relative to the in-lab study where they were very clearly biased toward the instrument.
 
 
 ```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online."}
@@ -108,6 +110,10 @@ ggplot(bind_rows(first.move.orig.summary, first.move.web.summary),
   labs(y = "Proportion of first mouse movements", x = "Bias")
 ```
 
+The eye-tracking results from both studies are summarized in Figure \@ref(fig:E4-proportion-fix-by-window-both). 
+For simplicity, and to reflect the dependent variable used in analyses, we average the proportion of fixations to the target animal within each time window.
+Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study. 
+This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study. 
 
 ```{r}
 eyetracking.window.summary.by.trial.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial) %>% 
@@ -118,31 +124,47 @@ eyetracking.window.summary.by.trial.both = bind_rows(eyetracking.window1.summary
 eyetracking.window.summary.by.subj.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial) %>% 
    filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" ) %>% 
   group_by(study, condition, time.window, subject) %>% 
-  summarize(M = mean(prop.fixations.animal)) %>% 
+  summarize(mean_prop = mean(prop.fixations.animal, na.rm = T)) %>% 
   mutate(time.window = factor(time.window, 
                             levels = c("post-verb-onset-pre-animal-onset",
                                        "post-animal-onset-pre-instrument-onset",
-                                       "post-instrument-onset")))
+                                       "post-instrument-onset"),
+                            labels = c('Verb to animal \n("Rub the")',
+                                       'Animal onset\n("frog with the")',
+                                       'Instrument+1500ms\n(feather...")')),
+         condition  = factor(condition, 
+                             levels = c("modifier", "equibiased", "instrument"), 
+                             labels = c("Modifier", "Equi-biased", "Instrument"))
+         ) %>% 
+  ungroup()
+
+eyetracking.window.summary.both = eyetracking.window.summary.by.subj.both %>% 
+  group_by(study, condition, time.window) %>% 
+  summarize(mean_prop = mean(mean_prop, na.rm = T), 
+            se_prop = sd(mean_prop, na.rm = T)/sqrt(n()))
+  
+  
 ```
 
-```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online."}
+
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means"}
 
 ggplot(eyetracking.window.summary.by.subj.both)+
-  stat_summary(aes(x=time.window, fill=condition, y = M, alpha = study), 
-               geom = 'point', fun = 'mean', shape = 21, size = 3)+
-  stat_summary(aes(x=as.numeric(time.window), fill=condition, y = M, linetype = study), geom = 'line', fun = 'mean', alpha = 0.5)+
+  stat_summary(aes(x=time.window, color=condition, y = mean_prop, shape = study), 
+               geom = 'point', fun = 'mean', size = 3)+
+ stat_summary(aes(x=as.numeric(time.window), y = mean_prop, linetype = study, group=paste(condition, study) ),
+             geom = 'line', fun = 'mean', alpha = 0.5, color = "grey")+
+  stat_summary(aes(x=as.numeric(time.window), y = mean_prop, color = condition, group = paste(condition , study)), 
+                geom = 'errorbar', fun.data = 'mean_cl_boot', width = 0.05)+
   #facet_wrap(~time.window)+
-  #geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
-  #scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
-  scale_alpha_manual(values = c(0.5,1))+
+  scale_color_brewer(palette = "Set1")+
+  scale_shape_manual(values = c(1,16))+
   scale_linetype_manual(values = c("dashed","solid"))+
   coord_cartesian(ylim = c(0,.8))+
   theme_classic()+
   labs(y = "Proportion of fixations", x = NULL)
 ```
-Something funky going on with this graph...
-
-```{r}
+```{r, eval  = F}
 orig.data.time.window.1 <- eyetracking.window1.summary.by.trial.orig %>% 
   filter(condition != "filler") %>% 
   mutate(condition = fct_drop(condition))
@@ -152,7 +174,7 @@ model.time.window.1 <- lmer(prop.fixations.animal ~ condition + (1 | subject) + 
 summary(model.time.window.1)
 ```
 
-```{r}
+```{r, eval  = F}
 orig.data.time.window.2 <- eyetracking.window2.summary.by.trial.orig %>% 
   filter(condition != "filler") %>% 
   mutate(condition = fct_drop(condition))
@@ -162,7 +184,7 @@ model.time.window.2 <- lmer(prop.fixations.animal ~ condition + (1 | subject) + 
 summary(model.time.window.2)
 ```
 
-```{r}
+```{r, eval  = F}
 orig.data.time.window.3 <- eyetracking.window3.summary.by.trial.orig %>% 
   filter(condition != "filler") %>% 
   mutate(condition = fct_drop(condition))
@@ -171,5 +193,5 @@ contrasts(orig.data.time.window.3$condition) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1
 model.time.window.3 <- lmer(prop.fixations.animal ~ condition + (1 | subject) + (1 | trialID), data=orig.data.time.window.3 )
 summary(model.time.window.3)
 ```
-```
+
 

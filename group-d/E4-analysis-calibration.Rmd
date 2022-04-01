@@ -43,13 +43,13 @@ summary.data.calib = all.data.calib %>%
   mutate(calib_num = row_number())
 ```
 
-```{r}
+```{r, eval = F}
 ggplot(summary.data.calib)+
   geom_line(aes(x = calib_num, y = mean_percent_in_roi, color=subject))+
   theme_bw()+
   theme(legend.position = "none") 
 ```
-```{r}
+```{r, eval=F}
 summary.data.calib.wide = summary.data.calib %>% 
   select(-trial_index) %>% 
   pivot_wider(id_cols = subject, names_from=calib_num, values_from = mean_percent_in_roi )
@@ -90,19 +90,43 @@ eyetracking.effects.by.subj = read_csv( "output/E4_eye-tracking_data.csv") %>%
   pivot_wider(names_from = condition, values_from = M) %>% 
   mutate(bias_effect = modifier - instrument) %>% 
   left_join(calib.by.subj, by = "subject")
-```
 
-```{r}
+
+```
+```{r, eval = F}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = modifier))+
   geom_point()+
   geom_smooth(method = "lm")
 ```
 
+```{r,eval=F}
+write_csv(calib.by.subj,"output/calib_by_subj.csv")
+```
+
 ```{r}
+
+m_calib = broom::tidy(lm(bias_effect ~ mean_percent_in_roi, data = eyetracking.effects.by.subj))
+#m_calib 
+```
+
+```{r}
+m_calib_b = m_calib %>% filter(term ==  'mean_percent_in_roi') %>% pull(estimate ) %>% round(digits = 3)
+m_calib_se = m_calib %>% filter(term ==  'mean_percent_in_roi') %>% pull(std.error ) %>% round(digits = 3)
+m_calib_p = m_calib %>% filter(term ==  'mean_percent_in_roi') %>% pull(p.value ) %>% round(digits = 3)
+```
+
+
+```{r, eval = F}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = bias_effect))+
   geom_point()+
   geom_smooth(method = "lm")
 ```
+Participants' calibration quality, measured as the mean percentage of fixations that landed within XX pixels of the calibration point, varied substantially (`r range(calib.by.subj$mean_percent_in_roi) |> round(digits = 2)`). 
+The quality of a participant's calibration significantly predicted the participant's effect size. 
+The difference in target animal fixation proportions between modifier and instrument conditions was higher for participants with better calibration ($b=$`r m_calib_b`,$SE=$`r m_calib_se`, $p=$`r m_calib_p`). 
+
+
+
 ```{r}
 eyetracking.window.3 = read_csv( "output/E4_eye-tracking_data.csv") %>% 
   filter(time.window == "post-instrument-onset", compatibility != "filler" ) %>% 
@@ -116,9 +140,9 @@ contrasts(eyetracking.window.3$condition) <- cbind(c(-2/3, 1/3, 1/3), c(0, -1/2,
 ```
 
 
-```{r }
+```{r , eval = F}
 
-model.time.window.3 <- lmer(prop.fixations.animal ~ condition + (1  | subject) + (1 | trialID), data=eyetracking.window.3,
+model.time.window.3 <- lmer(prop.fixations.animal ~ condition + (1 +condition | subject) + (1 | trialID), data=eyetracking.window.3,
                             control = lmerControl(optimizer = "bobyqa",
                                                   optCtrl = list(maxfun = 2e6)))
 summary(model.time.window.3)
@@ -137,11 +161,19 @@ contrasts(eyetracking.window.3.good.calib$condition) <- cbind(c(-2/3, 1/3, 1/3),
 
 ```{r }
 
-model.time.window.3.good.calib <- lmer(prop.fixations.animal ~ condition + (1  | subject) + (1 | trialID), data=eyetracking.window.3.good.calib,
+m.good.calib <- lmer(prop.fixations.animal ~ condition + (1  | subject) + (1 | trialID), data=eyetracking.window.3.good.calib,
                             control = lmerControl(optimizer = "bobyqa",
                                                   optCtrl = list(maxfun = 2e6)))
-summary(model.time.window.3.good.calib)
+#summary(m.good.calib)
+
+m_calib_good = broom.mixed::tidy(m.good.calib) 
+
+m_calib_good_c1 = m_calib_good %>% filter(term == "condition1")
+m_calib_good_c2 = m_calib_good %>% filter(term == "condition2")
+
 ```
+
+Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 35 participants with calibration quality >50% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r m_calib_good_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r m_calib_good_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_good_c2 %>% pull(p.value) %>% round(digits = 2)`). 
 
 ```{r}
 eyetracking.window.3.great.calib = eyetracking.window.3 %>% 
@@ -156,8 +188,15 @@ contrasts(eyetracking.window.3.great.calib$condition) <- cbind(c(-2/3, 1/3, 1/3)
 
 ```{r }
 
-model.time.window.3.great.calib <- lmer(prop.fixations.animal ~ condition + (1  | subject) + (1 | trialID), data=eyetracking.window.3.great.calib,
+m.great.calib <- lmer(prop.fixations.animal ~ condition + (1  | subject) + (1 | trialID), data=eyetracking.window.3.great.calib,
                             control = lmerControl(optimizer = "bobyqa",
                                                   optCtrl = list(maxfun = 2e6)))
-summary(model.time.window.3.great.calib)
+#summary(m.great.calib)
+m_calib_great = broom.mixed::tidy(m.great.calib) 
+
+m_calib_great_c1 = m_calib_great %>% filter(term == "condition1")
+m_calib_great_c2 = m_calib_great %>% filter(term == "condition2")
 ```
+
+Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 19 participants with calibration quality >75% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. 
+Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r m_calib_great_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_great_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r m_calib_great_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_great_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_great_c2 %>% pull(p.value) %>% round(digits = 2)`). 

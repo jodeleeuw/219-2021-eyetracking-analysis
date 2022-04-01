@@ -11,6 +11,7 @@ library(lmerTest)
 library(afex)
 library(forcats)
 library(broom.mixed)
+library(patchwork)
 ```
 
 ```{r in-box-function-ROIs}
@@ -95,7 +96,7 @@ eyetracking.data.with.roi <- eyetracking.data %>%
   mutate(roi_vec = list(c(in.roi.0, in.roi.1, in.roi.2, in.roi.3)),
          which_roi = ifelse(sum(roi_vec)==1, which(unlist(roi_vec) == TRUE), 99 ) ) 
 
-padding = -50
+padding = 0
 eyetracking.data.with.quadrant.roi <- eyetracking.data %>%
   left_join(screen.data, by = 'subject') %>% 
   #filter(!subject %in% bad.eyetracking.data.subjects) %>% 
@@ -123,7 +124,7 @@ eyetracking.data.with.quadrant.roi <- eyetracking.data %>%
 ```
 
 
-```{r}
+```{r, eval = F}
 
 ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
   geom_text(aes(x = `#jspsych-free-sort-draggable-0.x`, y = `#jspsych-free-sort-draggable-0.y`), color = "red", label = "0")+
@@ -133,20 +134,25 @@ ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6
   scale_y_reverse()
 ```
 
-```{r}
+Eye-tracking on the web differs critically from in-lab eye-tracking in that the size of the display differs across participants. Thus the size of the ROIs differs across participants. The current version of the web experiment used a bounding box around each image to determine the ROI. 
+This approach is flexible and accomodates variability in image size, but may exclude looks that are directed at the image but fall outside of the image (due to participant or eye-tracker noise) as show in Figure \@ref(fig:E4-example-subj-looks-ROI)a. Alternatively, The display can be split into 4 quadrants which jointly cover the entire screen (see Figure \@ref(fig:E4-example-subj-looks-ROI)b). 
 
-ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
+```{r E4-example-subj-looks-ROI, fig.cap = "Example participant's gaze coordinates categorized into ROIs based on a) image bounding boxes and b) screen quadrants. Magenta points indicate looks that were not categorized into an ROI"}
+p_box<-ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
   geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
-  scale_y_reverse()
+  scale_y_reverse()+
+  theme_bw()+
+  theme(legend.position = "none")
+p_quad<-ggplot(eyetracking.data.with.quadrant.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
+  geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
+  scale_y_reverse()+ 
+  theme_bw()+
+  theme(legend.position = "none")
+
+p_box + p_quad + plot_annotation(tag_levels = 'a')
 ```
 
-```{r}
-
-ggplot(eyetracking.data.with.quadrant.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
-  geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
-  scale_y_reverse()
-```
-```{r}
+```{r, eval = F}
 
 ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
   geom_point(aes(x = x, y = y, color = as.factor(which_roi)), alpha = 0.5)+
@@ -160,7 +166,7 @@ audio.info <- read_csv('info/audio_timing.csv')
 ```
 
 
-```{r E4-average-onsets-of-critical-words-ROIs}
+```{r }
 #Calculate average animal onset
 animal.onset <- audio.info %>% pull(onset_noun) %>% mean()
 instrument.onset <- audio.info %>% pull(onset_instrument) %>% mean()
@@ -210,9 +216,10 @@ eyetracking.data.with.time.windows.quadrant <- eyetracking.data.with.quadrant.ro
   time.window = factor(time.window, levels = c("pre-verb-onset", "post-verb-onset-pre-animal-onset","post-animal-onset-pre-instrument-onset","post-instrument-onset", "end")))
 ```
 
-```{r}
+```{r, eval = F}
 
-ggplot(eyetracking.data.with.time.windows.quadrant %>%filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>75,]$subject) %>%
+ggplot(eyetracking.data.with.time.windows.quadrant %>%
+         # filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>75,]$subject) %>%
          filter(in.roi.animal)) +
                 # calib_by_subj comes from the calibration analysis rmd          
   geom_vline(aes(xintercept=screen_width/2))+
@@ -237,7 +244,7 @@ eyetracking.data.with.time.windows.quadrant <- eyetracking.data.with.time.window
 ```{r E4-summarizing-gaze-data-for-plotting-ROIs}
 #Summarize data for plotting
 eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
-               filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>50,]$subject) %>% # calib_by_subj comes from the calibration analysis rmd %>%
+              # filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>50,]$subject) %>% # calib_by_subj comes from the calibration analysis rmd %>%
   filter(between(t.window , -200, 4000)) %>%
   group_by(subject, compatibility, t.window) %>%
   summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
@@ -247,7 +254,7 @@ eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
   summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
 ```
 
-```{r E4-gaze-timecourse-fig-ROIs, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms."}
+```{r , eval = F}
 
 fig2<-ggplot(eyetracking.figure.2.data %>% 
   mutate(compatibility = factor(compatibility, 
@@ -270,7 +277,7 @@ fig2
 ```{r E4-summarizing-gaze-data-for-plotting-quadrants}
 #Summarize data for plotting
 eyetracking.figure.3.data <- eyetracking.data.with.time.windows.quadrant %>%
-               filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>50,]$subject) %>% # calib_by_subj comes from the calibration analysis rmd
+             #  filter(subject %in% calib.by.subj[calib.by.subj$mean_percent_in_roi>50,]$subject) %>% # calib_by_subj comes from the calibration analysis rmd
   filter(between(t.window , -200, 4000)) %>%
   group_by(subject, compatibility, t.window) %>%
   summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
@@ -280,7 +287,7 @@ eyetracking.figure.3.data <- eyetracking.data.with.time.windows.quadrant %>%
   summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
 ```
 
-```{r E4-gaze-timecourse-fig-ROIs, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms."}
+```{r E4-gaze-timecourse-fig-quadrants, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition with gaze categorized based on which quadrant of the screen the coordinates fall in (as opposed to a bounding box around the image). Vertical lines indicate average onsets of animal and instrument offset by 200ms."}
 
 fig3<-ggplot(eyetracking.figure.3.data %>% 
   mutate(compatibility = factor(compatibility, 
@@ -317,45 +324,22 @@ contrasts(eyetracking.window.summary.by.trial$compatibility) <- cbind(c(-2/3, 1/
 ```
 
 
-```{r }
-data.time.window.1 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-verb-onset-pre-animal-onset")
-
-model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.1,
-                            control = lmerControl(optimizer = "bobyqa",
-                                                  optCtrl = list(maxfun = 2e6)))
-
-summary(model.time.window.1)
-```
-
-```{r }
-data.time.window.2 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-animal-onset-pre-instrument-onset")
-
-model.time.window.2 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.2)
-
-summary(model.time.window.2)
-```
 
 ```{r }
 data.time.window.3 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-instrument-onset")
 
 model.time.window.3 <- lmer(prop.fixations.animal ~ compatibility + (1 | subject) + (1 | trialID), data=data.time.window.3)
 
-summary(model.time.window.3)
+#summary(model.time.window.3)
 ```
 
-```{r E4-ET-analysis-tables}
-E4_ET_model1_tab = broom.mixed::tidy(model.time.window.1) 
-E4_ET_model2_tab = broom.mixed::tidy(model.time.window.2) 
+```{r }
+#E4_ET_model1_tab = broom.mixed::tidy(model.time.window.1) 
+#E4_ET_model2_tab = broom.mixed::tidy(model.time.window.2) 
 E4_ET_model3_tab = broom.mixed::tidy(model.time.window.3) 
-
-E4_ET_model1_c1 = E4_ET_model1_tab %>% filter(term == "compatibility1")
-E4_ET_model1_c2 = E4_ET_model1_tab %>% filter(term == "compatibility2")
-
-E4_ET_model2_c1 = E4_ET_model2_tab %>% filter(term == "compatibility1")
-E4_ET_model2_c2 = E4_ET_model2_tab %>% filter(term == "compatibility2")
 
 E4_ET_model3_c1 = E4_ET_model3_tab %>% filter(term == "compatibility1")
 E4_ET_model3_c2 = E4_ET_model3_tab %>% filter(term == "compatibility2")
 ```
 
-
+Categorizing gaze location based on which of the four quadrants of the screen the coordinates fell in, increases the overall proportions of fixations (see Figure \@ref(fig:E4-gaze-timecourse-fig-quadrants)).  In the _post-instrument_ window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r E4_ET_model3_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) and marginally so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r E4_ET_model3_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model3_c2 %>% pull(p.value) %>% round(digits = 2)`). Effect size estimates appeared somewhat larger and noise was somewhat reduced when using the quadrant categorization relative to the bounding box-based ROIs.

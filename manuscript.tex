@@ -215,7 +215,7 @@ During the calibration, dots appeared on the screen one at a time in different l
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R {[}Version 4.1.2; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 1.0.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.7; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.5; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.27.1; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.4; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 2.0.2; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.7.1; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, and \emph{tidyr} {[}Version 1.1.4; Wickham (2021b){]} for all our analyses.
+We used R {[}Version 4.1.2; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 1.0.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.7; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.5; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.27.1; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.4; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 2.1.1; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.7.1; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, \emph{tidyr} {[}Version 1.1.4; Wickham (2021b){]}, and \emph{tinylabels} (Barth, 2022) for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -430,7 +430,7 @@ After the eye-tracking calibration, participants went through an audio test so t
 
 During a trial, four pictures were displayed (target animal, target instrument, distractor animal, distractor instrument), one in each corner of the screen, and participants heard an audio prompt that contained instructions about the action they needed to act out (e.g., ``Rub the butterfly with the crayon''; see Figure XX)\footnote{In the original study, the pictures appeared one by one on the screen and their names were played as they appeared. We removed this introductory portion of the trial to save time}. Using their cursor, participants could act out the instructions by clicking on objects and moving them or motioning over the objects\footnote{ As opposed to the original study we recorded mouse movement instead of clicking behavior since not all of the audio prompts required clicking. For example, the sentence ``locate the camel with the straw'' may not involve any clicking but rather only mousing over the camel.}. After the action was completed, the participants were instructed to press the space bar which led to a screen that said ``Click Here'' in the middle in order to remove bias in the eye and mouse movements from the previous trial. The experiment only allowed the participants to move on to the next trial once the audio was completely done playing and the mouse had been moved over at least one object.
 
-\emph{TO DO}: ADD FIGURES Figure 1: An example of a critical trial for the sentence ``Rub the butterfly with the crayon.'' The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
+\textcolor{red}{TO DO: ADD FIGURES Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.}
 
 \hypertarget{materials-1}{%
 \subsubsection{Materials}\label{materials-1}}
@@ -453,7 +453,7 @@ The location of initial mouse movements was used to assess whether the final int
 
 A mixed-effects logistic regression model was used to predict whether the first movement was on the target instrument with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts with by-participant varying slopes for verb bias condition\footnote{\texttt{lme4} syntax: \texttt{glmer(is.mouse.over.instrument\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ family="binomial",\ data=d)}}. Participants were more likely to first move their mouse over target instruments in the instrument-biased condition relative to the equi-biased and modifier-biased condition (\emph{b} = -1.50, \emph{SE} = 0.25, \emph{p} \textless{} 0.01). Further, participants were more likely to first move their mouse over target instruments in the equi-biased condition relative to the modifier-biased condition (\emph{b} = -1.10, \emph{SE} = 0.29, \emph{p} \textless{} 0.01)
 
-Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. Figure \ref{fig:E4-gaze-timecourse-fig} suggests that the participants made more fixations to the target animal when the verb was modifier-biased\ldots{}
+Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. Figure \ref{fig:E4-gaze-timecourse-fig} suggests that the participants made more fixations to the target animal when the verb was modifier-biased compared to when the the verb was equi-biased and they looked at the target animal least when the verb was instrument-biased. The pattern was reversed for looks to the target instrument.
 
 \begin{figure}
 \centering
@@ -461,34 +461,63 @@ Gaze fixations were time-locked to the auditory stimulus on a trial by trial bas
 \caption{\label{fig:E4-gaze-timecourse-fig}Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms.}
 \end{figure}
 
-In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Mixed-effects linear regression models were used to predict the proportions of fixations to the target animal within each time window with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts\footnote{\texttt{lme4} syntax: \texttt{lmer(prop.fix.target.animal\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ data=d)}. A model with by-participant varying slopes for verb bias condition was first attempted but did not converge.}. In the \emph{verb-to-noun} window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs.~Equi and Modifier: \emph{b} = -0.01, \emph{SE} = 0.02, \emph{p} = 0.59; Equi vs.~Modifier: \emph{b} = 0, \emph{SE} = 0.02, \emph{p} = 1 ). In the \emph{noun-to-instrument} window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.01, \emph{p} \textless{} 0.01) and in the equi-biased relative to the instrument-biased condition ( \emph{b} = 0.02, \emph{SE} = 0.01, \emph{p} \textless{} 0.05). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition relative to the equi-biased and instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) but not significantly so in the equi-biased relative to the instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.02, \emph{p} = 0.59).
+In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Mixed-effects linear regression models were used to predict the proportions of fixations to the target animal within each time window with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts\footnote{\texttt{lme4} syntax: \texttt{lmer(prop.fix.target.animal\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ data=d)}. A model with by-participant varying slopes for verb bias condition was first attempted but did not converge.}. In the \emph{verb-to-noun} window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs.~Equi and Modifier: \emph{b} = -0.01, \emph{SE} = 0.02, \emph{p} = 0.59; Equi vs.~Modifier: \emph{b} = 0, \emph{SE} = 0.02, \emph{p} = 1 ). In the \emph{noun-to-instrument} window, participants looked more at the target animal in the modifier-biased condition and equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.01, \emph{p} \textless{} 0.01) and in the modifier biased relative to the equi-biased condition ( \emph{b} = 0.02, \emph{SE} = 0.01, \emph{p} \textless{} 0.05). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) but not significantly so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.02, \emph{p} = 0.15).
 
 \hypertarget{comparison-to-in-lab-data-1}{%
 \subsubsection{Comparison to in-lab data}\label{comparison-to-in-lab-data-1}}
 
+The web version of the study qualitatively replicates the action and eye-tracking results of the original dataset (Ryskin et al., 2017).
+The mouse click results from both studies are summarized in Figure \ref{fig:E4-mouse-moves-fig-web-and-orig}.
+The quantitative patterns of clicks were similar to those observed in the original dataset, though for Instrument-biased verbs, clicks were closer to evenly split between the animal and the instrument relative to the in-lab study where they were very clearly biased toward the instrument.
+
 \begin{figure}
 \centering
 \includegraphics{manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf}
-\caption{\label{fig:E4-mouse-moves-fig-web-and-orig}Proportion of first mouse movements by location and verb bias in original dataset (Ryskin et al., 2017) .}
+\caption{\label{fig:E4-mouse-moves-fig-web-and-orig}Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.}
+\end{figure}
+
+The eye-tracking results from both studies are summarized in Figure \ref{fig:E4-proportion-fix-by-window-both}.
+For simplicity, and to reflect the dependent variable used in analyses, we average the proportion of fixations to the target animal within each time window.
+Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study.
+This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf}
+\caption{\label{fig:E4-proportion-fix-by-window-both}Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95\% CIs over subject means}
 \end{figure}
 
 \hypertarget{calibration-2}{%
 \subsubsection{Calibration}\label{calibration-2}}
 
-\begin{itemize}
-\tightlist
-\item
-  here we will describe the analyses that correlate calibration quality with effect size at the level of the individual
-\end{itemize}
+Participants' calibration quality, measured as the mean percentage of fixations that landed within XX pixels of the calibration point, varied substantially (2.22 and 97.36).
+The quality of a participant's calibration significantly predicted the participant's effect size.
+The difference in target animal fixation proportions between modifier and instrument conditions was higher for participants with better calibration (\$b=\(0.00,\)SE=\$0.00, \$p=\$0.03).
+
+Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 35 participants with calibration quality \textgreater50\% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.10, \emph{SE} = 0.02, \emph{p} \textless{} 0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.02, \emph{SE} = 0.02, \emph{p} = 0.29).
+
+Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 19 participants with calibration quality \textgreater75\% suggests that the effect of verb bias condition was larger in this subset than in the full dataset.
+Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.11, \emph{SE} = 0.03, \emph{p} \textless{} 0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.05, \emph{SE} = 0.03, \emph{p} = 0.13).
 
 \hypertarget{effects-of-rois}{%
 \subsubsection{Effects of ROIs}\label{effects-of-rois}}
 
-\begin{itemize}
-\tightlist
-\item
-  here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
-\end{itemize}
+Eye-tracking on the web differs critically from in-lab eye-tracking in that the size of the display differs across participants. Thus the size of the ROIs differs across participants. The current version of the web experiment used a bounding box around each image to determine the ROI.
+This approach is flexible and accomodates variability in image size, but may exclude looks that are directed at the image but fall outside of the image (due to participant or eye-tracker noise) as show in Figure \ref{fig:E4-example-subj-looks-ROI}a. Alternatively, The display can be split into 4 quadrants which jointly cover the entire screen (see Figure \ref{fig:E4-example-subj-looks-ROI}b).
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf}
+\caption{\label{fig:E4-example-subj-looks-ROI}Example participant's gaze coordinates categorized into ROIs based on a) image bounding boxes and b) screen quadrants. Magenta points indicate looks that were not categorized into an ROI}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf}
+\caption{\label{fig:E4-gaze-timecourse-fig-quadrants}Timecourse of eye-gaze to target animal and target instrument by verb bias condition with gaze categorized based on which quadrant of the screen the coordinates fall in (as opposed to a bounding box around the image). Vertical lines indicate average onsets of animal and instrument offset by 200ms.}
+\end{figure}
+
+Categorizing gaze location based on which of the four quadrants of the screen the coordinates fell in, increases the overall proportions of fixations (see Figure \ref{fig:E4-gaze-timecourse-fig-quadrants}). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) and marginally so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.04, \emph{SE} = 0.02, \emph{p} = 0.05). Effect size estimates appeared somewhat larger and noise was somewhat reduced when using the quadrant categorization relative to the bounding box-based ROIs.
 
 \hypertarget{discussion-3}{%
 \subsection{Discussion}\label{discussion-3}}
@@ -596,6 +625,9 @@ Altmann, G. T. M., \& Kamide, Y. (1999). Incremental interpretation at verbs: Re
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
 Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tinylabels}{}}%
+Barth, M. (2022). \emph{{tinylabels}: Lightweight variable labels}. Retrieved from \url{https://cran.r-project.org/package=tinylabels}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-lme4}{}}%
 Bates, D., Mächler, M., Bolker, B., \& Walker, S. (2015). Fitting linear mixed-effects models using {lme4}. \emph{Journal of Statistical Software}, \emph{67}(1), 1--48. \url{https://doi.org/10.18637/jss.v067.i01}

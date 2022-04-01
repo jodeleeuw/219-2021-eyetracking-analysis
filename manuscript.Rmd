@@ -64,6 +64,15 @@ library(afex)
 library(forcats)
 library(broom.mixed)
 r_refs("references.bib")
+
+colorize <- function(x, color) { # for adding colored text (e.g., for notes to self)
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color,
+      x)
+  } else x
+}
 ```
 
 ```{r analysis-preferences}
@@ -275,7 +284,7 @@ After the eye-tracking calibration, participants went through an audio test so t
 
 During a trial, four pictures were displayed (target animal, target instrument, distractor animal, distractor instrument), one in each corner of the screen, and participants heard an audio prompt that contained instructions about the action they needed to act out (e.g., "Rub the butterfly with the crayon"; see Figure XX)^[In the original study, the pictures appeared one by one on the screen and their names were played as they appeared. We removed this introductory portion of the trial to save time]. Using their cursor, participants could act out the instructions by clicking on objects and moving them or motioning over the objects^[ As opposed to the original study we recorded mouse movement instead of clicking behavior since not all of the audio prompts required clicking. For example, the sentence “locate the camel with the straw” may not involve any clicking but rather only mousing over the camel.]. After the action was completed, the participants were instructed to press the space bar which led to a screen that said “Click Here” in the middle in order to remove bias in the eye and mouse movements from the previous trial. The experiment only allowed the participants to move on to the next trial once the audio was completely done playing and the mouse had been moved over at least one object. 
  
-*TO DO*: ADD FIGURES Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
+`r colorize("TO DO: ADD FIGURES Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.", color = "red")`
 
 ### Materials
 
@@ -294,18 +303,15 @@ The images and audios presented to the participants were the same stimuli used i
 
 ```
 
-### Calibration 
 
-* here we will describe the analyses that correlate calibration quality with effect size at the level of the individual 
+### Calibration 
 
 ```{r E4-analysis-calibration, child='group-d/E4-analysis-calibration.Rmd'}
 
 ```
 
-
 ### Effects of ROIs 
 
-* here we will describe how results change depending on the size of the ROIs (using the image vs the screen quadrant)
 
 ```{r E4-analysis-ROIs, child='group-d/E4-analysis-ROIs.Rmd'}
 
