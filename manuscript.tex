@@ -320,15 +320,15 @@ The primary methodological difference between this replication and Johansson and
 \hypertarget{replication-1}{%
 \subsubsection{Replication}\label{replication-1}}
 
-\textbf{Eye-gaze}. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled ``first,'' ``second,'' third'' (e.g., when the critical quadrant was in the top left, the ``first'' quadrant was the top right quadrant, but when the critical quadrant was in the top right, ``first'' corresponded to bottom right, etc.). In the free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \ref{fig:E2-gaze-fig}).
+\textbf{Eye-gaze}. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled ``first,'' ``second,'' third'' (e.g., when the critical quadrant was in the top left, the ``first'' quadrant was the top right quadrant, but when the critical quadrant was in the top right, ``first'' corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \ref{fig:E2-gaze-fig-both-conds}). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was (somewhat) effective.
 
 \begin{figure}
 \centering
-\includegraphics{manuscript_files/figure-latex/E2-gaze-fig-1.pdf}
-\caption{\label{fig:E2-gaze-fig}Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval.}
+\includegraphics{manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf}
+\caption{\label{fig:E2-gaze-fig-both-conds}Proportion of eye-gaze to critical quadrant and other three quadrants during memory retrieval in a) fixed and b) free viewing conditions.}
 \end{figure}
 
-The proportion of looks across quadrant was analyzed in linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(proportion\ \textasciitilde{}\ quadrant\ +\ (1+quadrant\textbar{}subject\_id))}. Among other limitations, this approach may violate the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.} Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: \emph{b} = -0.06, \emph{SE} = 0.01, \emph{p}\textless0.001, second: \emph{b} = -0.08, \emph{SE} = 0.01, \emph{p}\textless0.001, third: \emph{b} = -0.05, \emph{SE} = 0.01, \emph{p}\textless0.001 )
+The proportion of looks across quadrants in the free-viewing condition was analyzed in linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(proportion\ \textasciitilde{}\ quadrant\ +\ (1+quadrant\textbar{}subject\_id))}. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.} Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: \emph{b} = -0.06, \emph{SE} = 0.01, \emph{p}\textless0.001, second: \emph{b} = -0.08, \emph{SE} = 0.01, \emph{p}\textless0.001, third: \emph{b} = -0.05, \emph{SE} = 0.01, \emph{p}\textless0.001 )
 
 \begin{figure}
 \centering
@@ -336,25 +336,23 @@ The proportion of looks across quadrant was analyzed in linear mixed-effects mod
 \caption{\label{fig:E2-rt-acc-fig}Accuracy and response times during memory retrieval.}
 \end{figure}
 
-\textbf{Response Time and Accuracy}. Participants' response times and accuracies on memory questions are summarized in Figure \ref{fig:E2-rt-acc-fig}. Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing\_condition (fixed = -0.5, free=0.5) and their interaction as the predictors. The model included random intercepts for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(DV\ \textasciitilde{}\ relation\_type*viewing\_condition\ +\ (1\textbar{}subject\_id))}}. Response times were slower for interobject (e.g., ``The train is to the right of the taxi.'') than intraobject (e.g., ``The train is facing right.'') questions (\emph{b} = -555.60, \emph{SE} = 105.24, \emph{p}\textless0.001). Response times were slower in the free viewing condition than the fixed condition (\emph{b} = , \emph{SE} = , \emph{p}\textless0.001). Accuracy did not differ significantly between interobject and intraobject questions (\emph{b} = -0.05, \emph{SE} = 0.03, \emph{p}=0.05). Participants were less accurate in the free viewing condition than the fixed condition (\emph{b} = -0.06, \emph{SE} = 0.03, \emph{p}=0.03). The interaction ws not a signficant predictor for response times or accuracy.
+\textbf{Response Time and Accuracy}. Participants' response times and accuracies on memory questions are summarized in Figure \ref{fig:E2-rt-acc-fig}.
+Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing\_condition (fixed = -0.5, free=0.5) and their interaction as the predictors.
+The model included random intercepts for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(DV\ \textasciitilde{}\ relation\_type*viewing\_condition\ +\ (1\textbar{}subject\_id))}}.
+Accuracy did not differ significantly between interobject and intraobject questions (\emph{b} = -0.05, \emph{SE} = 0.03, \emph{p}=0.05). Participants were less accurate in the free viewing condition than the fixed condition (\emph{b} = -0.06, \emph{SE} = 0.03, \emph{p}=0.03).
+Response times were slower for interobject (e.g., ``The train is to the right of the taxi.'') than intraobject (e.g., ``The train is facing right.'') questions (\emph{b} = -555.60, \emph{SE} = 105.24, \emph{p}\textless0.001). Response times were slower in the free viewing condition than the fixed condition (\emph{b} = 260.98, \emph{SE} = 105.24, \emph{p}\textless0.001).
+The interaction was not a significant predictor for response times or accuracy.
+These behavioral results are inconsistent with the original findings.
 
-\emph{Q: Can we recover item IDs to do crossed random effects}
+One possibility is that in-lab participants were much more compliant with the instruction to keep their gaze on central fixation (though these data are not reported in the original paper). When analyzing results from the subset of participants (N = 25) who were most compliant during the fixed-viewing block (at least 25\% of their looks fell within 20\% of the center of the display), the viewing condition effects and the interactions were not signficant. Given the smaller sample size we do not interpret these results further.
 
-\begin{itemize}
-\item
-  here we will describe the analyses that are as close as possible to the original paper
-\item
-  same but stricter validation cutoff
-\end{itemize}
+\emph{Q: Can we recover item IDs to do crossed random effects?}
 
 \hypertarget{calibration-1}{%
 \subsubsection{Calibration}\label{calibration-1}}
 
-\begin{itemize}
-\tightlist
-\item
-  here we will describe the analyses that correlate calibration quality with effect size at the individual level
-\end{itemize}
+Participants' calibration quality, measured as the mean percentage of fixations that landed within \textcolor{red}{XX} pixels of the calibration point, varied substantially (between 17.78 and 100 \%).
+The quality of a participant's calibration was not significantly correlated with the participant's effect size ( \emph{Pearson's r}= 0.20, \emph{p} = 0.14) as measured by the difference between the proportion of looks to the critical quadrant minues the average proportion of looks to the average of the other three quadrants.
 
 \hypertarget{discussion-1}{%
 \subsection{Discussion}\label{discussion-1}}
@@ -561,41 +559,6 @@ In the original study, a video-based eye tracker was used. The eye movements of 
 
 \hypertarget{discussion-4}{%
 \subsection{Discussion}\label{discussion-4}}
-
-\hypertarget{experiment-6}{%
-\section{Experiment 6}\label{experiment-6}}
-
-The sixth study was a replication attempt of Posner et al.~??.
-
-\hypertarget{methods-5}{%
-\subsection{Methods}\label{methods-5}}
-
-\hypertarget{participants-6}{%
-\subsubsection{Participants}\label{participants-6}}
-
-\hypertarget{procedure-and-design-1}{%
-\subsubsection{Procedure and Design}\label{procedure-and-design-1}}
-
-\hypertarget{data-analysis-3}{%
-\subsubsection{Data analysis}\label{data-analysis-3}}
-
-\hypertarget{results-5}{%
-\subsection{Results}\label{results-5}}
-
-\hypertarget{replication-3}{%
-\subsubsection{Replication}\label{replication-3}}
-
-\hypertarget{calibration-3}{%
-\subsubsection{Calibration}\label{calibration-3}}
-
-\hypertarget{rois}{%
-\subsubsection{ROIs}\label{rois}}
-
-\hypertarget{item-numbers}{%
-\subsubsection{Item Numbers}\label{item-numbers}}
-
-\hypertarget{discussion-5}{%
-\subsection{Discussion}\label{discussion-5}}
 
 \hypertarget{combined-analyses}{%
 \section{Combined Analyses}\label{combined-analyses}}

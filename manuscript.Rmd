@@ -214,13 +214,11 @@ The primary methodological difference between this replication and Johansson and
 
 ```
 
-* here we will describe the analyses that are as close as possible to the original paper
-
-* same but stricter validation cutoff
-
 ### Calibration 
 
-* here we will describe the analyses that correlate calibration quality with effect size at the individual level
+```{r E2-analysis-calibration, child='group-b/E2-analysis-calibration.Rmd'}
+
+```
 
 ## Discussion
 
@@ -355,8 +353,8 @@ In the original study, a video-based eye tracker was used. The eye movements of 
 
 ## Discussion
 
+<!-- posner cueing task
 # Experiment 6
-<!-- posner cueing task -->
 
 The sixth study was a replication attempt of Posner et al. ??.
 
@@ -379,6 +377,7 @@ The sixth study was a replication attempt of Posner et al. ??.
 ### Item Numbers
 
 ## Discussion
+ -->
 
 # Combined Analyses
 

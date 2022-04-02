@@ -115,16 +115,172 @@ free.view.summary.subject.data <- free.view.summary.trial.data %>%
   summarize(proportion = mean(proportion))
 ```
 
-__Eye-gaze__. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled "first", "second," third" (e.g., when the critical quadrant was in the top left, the "first" quadrant was the top right quadrant, but when the critical quadrant was in the top right, "first" corresponded to bottom right, etc.). In the free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \@ref(fig:E2-gaze-fig)).
+<!--Checking what was up in the fixed viewing condition-->
+<!--Grab the relevant data, unnesting webgazer observations-->
 
-<!--Summarize by between condition -->
+```{r}
+fixed.view.data <- task.data %>%
+  filter(condition == "fixed") %>%
+  unnest(webgazer_data)
+```
+
+<!--Add quadrant information to each observation-->
+
+```{r}
+#Define a function for determining if `x,y` value falls in box.
+in.box <- function(x, y, left, right, top, bottom, padding=0){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)}
+
+fixed.view.data <- fixed.view.data %>%
+  mutate(x.percent = x / width * 100, y.percent = y / height * 100) %>%
+  mutate(view_quadrant = case_when(
+    x.percent <= 50 & y.percent <= 50 ~ 'top.left',
+    x.percent > 50 & y.percent <= 50 ~ 'top.right',
+    x.percent <= 50 & y.percent > 50 ~ 'bottom.left',
+    x.percent > 50 & y.percent > 50 ~ 'bottom.right'
+  )) %>%
+  mutate(central_fix = in.box(x.percent, y.percent, 40, 60, 40, 60)) %>% 
+  mutate(normalized_quadrant = case_when(
+    quadrant == 1 & view_quadrant == 'top.left' ~ 'critical',
+    quadrant == 1 & view_quadrant == 'top.right' ~ 'first',
+    quadrant == 1 & view_quadrant == 'bottom.right' ~ 'second',
+    quadrant == 1 & view_quadrant == 'bottom.left' ~ 'third',
+    
+    quadrant == 2 & view_quadrant == 'top.left' ~ 'third',
+    quadrant == 2 & view_quadrant == 'top.right' ~ 'critical',
+    quadrant == 2 & view_quadrant == 'bottom.right' ~ 'first',
+    quadrant == 2 & view_quadrant == 'bottom.left' ~ 'second',
+    
+    quadrant == 3 & view_quadrant == 'top.left' ~ 'first',
+    quadrant == 3 & view_quadrant == 'top.right' ~ 'second',
+    quadrant == 3 & view_quadrant == 'bottom.right' ~ 'third',
+    quadrant == 3 & view_quadrant == 'bottom.left' ~ 'critical',
+    
+    quadrant == 4 & view_quadrant == 'top.left' ~ 'second',
+    quadrant == 4 & view_quadrant == 'top.right' ~ 'third',
+    quadrant == 4 & view_quadrant == 'bottom.right' ~ 'critical',
+    quadrant == 4 & view_quadrant == 'bottom.left' ~ 'first'
+  ))
+```
+
+```{r, eval = F}
+ggplot(fixed.view.data %>% filter(subject_id == '5f7c9ab9b52d920f0aa8ab4e'))+
+  geom_point(aes(x = x, y = y, color = view_quadrant))+
+  geom_point(data = fixed.view.data %>% filter(subject_id == '5f7c9ab9b52d920f0aa8ab4e' & central_fix),
+             aes(x = x, y = y ), color = "black")+
+  scale_y_reverse()+
+  theme_bw()+
+  theme(legend.position = "none")
+
+
+```
+<!--Summarize how well each subject was able to follow the instructions in fixed condition-->
+
+```{r}
+fixed.view.summary.by.subj <- fixed.view.data %>%
+  group_by(subject_id) %>%
+  summarize(prop_fixed = mean(central_fix, na.rm=T)) 
+
+successful_fixed = fixed.view.summary.by.subj %>% filter(prop_fixed>=0.25) %>% pull(subject_id)
+#ggplot(fixed.view.summary.by.subj)+geom_histogram(aes(x=prop_fixed))
+```
+
+<!--Summarize proportion of views in each quadrant for each trial-->
+```{r}
+fixed.view.summary.trial.data <- fixed.view.data %>%
+  group_by(subject_id, trial_index, relation) %>%
+  summarize(critical = sum(normalized_quadrant == 'critical')/n(),
+            first = sum(normalized_quadrant == 'first')/n(),
+            second = sum(normalized_quadrant == 'second')/n(),
+            third = sum(normalized_quadrant == 'third')/n()) %>%
+  pivot_longer(c("critical", "first", "second", "third"), names_to = "normalized_quadrant", values_to = "proportion")
+```
+<!--Summarize by subject-->
+```{r}
+fixed.view.summary.subject.data <- fixed.view.summary.trial.data %>%
+  group_by(subject_id,relation,normalized_quadrant) %>%
+  summarize(proportion = mean(proportion))
+```
+
+<!-- all data together -->
+```{r}
+view.data <- task.data %>%
+  #filter(condition == "fixed") %>%
+  unnest(webgazer_data)
+```
+
+<!--Add quadrant information to each observation-->
+
+```{r}
+#Define a function for determining if `x,y` value falls in box.
+in.box <- function(x, y, left, right, top, bottom, padding=0){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)}
+
+view.data <- view.data %>%
+  mutate(x.percent = x / width * 100, y.percent = y / height * 100) %>%
+  mutate(view_quadrant = case_when(
+    x.percent <= 50 & y.percent <= 50 ~ 'top.left',
+    x.percent > 50 & y.percent <= 50 ~ 'top.right',
+    x.percent <= 50 & y.percent > 50 ~ 'bottom.left',
+    x.percent > 50 & y.percent > 50 ~ 'bottom.right'
+  )) %>%
+  mutate(central_fix = in.box(x.percent, y.percent, 40, 60, 40, 60)) %>% 
+  mutate(normalized_quadrant = case_when(
+    quadrant == 1 & view_quadrant == 'top.left' ~ 'critical',
+    quadrant == 1 & view_quadrant == 'top.right' ~ 'first',
+    quadrant == 1 & view_quadrant == 'bottom.right' ~ 'second',
+    quadrant == 1 & view_quadrant == 'bottom.left' ~ 'third',
+    
+    quadrant == 2 & view_quadrant == 'top.left' ~ 'third',
+    quadrant == 2 & view_quadrant == 'top.right' ~ 'critical',
+    quadrant == 2 & view_quadrant == 'bottom.right' ~ 'first',
+    quadrant == 2 & view_quadrant == 'bottom.left' ~ 'second',
+    
+    quadrant == 3 & view_quadrant == 'top.left' ~ 'first',
+    quadrant == 3 & view_quadrant == 'top.right' ~ 'second',
+    quadrant == 3 & view_quadrant == 'bottom.right' ~ 'third',
+    quadrant == 3 & view_quadrant == 'bottom.left' ~ 'critical',
+    
+    quadrant == 4 & view_quadrant == 'top.left' ~ 'second',
+    quadrant == 4 & view_quadrant == 'top.right' ~ 'third',
+    quadrant == 4 & view_quadrant == 'bottom.right' ~ 'critical',
+    quadrant == 4 & view_quadrant == 'bottom.left' ~ 'first'
+  ))
+```
+
+
+<!--Summarize proportion of views in each quadrant for each trial-->
+```{r}
+view.summary.trial.data <- view.data %>%
+  group_by(subject_id, condition, trial_index, relation) %>%
+  summarize(critical = sum(normalized_quadrant == 'critical')/n(),
+            first = sum(normalized_quadrant == 'first')/n(),
+            second = sum(normalized_quadrant == 'second')/n(),
+            third = sum(normalized_quadrant == 'third')/n()) %>%
+  pivot_longer(c("critical", "first", "second", "third"), names_to = "normalized_quadrant", values_to = "proportion")
+```
+<!--Summarize by subject-->
+```{r}
+view.summary.subject.data <- view.summary.trial.data %>%
+  group_by(subject_id,relation,condition, normalized_quadrant) %>%
+  summarize(proportion = mean(proportion))
+```
+
+```{r, eval=F}
+write_csv(view.summary.subject.data, 'output/E2_eye-tracking_data_subj.csv')
+```
+
+__Eye-gaze__. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled "first", "second," third" (e.g., when the critical quadrant was in the top left, the "first" quadrant was the top right quadrant, but when the critical quadrant was in the top right, "first" corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \@ref(fig:E2-gaze-fig-both-conds)). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was (somewhat) effective.
+
 ```{r}
 free.view.summary.condition1.data <- free.view.summary.subject.data %>%
   group_by(normalized_quadrant) %>%
   summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
 ```
 
-```{r E2-gaze-fig, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval."}
+```{r E2-gaze-fig-free, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval.", eval =FALSE}
 fig<-ggplot(free.view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill = normalized_quadrant == "critical" )) +
   geom_col(position=position_dodge(), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
@@ -139,6 +295,42 @@ saveRDS(fig, "output/ETfig.rds")
 
 ```
 
+```{r}
+view.summary.condition1.data <- view.summary.subject.data %>%
+  group_by(normalized_quadrant, condition) %>%
+  summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
+```
+```{r E2-gaze-fig-both-conds, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants during memory retrieval in a) fixed and b) free viewing conditions."}
+
+ggplot(view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill = normalized_quadrant == "critical" )) +
+  geom_col(position=position_dodge(), color = "black")+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
+  facet_wrap(~condition)+
+  scale_fill_brewer(palette="Set1",)+
+  theme_classic()+
+  labs(x = "Quadrant", y = "Mean proportion of looks")+
+  theme(legend.position = "none")
+
+```
+
+<!--Summarize by between condition -->
+```{r}
+fixed.view.summary.condition1.data <- fixed.view.summary.subject.data %>%
+  group_by(normalized_quadrant) %>%
+  summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
+```
+
+```{r E2-gaze-fig-fixed, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval.", eval = F}
+fig.fixed<-ggplot(fixed.view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill = normalized_quadrant == "critical" )) +
+  geom_col(position=position_dodge(), color = "black")+
+  geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
+  scale_fill_brewer(palette="Set1",)+
+  theme_classic()+
+  labs(x = "Quadrant", y = "Mean proportion of looks")+
+  theme(legend.position = "none")
+fig.fixed
+```
+
 ```{r E2-gaze-model}
 E2_gaze_model<-lmer(proportion ~ normalized_quadrant + (1+normalized_quadrant|subject_id), data = free.view.summary.subject.data)
 #summary(m1)
@@ -148,7 +340,7 @@ E2_gaze_model_q2 = E2_gaze_model_tab %>% filter(term == "normalized_quadrantseco
 E2_gaze_model_q3 = E2_gaze_model_tab %>% filter(term == "normalized_quadrantthird")
 ```
 
-The proportion of looks across quadrant was analyzed in linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants^[ `lme4` syntax: `lmer(proportion ~ quadrant + (1+quadrant|subject_id))`. Among other limitations, this approach may violate the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.] Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: _b_ =  `r E2_gaze_model_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 )
+The proportion of looks across quadrants in the free-viewing condition was analyzed in linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants^[ `lme4` syntax: `lmer(proportion ~ quadrant + (1+quadrant|subject_id))`. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.] Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: _b_ =  `r E2_gaze_model_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 )
 
 
 ```{r E2-compute-accuracy}
@@ -240,11 +432,40 @@ E2_RT_model<-lmer(rt ~ relation*condition + (1|subject_id), data = rt.behavioral
 #summary(m1)
 E2_RT_model_tab = broom.mixed::tidy(E2_RT_model) 
 E2_RT_model_rel = E2_RT_model_tab %>% filter(term == "relation1")
-E2_RT_model_cond = E2_RT_model_tab %>% filter(term == "condition")
+E2_RT_model_cond = E2_RT_model_tab %>% filter(term == "condition1")
 ```
 
-__Response Time and Accuracy__. Participants' response times and accuracies on memory questions are summarized in Figure \@ref(fig:E2-rt-acc-fig). Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing_condition (fixed = -0.5, free=0.5) and their interaction as the predictors. The model included random intercepts for participants^[ `lme4` syntax: `lmer(DV ~ relation_type*viewing_condition + (1|subject_id))`]. Response times were slower for interobject (e.g., "The train is to the right of the taxi.") than intraobject (e.g., "The train is facing right.") questions (_b_ =  `r E2_RT_model_rel %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_RT_model_rel %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001). Response times were slower in the free viewing condition than the fixed condition (_b_ =  `r E2_RT_model_cond %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_RT_model_cond %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001). Accuracy did not differ significantly between interobject and intraobject questions (_b_ =  `r E2_acc_model_rel %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_acc_model_rel %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E2_acc_model_rel %>% pull(p.value) %>% round(digits = 2)`). Participants were less accurate in the free viewing condition than the fixed condition (_b_ =  `r E2_acc_model_cond %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_acc_model_cond %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E2_acc_model_cond %>% pull(p.value) %>% round(digits = 2)`). The interaction ws not a signficant predictor for response times or accuracy.
+__Response Time and Accuracy__. Participants' response times and accuracies on memory questions are summarized in Figure \@ref(fig:E2-rt-acc-fig). 
+Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing_condition (fixed = -0.5, free=0.5) and their interaction as the predictors. 
+The model included random intercepts for participants^[ `lme4` syntax: `lmer(DV ~ relation_type*viewing_condition + (1|subject_id))`]. 
+Accuracy did not differ significantly between interobject and intraobject questions (_b_ =  `r E2_acc_model_rel %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_acc_model_rel %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E2_acc_model_rel %>% pull(p.value) %>% round(digits = 2)`). Participants were less accurate in the free viewing condition than the fixed condition (_b_ =  `r E2_acc_model_cond %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_acc_model_cond %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E2_acc_model_cond %>% pull(p.value) %>% round(digits = 2)`). 
+Response times were slower for interobject (e.g., "The train is to the right of the taxi.") than intraobject (e.g., "The train is facing right.") questions (_b_ =  `r E2_RT_model_rel %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_RT_model_rel %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001). Response times were slower in the free viewing condition than the fixed condition (_b_ =  `r E2_RT_model_cond %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_RT_model_cond %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001). 
+The interaction was not a significant predictor for response times or accuracy.
+These behavioral results are inconsistent with the original findings. 
 
+```{r E2-acc-model-good-subs}
+
+E2_acc_model2<-lmer(accuracy ~ relation*condition + (1|subject_id), 
+                   data = acc.behavioral.subject.data %>% 
+                     filter(subject_id %in% successful_fixed))
+#summary(m1)
+E2_acc_model2_tab = broom.mixed::tidy(E2_acc_model) 
+E2_acc_model2_rel = E2_acc_model_tab %>% filter(term == "relation1")
+E2_acc_model2_cond = E2_acc_model_tab %>% filter(term == "condition1")
+```
+
+```{r E2-rt-model-good-subs}
+
+E2_RT_model2<-lmer(rt ~ relation*condition + (1|subject_id), 
+                  data = rt.behavioral.subject.data %>% 
+                     filter(subject_id %in% successful_fixed))
+#summary(m1)
+E2_RT_model2_tab = broom.mixed::tidy(E2_RT_model) 
+E2_RT_model2_rel = E2_RT_model_tab %>% filter(term == "relation1")
+E2_RT_model2_cond = E2_RT_model_tab %>% filter(term == "condition1")
+```
+
+One possibility is that in-lab participants were much more compliant with the instruction to keep their gaze on central fixation (though these data are not reported in the original paper). When  analyzing results from the subset of participants (N = `r length(successful_fixed)`) who were most compliant during the fixed-viewing block (at least 25% of their looks fell within 20% of the center of the display), the viewing condition effects and the interactions were not signficant. Given the smaller sample size we do not interpret these results further.
 
 ```{r, eval = F}
 #Goal: ANOVA with RT as DV, condition, statement as IVs
@@ -256,4 +477,4 @@ rt.anova$ANOVA
 acc.anova <- ezANOVA(acc.behavioral.subject.data, dv=accuracy, wid=subject_id, within = c(relation, condition))
 acc.anova$ANOVA
 ```
-*Q: Can we recover item IDs to do crossed random effects*
+*Q: Can we recover item IDs to do crossed random effects?*
