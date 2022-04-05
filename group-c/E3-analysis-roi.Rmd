@@ -3,7 +3,7 @@ title: "Experiment 3: Replication Analysis"
 output: html_notebook
 ---
 
-In the original experiment, the two objects on day 1 were presented on two separate monitors and gaze was coded by manually coding video recordings. In our replication analysis, we analyzed eye movement data using ROIs. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. 
+In the original experiment, the two objects on day 1 were presented on two separate monitors and gaze was coded by manually coding video recordings. In our replication analysis, we analyzed eye movement data using ROIs defined around the two images. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
 
 ```{r E3 load libraries, include=FALSE}
 library(dplyr)
@@ -62,13 +62,14 @@ eyetracking.data <- eyetracking.data %>%
 ```{r Calculate looking score, include=FALSE}
 looking.score.data <- eyetracking.data %>% 
   group_by(subject_id, right_image, left_image, right_image_new, left_image_new) %>%
-  summarise(looking.score = if_else(sum(in.target.roi, in.distractor.roi) == 0, 0, sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi))) %>%
+  summarise(looking.score = sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi)) %>%
   mutate(image = if_else(right_image_new, left_image, right_image))
 ```
 
 ```{r Day 1 t-test looking scores, include=FALSE}
 t.test.data1 <- looking.score.data %>%
   group_by(subject_id) %>%
+  filter(!is.nan(looking.score)) %>%
   summarize(M.looking.score = mean(looking.score))
 
 t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
@@ -78,6 +79,35 @@ t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
 #### Looking Scores
 
 When looking scores are coded as left vs. right half of the screen, we do find that participants looked more at the novel object. The mean looking score was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
+
+```{r Create looking over time curve data, include=FALSE}
+
+day.1.looking.by.time <- expand.grid(subject_id = unique(eyetracking.data$subject_id), t = seq(100, 5000, 100))
+
+cumulative.looking.score <- function(subj, time){
+  return(eyetracking.data %>%
+    filter(subject_id == subj, t <= time) %>%
+    summarize(cl = sum(in.target.roi) / (sum(in.target.roi) + sum(in.distractor.roi))) %>%
+    pull(cl))
+}
+  
+day.1.looking.by.time <- day.1.looking.by.time %>%
+  rowwise() %>%
+  mutate(cumulative.looks.new = cumulative.looking.score(subject_id, t))
+
+day.1.looking.by.time.summary <- day.1.looking.by.time %>%
+  group_by(t) %>%
+  filter(!is.nan(cumulative.looks.new)) %>%
+  summarize(M = mean(cumulative.looks.new), SE=sd(cumulative.looks.new) / sqrt(n()))
+```
+
+```{r Plot of cumulative looking score, echo=FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
+ggplot(day.1.looking.by.time.summary, aes(x=t, y=M, ymin=M-SE, ymax=M+SE))+
+  geom_pointrange()+
+  labs(x = "Time (ms)", y = "Cumulative Looking Score")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+```
 
 #### Correlations with Day 2 Performance
 
