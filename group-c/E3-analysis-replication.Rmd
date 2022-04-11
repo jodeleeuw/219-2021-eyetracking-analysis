@@ -38,9 +38,9 @@ data.day.2 <- all.data %>% filter(day == 2)
 eyetracking.data <- data.day.1 %>%
   filter(phase == "part2") %>%
   select(subject_id, webgazer_data, webgazer_targets, left_image_new, right_image_new, right_image, left_image) %>%
-  unpack(webgazer_targets) %>%
-  unpack(c("#left-img", "#right-img"), names_sep=".") %>%
-  unnest(webgazer_data)
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c("#left-img", "#right-img"), names_sep=".") %>%
+  tidyr::unnest(webgazer_data)
 ```
 
 ```{r Add ROI information, include=FALSE}

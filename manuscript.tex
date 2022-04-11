@@ -3,12 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  english,
   man,floatsintext]{apa6}
-\title{Eye-tracking on the web: lessons learned from replicating 5 experiments}
-\author{Josh de Leeuw\textsuperscript{1} \& et al.\textsuperscript{1,2}}
-\date{}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -97,6 +92,15 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -127,6 +131,20 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -138,26 +156,30 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Just picked a random title: feel free to change}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
 \keywords{keywords\newline\indent Word count: X}
 \usepackage{lineno}
 
 \linenumbers
 \usepackage{csquotes}
-\ifXeTeX
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
+\title{Eye-tracking on the web: lessons learned from replicating 5 experiments}
+\author{Josh de Leeuw\textsuperscript{1} \& et al.\textsuperscript{1,2}}
+\date{}
+
+
+\shorttitle{Just picked a random title: feel free to change}
 
 \authornote{
 
@@ -173,7 +195,7 @@ Correspondence concerning this article should be addressed to Josh de Leeuw, Pos
 
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Vassar College\\\textsuperscript{2} XX}
 
-\abstract{
+\abstract{%
 ADD LATER
 }
 
@@ -215,7 +237,7 @@ During the calibration, dots appeared on the screen one at a time in different l
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R {[}Version 4.1.2; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 1.0.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.7; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.5; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.27.1; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.4; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 2.1.1; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.7.1; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, \emph{tidyr} {[}Version 1.1.4; Wickham (2021b){]}, and \emph{tinylabels} (Barth, 2022) for all our analyses.
+We used R (Version 4.1.2; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.1.0; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.3; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.8; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.1; Wickham, 2021a), \emph{ggplot2} (Version 3.3.5; Wickham, 2016), \emph{jsonlite} (Version 1.8.0; Ooms, 2014), \emph{lme4} (Version 1.1.28; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.3.4; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2020), \emph{readr} (Version 2.1.2; Wickham \& Hester, 2020), \emph{shiny} (Chang et al., 2021), \emph{stringr} (Version 1.4.0; Wickham, 2019), \emph{tidyr} (Version 1.2.0; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -317,10 +339,14 @@ The primary methodological difference between this replication and Johansson and
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
 
+\begin{verbatim}
+## Warning: package 'patchwork' was built under R version 4.1.3
+\end{verbatim}
+
 \hypertarget{replication-1}{%
 \subsubsection{Replication}\label{replication-1}}
 
-\textbf{Eye-gaze}. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled ``first,'' ``second,'' third'' (e.g., when the critical quadrant was in the top left, the ``first'' quadrant was the top right quadrant, but when the critical quadrant was in the top right, ``first'' corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \ref{fig:E2-gaze-fig-both-conds}). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was (somewhat) effective.
+\textbf{Eye-gaze}. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled ``first'', ``second,'' third'' (e.g., when the critical quadrant was in the top left, the ``first'' quadrant was the top right quadrant, but when the critical quadrant was in the top right, ``first'' corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \ref{fig:E2-gaze-fig-both-conds}). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was (somewhat) effective.
 
 \begin{figure}
 \centering
@@ -395,6 +421,80 @@ There were two modifications we made to the methods of the original experiment. 
 
 \hypertarget{results-2}{%
 \subsection{Results}\label{results-2}}
+
+\hypertarget{day-1}{%
+\paragraph{Day 1}\label{day-1}}
+
+During day 1 of the experiment, participants viewed pairs of images, one of which was always familiar and the other unfamiliar. We calculated a looking score for each participant, defined as the proportion of gaze samples in the ROI of the unfamiliar image out of all the gaze samples that were in either ROI. Gaze samples that were not in either ROI were not included in this analysis. A looking score of 0.5 indicates that participants looked equally often at the familiar and unfamiliar images, while a looking score above 0.5 indicates a preference for the unfamiliar object and a looking score below 0.5 indicate a preference for the familiar object.
+
+Of the 1248 trials in the experiment, 78 had no fixations in either ROI, and so the looking score was unknown. We removed these trials from this analysis.
+
+The mean looking score was 0.55 (\emph{SD} = 0.10). This significantly greater than 0.5, \emph{t}(49) = 3.29, \emph{p} = 0.00, indicating that participants did show a preference for looking at the novel objects.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf}
+\caption{(\#fig:Plot of cumulative looking score)Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM.}
+\end{figure}
+
+\hypertarget{day-2}{%
+\paragraph{Day 2}\label{day-2}}
+
+In all of these analyses, we excluded the 16 (out of 2304) trials where the response time for the recognition judgment was greater than 10 seconds.
+
+Participants correctly identified whether the image was familiar or unfamiliar 87.09\% (\emph{SD} = 10.49) of the time. After excluding the 3 participants who responded correctly to all images, the average confidence rating for correct responses (M = 3.51; SD = 0.41) was significantly higher than their average confidence ratings for incorrect responses (M = 2.55; SD = 0.75), t(44) = -9.36, p = 0.00 . Among the same subset of participants, response times for correct responses (M = 1,443.49, SD = 413.94) were also significantly faster than for incorrect responses (M = 2,212.65, SD = 1,733.76), t(44) = 3.43 , p = 0.00.
+
+To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on day 2, we computed the correlation coefficient between day 1 looking scores and day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, we found no significant different from 0 for the correlation between looking score and confidence ratings, t(38) = 0.46, p = 0.65 (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looking score and RT, t(46) = 0.49, p = 0.63.
+
+\begin{verbatim}
+## Warning: Removed 75 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf}
+
+\hypertarget{effects-of-rois}{%
+\subsubsection{Effects of ROIs}\label{effects-of-rois}}
+
+In the original experiment, the two objects on day 1 were presented on two separate monitors and gaze was coded by manually coding video recordings. In our replication analysis, we analyzed eye movement data using ROIs defined around the two images. In this section we explore an alternative coding of the eye movement data by coding simply left half vs.~right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
+
+The correlation between looking scores using the ROI method and the halves method is 0.76.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf}
+\caption{(\#fig:E3-roi correlation of looking score)Correlation between looking scores calculated using ROIs and using screen halves.}
+\end{figure}
+
+\hypertarget{looking-scores}{%
+\paragraph{Looking Scores}\label{looking-scores}}
+
+When looking scores are coded as left vs.~right half of the screen, we find that participants looked more at the novel object. The mean looking score was 0.54 (\emph{SD} = 0.08). This was significantly greater than 0.5, \emph{t}(50) = 3.51, \emph{p} = 0.00.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf}
+\caption{(\#fig:E3-roi Plot of cumulative looking score)Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM.}
+\end{figure}
+
+\hypertarget{correlations-with-day-2-performance}{%
+\paragraph{Correlations with Day 2 Performance}\label{correlations-with-day-2-performance}}
+
+Performance on day 2 remained uncorrelated with day 1 looking scores after switching the coding of gaze. We found no significant different from 0 for the correlation between looking score and confidence ratings, t(39) = 0.74, p = 0.47 (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looking score and RT, t(47) = 0.28, p = 0.78.
+
+\hypertarget{calibration-2}{%
+\subsubsection{Calibration}\label{calibration-2}}
+
+To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within XXX pixels of the validation points during the final validation phase before the eye tracking is performed.
+
+Calibration scores were not correlated with looking scores, regardless of which method was used to calculate looking scores.
+
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf}
+
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf}
+
+We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation.
+
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot correlations with calibration.score-1.pdf}
 
 \hypertarget{discussion-2}{%
 \subsection{Discussion}\label{discussion-2}}
@@ -479,14 +579,18 @@ For simplicity, and to reflect the dependent variable used in analyses, we avera
 Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study.
 This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.
 
+\begin{verbatim}
+## Warning: Computation failed in `stat_summary()`:
+\end{verbatim}
+
 \begin{figure}
 \centering
 \includegraphics{manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf}
 \caption{\label{fig:E4-proportion-fix-by-window-both}Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95\% CIs over subject means}
 \end{figure}
 
-\hypertarget{calibration-2}{%
-\subsubsection{Calibration}\label{calibration-2}}
+\hypertarget{calibration-3}{%
+\subsubsection{Calibration}\label{calibration-3}}
 
 Participants' calibration quality, measured as the mean percentage of fixations that landed within \textcolor{red}{XX} pixels of the calibration point, varied substantially (between 2.22 and 97.36 \%).
 The quality of a participant's calibration significantly correlated with the participant's effect size ( \emph{Pearson's r}= 0.29, \emph{p} \textless{} 0.05).
@@ -497,8 +601,8 @@ Replicating the linear mixed-effects analysis (in the post-instrument onset time
 Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 19 participants with calibration quality \textgreater75\% suggests that the effect of verb bias condition was larger in this subset than in the full dataset.
 Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.11, \emph{SE} = 0.03, \emph{p} \textless{} 0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.05, \emph{SE} = 0.03, \emph{p} = 0.13).
 
-\hypertarget{effects-of-rois}{%
-\subsubsection{Effects of ROIs}\label{effects-of-rois}}
+\hypertarget{effects-of-rois-1}{%
+\subsubsection{Effects of ROIs}\label{effects-of-rois-1}}
 
 Eye-tracking on the web differs critically from in-lab eye-tracking in that the size of the display differs across participants. Thus the size of the ROIs differs across participants. The current version of the web experiment used a bounding box around each image to determine the ROI.
 This approach is flexible and accomodates variability in image size, but may exclude looks that are directed at the image but fall outside of the image (due to participant or eye-tracker noise) as show in Figure \ref{fig:E4-example-subj-looks-ROI}a. Alternatively, The display can be split into 4 quadrants which jointly cover the entire screen (see Figure \ref{fig:E4-example-subj-looks-ROI}b).
@@ -620,7 +724,7 @@ Manns, J. R., Stark, C. E. L., \& Squire, L. R. (2000). The visual paired-compar
 Ooms, J. (2014). The jsonlite package: A practical and consistent mapping between JSON data and r objects. \emph{arXiv:1403.2805 {[}Stat.CO{]}}. Retrieved from \url{https://arxiv.org/abs/1403.2805}
 
 \leavevmode\vadjust pre{\hypertarget{ref-papoutsaki2016webgazer}{}}%
-Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. In \emph{Proceedings of the 25th international joint conference on artificial intelligence ({IJCAI})} (pp. 3839--3845). {AAAI}.
+Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. \emph{Proceedings of the 25th International Joint Conference on Artificial Intelligence ({IJCAI})}, 3839--3845. {AAAI}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}

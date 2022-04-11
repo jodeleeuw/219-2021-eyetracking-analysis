@@ -1,18 +1,18 @@
 ---
-title: "Experiment 3: Replication Analysis"
+title: "Experiment 3: ROI Analysis"
 output: html_notebook
 ---
 
 In the original experiment, the two objects on day 1 were presented on two separate monitors and gaze was coded by manually coding video recordings. In our replication analysis, we analyzed eye movement data using ROIs defined around the two images. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
 
-```{r E3 load libraries, include=FALSE}
+```{r E3-roi load libraries, include=FALSE}
 library(dplyr)
 library(tidyr)
 library(jsonlite)
 library(ggplot2)
 ```
 
-```{r E3 load all data, include=FALSE}
+```{r E3-roi load all data, include=FALSE}
 data.files <- list.files('data', full.names = TRUE)
 data.tables <- lapply(data.files, function(file){
   data.table <- fromJSON(file)
@@ -22,7 +22,7 @@ data.tables <- lapply(data.files, function(file){
 all.data <- bind_rows(data.tables)
 ```
 
-```{r Split into day 1 and day 2, include=FALSE}
+```{r E3-roi Split into day 1 and day 2, include=FALSE}
 study.id.day.1.group.1 <- "6062337f1a63a6788185d0e3"
 study.id.day.1.group.2 <- "607de170bb44b7e25174421f"
 study.id.day.2.group.1 <- "606233c0e42b980319b6a18e"
@@ -36,16 +36,16 @@ data.day.1 <- all.data %>% filter(day == 1)
 data.day.2 <- all.data %>% filter(day == 2)
 ```
 
-```{r Select eyetracking data, include=FALSE}
+```{r E3-roi Select eyetracking data, include=FALSE}
 eyetracking.data <- data.day.1 %>%
   filter(phase == "part2") %>%
   select(subject_id, webgazer_data, webgazer_targets, left_image_new, right_image_new, right_image, left_image) %>%
-  unpack(webgazer_targets) %>%
-  unpack(c("#left-img", "#right-img"), names_sep=".") %>%
-  unnest(webgazer_data)
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c("#left-img", "#right-img"), names_sep=".") %>%
+  tidyr::unnest(webgazer_data)
 ```
 
-```{r Add ROI information, include=FALSE}
+```{r E3-roi Add ROI information, include=FALSE}
 in.box <- function(x, y, left, right, top, bottom, padding){
   is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
   return(is.in.the.box)
@@ -53,41 +53,65 @@ in.box <- function(x, y, left, right, top, bottom, padding){
 
 eyetracking.data <- eyetracking.data %>%
   mutate(midpoint.x = `#left-img.right` + (`#right-img.left` - `#left-img.right`)/2) %>%
-  mutate(in.left.roi = x < midpoint.x) %>%
-  mutate(in.right.roi = x > midpoint.x)%>%
+  mutate(in.left.half = x < midpoint.x) %>%
+  mutate(in.right.half = x > midpoint.x)%>%
+  mutate(in.target.half = if_else(left_image_new == TRUE, in.left.half, in.right.half))%>%
+  mutate(in.distractor.half = if_else(left_image_new == TRUE, in.right.half, in.left.half)) %>%
+  mutate(in.left.roi = in.box(x, y,`#left-img.left`, `#left-img.right`, `#left-img.top`, `#left-img.bottom`, 50))%>%
+  mutate(in.right.roi = in.box(x, y,`#right-img.left`, `#right-img.right`, `#right-img.top`, `#right-img.bottom`, 50))%>%
   mutate(in.target.roi = if_else(left_image_new == TRUE, in.left.roi, in.right.roi))%>%
   mutate(in.distractor.roi = if_else(left_image_new == TRUE, in.right.roi, in.left.roi))
 ```
 
-```{r Calculate looking score, include=FALSE}
+```{r E3-roi Calculate looking score, include=FALSE}
 looking.score.data <- eyetracking.data %>% 
   group_by(subject_id, right_image, left_image, right_image_new, left_image_new) %>%
-  summarise(looking.score = sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi)) %>%
+  summarise(looking.score.roi = sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi),
+            looking.score.half = sum(in.target.half) / sum(in.target.half, in.distractor.half)) %>%
   mutate(image = if_else(right_image_new, left_image, right_image))
 ```
 
-```{r Day 1 t-test looking scores, include=FALSE}
+```{r E3-roi Calculate correlation between LS methods, include=FALSE}
+looking.score.correlation.data <- looking.score.data %>%
+  filter(!is.nan(looking.score.roi)) %>%
+  select(subject_id, looking.score.half, looking.score.roi)
+
+ls.cor <- cor(looking.score.correlation.data$looking.score.half, looking.score.correlation.data$looking.score.roi)
+```
+
+The correlation between looking scores using the ROI method and the halves method is `r ls.cor`.
+
+```{r E3-roi correlation of looking score, echo=FALSE, fig.cap="Correlation between looking scores calculated using ROIs and using screen halves."}
+ggplot(looking.score.data %>% filter(!is.nan(looking.score.roi)), aes(x=looking.score.roi, y=looking.score.half))+
+  geom_point()+
+  geom_smooth(method="lm", formula = y~x)+
+  labs(x="Looking Score (ROIs)", y="Looking Score (Halves)")+
+  theme_bw()+
+  coord_fixed()+
+  theme(panel.grid=element_blank())
+```
+
+#### Looking Scores
+
+```{r E3-roi Day 1 t-test looking scores, include=FALSE}
 t.test.data1 <- looking.score.data %>%
   group_by(subject_id) %>%
-  filter(!is.nan(looking.score)) %>%
-  summarize(M.looking.score = mean(looking.score))
+  filter(!is.nan(looking.score.half)) %>%
+  summarize(M.looking.score = mean(looking.score.half))
 
 t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
 ```
 
+When looking scores are coded as left vs. right half of the screen, we find that participants looked more at the novel object. The mean looking score was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
 
-#### Looking Scores
-
-When looking scores are coded as left vs. right half of the screen, we do find that participants looked more at the novel object. The mean looking score was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
-
-```{r Create looking over time curve data, include=FALSE}
+```{r E3-roi Create looking over time curve data, include=FALSE}
 
 day.1.looking.by.time <- expand.grid(subject_id = unique(eyetracking.data$subject_id), t = seq(100, 5000, 100))
 
 cumulative.looking.score <- function(subj, time){
   return(eyetracking.data %>%
     filter(subject_id == subj, t <= time) %>%
-    summarize(cl = sum(in.target.roi) / (sum(in.target.roi) + sum(in.distractor.roi))) %>%
+    summarize(cl = sum(in.target.half) / (sum(in.target.half) + sum(in.distractor.half))) %>%
     pull(cl))
 }
   
@@ -101,17 +125,17 @@ day.1.looking.by.time.summary <- day.1.looking.by.time %>%
   summarize(M = mean(cumulative.looks.new), SE=sd(cumulative.looks.new) / sqrt(n()))
 ```
 
-```{r Plot of cumulative looking score, echo=FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
+```{r E3-roi Plot of cumulative looking score, echo=FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
 ggplot(day.1.looking.by.time.summary, aes(x=t, y=M, ymin=M-SE, ymax=M+SE))+
   geom_pointrange()+
-  labs(x = "Time (ms)", y = "Cumulative Looking Score")+
+  labs(x = "Time (ms)", y = "Cumulative Looking Score (Halves)")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 ```
 
 #### Correlations with Day 2 Performance
 
-```{r Prepare Day 2 data, include=FALSE}
+```{r E3-roi Prepare Day 2 data, include=FALSE}
 day2.test.data <- data.day.2 %>%
   filter(task %in% c("recognition", "confidence")) %>%
   select(subject_id, image, old_or_new, correct, rt, response, task) %>%
@@ -120,14 +144,14 @@ day2.test.data <- data.day.2 %>%
   mutate(response_confidence = as.numeric(response_confidence))
 ```
 
-```{r Calculate Looking Score Correlations, include=FALSE}
+```{r E3-roi Calculate Looking Score Correlations, include=FALSE}
 looking.plus.behavioral <- left_join(looking.score.data, day2.test.data)
 
 looking.confidence.correlations.subjects <- looking.plus.behavioral %>%
   filter(correct_recognition == TRUE) %>%
   filter(rt_recognition <= 10000) %>%
   group_by(subject_id) %>%
-  summarize(pearson.r = cor(looking.score, response_confidence)) %>%
+  summarize(pearson.r = cor(looking.score.half, response_confidence)) %>%
   mutate(r.to.z = .5*(log(1+pearson.r) - log(1 - pearson.r)))
 
 looking.confidence.correlations.subjects.filtered <- looking.confidence.correlations.subjects %>%
@@ -139,7 +163,7 @@ looking.rt.correlations.subjects <- looking.plus.behavioral %>%
   filter(correct_recognition == TRUE) %>%
   filter(rt_recognition <= 10000) %>%
   group_by(subject_id) %>%
-  summarize(pearson.r = cor(looking.score, rt_recognition)) %>%
+  summarize(pearson.r = cor(looking.score.half, rt_recognition)) %>%
   mutate(r.to.z = .5*(log(1+pearson.r) - log(1 - pearson.r)))
 
 looking.rt.correlations.subjects.filtered <- looking.rt.correlations.subjects %>%

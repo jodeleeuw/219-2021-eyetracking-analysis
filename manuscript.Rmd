@@ -256,6 +256,23 @@ There were two modifications we made to the methods of the original experiment. 
 
 ## Results
 
+```{r E3-analysis-replication, child='group-c/E3-analysis-replication.Rmd'}
+
+```
+
+### Effects of ROIs 
+
+
+```{r E3-analysis-ROIs, child='group-c/E3-analysis-roi.Rmd'}
+
+```
+
+### Calibration 
+
+```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
+
+```
+
 ## Discussion
 
 # Experiment 4

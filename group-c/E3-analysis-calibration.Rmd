@@ -1,0 +1,166 @@
+---
+title: "Experiment 3: Calibration Analysis"
+output: html_notebook
+---
+
+```{r E3-cal load libraries, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(ggplot2)
+```
+
+```{r E3-cal load all data, include=FALSE}
+data.files <- list.files('data', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  data.table$response <- as.character(data.table$response)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+```{r E3-cal Split into day 1 and day 2, include=FALSE}
+study.id.day.1.group.1 <- "6062337f1a63a6788185d0e3"
+study.id.day.1.group.2 <- "607de170bb44b7e25174421f"
+study.id.day.2.group.1 <- "606233c0e42b980319b6a18e"
+study.id.day.2.group.2 <- "607de2837874a824e2e8c6ec"
+
+all.data <- all.data %>%
+  mutate(day = if_else(study_id %in% c(study.id.day.1.group.1, study.id.day.1.group.2), 1, 2)) %>%
+  mutate(group = if_else(study_id %in% c(study.id.day.1.group.1, study.id.day.2.group.1), 1, 2))
+
+data.day.1 <- all.data %>% filter(day == 1)
+data.day.2 <- all.data %>% filter(day == 2)
+```
+
+```{r E3-cal Select calibration data, include=FALSE}
+eyetracking.calibration.data <- data.day.1 %>%
+  filter(trial_type == "webgazer-validate") %>%
+  select(subject_id, trial_index, phase,  percent_in_roi, average_offset) %>% 
+  unnest(percent_in_roi)
+  
+eyetracking.calibration.summary <- eyetracking.calibration.data %>% 
+  group_by(subject_id, trial_index, phase) %>% 
+  summarize(mean_percent_in_roi = mean(percent_in_roi)) %>% 
+  group_by(subject_id) %>% 
+  mutate(calib_num = row_number())
+
+subject.calibration.score <- eyetracking.calibration.summary %>%
+  filter(phase=="boost-calibration") %>%
+  select(subject_id, mean_percent_in_roi)
+```
+
+```{r E3-cal Select eyetracking data, include=FALSE}
+eyetracking.data <- data.day.1 %>%
+  filter(phase == "part2") %>%
+  select(subject_id, webgazer_data, webgazer_targets, left_image_new, right_image_new, right_image, left_image) %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c("#left-img", "#right-img"), names_sep=".") %>%
+  tidyr::unnest(webgazer_data)
+```
+
+```{r E3-cal Add ROI information, include=FALSE}
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+
+eyetracking.data <- eyetracking.data %>%
+  mutate(midpoint.x = `#left-img.right` + (`#right-img.left` - `#left-img.right`)/2) %>%
+  mutate(in.left.half = x < midpoint.x) %>%
+  mutate(in.right.half = x > midpoint.x)%>%
+  mutate(in.target.half = if_else(left_image_new == TRUE, in.left.half, in.right.half))%>%
+  mutate(in.distractor.half = if_else(left_image_new == TRUE, in.right.half, in.left.half)) %>%
+  mutate(in.left.roi = in.box(x, y,`#left-img.left`, `#left-img.right`, `#left-img.top`, `#left-img.bottom`, 50))%>%
+  mutate(in.right.roi = in.box(x, y,`#right-img.left`, `#right-img.right`, `#right-img.top`, `#right-img.bottom`, 50))%>%
+  mutate(in.target.roi = if_else(left_image_new == TRUE, in.left.roi, in.right.roi))%>%
+  mutate(in.distractor.roi = if_else(left_image_new == TRUE, in.right.roi, in.left.roi))
+```
+
+```{r E3-cal Calculate looking score, include=FALSE}
+looking.score.data <- eyetracking.data %>% 
+  group_by(subject_id, right_image, left_image, right_image_new, left_image_new) %>%
+  summarise(looking.score.roi = sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi),
+            looking.score.half = sum(in.target.half) / sum(in.target.half, in.distractor.half)) %>%
+  mutate(image = if_else(right_image_new, left_image, right_image))
+```
+
+```{r E3-cal Join looking score with calibration, include=FALSE}
+merged.eyetracking <- looking.score.data %>%
+  group_by(subject_id) %>%
+  summarize(looking.score.M.roi = mean(looking.score.roi),
+            looking.score.M.half = mean(looking.score.half))%>%
+  left_join(subject.calibration.score, by=c("subject_id"))
+```
+
+To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within XXX pixels of the validation points during the final validation phase before the eye tracking is performed.
+
+Calibration scores were not correlated with looking scores, regardless of which method was used to calculate looking scores.
+
+
+```{r E3-cal Plot looking score (halves) by calibration, echo=FALSE}
+ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.half))+
+  geom_point()+
+  geom_smooth(method="lm", formula = y ~ x)+
+  labs(x="Calibration Score", y="Looking Score (Halves)")
+```
+
+```{r E3-cal Plot looking score (roi) by calibration, echo=FALSE, warning=FALSE}
+ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.roi))+
+  geom_point()+
+  geom_smooth(method="lm", formula = y ~ x)+
+  labs(x="Calibration Score", y="Looking Score (ROIs)")
+```
+
+```{r E3-cal Prepare Day 2 data, include=FALSE}
+day2.test.data <- data.day.2 %>%
+  filter(task %in% c("recognition", "confidence")) %>%
+  select(subject_id, image, old_or_new, correct, rt, response, task) %>%
+  pivot_wider(names_from=task, values_from=c(correct, response, rt)) %>%
+  select(-correct_confidence) %>%
+  mutate(response_confidence = as.numeric(response_confidence))
+```
+
+```{r E3-cal Calculate Looking Score Correlations, include=FALSE}
+looking.plus.behavioral <- left_join(looking.score.data, day2.test.data)
+
+looking.correlations.subjects <- looking.plus.behavioral %>%
+  filter(correct_recognition == TRUE) %>%
+  filter(rt_recognition <= 10000) %>%
+  group_by(subject_id) %>%
+  summarize(pearson.r.conf.roi = cor(looking.score.roi, response_confidence),
+            pearson.r.rt.roi = cor(looking.score.roi, rt_recognition),
+            pearson.r.conf.half = cor(looking.score.half, response_confidence),
+            pearson.r.rt.half = cor(looking.score.half, rt_recognition)
+            ) %>%
+  mutate(r.to.z.conf.roi = .5*(log(1+pearson.r.conf.roi) - log(1 - pearson.r.conf.roi)),
+         r.to.z.rt.roi = .5*(log(1+pearson.r.rt.roi) - log(1 - pearson.r.rt.roi)),
+         r.to.z.conf.half = .5*(log(1+pearson.r.conf.half) - log(1 - pearson.r.conf.half)),
+         r.to.z.rt.half = .5*(log(1+pearson.r.rt.half) - log(1 - pearson.r.rt.half)))
+
+looking.correlations.subjects.tidy <- looking.correlations.subjects %>%
+  select(subject_id, r.to.z.conf.half, r.to.z.conf.roi, r.to.z.rt.roi, r.to.z.rt.half) %>%
+  pivot_longer(2:5, names_to = "measure", values_to = "z") %>%
+  mutate(behavioral_measure = case_when(
+    measure %in% c("r.to.z.conf.half", "r.to.z.conf.roi") ~ "confidence",
+    measure %in% c("r.to.z.rt.half", "r.to.z.rt.roi") ~ "rt",
+  )) %>%
+  mutate(looking_measure = case_when(
+    measure %in% c("r.to.z.conf.roi", "r.to.z.rt.roi") ~ "roi",
+    measure %in% c("r.to.z.rt.half", "r.to.z.conf.half") ~ "half",
+  )) %>%
+  select(subject_id, behavioral_measure, looking_measure, z) %>%
+  left_join(subject.calibration.score, by=c("subject_id"))
+```
+
+We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation.
+
+```{r E3-cal Plot correlations with calibration.score, echo=FALSE, warning=FALSE}
+ggplot(looking.correlations.subjects.tidy, aes(x=mean_percent_in_roi, y=z))+
+  geom_point()+
+  geom_smooth(method="lm", formula=y~x)+
+  facet_grid(behavioral_measure ~ looking_measure)
+
+```
+
