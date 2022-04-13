@@ -94,6 +94,22 @@ merged.eyetracking <- looking.score.data %>%
   left_join(subject.calibration.score, by=c("subject_id"))
 ```
 
+
+#### Calibration Accuracy
+
+```{r E3-cal Plot Calibration Accuracy, echo=FALSE}
+ggplot(subject.calibration.score, aes(x=mean_percent_in_roi))+
+  stat_bin(binwidth = 10)+
+  labs(x="Calibration Accuracy\n(% of samples within 200px of calibration point)")+
+  theme_minimal()+
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.title.y = element_blank())
+```
+
+#### Correlation with Effects
+
 To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within XXX pixels of the validation points during the final validation phase before the eye tracking is performed.
 
 Calibration scores were not correlated with looking scores, regardless of which method was used to calculate looking scores.
