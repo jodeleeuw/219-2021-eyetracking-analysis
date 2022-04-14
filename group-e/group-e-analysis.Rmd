@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 ```{r}
@@ -8,6 +10,7 @@ library(dplyr)
 library(tidyr)
 library(jsonlite)
 library(ggplot2)
+library(lme4)
 ```
 
 Loading data and converting it to a tibble
@@ -140,7 +143,7 @@ ggplot(summary.gaze.view, aes(x=time.window, y=prop.in.target, ymin=prop.in.targ
 Fit sigmoid curve
 
 ```{r}
-attractiveness.curve <- summary.gaze.view %>% filter(roundness_task == FALSE)
+attractiveness.curve <- summary.gaze.view %>% filter(task != "Roundness")
 fit <- nls(prop.in.target ~ MaxP + (MinP - MaxP)/(1+(time.window/InfP)^Slope), data = attractiveness.curve, start=list(MaxP=0.9,MinP=0.5,InfP=-500,Slope=-1))
 ```
 
