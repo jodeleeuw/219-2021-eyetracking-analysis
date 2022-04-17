@@ -3,6 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
+  english,
   man,floatsintext]{apa6}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -92,15 +93,6 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-\ifLuaTeX
-\usepackage[bidi=basic]{babel}
-\else
-\usepackage[bidi=default]{babel}
-\fi
-\babelprovide[main,import]{english}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -116,9 +108,9 @@
 
 % Create new environments so endfloat can handle them
 % \newenvironment{ltable}
-%   {\begin{landscape}\centering\begin{threeparttable}}
-%   {\end{threeparttable}\end{landscape}}
-\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+%   {\begin{landscape}\begin{center}\begin{threeparttable}}
+%   {\end{threeparttable}\end{center}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
 
 % Enables adjusting longtable caption width to table width
 % Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
@@ -131,20 +123,6 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
-% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
-% See https://github.com/crsh/papaja/issues/292
-\makeatletter
-\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
-  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-  {-1em}%
-  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
-
-\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
-  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-  {-\z@\relax}%
-  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
-\makeatother
-
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -156,20 +134,22 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-
-\usepackage{xpatch}
-\makeatletter
-\xapptocmd\appendix
-  {\xapptocmd\section
-    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
-    {}{\InnerPatchFailed}%
-  }
-{}{\PatchFailed}
+\shorttitle{Just picked a random title: feel free to change}
 \keywords{keywords\newline\indent Word count: X}
 \usepackage{lineno}
 
 \linenumbers
 \usepackage{csquotes}
+\ifXeTeX
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\else
+  \usepackage[main=english]{babel}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -178,8 +158,6 @@
 \author{Josh de Leeuw\textsuperscript{1} \& et al.\textsuperscript{1,2}}
 \date{}
 
-
-\shorttitle{Just picked a random title: feel free to change}
 
 \authornote{
 
@@ -195,7 +173,7 @@ Correspondence concerning this article should be addressed to Josh de Leeuw, Pos
 
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Vassar College\\\textsuperscript{2} XX}
 
-\abstract{%
+\abstract{
 ADD LATER
 }
 
@@ -237,7 +215,7 @@ During the calibration, dots appeared on the screen one at a time in different l
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R (Version 4.1.2; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.1.0; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.3; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.8; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.1; Wickham, 2021a), \emph{ggplot2} (Version 3.3.5; Wickham, 2016), \emph{jsonlite} (Version 1.8.0; Ooms, 2014), \emph{lme4} (Version 1.1.28; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.3.4; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2020), \emph{readr} (Version 2.1.2; Wickham \& Hester, 2020), \emph{shiny} (Chang et al., 2021), \emph{stringr} (Version 1.4.0; Wickham, 2019), \emph{tidyr} (Version 1.2.0; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R {[}Version 4.0.3; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 1.0.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.7; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.3; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.26; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.2; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 1.4.0; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.6.0; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, \emph{tidyr} {[}Version 1.1.3; Wickham (2021b){]}, and \emph{tinylabels} (Barth, 2022) for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -338,10 +316,6 @@ The primary methodological difference between this replication and Johansson and
 
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
-
-\begin{verbatim}
-## Warning: package 'patchwork' was built under R version 4.1.3
-\end{verbatim}
 
 \hypertarget{replication-1}{%
 \subsubsection{Replication}\label{replication-1}}
@@ -502,7 +476,7 @@ Calibration scores were not correlated with looking scores, regardless of which 
 
 We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation.
 
-\includegraphics{manuscript_files/figure-latex/E3-cal Plot correlations with calibration.score-1.pdf}
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf}
 
 \hypertarget{discussion-2}{%
 \subsection{Discussion}\label{discussion-2}}
@@ -587,10 +561,6 @@ For simplicity, and to reflect the dependent variable used in analyses, we avera
 Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study.
 This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.
 
-\begin{verbatim}
-## Warning: Computation failed in `stat_summary()`:
-\end{verbatim}
-
 \begin{figure}
 \centering
 \includegraphics{manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf}
@@ -635,7 +605,9 @@ Categorizing gaze location based on which of the four quadrants of the screen th
 \hypertarget{experiment-5}{%
 \section{Experiment 5}\label{experiment-5}}
 
-The fifth study was a replication attempt of Shimojo, Simion, Shimojo, and Scheier (2003), which found that human gaze is actively involved in preference formation. Participants were shown pairs of human faces and were asked to choose the face which they found more attractive. Prior to making their explicit selection, participants spent more time looking at the face that was ultimately judged more attractive. This bias was not as large when the task was face shape discrimination rather than a preference-based choice.
+The fifth study was a replication attempt of Shimojo, Simion, Shimojo, and Scheier (2003), which found that human gaze is actively involved in preference formation. Separate sets of participants were shown pairs of human faces and asked either to choose which one they found more attractive or which they felt was rounder. Prior to making their explicit selection, participants were increasingly likely to be fixating the face they ultimately chose, though this effect was significantly weaker for roundness discrimination.
+
+Note that Shimojo and colleagues compare five conditions, of which we replicate only the two that figure most prominently in their conclusions: the ``face-attractiveness-difficult task'' and the ``face-roundness task''.
 
 \hypertarget{methods-4}{%
 \subsection{Methods}\label{methods-4}}
@@ -645,12 +617,8 @@ All stimuli, experiment scripts, data, and analysis scripts are available on the
 \hypertarget{participants-5}{%
 \subsubsection{Participants}\label{participants-5}}
 
-27 participants were recruited on Prolific to participate in stimulus norming (for attractiveness). They were paid \$XX for completing the experiment. Data from 3 participants was excluded because their mode response made up more than 50\% of their total responses , for a total of 24 participants in the norming.
-
-50 participants for the main task were recruited on Prolific and were paid \$XX. 8 subjects, 4 from the attractiveness task group and 4 from the roundness task group, were excluded for incorrect validations. After this data exclusion, we ended up with 21 participants each for the attractiveness task and the roundness task.The original sample size in Shimojo et al.~(2003) was 10 participants total.
-
-\hypertarget{procedure-and-design}{%
-\subsubsection{Procedure and Design}\label{procedure-and-design}}
+50 participants for the main task were recruited on Prolific and were paid \$XX. 8 subjects, 4 from the attractiveness task group and 4 from the roundness task group, were excluded for incorrect validations. After this data exclusion, we ended up with 21 participants each for the attractiveness task and the roundness task. The original sample size in Shimojo et al.~(2003) was 10 participants total.
+\#\#\# Procedure and Design
 
 At the beginning of the experimental task, participants completed a 9-point eye-tracker calibration (each point appeared 3 times in random order) and 3-point validation. The validation point appeared once at center, middle left, and middle right locations in random order.
 
@@ -659,15 +627,62 @@ During each trial of the main task, two faces were displayed on the two halves o
 \hypertarget{materials-and-norming}{%
 \subsubsection{Materials and Norming}\label{materials-and-norming}}
 
-The faces in our replication were selected from a set of 1,000 faces within the Flickr-Faces-HQ Dataset. (The face images used in Shimojo et al.~were from the Ekman face database and the AR face database.) These images were chosen because the person in each image was looking at the camera with a fairly neutral facial expression and appeared to be over the age of 18. Participants in the norming study viewed 172 faces and were asked to rate them on a scale from 1 (less attractive) to 7 (more attractive) using a slider. Faces were presented one at a time and in a random order for each participant. Following Shimojo et al., 19 face pairs were made by matching two faces that had a difference in mean attractiveness ratings that was 0.25 points or lower and that matched in gender, race, and age group (young adult, adult, or older adult).
+The faces in our replication were selected from a set of 1,000 faces within the Flickr-Faces-HQ Dataset. (The face images used in Shimojo et al.~were from the Ekman face database and the AR face database.) These images were chosen because the person in each image was looking at the camera with a fairly neutral facial expression and appeared to be over the age of 18. 27 participants were recruited on Prolific to participate in stimulus norming (for attractiveness). They were paid \$XX for completing the experiment. Data from 3 participants was excluded because their mode response made up more than 50\% of their total responses , for a total of 24 participants in the norming. They each viewed all 172 faces and were asked to rate them on a scale from 1 (less attractive) to 7 (more attractive) using a slider. Faces were presented one at a time and in a random order for each participant. Following Shimojo et al., 19 face pairs were made by matching two faces that had a difference in mean attractiveness ratings that was 0.25 points or lower and that matched in gender, race, and age group (young adult, adult, or older adult).
 
 \hypertarget{data-analysis-2}{%
 \subsubsection{Data analysis}\label{data-analysis-2}}
 
-In the original study, a video-based eye tracker was used. The eye movements of participants were recorded with a digital camera, and eye position was then tracked using MediaAnalyzer software. This eye tracker was able to collect 30 samples per second. In our study, the camera on the device used by the participant and the jsPsych WebGazer package were used to determine where a participant's gaze was directed. Since our eye tracking method did not have the same sample collection rate as the eye tracker in Shimojo et al., time windows of 50 milliseconds were used when looking at the likelihood of gazing at the chosen face at a given point between a cutoff time and when the decision was made.
+In the original study, a video-based eye tracker was used. The eye movements of participants were recorded with a digital camera downsampled to 33.3 Hz, with eye position was then determined automatically with MediaAnalyzer software. In our study, subjects supplied their own cameras, so hardware sampling rate varied. However, data was collected at 20 Hz.{[}TODO - CONFIRM{]}
 
 \hypertarget{results-4}{%
 \subsection{Results}\label{results-4}}
+
+Due to large variation in response time latency, Shimojo and colleagues analyzed eye gaze for the 1.67 seconds prior to the response. This duration was one standard deviation of the mean response time, ensuring that all timepoints analyzed have data from at least 67\% of trials. In our dataset, one standard deviation amounts to 1.85 seconds. We then binned eyegaze data into 50 ms bins rather than the 30 ms bins used by Shimojo and colleagues, reflecting the different sampling rates.
+
+
+
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{figGroupEOrigA} \includegraphics[width=0.45\linewidth]{figGroupEOrigB} \includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMain-3} \includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMain-4} \caption{Primary results from Exp. 5. \emph{Top} shows the original results from Shimojo and colleagues (Figures reprinted with permission{[}TODO{]}). The attractiveness judgment along with the best-fitting sigmoid is shown in the \emph{top left}. Results for the roundness judgment are show in the \emph{top right}, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison (\emph{top right}). (\emph{Bottom}) shows the analogous results from the replication, with the attractiveness judgments on the \emph{bottom left} and the roundness judgments on the \emph{bottom right}. Again, the best-fitting sigmoid for the attractiveness judgments are plotted with a dashed line alongside the roundness results, for purposes of comparison.}\label{fig:groupEMain}
+\end{figure}
+
+Following Shimojo and colleagues, data for each condition were fit using a four-parameter sigmoid (Fig. \ref{fig:Shimojo}). These fit less well than in the original paper for both the attractiveness judgment (R\textsuperscript{2} = 0.84 vs.~0.91) and the roundness judgment (R\textsuperscript{2} = 0.54 vs.~0.91).
+
+From these curves, Shimojo and colleagues focus on two qualitative findings. First, they note a higher asymptote for the attractiveness discrimination task relative to roundness discrimination. Qualitatively, this appears to replicate. However, their statistical analysis -- a Kolmogorov-Smirnov test for distance between two distributions -- is not significant (D = 0.19, p = 0.53), though it should be noted that this is a very indirect statistical test of the hypothesis and probably not very sensitive.
+
+The second qualitative finding they note is that the curve for the roundness judgment ``saturates'' (asymptotes) earlier than the curve for the attractiveness judgment. They do not present any statistical analyses, but it is clear qualitatively that the result does not replicate.
+
+\hypertarget{calibration-4}{%
+\subsubsection{Calibration}\label{calibration-4}}
+
+As in the previous experiments, calibration score was defined as the average proportion of samples within 200 pixels of the validation point during the final validation phase before the eye tracking is performed. The distribution across participants is shown in Fig. \ref{fig:E5cal}.
+
+
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/E5cal-1} \caption{Histogram of calibration success in Exp. 5. Where participants required more than one calibration (N=8), only the final calibration was considered.}\label{fig:E5cal}
+\end{figure}
+
+To determine whether calibration accuracy influenced our key effects, we calculated the percentage of samples during the task in which the participant was fixating the face they ultimately chose. There was a significant correlation for both the attractiveness judgments (r = 0.47 {[}0.04, 0.75{]}, p = 0.03) and the roundness judgments (r = 0.60 {[}0.23, 0.82{]}, p = 0). Inspection of Fig. \ref{fig:E5calcorr} reveals that this correlation is due to a handful of particpiants with calibration values below 50\%.
+
+
+
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{manuscript_files/figure-latex/E5calcorr-1} \caption{Correlation between calibration accuracy (x-axis) and percentage of samples fixating target (y-axis) in Exp. 5.}\label{fig:E5calcorr}
+\end{figure}
+
+Thus, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50\%. This slightly improved the fits of the sigmoids (Attractiveness: R\textsuperscript{2} = 0.79; Roundness: R\textsuperscript{2} = 0.60). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = 0.22, p = 0.35). Descriptively, the results do not look substantially different (Fig. \ref{fig:groupEMainrev}).
+
+
+
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMainrev-1} \includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMainrev-2} \caption{Revised results for Exp. 5 after removing low-calibration accuracy participants. \emph{Left}: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. \emph{Right}: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).}\label{fig:groupEMainrev}
+\end{figure}
+
+\hypertarget{effects-of-rois-2}{%
+\subsubsection{Effects of ROIs}\label{effects-of-rois-2}}
+
+In the original experiment, eye gazes that did not directly fixate one or other of the faces were excluded. In this section we explore an alternative coding of the eye movement data by coding simply left half vs.~right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
+
+Only a small percentage of samples (7.00\%) involved looks to anything other than one of the two faces. Thus, not surprisingly, the correlation between percentage of time spent fixating the to-be-chosen face using the ROI method and the halves method was near ceiling (r = 0.97 {[}0.97, 0.98{]}, p = 0). Since the choice of method had almost no effect on whether participants were coded as fixating one face or the other, we did not further investigate the effect of method choice on the analytic results.
 
 \hypertarget{discussion-4}{%
 \subsection{Discussion}\label{discussion-4}}
@@ -732,7 +747,7 @@ Manns, J. R., Stark, C. E. L., \& Squire, L. R. (2000). The visual paired-compar
 Ooms, J. (2014). The jsonlite package: A practical and consistent mapping between JSON data and r objects. \emph{arXiv:1403.2805 {[}Stat.CO{]}}. Retrieved from \url{https://arxiv.org/abs/1403.2805}
 
 \leavevmode\vadjust pre{\hypertarget{ref-papoutsaki2016webgazer}{}}%
-Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. \emph{Proceedings of the 25th International Joint Conference on Artificial Intelligence ({IJCAI})}, 3839--3845. {AAAI}.
+Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. In \emph{Proceedings of the 25th international joint conference on artificial intelligence ({IJCAI})} (pp. 3839--3845). {AAAI}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}

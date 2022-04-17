@@ -172,7 +172,7 @@ looking.correlations.subjects.tidy <- looking.correlations.subjects %>%
 
 We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation.
 
-```{r E3-cal Plot correlations with calibration.score, echo=FALSE, warning=FALSE}
+```{r E3-cal Plot correlations with calibration score, echo=FALSE, warning=FALSE}
 ggplot(looking.correlations.subjects.tidy, aes(x=mean_percent_in_roi, y=z))+
   geom_point()+
   geom_smooth(method="lm", formula=y~x)+

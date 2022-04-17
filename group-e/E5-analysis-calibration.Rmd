@@ -1,0 +1,192 @@
+---
+title: "Experiment 5: Calibration Analysis"
+output: html_notebook
+---
+
+```{r E5-cal load libraries, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(ggplot2)
+```
+
+```{r E5-cal load all data, include=FALSE, warning=FALSE, echo=FALSE}
+data.files <- list.files('data', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  data.table$response <- as.character(data.table$response)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+
+# Excluding Subjects
+all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6" & subject_id!="5ce1372c55fe0d001869c8d8" & subject_id!="5f47d860b56e68220cb86be1" & subject_id!="607eaf87ac02229ef4fa8f4a" & subject_id!="5d30857eb2f0ad00163470f3" & subject_id!="5e272684f205790453c2c4b8" & subject_id!="5f5b5881b17fa72756b8ff2a" & subject_id!="5fae5291ec402509e2885604")
+E5.excluded.n = 8
+
+# Code condition information
+all.data <- all.data %>%
+  mutate(task = if_else(study_id == '60748d36577623e2677865c6', "Attractiveness", "Roundness"))
+
+# Convert data to long format for gaze measurements
+task.data <- all.data %>%
+  filter(response=="a" | response=="d") %>%
+  select(subject_id, task, time_elapsed, trial_index, response, rt, webgazer_data, webgazer_targets) %>%
+  unnest(webgazer_data) %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c('#face1', '#face2'), names_sep = ".")
+
+# restrict to time points 1 sd before the decision
+rt.summary <- all.data %>%
+  filter(response=="a" | response=="d") %>%
+  select(subject_id, study_id, trial_index, response, rt) %>%
+  summarize(M=mean(rt), SD=sd(rt))
+task.data <- task.data %>%
+  mutate(time_until_decision = rt - t) %>%
+  filter(time_until_decision <= rt.summary$SD)
+
+# Bin in 50 ms bins (not 30 as in the original study, because we are using webcams)
+task.data <- task.data %>%
+  mutate(time.window = floor(time_until_decision/50)*50+25) #make sure bin is centered
+
+# define ROIs
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+
+#analyze with respect to ROIs
+task.data <- task.data %>%
+  mutate(in.left.box = in.box(x,y,`#face1.left`,`#face1.right`,`#face1.top`,`#face1.bottom`,0)) %>%
+  mutate(in.right.box = in.box(x,y,`#face2.left`,`#face2.right`,`#face2.top`,`#face2.bottom`,0)) %>%
+  mutate(in.target.box = if_else(response == 'a', in.left.box, in.right.box)) %>%
+  mutate(in.other.box = if_else(response == 'a', in.right.box, in.left.box))
+
+summary.gaze.view <- task.data %>%
+  filter(in.target.box == TRUE | in.other.box == TRUE) %>%
+  group_by(subject_id, task) %>%
+  summarize(prop.in.target.subject = mean(in.target.box))
+
+
+subject.calibration.score <- all.data %>%
+  filter(trial_type == "webgazer-validate") %>%
+  select(subject_id, trial_index, phase,  percent_in_roi, average_offset) %>% 
+  unnest(percent_in_roi) %>%
+  group_by(subject_id, trial_index, phase) %>% 
+  summarize(mean_percent_in_roi = mean(percent_in_roi)) %>% 
+  group_by(subject_id) %>% 
+  mutate(calib_num = row_number()) %>%
+  group_by(subject_id) %>%
+  filter(calib_num == max(calib_num)) %>%
+  select(subject_id, mean_percent_in_roi)
+
+scores <- subject.calibration.score %>%
+  merge(summary.gaze.view)
+
+scorescorrs.A <- cor.test(scores$mean_percent_in_roi[scores$task=="Attractiveness"], scores$prop.in.target.subject[scores$task=="Attractiveness"])
+scorescorrs.R <- cor.test(scores$mean_percent_in_roi[scores$task=="Roundness"], scores$prop.in.target.subject[scores$task=="Roundness"])
+
+```
+
+As in the previous experiments, calibration score was defined as the average proportion of samples within 200 pixels of the validation point during the final validation phase before the eye tracking is performed. The distribution across participants is shown in Fig. \@ref(fig:E5cal). 
+(ref:E5cal-caption) Histogram of calibration success in Exp. 5. Where participants required more than one calibration (N=8), only the final calibration was considered.
+
+```{r E5cal, fig.show="hold", out.width="45%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:E5cal-caption)"}
+ggplot(subject.calibration.score, aes(x=mean_percent_in_roi)) +
+  stat_bin(binwidth = 10) +
+  labs(x="Calibration Accuracy\n(% of samples within 200px of calibration point)") +
+  theme_classic()+
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.title.y = element_blank())
+```
+
+To determine whether calibration accuracy influenced our key effects, we calculated the percentage of samples during the task in which the participant was fixating the face they ultimately chose. There was a significant correlation for both the attractiveness judgments (r = `r round(scorescorrs.A$estimate, 2)` [`r round(scorescorrs.A$conf.int, 2)[1]`, `r round(scorescorrs.A$conf.int, 2)[2]`], p = `r round(scorescorrs.A$p.value, 2)`) and the roundness judgments (r = `r round(scorescorrs.R$estimate, 2)` [`r round(scorescorrs.R$conf.int, 2)[1]`, `r round(scorescorrs.R$conf.int, 2)[2]`], p = `r round(scorescorrs.R$p.value, 2)`). Inspection of Fig. \@ref(fig:E5calcorr) reveals that this correlation is due to a handful of particpiants with calibration values below 50%.
+
+(ref:E5calcorr-caption) Correlation between calibration accuracy (x-axis) and percentage of samples fixating target (y-axis) in Exp. 5.
+
+```{r E5calcorr, fig.show="hold", out.width="80%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:E5calcorr-caption)"}
+ggplot(scores, aes(x=mean_percent_in_roi, y=prop.in.target.subject, group=task, color=task))+
+  geom_point() + geom_smooth(method="lm") +
+  labs(x="calibration accuracy", y="looking at chosen face") +
+  theme_classic() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.title.y = element_blank())
+```
+
+```{r reanalyzedat, echo=FALSE, warning=FALSE, include=FALSE}
+
+#re-aggregate data, removing subjects with calibration scores =< 50%.
+rescore <- task.data %>%
+  filter(in.target.box == TRUE | in.other.box == TRUE) %>%
+  group_by(subject_id, time_until_decision, task) %>%
+  summarize(prop.in.target.subject = mean(in.target.box)) %>%
+  merge(subject.calibration.score) %>%
+  filter(mean_percent_in_roi > 50) %>%
+  mutate(time.window = floor(time_until_decision/50)*50+25) %>% #make sure bin is centered
+  group_by(time.window, task) %>%
+  summarize(prop.in.target = mean(prop.in.target.subject), se = sd(prop.in.target.subject)/sqrt(n()))
+
+KS <- ks.test(rescore %>% filter(task == "Attractiveness") %>% pull(prop.in.target),
+         rescore %>% filter(task == "Roundness") %>% pull(prop.in.target))
+
+# Fitting a sigmoid as described in original
+
+sigmoid<-function(x, a, b, c, d){
+  return(d + (a - d) / (1 + (x / c)^b))
+}
+
+error <- function(x,y, pars){
+  a <- pars[1]
+  b <- pars[2]
+  c <- pars[3]
+  d <- pars[4]
+  sum(sapply(1:length(x), function(i){
+    return(y[i] - sigmoid(x[i], a, b, c, d))
+  })^2)
+}
+
+fitsig<-function(x, y){
+  pars <- c(0,0,200,0)
+  return(optim(pars, fn=function(pars){error(x,y,pars)}, method="Nelder-Mead"))
+}
+
+fit.A <- fitsig(rescore$time.window[rescore$task=="Attractiveness"], rescore$prop.in.target[rescore$task=="Attractiveness"])
+fit.R <- fitsig(rescore$time.window[rescore$task=="Roundness"], rescore$prop.in.target[rescore$task=="Roundness"])
+
+fit.A.dat<-data.frame(x=rescore$time.window[rescore$task=="Attractiveness"], y=sigmoid(rescore$time.window[rescore$task=="Attractiveness"], fit.A$par[1], fit.A$par[2], fit.A$par[3], fit.A$par[4]))
+
+fit.R.dat<-data.frame(x=rescore$time.window[rescore$task=="Roundness"], y=sigmoid(rescore$time.window[rescore$task=="Roundness"], fit.R$par[1], fit.R$par[2], fit.R$par[3], fit.R$par[4]))
+
+# calculate R^2
+R2 <- function(fit, y){
+  return(1 - fit$value / sum((y - mean(y))^2))
+}
+R2.A<-R2(fit.A, rescore$prop.in.target[rescore$task=="Attractiveness"])
+R2.R<-R2(fit.R, rescore$prop.in.target[rescore$task=="Roundness"])
+
+plot.A<-ggplot(rescore[rescore$task=="Attractiveness",], aes(x=time.window, y=prop.in.target)) +
+  geom_point(color="red") + 
+  geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "solid") + 
+  scale_x_reverse() + theme_classic() + 
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
+
+plot.R<-ggplot(rescore[rescore$task=="Roundness",], aes(x=time.window, y=prop.in.target))+
+  geom_point(color="turquoise4") + 
+  geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "dashed") + 
+  geom_line(data=fit.R.dat, aes(x=x, y=y), color="turquoise4", lwd=1.25, linetype = "solid") + 
+  scale_x_reverse() + theme_classic() + 
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
+
+```
+
+Thus, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50%. This slightly improved the fits of the sigmoids (Attractiveness: R^2^ = `r round(R2.A,2)`; Roundness: R^2^ = `r round(R2.R,2)`). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = `r round(KS$statistic, 2)`, p = `r round(KS$p.value, 2)`). Descriptively, the results do not look substantially different (Fig. \@ref(fig:groupEMainrev)).
+
+(ref:groupEMainrev-caption) Revised results for Exp. 5 after removing low-calibration accuracy participants. *Left*: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. *Right*: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).
+
+```{r groupEMainrev, fig.show="hold", out.width="45%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:groupEMainrev-caption)"}
+plot.A
+plot.R
+```

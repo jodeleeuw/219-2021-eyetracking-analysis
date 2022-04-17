@@ -1,0 +1,76 @@
+---
+title: "Experiment 5: ROI Analysis"
+output: html_notebook
+---
+
+In the original experiment, eye gazes that did not directly fixate one or other of the faces were excluded. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
+
+```{r E5-roi load all data, include=FALSE, warning=FALSE, echo=FALSE}
+data.files <- list.files('data', full.names = TRUE)
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  data.table$response <- as.character(data.table$response)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+
+# Excluding Subjects
+all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6" & subject_id!="5ce1372c55fe0d001869c8d8" & subject_id!="5f47d860b56e68220cb86be1" & subject_id!="607eaf87ac02229ef4fa8f4a" & subject_id!="5d30857eb2f0ad00163470f3" & subject_id!="5e272684f205790453c2c4b8" & subject_id!="5f5b5881b17fa72756b8ff2a" & subject_id!="5fae5291ec402509e2885604")
+E5.excluded.n = 8
+
+# Code condition information
+all.data <- all.data %>%
+  mutate(task = if_else(study_id == '60748d36577623e2677865c6', "Attractiveness", "Roundness"))
+
+# Convert data to long format for gaze measurements
+task.data <- all.data %>%
+  filter(response=="a" | response=="d") %>%
+  select(subject_id, task, time_elapsed, trial_index, response, rt, webgazer_data, webgazer_targets) %>%
+  unnest(webgazer_data) %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(c('#face1', '#face2'), names_sep = ".")
+
+# restrict to time points 1 sd before the decision
+rt.summary <- all.data %>%
+  filter(response=="a" | response=="d") %>%
+  select(subject_id, study_id, trial_index, response, rt) %>%
+  summarize(M=mean(rt), SD=sd(rt))
+task.data <- task.data %>%
+  mutate(time_until_decision = rt - t) %>%
+  filter(time_until_decision <= rt.summary$SD)
+
+# Bin in 50 ms bins (not 30 as in the original study, because we are using webcams)
+task.data <- task.data %>%
+  mutate(time.window = floor(time_until_decision/50)*50+25) #make sure bin is centered
+
+# define ROIs
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+
+#analyze with respect to ROIs
+task.data <- task.data %>%
+  mutate(midpoint.x = `#face1.right` + (`#face2.left` - `#face1.right`)/2) %>%
+  mutate(in.left.half = x < midpoint.x) %>%
+  mutate(in.right.half = x > midpoint.x) %>%
+  mutate(in.target.half = if_else(response == 'a', in.left.half, in.right.half)) %>%
+  mutate(in.distractor.half = if_else(response == 'a', in.right.half, in.left.half)) %>%
+  mutate(in.left.roi = in.box(x, y,`#face1.left`, `#face1.right`, `#face1.top`, `#face1.bottom`, 50))%>%
+  mutate(in.right.roi = in.box(x, y,`#face2.left`, `#face2.right`, `#face2.top`, `#face2.bottom`, 50))%>%
+  mutate(in.target.roi = if_else(response == 'a', in.left.roi, in.right.roi)) %>%
+  mutate(in.distractor.roi = if_else(response == 'a', in.right.roi, in.left.roi))
+
+looking.score.data <- task.data %>% 
+  group_by(subject_id, task, time.window) %>%
+  summarise(looking.score.roi = sum(in.target.roi)/ sum(in.target.roi, in.distractor.roi),
+            looking.score.half = sum(in.target.half) / sum(in.target.half, in.distractor.half))
+
+looking.score.correlation.data <- looking.score.data %>%
+  filter(!is.nan(looking.score.roi)) %>%
+  select(subject_id, looking.score.half, looking.score.roi)
+
+ls.cor <- cor.test(looking.score.correlation.data$looking.score.half, looking.score.correlation.data$looking.score.roi)
+```
+
+Only a small percentage of samples (`r round(mean(task.data$in.target.roi==0 &  task.data$in.distractor.roi==0), 2)*100`%) involved looks to anything other than one of the two faces. Thus, not surprisingly, the correlation between percentage of time spent fixating the to-be-chosen face using the ROI method and the halves method was near ceiling (r = `r round(ls.cor$estimate, 2)` [`r round(ls.cor$conf.int[1], 2)`, `r round(ls.cor$conf.int[2], 2)`], p = `r ls.cor$p.value`). Since the choice of method had almost no effect on whether participants were coded as fixating one face or the other, we did not further investigate the effect of method choice on the analytic results.
