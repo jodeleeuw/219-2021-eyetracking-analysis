@@ -224,8 +224,8 @@ fig2<-ggplot(eyetracking.figure.2.data %>%
   aes(x=t.window, y=M, ymin=M-SE, ymax=M+SE, color=compatibility, fill=compatibility, linetype=object_type))+
   geom_ribbon(color=NA, alpha=0.3)+
   geom_line(size=1)+
-  scale_color_brewer(palette = "Set1")+
-  scale_fill_brewer(palette = "Set1")+
+  scale_color_manual(values = c( "#377eb8", "#e41a1c","#4daf4a"))+
+  scale_fill_manual(values = c("#377eb8", "#e41a1c", "#4daf4a"))+
   scale_linetype(labels = c("Animal", "Instrument") )+
   theme_classic() +
   geom_vline(xintercept = animal.onset + 200) + 
@@ -236,7 +236,7 @@ fig2
 ```
 ```{r, eval=FALSE}
 saveRDS(fig2, "output/ETfig.rds")
-
+ggsave("output/ETfig.png", plot = fig2, height = 4, width = 6)
 ```
 
 ```{r E4-compute-proportion-gaze-data-by-trial}

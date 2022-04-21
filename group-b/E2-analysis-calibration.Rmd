@@ -108,5 +108,5 @@ m_calib_p = m_calib %>% pull(p.value )
 
 ```
 
-Participants' calibration quality, measured as the mean percentage of fixations that landed within `r colorize("XX", "red")` pixels of the calibration point, varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)` %). 
+Participants' calibration quality, measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)` %). 
 The quality of a participant's calibration was not significantly correlated with the participant's effect size ( _Pearson's r_= `r m_calib_r`, _p_ = `r m_calib_p`) as measured by the difference between the proportion of looks to the critical quadrant minues the average proportion of looks to the average of the other three quadrants.
