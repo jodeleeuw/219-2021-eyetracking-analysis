@@ -98,19 +98,19 @@ Intro stuff:
 
 -   But, concerns over quality + little known about eye-tracking online
 
-*Present work*
+# Present work
 
-In the present work, we attempted to replicate five eye-tracking studies
-from the cognitive science literature using the eye-tracking plug-in
-from `jsPsych`, a Javascript library for running behavioral experiments
-in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. The plug-in
-relies on the `webgazer.js` library for webcam eye-tracking
-[@papoutsaki2016webgazer]. The goal was to examine the strengths and
-weaknesses of webcam eye-tracking for common paradigms in cognitive
-science. The studies were chosen to cover a variety of topic areas
-(e.g., memory, decision-making, psycholinguistics) and paradigms (two
+In order to validate online eyetracking measures, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. Ideally, we would only attempt to replicate studies where the original measurements have small error bars and are known to replicate; otherwise, it can be difficult to distinguish a failure of the method (online eyetracking does not work) from a failure of the original study to replicate. 
+
+In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several ``sanity check'' analyses, such as the correlation between calibration accuracy and effect size. (If the effect is real but there is noise from low-accuracy eyetracking, this correlation should be substantial.) Third, for XXX of the studies, we had comparison data collected in-lab either using jsPsych or a more traditional eyetracker technology, allowing us to direct assess the impact of differences in subject population and equipment.
+
+## Selection of Studies
+
+We chose five high-impact eyetracking studies involve adult subjects. (Given the additional difficulties of recruiting and retaining child participants, we excluded developmental studies.) Our goal was to include exempars from a range of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two
 halves of the screen, visual world paradigm with four quadrants, visual
-world paradigm with "natural" scenes). ...
+world paradigm with "natural" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. 
+
+The final selection of studies was FUBAR...
 
 # General Methods
 
@@ -122,6 +122,13 @@ experiment, participants had to meet the following criteria: 18 years of
 age or older, fluency in English, and access to a webcam. All
 participants provided informed consent. The studies were approved by the
 Vassar College Institutional Review Board.
+
+In order to have adequate statistical power and precision, we aimed for XXXX participants per experiment. 
+
+## Equipment
+
+We used a novel port of the `webgazer.js` library for webcam eyetracking [@papoutsaki2016webgazer], implemented in `jsPsych`, a Javascript library for running behavioral experiments
+in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. We made several changes to webgazer.js in order to improve data quality. FUBAR
 
 ## Eye-tracking Calibration and Validation
 
