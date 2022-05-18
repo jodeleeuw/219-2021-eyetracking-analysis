@@ -123,7 +123,12 @@ age or older, fluency in English, and access to a webcam. All
 participants provided informed consent. The studies were approved by the
 Vassar College Institutional Review Board.
 
-In order to have adequate statistical power and precision, we aimed for XXXX participants per experiment. 
+In order to have adequate statistical power and precision, we aimed for 2.5x the
+sample size of the original experiment, following the heuristic of Simonsohn @simonsohn215.
+In study 5, the original sample size was so small that we opted to collect 5x the 
+number of participants to increase precision. Because of budget and time constraints 
+we were unable to  replace the data for subjects who were excluded or whose data was 
+missing due to technical failures.
 
 ## Equipment
 
