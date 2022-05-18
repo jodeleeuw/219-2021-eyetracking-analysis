@@ -132,8 +132,8 @@ missing due to technical failures.
 
 ## Equipment
 
-We used a novel port of the `webgazer.js` library for webcam eyetracking [@papoutsaki2016webgazer], implemented in `jsPsych`, a Javascript library for running behavioral experiments
-in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. We made several changes to webgazer.js in order to improve data quality. FUBAR
+We used a fork of the `webgazer.js` library for webcam eyetracking [@papoutsaki2016webgazer], implemented in `jsPsych`, a Javascript library for running behavioral experiments
+in a web browser [@deleeuwJsPsychJavaScriptLibrary2015]. Our fork included changes to webgazer.js in order to improve data quality for experiments in which the precise timing of stimulus onsets is relevant. Specifically, we implemented a polling mode so that gaze predictions could be requested at a regular interval, which improved the sampling rate considerably in informal testing. This modification is similar to what Yang and Krajbich @yang2021webcam reported improved the sampling rate in their study of webgazer. We also adjusted the mechanism for recording time stamps of each gaze prediction, so that the time stamp reported by webgazer is based on when the video frame is received and not when the computation of the gaze point is finished. 
 
 ## Eye-tracking Calibration and Validation
 
