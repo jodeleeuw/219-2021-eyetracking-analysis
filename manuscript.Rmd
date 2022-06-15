@@ -2,26 +2,218 @@
 title             : "Eye-tracking on the web: lessons learned from replicating 5 experiments"
 shorttitle        : "Just picked a random title: feel free to change"
 
-author: 
-  - name          : "Josh de Leeuw"
-    affiliation   : "1"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
-    email         : "my@email.com"
-    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
-      - Conceptualization
-      - Writing - Original Draft Preparation
-      - Writing - Review & Editing
-  - name          : "et al."
-    affiliation   : "1,2"
+author:
+  - name: Joshua R. de Leeuw
+    affiliation: '1'
     role:
-      - Writing - Review & Editing
+      - Conceptualization
+      - Data curation
+      - Formal analysis
+      - Investigation
+      - Methodology
+      - Project administration
+      - Software
+      - Supervision
+      - Validation
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    corresponding: yes
+    email: jdeleeuw@vassar.edu
+    address: 124 Raymond Ave, Poughkeepsie, NY 12604, USA
+  - name: Rachel Ryskin
+    affiliation: '2'
+    role:
+      - Conceptualization
+      - Formal analysis
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    email: rryskin@ucmerced.edu
+  - name: Ariel N. James
+    affiliation: '3'
+    role:
+      - Conceptualization
+      - Formal analysis
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    email: ajames2@macalester.edu
+  - name: Joshua K. Hartshorne
+    affiliation: '4'
+    role:
+      - Conceptualization
+      - Formal analysis
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    email: joshua.hartshorne@bc.edu
+  - name: Haylee Backs
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: hbacks@vassar.edu
+  - name: Nandeeta Bala
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: nbala@vassar.edu
+  - name: Laila Barcenas-Meade
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: lbarcenasmeade@vassar.edu
+  - name: Samata Bhattarai
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: sbhattarai@vassar.edu
+  - name: Tessa Charles
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: tcharles@vassar.edu
+  - name: Gerasimos Copoulos
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: gcopoulos@vassar.edu
+  - name: Claire Coss
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: ccoss@vassar.edu
+  - name: Alexander Eisert
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: aeisert@vassar.edu
+  - name: Elena Furuhashi
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: efuruhashi@vassar.edu
+  - name: Keara Ginell
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: kginell@vassar.edu
+  - name: Anna Guttman-McCabe
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: aguttmanmccabe@vassar.edu
+  - name: Emma (Chaz) Harrison
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: eharrison@vassar.edu
+  - name: Laura Hoban
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: lhoban@vassar.edu
+  - name: William A. Hwang
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: whwang@vassar.edu
+  - name: Claire Iannetta
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: ciannetta@vassar.edu
+  - name: Kristen M. Koenig
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: kkoenig@vassar.edu
+  - name: Chauncey Lo
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: chaunceylo@vassar.edu
+  - name: Victoria Palone
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: vpalone@vassar.edu
+  - name: Gina Pepitone
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: gpepitone@vassar.edu
+  - name: Margaret Ritzau
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: mritzau@vassar.edu
+  - name: Yi Hua Sung
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: ysung@vassar.edu
+  - name: Lauren Thompson
+    affiliation: '1'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: lthompson@vassar.edu
 
 affiliation:
-  - id            : "1"
-    institution   : "Vassar College"
-  - id            : "2"
-    institution   : "XX"
+  - id: '1'
+    institution: Cognitive Science Department, Vassar College
+  - id: '2'
+    institution: Department of Cognitive & Information Science, University of California,
+      Merced
+  - id: '3'
+    institution: Psychology Department, Macalester College
+  - id: '4'
+    institution: Department of Psychology & Neuroscience, Boston College
+
 
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.

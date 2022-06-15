@@ -3,7 +3,6 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  english,
   man,floatsintext]{apa6}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -38,7 +37,7 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   pdftitle={Eye-tracking on the web: lessons learned from replicating 5 experiments},
-  pdfauthor={Josh de Leeuw1 \& et al.1,2},
+  pdfauthor={Joshua R. de Leeuw1, Rachel Ryskin2, Ariel N. James3, Joshua K. Hartshorne4, Haylee Backs1, Nandeeta Bala1, Laila Barcenas-Meade1, Samata Bhattarai1, Tessa Charles1, Gerasimos Copoulos1, Claire Coss1, Alexander Eisert1, Elena Furuhashi1, Keara Ginell1, Anna Guttman-McCabe1, Emma (Chaz) Harrison1, Laura Hoban1, William A. Hwang1, Claire Iannetta1, Kristen M. Koenig1, Chauncey Lo1, Victoria Palone1, Gina Pepitone1, Margaret Ritzau1, Yi Hua Sung1, \& Lauren Thompson1},
   pdflang={en-EN},
   pdfkeywords={keywords},
   hidelinks,
@@ -93,6 +92,15 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -108,9 +116,9 @@
 
 % Create new environments so endfloat can handle them
 % \newenvironment{ltable}
-%   {\begin{landscape}\begin{center}\begin{threeparttable}}
-%   {\end{threeparttable}\end{center}\end{landscape}}
-\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
 
 % Enables adjusting longtable caption width to table width
 % Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
@@ -123,6 +131,20 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -134,30 +156,30 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Just picked a random title: feel free to change}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
 \keywords{keywords\newline\indent Word count: X}
 \usepackage{lineno}
 
 \linenumbers
 \usepackage{csquotes}
-\ifXeTeX
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
 \title{Eye-tracking on the web: lessons learned from replicating 5 experiments}
-\author{Josh de Leeuw\textsuperscript{1} \& et al.\textsuperscript{1,2}}
+\author{Joshua R. de Leeuw\textsuperscript{1}, Rachel Ryskin\textsuperscript{2}, Ariel N. James\textsuperscript{3}, Joshua K. Hartshorne\textsuperscript{4}, Haylee Backs\textsuperscript{1}, Nandeeta Bala\textsuperscript{1}, Laila Barcenas-Meade\textsuperscript{1}, Samata Bhattarai\textsuperscript{1}, Tessa Charles\textsuperscript{1}, Gerasimos Copoulos\textsuperscript{1}, Claire Coss\textsuperscript{1}, Alexander Eisert\textsuperscript{1}, Elena Furuhashi\textsuperscript{1}, Keara Ginell\textsuperscript{1}, Anna Guttman-McCabe\textsuperscript{1}, Emma (Chaz) Harrison\textsuperscript{1}, Laura Hoban\textsuperscript{1}, William A. Hwang\textsuperscript{1}, Claire Iannetta\textsuperscript{1}, Kristen M. Koenig\textsuperscript{1}, Chauncey Lo\textsuperscript{1}, Victoria Palone\textsuperscript{1}, Gina Pepitone\textsuperscript{1}, Margaret Ritzau\textsuperscript{1}, Yi Hua Sung\textsuperscript{1}, \& Lauren Thompson\textsuperscript{1}}
 \date{}
 
+
+\shorttitle{Just picked a random title: feel free to change}
 
 \authornote{
 
@@ -165,15 +187,15 @@ Add complete departmental affiliations for each author here. Each new line herei
 
 Enter author note here.
 
-The authors made the following contributions. Josh de Leeuw: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; et al.: Writing - Review \& Editing.
+The authors made the following contributions. Joshua R. de Leeuw: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Project administration, Software, Supervision, Validation, Visualization, Writing - original draft, Writing - review \& editing; Rachel Ryskin: Conceptualization, Formal analysis, Visualization, Writing - original draft, Writing - review \& editing; Ariel N. James: Conceptualization, Formal analysis, Visualization, Writing - original draft, Writing - review \& editing; Joshua K. Hartshorne: Conceptualization, Formal analysis, Visualization, Writing - original draft, Writing - review \& editing; Haylee Backs: Investigation, Methodology, Software; Nandeeta Bala: Investigation, Methodology, Software; Laila Barcenas-Meade: Investigation, Methodology, Software; Samata Bhattarai: Investigation, Methodology, Software; Tessa Charles: Investigation, Methodology, Software; Gerasimos Copoulos: Investigation, Methodology, Software; Claire Coss: Investigation, Methodology, Software; Alexander Eisert: Investigation, Methodology, Software; Elena Furuhashi: Investigation, Methodology, Software; Keara Ginell: Investigation, Methodology, Software; Anna Guttman-McCabe: Investigation, Methodology, Software; Emma (Chaz) Harrison: Investigation, Methodology, Software; Laura Hoban: Investigation, Methodology, Software; William A. Hwang: Investigation, Methodology, Software; Claire Iannetta: Investigation, Methodology, Software; Kristen M. Koenig: Investigation, Methodology, Software; Chauncey Lo: Investigation, Methodology, Software; Victoria Palone: Investigation, Methodology, Software; Gina Pepitone: Investigation, Methodology, Software; Margaret Ritzau: Investigation, Methodology, Software; Yi Hua Sung: Investigation, Methodology, Software; Lauren Thompson: Investigation, Methodology, Software.
 
-Correspondence concerning this article should be addressed to Josh de Leeuw, Postal address. E-mail: \href{mailto:my@email.com}{\nolinkurl{my@email.com}}
+Correspondence concerning this article should be addressed to Joshua R. de Leeuw, 124 Raymond Ave, Poughkeepsie, NY 12604, USA. E-mail: \href{mailto:jdeleeuw@vassar.edu}{\nolinkurl{jdeleeuw@vassar.edu}}
 
 }
 
-\affiliation{\vspace{0.5cm}\textsuperscript{1} Vassar College\\\textsuperscript{2} XX}
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Cognitive Science Department, Vassar College\\\textsuperscript{2} Department of Cognitive \& Information Science, University of California, Merced\\\textsuperscript{3} Psychology Department, Macalester College\\\textsuperscript{4} Department of Psychology \& Neuroscience, Boston College}
 
-\abstract{
+\abstract{%
 ADD LATER
 }
 
@@ -194,19 +216,21 @@ Intro stuff:
   But, concerns over quality + little known about eye-tracking online
 \end{itemize}
 
-\emph{Present work}
+\hypertarget{present-work}{%
+\section{Present work}\label{present-work}}
 
-In the present work, we attempted to replicate five eye-tracking studies
-from the cognitive science literature using the eye-tracking plug-in
-from \texttt{jsPsych}, a Javascript library for running behavioral experiments
-in a web browser (de Leeuw, 2015). The plug-in
-relies on the \texttt{webgazer.js} library for webcam eye-tracking
-(Papoutsaki et al., 2016). The goal was to examine the strengths and
-weaknesses of webcam eye-tracking for common paradigms in cognitive
-science. The studies were chosen to cover a variety of topic areas
-(e.g., memory, decision-making, psycholinguistics) and paradigms (two
+In order to validate online eyetracking measures, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. Ideally, we would only attempt to replicate studies where the original measurements have small error bars and are known to replicate; otherwise, it can be difficult to distinguish a failure of the method (online eyetracking does not work) from a failure of the original study to replicate.
+
+In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several ``sanity check'\,' analyses, such as the correlation between calibration accuracy and effect size. (If the effect is real but there is noise from low-accuracy eyetracking, this correlation should be substantial.) Third, for XXX of the studies, we had comparison data collected in-lab either using jsPsych or a more traditional eyetracker technology, allowing us to direct assess the impact of differences in subject population and equipment.
+
+\hypertarget{selection-of-studies}{%
+\subsection{Selection of Studies}\label{selection-of-studies}}
+
+We chose five high-impact eyetracking studies involve adult subjects. (Given the additional difficulties of recruiting and retaining child participants, we excluded developmental studies.) Our goal was to include exempars from a range of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two
 halves of the screen, visual world paradigm with four quadrants, visual
-world paradigm with ``natural'' scenes). \ldots{}
+world paradigm with ``natural'' scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible.
+
+The final selection of studies was FUBAR\ldots{}
 
 \hypertarget{general-methods}{%
 \section{General Methods}\label{general-methods}}
@@ -220,6 +244,19 @@ experiment, participants had to meet the following criteria: 18 years of
 age or older, fluency in English, and access to a webcam. All
 participants provided informed consent. The studies were approved by the
 Vassar College Institutional Review Board.
+
+In order to have adequate statistical power and precision, we aimed for 2.5x the
+sample size of the original experiment, following the heuristic of Simonsohn (\textbf{simonsohn215?}).
+In study 5, the original sample size was so small that we opted to collect 5x the
+number of participants to increase precision. Because of budget and time constraints
+we were unable to replace the data for subjects who were excluded or whose data was
+missing due to technical failures.
+
+\hypertarget{equipment}{%
+\subsection{Equipment}\label{equipment}}
+
+We used a fork of the \texttt{webgazer.js} library for webcam eyetracking (Papoutsaki et al., 2016), implemented in \texttt{jsPsych}, a Javascript library for running behavioral experiments
+in a web browser (de Leeuw, 2015). Our fork included changes to webgazer.js in order to improve data quality for experiments in which the precise timing of stimulus onsets is relevant. Specifically, we implemented a polling mode so that gaze predictions could be requested at a regular interval, which improved the sampling rate considerably in informal testing. This modification is similar to what Yang and Krajbich Yang and Krajbich (2021) reported improved the sampling rate in their study of webgazer. We also adjusted the mechanism for recording time stamps of each gaze prediction, so that the time stamp reported by webgazer is based on when the video frame is received and not when the computation of the gaze point is finished.
 
 \hypertarget{eye-tracking-calibration-and-validation}{%
 \subsection{Eye-tracking Calibration and Validation}\label{eye-tracking-calibration-and-validation}}
@@ -254,7 +291,7 @@ the study.
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R {[}Version 4.0.3; R Core Team (2021){]} and the R-packages \emph{afex} {[}Version 1.0.1; Singmann, Bolker, Westfall, Aust, and Ben-Shachar (2021){]}, \emph{broom.mixed} {[}Version 0.2.7; Bolker and Robinson (2020){]}, \emph{dplyr} {[}Version 1.0.7; Wickham, François, Henry, and Müller (2021){]}, \emph{forcats} {[}Version 0.5.1; Wickham (2021a){]}, \emph{ggplot2} {[}Version 3.3.3; Wickham (2016){]}, \emph{jsonlite} {[}Version 1.7.2; Ooms (2014){]}, \emph{lme4} {[}Version 1.1.26; Bates, Mächler, Bolker, and Walker (2015){]}, \emph{lmerTest} {[}Version 3.1.3; Kuznetsova, Brockhoff, and Christensen (2017){]}, \emph{Matrix} {[}Version 1.3.2; Bates and Maechler (2021){]}, \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]}, \emph{readr} {[}Version 1.4.0; Wickham and Hester (2020){]}, \emph{shiny} {[}Version 1.6.0; Chang et al. (2021){]}, \emph{stringr} {[}Version 1.4.0; Wickham (2019){]}, \emph{tidyr} {[}Version 1.1.3; Wickham (2021b){]}, and \emph{tinylabels} (Barth, 2022) for all our analyses.
+We used R (Version 4.2.0; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.1.1; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.4; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.9; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.1; Wickham, 2021a), \emph{ggplot2} (Version 3.3.6; Wickham, 2016), \emph{jsonlite} (Version 1.8.0; Ooms, 2014), \emph{lme4} (Version 1.1.29; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.4.1; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2020), \emph{readr} (Version 2.1.2; Wickham \& Hester, 2020), \emph{shiny} (Chang et al., 2021), \emph{stringr} (Version 1.4.0; Wickham, 2019), \emph{tidyr} (Version 1.2.0; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -808,6 +845,10 @@ For simplicity, and to reflect the dependent variable used in analyses, we avera
 Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study.
 This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.
 
+\begin{verbatim}
+## Warning: Computation failed in `stat_summary()`:
+\end{verbatim}
+
 \begin{figure}
 \centering
 \includegraphics{manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf}
@@ -970,7 +1011,7 @@ To determine whether calibration accuracy influenced our key effects, we calcula
 \includegraphics[width=0.8\linewidth]{manuscript_files/figure-latex/E5calcorr-1} \caption{Correlation between calibration accuracy (x-axis) and percentage of samples fixating target (y-axis) in Exp. 5.}\label{fig:E5calcorr}
 \end{figure}
 
-Thus, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50\%. This slightly improved the fits of the sigmoids (Attractiveness: R\textsuperscript{2} = 0.79; Roundness: R\textsuperscript{2} = 0.60). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = 0.22, p = 0.35). Descriptively, the results do not look substantially different (Fig. \ref{fig:groupEMainrev}).
+Thus, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50\%. This slightly improved the fits of the sigmoids (Attractiveness: R\textsuperscript{2} = 0.79; Roundness: R\textsuperscript{2} = 0.60). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = 0.22, p = 0.36). Descriptively, the results do not look substantially different (Fig. \ref{fig:groupEMainrev}).
 
 
 
@@ -1049,7 +1090,7 @@ Manns, J. R., Stark, C. E. L., \& Squire, L. R. (2000). The visual paired-compar
 Ooms, J. (2014). The jsonlite package: A practical and consistent mapping between JSON data and r objects. \emph{arXiv:1403.2805 {[}Stat.CO{]}}. Retrieved from \url{https://arxiv.org/abs/1403.2805}
 
 \leavevmode\vadjust pre{\hypertarget{ref-papoutsaki2016webgazer}{}}%
-Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. In \emph{Proceedings of the 25th international joint conference on artificial intelligence ({IJCAI})} (pp. 3839--3845). {AAAI}.
+Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. \emph{Proceedings of the 25th International Joint Conference on Artificial Intelligence ({IJCAI})}, 3839--3845. {AAAI}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
@@ -1089,6 +1130,9 @@ Wickham, H., François, R., Henry, L., \& Müller, K. (2021). \emph{Dplyr: A gra
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-readr}{}}%
 Wickham, H., \& Hester, J. (2020). \emph{Readr: Read rectangular text data}. Retrieved from \url{https://CRAN.R-project.org/package=readr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-yang2021webcam}{}}%
+Yang, X., \& Krajbich, I. (2021). Webcam-based online eye-tracking for behavioral research. \emph{Judgment and Decision Making}, \emph{16}(6), 1486.
 
 \end{CSLReferences}
 
