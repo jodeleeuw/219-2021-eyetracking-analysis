@@ -298,11 +298,52 @@ In practice, replications (successful or otherwise) have only been reported for 
 
 ## Selection of Studies
 
-We chose five high-impact eyetracking studies involve adult subjects. (Given the additional difficulties of recruiting and retaining child participants, we excluded developmental studies.) Our goal was to include exempars from a range of topic areas (e.g., memory, decision-making, psycholinguistics) and paradigms (two
-halves of the screen, visual world paradigm with four quadrants, visual
-world paradigm with "natural" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. 
+<!-- June 2022: shimojo: 964 citations, altmann: 1840, ryskin: 75, johansson 190, 127 -->
 
-The final selection of studies was FUBAR...
+We chose five high-impact eyetracking studies involving adult subjects. (Given the additional difficulties of recruiting and retaining child participants, we excluded developmental studies.) Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two
+halves of the screen, visual world paradigm with four quadrants, visual
+world paradigm with "natural" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. TABLE X provides an overview of the five studies we selected.
+
+```{r Create Studies Table, echo=FALSE}
+studies_table <- data.frame(
+  Citation = c(
+    "Altmann & Kamide, 1999",
+    "Johansson & Johansson, 2013",
+    "Manns, Stark, & Squire, 2000",
+    "Ryskin et al., 2017",
+    "Shimojo et al., 2003"
+  ),
+  `Topic Area` = c(
+    "Psycholinguistics",
+    "Memory",
+    "Memory",
+    "Psycholinguistics",
+    "Decision Making"
+  ),
+  `Paradigm` = c(
+    "Natural Scenes",
+    "Four Quadrants",
+    "Two Halves",
+    "Four Quadrants",
+    "Two Halves"
+  ),
+  `Citations (June 2022, Google Scholar)` = c(
+    1840,
+    190,
+    127,
+    75,
+    964
+  ),
+  check.names = FALSE
+)
+
+apa_table(
+  studies_table,
+  caption = "Studies selected for replication attempts",
+  font_size = "small"
+)
+    
+```
 
 # General Methods
 

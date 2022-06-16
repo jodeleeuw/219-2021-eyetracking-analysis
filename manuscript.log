@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.15)  15 JUN 2022 13:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.15)  16 JUN 2022 10:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -664,234 +664,245 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 21
 (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [5]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 258.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 242.
+
+Overfull \hbox (60.6078pt too wide) in paragraph at lines 237--257
+ [] 
+ []
+
+[6]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 284.
 (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Underfull \vbox (badness 1303) has occurred while \output is active []
-
-[6] [7] [8] [9] [10] [11] [12]
-<manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf, id=330, 469.755pt x 325.215pt>
+) [7] [8] [9] [10] [11] [12] [13]
+<manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf, id=342, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf  used on input line 505.
+Package pdftex.def Info: manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf  used on input line 531.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 509.
+(Font)              <10> on input line 535.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 509.
+(Font)              <7> on input line 535.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 509.
-<manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf, id=332, 469.755pt x 325.215pt>
+(Font)              <5> on input line 535.
+<manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf, id=344, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf  used on input line 513.
+Package pdftex.def Info: manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf  used on input line 539.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[13]
-Underfull \vbox (badness 1189) has occurred while \output is active []
+[14 <./manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf>]
+Underfull \vbox (badness 4752) has occurred while \output is active []
 
-[14 <./manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf>] [15 <./manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf>] [16]
-Underfull \vbox (badness 3977) has occurred while \output is active []
-
-[17]
-<manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf, id=382, 469.755pt x 325.215pt>
+[15 <./manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf>] [16] [17] [18]
+<manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf, id=394, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf  used on input line 642.
+Package pdftex.def Info: manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf  used on input line 668.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[18] [19 <./manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf>]
-<manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf, id=406, 469.755pt x 325.215pt>
+[19]
+<manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf, id=402, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf  used on input line 659.
+Package pdftex.def Info: manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf  used on input line 685.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 659--660
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 685--686
 [][]  
  []
 
-[20 <./manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf>]
-<manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf, id=417, 469.755pt x 325.215pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[20 <./manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf>]
+<manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf, id=413, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf  used on input line 670.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf  used on input line 696.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf, id=418, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf, id=414, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf  used on input line 681.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf  used on input line 707.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[21 <./manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf>]
-<manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf, id=436, 469.755pt x 325.215pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[21 <./manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf, id=428, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf  used on input line 696.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf  used on input line 722.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22 <./manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf>]
-<manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf, id=450, 469.755pt x 325.215pt>
+[22 <./manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[23 <./manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf, id=456, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf  used on input line 705.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf  used on input line 731.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 705--706
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 731--732
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[23 <./manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf>]
-<manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf, id=463, 469.755pt x 325.215pt>
+[24 <./manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf, id=469, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf  used on input line 707.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf  used on input line 733.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 707--708
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 733--734
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[24 <./manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf>]
-<manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf, id=476, 469.755pt x 325.215pt>
+[25 <./manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf, id=483, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf  used on input line 711.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf  used on input line 737.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 711--712
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 737--738
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[25 <./manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf>] [26 <./manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf>] [27] [28]
-<manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf, id=528, 469.755pt x 325.215pt>
+[26 <./manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf>] [27 <./manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf>] [28] [29]
+<manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf, id=534, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf  used on input line 814.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf  used on input line 840.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[29 <./manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf>]
-<manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf, id=541, 469.755pt x 325.215pt>
+[30 <./manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf>]
+<manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf, id=547, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf  used on input line 824.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf  used on input line 850.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 3291) has occurred while \output is active []
 
-[30 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf>] [31]
-<manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf, id=566, 469.755pt x 325.215pt>
+[31 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf>] [32]
+<manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf, id=572, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf  used on input line 839.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf  used on input line 865.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf, id=568, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf, id=574, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf  used on input line 854.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf  used on input line 880.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[32 <./manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf>]
+[33 <./manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf>]
 Underfull \vbox (badness 3623) has occurred while \output is active []
 
-[33 <./manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf>]
-<manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf, id=598, 469.755pt x 325.215pt>
+[34 <./manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf>]
+<manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf, id=604, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf  used on input line 878.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf  used on input line 904.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf, id=599, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf, id=605, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf  used on input line 884.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf  used on input line 910.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 2469) has occurred while \output is active []
 
-[34] [35 <./manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf>] [36 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>] [37]
-<figGroupEOrigA.png, id=643, 1033.8625pt x 770.88pt>
+[35] [36 <./manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf>] [37 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>] [38]
+<figGroupEOrigA.png, id=649, 1033.8625pt x 770.88pt>
 File: figGroupEOrigA.png Graphic file (type png)
 <use figGroupEOrigA.png>
-Package pdftex.def Info: figGroupEOrigA.png  used on input line 987.
+Package pdftex.def Info: figGroupEOrigA.png  used on input line 1013.
 (pdftex.def)             Requested size: 211.37526pt x 157.60797pt.
-<figGroupEOrigB.png, id=645, 1082.0425pt x 788.9475pt>
+<figGroupEOrigB.png, id=651, 1082.0425pt x 788.9475pt>
 File: figGroupEOrigB.png Graphic file (type png)
 <use figGroupEOrigB.png>
-Package pdftex.def Info: figGroupEOrigB.png  used on input line 987.
+Package pdftex.def Info: figGroupEOrigB.png  used on input line 1013.
 (pdftex.def)             Requested size: 211.38544pt x 154.12703pt.
-<manuscript_files/figure-latex/groupEMain-3.pdf, id=646, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/groupEMain-3.pdf, id=652, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/groupEMain-3.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/groupEMain-3.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-3.pdf  used on input line 987.
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-3.pdf  used on input line 1013.
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
-<manuscript_files/figure-latex/groupEMain-4.pdf, id=647, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/groupEMain-4.pdf, id=653, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/groupEMain-4.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/groupEMain-4.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-4.pdf  used on input line 987.
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-4.pdf  used on input line 1013.
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 987--987
+Underfull \hbox (badness 10000) in paragraph at lines 1013--1013
 [][] []
  []
 
 
-LaTeX Warning: Reference `fig:Shimojo' on page 38 undefined on input line 990.
+LaTeX Warning: Reference `fig:Shimojo' on page 39 undefined on input line 1016.
 
-[38] [39 <./figGroupEOrigA.png> <./figGroupEOrigB.png> <./manuscript_files/figure-latex/groupEMain-3.pdf> <./manuscript_files/figure-latex/groupEMain-4.pdf>]
-<manuscript_files/figure-latex/E5cal-1.pdf, id=673, 469.755pt x 325.215pt>
+[39] [40 <./figGroupEOrigA.png> <./figGroupEOrigB.png> <./manuscript_files/figure-latex/groupEMain-3.pdf> <./manuscript_files/figure-latex/groupEMain-4.pdf>]
+<manuscript_files/figure-latex/E5cal-1.pdf, id=679, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E5cal-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E5cal-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E5cal-1.pdf  used on input line 1003.
+Package pdftex.def Info: manuscript_files/figure-latex/E5cal-1.pdf  used on input line 1029.
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
-<manuscript_files/figure-latex/E5calcorr-1.pdf, id=675, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/E5calcorr-1.pdf, id=681, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E5calcorr-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E5calcorr-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E5calcorr-1.pdf  used on input line 1011.
+Package pdftex.def Info: manuscript_files/figure-latex/E5calcorr-1.pdf  used on input line 1037.
 (pdftex.def)             Requested size: 375.80452pt x 260.17235pt.
-[40 <./manuscript_files/figure-latex/E5cal-1.pdf>]
-<manuscript_files/figure-latex/groupEMainrev-1.pdf, id=689, 469.755pt x 325.215pt>
+[41 <./manuscript_files/figure-latex/E5cal-1.pdf>]
+<manuscript_files/figure-latex/groupEMainrev-1.pdf, id=695, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/groupEMainrev-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/groupEMainrev-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-1.pdf  used on input line 1019.
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-1.pdf  used on input line 1045.
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
-<manuscript_files/figure-latex/groupEMainrev-2.pdf, id=690, 469.755pt x 325.215pt>
+<manuscript_files/figure-latex/groupEMainrev-2.pdf, id=696, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/groupEMainrev-2.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/groupEMainrev-2.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-2.pdf  used on input line 1019.
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-2.pdf  used on input line 1045.
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
-[41 <./manuscript_files/figure-latex/E5calcorr-1.pdf>] [42 <./manuscript_files/figure-latex/groupEMainrev-1.pdf> <./manuscript_files/figure-latex/groupEMainrev-2.pdf>]
+[42 <./manuscript_files/figure-latex/E5calcorr-1.pdf>] [43 <./manuscript_files/figure-latex/groupEMainrev-1.pdf> <./manuscript_files/figure-latex/groupEMainrev-2.pdf>]
 Underfull \vbox (badness 1028) has occurred while \output is active []
 
-[43]
+[44]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[44] AED endfloat: Processing end Figures and Tables [45] (./manuscript.aux)
+[45] AED endfloat: Processing end Figures and Tables [46] (./manuscript.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: F6477AAD27740EFBF61B0B5C7D181BF2;7193.
+(rerunfilecheck)             Checksum: 5DA95602E091EC924B25CEF2CCB77618;7195.
  ) 
 Here is how much of TeX's memory you used:
- 16577 strings out of 480000
- 279967 string characters out of 5886352
- 589904 words of memory out of 5000000
- 34190 multiletter control sequences out of 15000+600000
- 547412 words of font info for 96 fonts, out of 8000000 for 9000
+ 16599 strings out of 480000
+ 280349 string characters out of 5886352
+ 589978 words of memory out of 5000000
+ 34209 multiletter control sequences out of 15000+600000
+ 558303 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,77p,2249b,597s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,77p,2249b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}<c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on manuscript.pdf (45 pages, 1814339 bytes).
+Output written on manuscript.pdf (46 pages, 1820293 bytes).
 PDF statistics:
- 890 PDF objects out of 1000 (max. 8388607)
- 766 compressed objects within 8 object streams
- 229 named destinations out of 1000 (max. 500000)
+ 896 PDF objects out of 1000 (max. 8388607)
+ 771 compressed objects within 8 object streams
+ 232 named destinations out of 1000 (max. 500000)
  601 words of extra memory for PDF output out of 10000 (max. 10000000)
 
