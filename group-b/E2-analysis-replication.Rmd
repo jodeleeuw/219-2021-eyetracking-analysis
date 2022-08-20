@@ -285,14 +285,15 @@ fig<-ggplot(free.view.summary.condition1.data, aes(x=normalized_quadrant, y=M, y
   geom_col(position=position_dodge(), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
   scale_fill_brewer(palette="Set1",)+
-  theme_classic()+
+  theme_classic(base_size = 25)+
+  coord_cartesian(ylim = c(0, 0.4))+
   labs(x = "Quadrant", y = "Mean proportion of looks")+
   theme(legend.position = "none")
 fig
 ```
 ```{r saving plot, eval=FALSE}
 saveRDS(fig, "output/ETfig.rds")
-
+ggsave("output/ETfig.png", plot = fig, width  = 8.5, height = 5.5)
 ```
 
 ```{r}
