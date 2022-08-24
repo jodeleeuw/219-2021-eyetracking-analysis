@@ -1,0 +1,33 @@
+---
+title: "Experiment 3: Calibration Figure"
+output: html_notebook
+---
+
+```{r include=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+```{r include=FALSE}
+calibration_points <- matrix(c(
+  c(10,50),
+  c(50,50),
+  c(90,50),
+  c(25,25),
+  c(25,75),
+  c(75,25),
+  c(75,75)
+), ncol=2, byrow=T)
+
+colnames(calibration_points) <- c("x","y")
+
+df <- as_tibble(calibration_points)
+```
+
+```{r echo=FALSE, fig.cap="Calibration point locations for Experiment 3."}
+ggplot(df, aes(x=x, y=y))+
+  geom_point(size=3)+
+  coord_cartesian(xlim=c(0,100), ylim=c(100,0), expand=FALSE)+
+  theme_void()+
+  theme(panel.border = element_rect(color="black", fill=NA))
+```
