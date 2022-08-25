@@ -33,16 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Eye-tracking on the web: lessons learned from replicating 5 experiments},
-  pdfauthor={Joshua R. de Leeuw1, Rachel Ryskin2, Ariel N. James3, Joshua K. Hartshorne4, Haylee Backs1, Nandeeta Bala1, Laila Barcenas-Meade1, Samata Bhattarai1, Tessa Charles1, Gerasimos Copoulos1, Claire Coss1, Alexander Eisert1, Elena Furuhashi1, Keara Ginell1, Anna Guttman-McCabe1, Emma (Chaz) Harrison1, Laura Hoban1, William A. Hwang1, Claire Iannetta1, Kristen M. Koenig1, Chauncey Lo1, Victoria Palone1, Gina Pepitone1, Margaret Ritzau1, Yi Hua Sung1, \& Lauren Thompson1},
-  pdflang={en-EN},
-  pdfkeywords={keywords},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -173,6 +163,16 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Eye-tracking on the web: lessons learned from replicating 5 experiments},
+  pdfauthor={Joshua R. de Leeuw1, Rachel Ryskin2, Ariel N. James3, Joshua K. Hartshorne4, Haylee Backs1, Nandeeta Bala1, Laila Barcenas-Meade1, Samata Bhattarai1, Tessa Charles1, Gerasimos Copoulos1, Claire Coss1, Alexander Eisert1, Elena Furuhashi1, Keara Ginell1, Anna Guttman-McCabe1, Emma (Chaz) Harrison1, Laura Hoban1, William A. Hwang1, Claire Iannetta1, Kristen M. Koenig1, Chauncey Lo1, Victoria Palone1, Gina Pepitone1, Margaret Ritzau1, Yi Hua Sung1, \& Lauren Thompson1},
+  pdflang={en-EN},
+  pdfkeywords={keywords},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Eye-tracking on the web: lessons learned from replicating 5 experiments}
 \author{Joshua R. de Leeuw\textsuperscript{1}, Rachel Ryskin\textsuperscript{2}, Ariel N. James\textsuperscript{3}, Joshua K. Hartshorne\textsuperscript{4}, Haylee Backs\textsuperscript{1}, Nandeeta Bala\textsuperscript{1}, Laila Barcenas-Meade\textsuperscript{1}, Samata Bhattarai\textsuperscript{1}, Tessa Charles\textsuperscript{1}, Gerasimos Copoulos\textsuperscript{1}, Claire Coss\textsuperscript{1}, Alexander Eisert\textsuperscript{1}, Elena Furuhashi\textsuperscript{1}, Keara Ginell\textsuperscript{1}, Anna Guttman-McCabe\textsuperscript{1}, Emma (Chaz) Harrison\textsuperscript{1}, Laura Hoban\textsuperscript{1}, William A. Hwang\textsuperscript{1}, Claire Iannetta\textsuperscript{1}, Kristen M. Koenig\textsuperscript{1}, Chauncey Lo\textsuperscript{1}, Victoria Palone\textsuperscript{1}, Gina Pepitone\textsuperscript{1}, Margaret Ritzau\textsuperscript{1}, Yi Hua Sung\textsuperscript{1}, \& Lauren Thompson\textsuperscript{1}}
@@ -271,18 +271,31 @@ age or older, fluency in English, and access to a webcam. All
 participants provided informed consent. The studies were approved by the
 Vassar College Institutional Review Board.
 
-In order to have adequate statistical power and precision, we aimed for 2.5x the
-sample size of the original experiment, following the heuristic of Simonsohn (\textbf{simonsohn215?}).
-In study 5, the original sample size was so small that we opted to collect 5x the
-number of participants to increase precision. Because of budget and time constraints
-we were unable to replace the data for subjects who were excluded or whose data was
+In order to have adequate statistical power and precision, we aimed for
+2.5x the sample size of the original experiment, following the heuristic
+of Simonsohn (\textbf{simonsohn215?}). In study 5, the original sample size was so
+small that we opted to collect 5x the number of participants to increase
+precision. Because of budget and time constraints we were unable to
+replace the data for subjects who were excluded or whose data was
 missing due to technical failures.
 
 \hypertarget{equipment}{%
 \subsection{Equipment}\label{equipment}}
 
-We used a fork of the \texttt{webgazer.js} library for webcam eyetracking (Papoutsaki et al., 2016), implemented in \texttt{jsPsych}, a Javascript library for running behavioral experiments
-in a web browser (de Leeuw, 2015). Our fork included changes to webgazer.js in order to improve data quality for experiments in which the precise timing of stimulus onsets is relevant. Specifically, we implemented a polling mode so that gaze predictions could be requested at a regular interval, which improved the sampling rate considerably in informal testing. This modification is similar to what Yang and Krajbich Yang and Krajbich (2021) reported improved the sampling rate in their study of webgazer. We also adjusted the mechanism for recording time stamps of each gaze prediction, so that the time stamp reported by webgazer is based on when the video frame is received and not when the computation of the gaze point is finished.
+We used a fork of the \texttt{webgazer.js} library for webcam eyetracking
+(Papoutsaki et al., 2016), implemented in \texttt{jsPsych}, a Javascript
+library for running behavioral experiments in a web browser
+(de Leeuw, 2015). Our fork included changes to
+webgazer.js in order to improve data quality for experiments in which
+the precise timing of stimulus onsets is relevant. Specifically, we
+implemented a polling mode so that gaze predictions could be requested
+at a regular interval, which improved the sampling rate considerably in
+informal testing. This modification is similar to what Yang and Krajbich
+Yang and Krajbich (2021) reported improved the sampling rate in their study of
+webgazer. We also adjusted the mechanism for recording time stamps of
+each gaze prediction, so that the time stamp reported by webgazer is
+based on when the video frame is received and not when the computation
+of the gaze point is finished.
 
 \hypertarget{eye-tracking-calibration-and-validation}{%
 \subsection{Eye-tracking Calibration and Validation}\label{eye-tracking-calibration-and-validation}}
@@ -564,29 +577,44 @@ The quality of a participant's calibration was not significantly correlated with
 \hypertarget{experiment-3}{%
 \section{Experiment 3}\label{experiment-3}}
 
-The third study was a replication attempt of
-Manns, Stark, and Squire (2000) which aimed to show that the visual
-paired-comparison task, widely used in the patient literature, tapped
-into declarative memory. In the visual paired-comparison task, two
-identical pictures were presented side by side for a brief viewing
-period. After a delay, one of the previously viewed pictures was
-presented along with a new picture. Individuals looked more at the new
-picture than the old picture and the time spent looking was correlated
-with later recognition memory performance. On the other hand perceptual
-priming, thought to recruit non-declarative memory, was not linked to
-later recognition. (The perceptual priming arm of the design was not
-included in this replication.)
+The third study was a partial replication attempt of
+Manns, Stark, and Squire (2000). This experiment used the visual
+paired-comparison, which involves presenting a previously-viewed image
+and novel image together and measuring the proportion of time spent
+looking at each image. The expected pattern of results is that
+participants will look more at novel objects. They
+Manns et al. (2000) hypothesized that this pattern of
+behavior could be used to measure the strength of memories. If a viewer
+has a weak memory of the old image, then they may look at the old and
+new images roughly the same amount of time. They tested this in two
+ways. First, they showed participants a set of images, waited five
+minutes, and then paired those images with novel images. They found that
+participants spent more time (58.8\% of total time) looking at the novel
+images. They then measured memory performance one day later and found
+that participants were more likely to recall images that they had spent
+less time looking at during the visual paired-comparison task the
+previous day.
 
 \hypertarget{methods-2}{%
 \subsection{Methods}\label{methods-2}}
 
+The stimuli, experimental code, and data and analysis scripts can be
+found on the Open Science Framework at \url{https://osf.io/k63b9/}
+(\url{https://osf.io/k63b9/}). The pre-registration for the study can be
+found at \url{https://osf.io/48jsv} (\url{https://osf.io/48jsv}). We
+inadvertently did not create a formal pre-registration using the OSF
+registries tool, but this document contains the same information and is
+time stamped prior to the start of data collection.
+
 \hypertarget{participants-3}{%
 \subsubsection{Participants}\label{participants-3}}
 
-Our initial sample size was 51 participants for the first day of our
-experiment and 48 of them came back for the second day. Following Manns
-et al., we excluded 3 participants due to perfect performance on the
-recognition memory test. Our final sample size was 45 participants.
+Our pre-registered target was 50 participants. 51 participants completed
+the first day of the experiment and 48 completed the second day.
+Following Manns et al., we excluded 3 participants due to perfect
+performance on the recognition memory test because this prevents
+comparison of gaze data for recalled vs.~non-recalled images. Our final
+sample size was 45 participants.
 
 \hypertarget{procedure-2}{%
 \subsubsection{Procedure}\label{procedure-2}}
@@ -595,7 +623,15 @@ The task began with a 7-point eye-tracker calibration (each point was
 presented 3 times in a random order) and validation with 3 points (each
 presented once). The point locations were designed to focus calibration
 on the center of the screen and the middle of the left and right halves
-of the screen. The experiment was administered over the course of two
+of the screen.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/unnamed-chunk-36-1.pdf}
+\caption{\label{fig:unnamed-chunk-36}Calibration and validation point locations for Experiment 3. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.}
+\end{figure}
+
+The experiment was administered over the course of two
 consecutive days. It consisted of three sections: a presentation phase,
 a test phase, and a recognition test. The first two phases occurred on
 the first day, while the recognition test occurred on the second day.
@@ -622,7 +658,7 @@ Approximately 24 hours after completing the first session, with a leeway
 interval of 12 hours to accommodate busy schedules, participants were
 given the recognition test. It consisted of 48 photographs, presented
 one at a time. Each was shown on the screen for 1 second, followed by a
-1 second interstimulus interval. Half of the pohotographs had been
+1 second interstimulus interval. Half of the photographs had been
 viewed twice on the previous day and were deemed the ``targets.'' The
 other half depicted an object with the same name as an object in one of
 the old photographs, but had not been viewed before, deemed ``foils.''
@@ -870,10 +906,6 @@ The eye-tracking results from both studies are summarized in Figure \ref{fig:E4-
 For simplicity, and to reflect the dependent variable used in analyses, we average the proportion of fixations to the target animal within each time window.
 Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study.
 This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.
-
-\begin{verbatim}
-## Warning: Computation failed in `stat_summary()`:
-\end{verbatim}
 
 \begin{figure}
 \centering
