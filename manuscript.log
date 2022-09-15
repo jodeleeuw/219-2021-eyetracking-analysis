@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.29)  20 AUG 2022 11:34
+=======
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.15)  25 AUG 2022 11:45
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -292,11 +296,159 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+<<<<<<< HEAD
 ) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2022-06-20 v7.00s Hypertext links for LaTeX
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+=======
+)
+\cslhangindent=\skip74
+\csllabelwidth=\skip75
+\cslentryspacingunit=\skip76
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count288
+\calc@Bcount=\count289
+\calc@Adimen=\dimen179
+\calc@Bdimen=\dimen180
+\calc@Askip=\skip77
+\calc@Bskip=\skip78
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count290
+\calc@Cskip=\skip79
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2022/06/06 3.76 The Babel package
+\babel@savecnt=\count291
+\U@D=\dimen181
+\l@unhyphenated=\language3
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count292
+Package babel Info: You haven't specified a language. I'll use 'nil'
+(babel)             as the main language. Reported on input line 4376.
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/nil.ldf
+Language: nil 2022/06/06 3.76 Nil language
+\l@nil=\language4
+))
+\everypar=\toks27
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
+Package babel Info: Importing data for english
+(babel)             from babel-en.ini. Reported on input line 90.
+Package babel Info: Hyphen rules for 'english' set to \l@english
+(babel)             (\language0). Reported on input line 90.
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
+Package: upgreek 2003/02/12 v2.0 (WaS)
+Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
+\symugrf@m=\mathgroup9
+LaTeX Font Info:    Overwriting symbol font `ugrf@m' in version `bold'
+(Font)                  U/eur/m/n --> U/eur/b/n on input line 38.
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+\LTleft=\skip80
+\LTright=\skip81
+\LTpre=\skip82
+\LTpost=\skip83
+\LTchunksize=\count293
+\LTcapwidth=\dimen182
+\LT@head=\box57
+\LT@firsthead=\box58
+\LT@foot=\box59
+\LT@lastfoot=\box60
+\LT@gbox=\box61
+\LT@cols=\count294
+\LT@rows=\count295
+\c@LT@tables=\count296
+\c@LT@chunks=\count297
+\LT@p@ftn=\toks28
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip84
+\multirow@cntb=\count298
+\multirow@dima=\skip85
+\bigstrutjot=\dimen183
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2022/03/10 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen184
+\ar@mcellbox=\box62
+\extrarowheight=\dimen185
+\NC@list=\toks29
+\extratabsurround=\skip86
+\backup@length=\skip87
+\ar@cellbox=\box63
+)
+\TX@col@width=\dimen186
+\TX@old@table=\dimen187
+\TX@old@col=\dimen188
+\TX@target=\dimen189
+\TX@delta=\dimen190
+\TX@cols=\count299
+\TX@ftn=\toks30
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip88
+)
+\longtablewidth=\skip89
+Failed to patch abstract.
+Failed to patch title.
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2022-06-02 L3 programming layer (loader) 
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-04-20 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count300
+\l__pdf_internal_box=\box64
+))
+Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2022-06-07 L3 Experimental document command parser
+)) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count301
+\output=\toks31
+\linenoprevgraf=\count302
+\linenumbersep=\dimen191
+\linenumberwidth=\dimen192
+\c@linenumber=\count303
+\c@pagewiselinenumber=\count304
+\c@LN@truepage=\count305
+\c@internallinenumber=\count306
+\c@internallinenumbers=\count307
+\quotelinenumbersep=\dimen193
+\bframerule=\dimen194
+\bframesep=\dimen195
+\bframebox=\box65
+LaTeX Info: Redefining \\ on input line 3056.
+) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.sty
+Package: csquotes 2021-02-22 v5.2l context-sensitive quotations (JAW)
+\csq@reset=\count308
+\csq@gtype=\count309
+\csq@glevel=\count310
+\csq@qlevel=\count311
+\csq@maxlvl=\count312
+\csq@tshold=\count313
+\csq@ltx@everypar=\toks32
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.def
+File: csquotes.def 2021-02-22 v5.2l csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.cfg
+File: csquotes.cfg 
+)) (c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2022-06-13 v7.00r Hypertext links for LaTeX
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 ) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
@@ -327,13 +479,21 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count288
+\c@section@level=\count314
 )
+<<<<<<< HEAD
 \@linkdim=\dimen179
 \Hy@linkcounter=\count289
 \Hy@pagecounter=\count290
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2022-06-20 v7.00s Hyperref: PDFDocEncoding definition (HO)
+=======
+\@linkdim=\dimen196
+\Hy@linkcounter=\count315
+\Hy@pagecounter=\count316
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2022-06-13 v7.00r Hyperref: PDFDocEncoding definition (HO)
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 ) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
@@ -341,9 +501,15 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
+<<<<<<< HEAD
 \Hy@SavedSpaceFactor=\count291
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2022-06-20 v7.00s Hyperref: PDF Unicode definition (HO)
+=======
+\Hy@SavedSpaceFactor=\count317
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2022-06-13 v7.00r Hyperref: PDF Unicode definition (HO)
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
@@ -354,6 +520,7 @@ Package hyperref Info: Hyper index ON on input line 4170.
 Package hyperref Info: Plain pages OFF on input line 4177.
 Package hyperref Info: Backreferencing OFF on input line 4182.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+<<<<<<< HEAD
 Package hyperref Info: Bookmarks ON on input line 4408.
 \c@Hy@tempcnt=\count292
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
@@ -363,10 +530,22 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 LaTeX Info: Redefining \url on input line 4746.
 \XeTeXLinkMargin=\dimen180
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+=======
+Package hyperref Info: Bookmarks ON on input line 4385.
+\c@Hy@tempcnt=\count318
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4723.
+\XeTeXLinkMargin=\dimen197
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
+<<<<<<< HEAD
 \Fld@menulength=\count293
 \Field@Width=\dimen181
 \Fld@charsize=\dimen182
@@ -378,12 +557,25 @@ Package hyperref Info: Link coloring OFF on input line 6044.
 Package hyperref Info: Link coloring with OCG OFF on input line 6049.
 Package hyperref Info: PDF/A mode OFF on input line 6054.
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+=======
+\Fld@menulength=\count319
+\Field@Width=\dimen198
+\Fld@charsize=\dimen199
+Package hyperref Info: Hyper figures OFF on input line 6001.
+Package hyperref Info: Link nesting OFF on input line 6006.
+Package hyperref Info: Hyper index ON on input line 6009.
+Package hyperref Info: backreferencing OFF on input line 6016.
+Package hyperref Info: Link coloring OFF on input line 6021.
+Package hyperref Info: Link coloring with OCG OFF on input line 6026.
+Package hyperref Info: PDF/A mode OFF on input line 6031.
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count294
-\c@Item=\count295
-\c@Hfootnote=\count296
+\Hy@abspage=\count320
+\c@Item=\count321
+\c@Hfootnote=\count322
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
@@ -392,15 +584,22 @@ File: hpdftex.def 2022-06-20 v7.00s Hyperref driver for pdfTeX
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
+<<<<<<< HEAD
 \Fld@listcount=\count297
 \c@bookmark@seq@number=\count298
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+=======
+\Fld@listcount=\count323
+\c@bookmark@seq@number=\count324
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
 )
+<<<<<<< HEAD
 \Hy@SectionHShift=\skip74
 ) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
@@ -546,6 +745,10 @@ Package csquotes Info: ... configuration file loaded successfully.
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.cfg
 File: csquotes.cfg 
 ))
+=======
+\Hy@SectionHShift=\skip90
+)
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
@@ -673,146 +876,233 @@ Overfull \hbox (60.6078pt too wide) in paragraph at lines 237--257
  []
 
 [6]
+<<<<<<< HEAD
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 284.
 (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [7] [8] [9] [10] [11] [12] [13]
 <manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf, id=125, 469.755pt x 325.215pt>
+=======
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 285.
+(c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [7] [8] [9] [10] [11] [12] [13]
+<manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf, id=348, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf  used on input line 531.
+Package pdftex.def Info: manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf  used on input line 544.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 535.
+(Font)              <10> on input line 548.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 535.
+(Font)              <7> on input line 548.
 LaTeX Font Info:    External font `lmex10' loaded for size
+<<<<<<< HEAD
 (Font)              <5> on input line 535.
 <manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf, id=127, 469.755pt x 325.215pt>
+=======
+(Font)              <5> on input line 548.
+<manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf, id=350, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf  used on input line 539.
+Package pdftex.def Info: manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf  used on input line 552.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [14 <./manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf>]
 Underfull \vbox (badness 4752) has occurred while \output is active []
 
+<<<<<<< HEAD
 [15 <./manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf>] [16] [17] [18]
 <manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf, id=187, 469.755pt x 325.215pt>
+=======
+[15 <./manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf>] [16]
+<manuscript_files/figure-latex/unnamed-chunk-36-1.pdf, id=387, 433.62pt x 289.08pt>
+File: manuscript_files/figure-latex/unnamed-chunk-36-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/unnamed-chunk-36-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-36-1.pdf  used on input line 630.
+(pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
+[17]
+Underfull \vbox (badness 3354) has occurred while \output is active []
+
+[18 <./manuscript_files/figure-latex/unnamed-chunk-36-1.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[19]
+<manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf, id=413, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf  used on input line 668.
+Package pdftex.def Info: manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf  used on input line 704.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<<<<<<< HEAD
 [19]
 <manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf, id=195, 469.755pt x 325.215pt>
+=======
+[20]
+<manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf, id=423, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf  used on input line 685.
+Package pdftex.def Info: manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf  used on input line 721.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 685--686
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 721--722
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [20 <./manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf>]
 <manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf, id=206, 469.755pt x 325.215pt>
+=======
+[21 <./manuscript_files/figure-latex/Plot of cumulative looking score-1.pdf>]
+<manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf, id=434, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf  used on input line 696.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf  used on input line 732.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<<<<<<< HEAD
 <manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf, id=207, 469.755pt x 325.215pt>
+=======
+<manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf, id=435, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf  used on input line 707.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf  used on input line 743.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [21 <./manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf>]
 <manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf, id=222, 469.755pt x 325.215pt>
+=======
+[22 <./manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf, id=450, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf  used on input line 722.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf  used on input line 758.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22 <./manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf>]
+[23 <./manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [23 <./manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf>]
 <manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf, id=250, 469.755pt x 325.215pt>
+=======
+[24 <./manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf, id=477, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf  used on input line 731.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf  used on input line 767.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 731--732
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 767--768
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [24 <./manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf>]
 <manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf, id=264, 469.755pt x 325.215pt>
+=======
+[25 <./manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf, id=491, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf  used on input line 733.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf  used on input line 769.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 733--734
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 769--770
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [25 <./manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf>]
 <manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf, id=278, 469.755pt x 325.215pt>
+=======
+[26 <./manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf>]
+<manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf, id=504, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf  used on input line 737.
+Package pdftex.def Info: manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf  used on input line 773.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (28.90639pt too wide) in paragraph at lines 737--738
+Overfull \hbox (28.90639pt too wide) in paragraph at lines 773--774
 [][]  
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [26 <./manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf>] [27 <./manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf>] [28] [29]
 <manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf, id=337, 469.755pt x 325.215pt>
+=======
+[27 <./manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf>] [28 <./manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf>] [29] [30]
+<manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf, id=556, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf  used on input line 840.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf  used on input line 876.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<<<<<<< HEAD
 [30 <./manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf>]
 <manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf, id=350, 469.755pt x 325.215pt>
+=======
+[31 <./manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf>]
+<manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf, id=570, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf  used on input line 850.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf  used on input line 886.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 3291) has occurred while \output is active []
 
+<<<<<<< HEAD
 [31 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf>] [32]
 <manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf, id=375, 469.755pt x 325.215pt>
+=======
+[32 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf>] [33]
+<manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf, id=593, 469.755pt x 325.215pt>
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 File: manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf  used on input line 865.
+Package pdftex.def Info: manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf  used on input line 901.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<<<<<<< HEAD
 <manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf, id=377, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf>
 Package pdftex.def Info: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf  used on input line 876.
+=======
+<manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf, id=595, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf  used on input line 912.
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+<<<<<<< HEAD
 [33 <./manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf>]
 Underfull \vbox (badness 3623) has occurred while \output is active []
 
@@ -826,10 +1116,26 @@ Package pdftex.def Info: manuscript_files/figure-latex/E4-example-subj-looks-ROI
 File: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>
 Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf  used on input line 906.
+=======
+[34 <./manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf>]
+Underfull \vbox (badness 3623) has occurred while \output is active []
+
+[35 <./manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf>]
+<manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf, id=625, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf  used on input line 936.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf, id=626, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf  used on input line 942.
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 Underfull \vbox (badness 2469) has occurred while \output is active []
 
+<<<<<<< HEAD
 [35] [36 <./manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf>] [37 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>] [38]
 <figGroupEOrigA.png, id=460, 1033.8625pt x 770.88pt>
 File: figGroupEOrigA.png Graphic file (type png)
@@ -853,10 +1159,36 @@ Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-4.pdf  used on
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 1009--1009
+=======
+[36] [37 <./manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf>] [38 <./manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf>] [39]
+<figGroupEOrigA.png, id=671, 1033.8625pt x 770.88pt>
+File: figGroupEOrigA.png Graphic file (type png)
+<use figGroupEOrigA.png>
+Package pdftex.def Info: figGroupEOrigA.png  used on input line 1045.
+(pdftex.def)             Requested size: 211.37526pt x 157.60797pt.
+<figGroupEOrigB.png, id=673, 1082.0425pt x 788.9475pt>
+File: figGroupEOrigB.png Graphic file (type png)
+<use figGroupEOrigB.png>
+Package pdftex.def Info: figGroupEOrigB.png  used on input line 1045.
+(pdftex.def)             Requested size: 211.38544pt x 154.12703pt.
+<manuscript_files/figure-latex/groupEMain-3.pdf, id=674, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/groupEMain-3.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/groupEMain-3.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-3.pdf  used on input line 1045.
+(pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
+<manuscript_files/figure-latex/groupEMain-4.pdf, id=675, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/groupEMain-4.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/groupEMain-4.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMain-4.pdf  used on input line 1045.
+(pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1045--1045
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 [][] []
  []
 
 
+<<<<<<< HEAD
 LaTeX Warning: Reference `fig:Shimojo' on page 39 undefined on input line 1012.
 
 [39] [40 <./figGroupEOrigA.png> <./figGroupEOrigB.png> <./manuscript_files/figure-latex/groupEMain-3.pdf> <./manuscript_files/figure-latex/groupEMain-4.pdf>]
@@ -880,17 +1212,43 @@ Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-1.pdf  used
 File: manuscript_files/figure-latex/groupEMainrev-2.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/groupEMainrev-2.pdf>
 Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-2.pdf  used on input line 1041.
+=======
+LaTeX Warning: Reference `fig:Shimojo' on page 40 undefined on input line 1048.
+
+[40] [41 <./figGroupEOrigA.png> <./figGroupEOrigB.png> <./manuscript_files/figure-latex/groupEMain-3.pdf> <./manuscript_files/figure-latex/groupEMain-4.pdf>]
+<manuscript_files/figure-latex/E5cal-1.pdf, id=700, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/E5cal-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/E5cal-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/E5cal-1.pdf  used on input line 1061.
 (pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
-[42 <./manuscript_files/figure-latex/E5calcorr-1.pdf>] [43 <./manuscript_files/figure-latex/groupEMainrev-1.pdf> <./manuscript_files/figure-latex/groupEMainrev-2.pdf>]
+<manuscript_files/figure-latex/E5calcorr-1.pdf, id=702, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/E5calcorr-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/E5calcorr-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/E5calcorr-1.pdf  used on input line 1069.
+(pdftex.def)             Requested size: 375.80452pt x 260.17235pt.
+[42 <./manuscript_files/figure-latex/E5cal-1.pdf>]
+<manuscript_files/figure-latex/groupEMainrev-1.pdf, id=716, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/groupEMainrev-1.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/groupEMainrev-1.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-1.pdf  used on input line 1077.
+(pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
+<manuscript_files/figure-latex/groupEMainrev-2.pdf, id=717, 469.755pt x 325.215pt>
+File: manuscript_files/figure-latex/groupEMainrev-2.pdf Graphic file (type pdf)
+<use manuscript_files/figure-latex/groupEMainrev-2.pdf>
+Package pdftex.def Info: manuscript_files/figure-latex/groupEMainrev-2.pdf  used on input line 1077.
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
+(pdftex.def)             Requested size: 211.3878pt x 146.3454pt.
+[43 <./manuscript_files/figure-latex/E5calcorr-1.pdf>] [44 <./manuscript_files/figure-latex/groupEMainrev-1.pdf> <./manuscript_files/figure-latex/groupEMainrev-2.pdf>]
 Underfull \vbox (badness 1028) has occurred while \output is active []
 
-[44]
+[45]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[45] AED endfloat: Processing end Figures and Tables [46] (./manuscript.aux)
+[46] AED endfloat: Processing end Figures and Tables [47] (./manuscript.aux)
 
 LaTeX Warning: There were undefined references.
 
+<<<<<<< HEAD
  ) 
 Here is how much of TeX's memory you used:
  16863 strings out of 479997
@@ -902,9 +1260,24 @@ Here is how much of TeX's memory you used:
  86i,11n,91p,2249b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
 Output written on manuscript.pdf (46 pages, 1820461 bytes).
+=======
+Package rerunfilecheck Info: File `manuscript.out' has not changed.
+(rerunfilecheck)             Checksum: F32762F79E0C6BAA011B073E42EF2451;7707.
+ ) 
+Here is how much of TeX's memory you used:
+ 16607 strings out of 480000
+ 280753 string characters out of 5886352
+ 590788 words of memory out of 5000000
+ 34214 multiletter control sequences out of 15000+600000
+ 558303 words of font info for 106 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 72i,11n,77p,2230b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}<c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/joshd/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on manuscript.pdf (47 pages, 1825796 bytes).
+>>>>>>> 948dc54555485c65cc597e45375ff94a0f6bff00
 PDF statistics:
- 896 PDF objects out of 1000 (max. 8388607)
- 771 compressed objects within 8 object streams
- 232 named destinations out of 1000 (max. 500000)
- 601 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 917 PDF objects out of 1000 (max. 8388607)
+ 789 compressed objects within 8 object streams
+ 234 named destinations out of 1000 (max. 500000)
+ 622 words of extra memory for PDF output out of 10000 (max. 10000000)
 
