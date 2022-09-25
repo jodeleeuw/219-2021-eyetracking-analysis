@@ -1,6 +1,6 @@
 ---
-title             : "Eye-tracking on the web: lessons learned from replicating 5 experiments"
-shorttitle        : "Just picked a random title: feel free to change"
+title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of 5 “classic” cognitive science experiments"
+shorttitle        : "Webcam eye-tracking paradigms"
 
 author:
   - name: Joshua R. de Leeuw
@@ -214,18 +214,12 @@ affiliation:
   - id: '4'
     institution: Department of Psychology & Neuroscience, Boston College
 
-
-authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
-
-  Enter author note here.
-
 abstract: |
   ADD LATER
   
   <!-- https://tinyurl.com/ybremelq -->
   
-keywords          : "keywords"
+keywords          : "eye-tracking, online, webcam, jsPsych, cognitive science"
 wordcount         : "X"
 
 bibliography      : ["references.bib"]
@@ -299,18 +293,19 @@ In practice, replications (successful or otherwise) have only been reported for 
 ## Selection of Studies
 
 <!-- June 2022: shimojo: 964 citations, altmann: 1840, ryskin: 75, johansson 190, 127 -->
+<!-- RR: switched ryskin to Snedeker & trueswell 2004 bcs my 75 looked sad -->
 
 We chose five high-impact eyetracking studies involving adult subjects. (Given the additional difficulties of recruiting and retaining child participants, we excluded developmental studies.) Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two
 halves of the screen, visual world paradigm with four quadrants, visual
-world paradigm with "natural" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. TABLE X provides an overview of the five studies we selected.
+world paradigm with "natural" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table\ \ref(tab:studies-table) provides an overview of the five studies we selected.
 
-```{r Create Studies Table, echo=FALSE}
+```{r studies-table, echo=FALSE}
 studies_table <- data.frame(
   Citation = c(
     "Altmann & Kamide, 1999",
     "Johansson & Johansson, 2013",
     "Manns, Stark, & Squire, 2000",
-    "Ryskin et al., 2017",
+    "Snedeker & Trueswell, 2004",
     "Shimojo et al., 2003"
   ),
   `Topic Area` = c(
@@ -331,7 +326,7 @@ studies_table <- data.frame(
     1840,
     190,
     127,
-    75,
+    448,
     964
   ),
   check.names = FALSE
@@ -358,7 +353,7 @@ Vassar College Institutional Review Board.
 
 In order to have adequate statistical power and precision, we aimed for
 2.5x the sample size of the original experiment, following the heuristic
-of Simonsohn @simonsohn215. In study 5, the original sample size was so
+of Simonsohn [@simonsohn2015]. In study 5, the original sample size was so
 small that we opted to collect 5x the number of participants to increase
 precision. Because of budget and time constraints we were unable to
 replace the data for subjects who were excluded or whose data was
@@ -375,7 +370,7 @@ the precise timing of stimulus onsets is relevant. Specifically, we
 implemented a polling mode so that gaze predictions could be requested
 at a regular interval, which improved the sampling rate considerably in
 informal testing. This modification is similar to what Yang and Krajbich
-@yang2021webcam reported improved the sampling rate in their study of
+[-@yang2021webcam] reported improved the sampling rate in their study of
 webgazer. We also adjusted the mechanism for recording time stamps of
 each gaze prediction, so that the time stamp reported by webgazer is
 based on when the video frame is received and not when the computation
@@ -425,9 +420,9 @@ The first study was a replication attempt of
 visual world eye-tracking paradigm [@tanenhaus1995] to show that
 meanings of verbs rapidly constrain the set of potential subsequent
 referents in sentence processing. For example, when looking at the
-display in Figure XX and listening to a sentence like "The boy will eat
-the...," participants are more likely to look at the cake than when they
-hear "The boy will move the...," in which case they tend to look at the
+display in Figure\ \@ref(fig:E1-example-trial) and listening to a sentence like
+"The boy will eat the...," participants are more likely to look at the cake than 
+when they hear "The boy will move the...," in which case they tend to look at the
 train, presumably because cakes are edible and trains are not. Semantic
 information available at the verb is used to anticipate upcoming
 linguistic input.
@@ -440,13 +435,13 @@ linguistic input.
 
 <!-- since there are not the analysis scripts we're using, I'm not sure about the best way to link to this -->
 
-All stimuli, experiment scrips, data, analysis scripts, and
+All stimuli, experiment scripts, data, analysis scripts, and a
 pre-registration are available on the Open Science Framework at
 <https://osf.io/s82kz>.
 
 ### Participants
 
-60 participants were paid \$XX for their participation. Our sample size
+60 participants were paid \$2.60 for their participation. Our sample size
 of participants was determined by the total run time of our experiment,
 \~10 minutes, and the allotted funding from the Vassar College Cognitive
 Science Department. From this information, we calculated a reasonable
@@ -457,16 +452,21 @@ worked with data collected from 58 participants.
 
 ### Procedure
 
-The task began with an <number of points>-point eye-tracker calibration
-and validation. During the experiment, the participants were
+The task began with a 9-point eye-tracker calibration
+and validation (Figure\ \@ref(fig:E1-calibration-figure)). 
+During the experiment, the participants were
 simultaneously presented with a visual image and a corresponding audio
 recording of a spoken sentence. Participants had to input a keyboard
 response indicating "yes" or "no" as to whether the sentence they heard
 was feasible given the visual image. There were two practice trials to
-ensure that participants had a sound understanding of the instructions
+ensure that participants understood the instructions
 before they undertook the main portion of the experiment. Participants'
 reaction times, keyboard responses, and looks to objects in the scene
 were recorded for each trial.
+
+```{r E1-calibration-figure, child='group-a/E1-calibration-figure.Rmd'}
+
+```
 
 ```{=html}
 <!-- Qs: 
@@ -477,7 +477,7 @@ were recorded for each trial.
 ### Materials & Design
 
 The visual stimuli were created through Canva and depicted an agent
-accompanied by four to five objects in the scene (see Figure XX). On
+accompanied by four to five objects in the scene (see Figure\ \@ref(fig:E1-example-trial)). On
 critical trials, participants heard one of two sentences associated with
 the scene. In the restrictive condition, the sentence (e.g., "The boy
 will eat the cake") contained a verb (e.g., "eat") which restricts the
@@ -494,13 +494,16 @@ scenes that looked similar to critical scenes but were paired with
 inappropriate sentences. The correct keyboard response for the filler
 trials was "no."
 
+```{r E1-example-trial, fig.cap='Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.'}
+knitr::include_graphics("group-a/E1-example-trial.jpeg")
+```
+
+
 Each participant was presented with sixteen critical trials (eight in
 the restrictive condition, eight in the non-restrictive condition) and
 sixteen fillers for a total of 32 trials. The order of trials and the
 assignment of critical scene to condition was random on a
 subject-by-subject basis.<!-- right?-->
-
-*TO DO:* add figure
 
 ### Data pre-processing and analysis
 
@@ -542,37 +545,48 @@ this spatial reinstatement facilitates retrieval of the picture.
 
 ## Methods
 
+All stimuli, experiment scripts, data, analysis scripts, and a
+pre-registration are available on the Open Science Framework at
+<https://osf.io/xezfu/>.
+
 ### Participants
 
-60 participants were paid \$XX for their participation <!--right?-->.
+60 participants were paid for their participation.
 The sample size was motivated in part by budget constraints, but was
-nonetheless 2.5x larger than the original sample size of 24, as
-suggested by Simonsohn (2015). Data from 1 participant were not properly
+nonetheless 2.5x larger than the original sample size of 24). 
+Data from 1 participant were not properly
 recorded due to unknown technical issues, so data from 59 participants
 were included in all analyses to follow.
 
 ### Procedure
 
+The task began with a 9-point eye-tracker calibration
+and validation (Figure\ \@ref(fig:E2-calibration-figure)). 
+
+```{r E2-calibration-figure, child='group-b/E2-calibration-figure.Rmd'}
+
+```
+
 The experiment consisted of two blocks each composed of an encoding
 phase and a recall phase. During the encoding phase, participants saw a
 grid indicating the four quadrants of the screen. Each quadrant
-contained six images of items belonging to the same category (see Figure
-XX). The four categories were humanoids, household objects, animals, and
-methods of transportation. Participants were asked to remember the
-contents of the four quadrants. Different images were used in each
-block.
-
+contained six images of items belonging to the same category (see Figure\ \@ref(fig:E2-example-trial)). 
+The four categories were humanoids, household objects, animals, and
+methods of transportation. 
 Each of the four quadrants was presented one at a time. First, a list of
-the items in the quadrant were shown, then the items in the actual
-quadrant were shown (??). For each item, an audio file would play
-("???") asking the participant to use their arrow keys to identify which
-direction each item was facing (every item was facing either left or
-right (right??)). After the participant identified the direction of each
+the items in the quadrant was shown, then the pictures of items were displayed in the quadrant. 
+For each item, participants used their arrow keys to indicate whether the object was facing left or right. After the participant identified the direction of each
 item, they would have an additional 30 seconds to encode the name and
-orientation of each item in the quadrant. Then, after all four quadrants
-were presented in this way, the participant was shown the full grid of
+orientation of each item in the quadrant. Finally, after all four quadrants
+were presented, participants were shown the full grid of
 24 items and had 60 seconds to further encode the name and orientation
 of each item.
+
+
+```{r E2-example-trial, fig.cap='Example trial from Experiment 2.'}
+knitr::include_graphics("group-b/E2-example-figure.jpeg")
+```
+
 
 During the recall phase, participants listened to statements and
 responded by pressing the 'F' key for false statements and 'T' for true
@@ -588,7 +602,7 @@ to freely gaze around the screen. During the fixed-viewing block,
 participants were asked to fixate a small cross in the center of the
 screen throughout the recall phase. In both cases, the mouse was
 obscured from the screen. Participants were randomly assigned to see the
-fixed-viewing or free-viewing block first.
+fixed-viewing or free-viewing block first. Different images were used in each block.
 
 After completing both encoding-recall blocks, participants were asked to
 answer a few survey questions (such as whether they wore glasses or
@@ -602,7 +616,6 @@ prompted to look to a specific quadrant (rather than free viewing or
 central fixation) which either matched or mismatched the original
 location of the to-be-remembered item.
 
-### Data analysis
 
 ## Results
 
@@ -617,6 +630,10 @@ location of the to-be-remembered item.
 ```
 
 ## Discussion
+
+As in @johanssonLookHereEye2014 and @spiveyOculomotorMechanismsActivated2001, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located
+during encoding, suggesting that visuospatial information is integrated into the memory
+for objects. However, we did not observe a memory benefit, in terms of speed or accuracy, of spatial reinstatement via gaze position during retrieval of the picture. We can speculate that this may be due to the fact that participants struggled to maintain their gaze fixed in the center in the fixed-viewing condition, such that the difference between the fixed- and free-viewing conditions was minimal. Crucially for the current purposes, the webcam-based eye-tracking measurements were successful in replicating the key eye-tracking results. 
 
 # Experiment 3
 
@@ -643,9 +660,9 @@ previous day.
 ## Methods
 
 The stimuli, experimental code, and data and analysis scripts can be
-found on the Open Science Framework at <https://osf.io/k63b9/>
-(<https://osf.io/k63b9/>). The pre-registration for the study can be
-found at <https://osf.io/48jsv> (<https://osf.io/48jsv>). We
+found on the Open Science Framework at <https://osf.io/k63b9/>.
+The pre-registration for the study can be
+found at <https://osf.io/48jsv> . We
 inadvertently did not create a formal pre-registration using the OSF
 registries tool, but this document contains the same information and is
 time stamped prior to the start of data collection. <!-- Students failed
@@ -667,7 +684,7 @@ The task began with a 7-point eye-tracker calibration (each point was
 presented 3 times in a random order) and validation with 3 points (each
 presented once). The point locations were designed to focus calibration
 on the center of the screen and the middle of the left and right halves
-of the screen. 
+of the screen (Figure\ \@ref(fig:E3-calibration-figure)). 
 
 ```{r E3-calibration-figure, child='group-c/E3-calibration-figure.Rmd'}
 
@@ -711,7 +728,12 @@ asked them to rate their confidence in their answer from 1 as a "pure
 guess" to 5 as "very sure." by clicking on the corresponding number on
 the screen. No feedback on their responses was given during the test.
 
-The experimental design is visually depicted in Figure XX
+The experimental design is visually depicted in Figure\ \@ref(fig:E3-design-schematic)
+
+
+```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3'}
+knitr::include_graphics("group-c/E3-example-figure.jpeg")
+```
 
 ### Materials
 
@@ -725,7 +747,6 @@ Additionally, for each section of the study, the stimuli was presented
 on a single screen instead of two screens due to the constraints of the
 online experiment format.
 
-### Data analysis
 
 ## Results
 
@@ -768,22 +789,16 @@ to rapidly choose an action while the sentence is unfolding. .
 
 The stimuli, experimental code, and data and analysis scripts can be
 found on the Open Science Framework at the following link,
-<https://osf.io/x3c49/> (<https://osf.io/x3c49/>). The pre-registration
-for the study can be found at <https://osf.io/3v4pg>
-(<https://osf.io/3v4pg>).
+<https://osf.io/x3c49/>. The pre-registration
+for the study can be found at <https://osf.io/3v4pg>.
 
 ### Participants
 
-58 (??) participants were paid \$XX for their participation
-<!--right?-->. A sample size of 58 was chosen because we wanted to
-replicate the experiment with greater statistical power. Note that the
-original study had a sample size of 24.
+57 participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that the original study had a sample size of 24. 
 
 ### Procedure
 
--   *TO DO:* add details of calibration point locations
-
-After the eye-tracking calibration, participants went through an audio
+After the eye-tracking calibration and validation (Figure\ \@ref(fig:E4-calibration-figure)), participants went through an audio
 test so they could adjust the audio on their computer to a comfortable
 level. Before beginning the experiment, they were given instructions
 that four objects would appear, an audio prompt would play, and they
@@ -791,11 +806,15 @@ should do their best to use their mouse to act out the instructions.
 They then went through three practice trials which were followed by 54
 critical trials and 24 filler trials presented in a random order.
 
+```{r E4-calibration-figure, child='group-d/E4-calibration-figure.Rmd'}
+
+```
+
 During a trial, four pictures were displayed (target animal, target
 instrument, distractor animal, distractor instrument), one in each
 corner of the screen, and participants heard an audio prompt that
 contained instructions about the action they needed to act out (e.g.,
-"Rub the butterfly with the crayon"; see Figure XX)[^1]. Using their
+"Rub the butterfly with the crayon"; see Figure\ \@ref(fig:E4-example-trial))[^1]. Using their
 cursor, participants could act out the instructions by clicking on
 objects and moving them or motioning over the objects[^2]. After the
 action was completed, the participants were instructed to press the
@@ -815,7 +834,9 @@ been moved over at least one object.
     the straw" may not involve any clicking but rather only mousing over
     the camel.
 
-`r colorize("TO DO: ADD FIGURES Figure 1: An example of a critical trial for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.", color = "red")`
+```{r E4-example-trial, fig.cap='An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.'}
+knitr::include_graphics("group-d/E4-example-figure.jpeg")
+```
 
 ### Materials
 
@@ -886,23 +907,26 @@ available on the Open Science Framework at <https://osf.io/eubsc/>
 ### Participants
 
 50 participants for the main task were recruited on Prolific and were
-paid \$XX. 8 subjects, 4 from the attractiveness task group and 4 from
+paid \$10/hour. 8 subjects, 4 from the attractiveness task group and 4 from
 the roundness task group, were excluded for incorrect validations.
 <!-- they were able to proceed despite bad validation?--> After this
 data exclusion, we ended up with 21 participants each for the
 attractiveness task and the roundness task. The original sample size in
-Shimojo et al. (2003) was 10 participants total. \### Procedure and
-Design
+Shimojo et al. (2003) was 10 participants total. 
+
+### Procedure and Design
 
 At the beginning of the experimental task, participants completed a
 9-point eye-tracker calibration (each point appeared 3 times in random
 order) and 3-point validation. The validation point appeared once at
-center, middle left, and middle right locations in random order.
+center, middle left, and middle right locations in random order (see Figure\ \@ref(fig:E5-calibration-figure)).
 <!-- does 9 points here mean that there were actually only 3 calibration points but each was shown 3 times so 9 total or is it 9 points shown 3 times so 27 total? If the latter, why is the coverage denser than for Experiment 4? -->
+```{r E5-calibration-figure, child='group-e/E5-calibration-figure.Rmd'}
+
+```
 
 During each trial of the main task, two faces were displayed on the two
-halves of the screen, one on the left and one on the right (as in Figure
-XX). Participants were randomly assigned to one of two tasks:
+halves of the screen, one on the left and one on the right (as in Figure\ \@ref(fig:E5-example-trial)). Participants were randomly assigned to one of two tasks:
 attractiveness or shape judgment. In the attractiveness task,
 participants were asked to chose the more attractice face in the pair
 and in the shape judgment task participants were asked to pick the face
@@ -912,6 +936,10 @@ right. A fixation cross appeared in the center of the screen between
 each set of faces. Participants were asked to look at this fixation
 cross in order to reset their gaze in between trials (???). The order of
 the 19 face pairs was random for each participant.
+
+```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5. (Text did not appear on each screen.)'}
+knitr::include_graphics("group-e/E5-example-figure.jpeg")
+```
 
 ### Materials and Norming
 
@@ -989,12 +1017,25 @@ The sixth study was a replication attempt of Posner et al. ??.
 ## Discussion
  -->
 ```
-# Combined Analyses
+# Combined Analyses?
 
 -   Pooling data from all experiments we can look at patterns in the
     calibration and validation data
 
 # General Discussion
+
+ - E1:
+ 
+ - E2: 
+    - replication of key result with 4 quadrants
+    - calib quality doesn't seem to matter 
+    - if attempting to control where people are looking, think about modifying task...
+ 
+ - E3:
+ 
+ - E4:
+ 
+ - E5:
 
 ```{=html}
 <!-- NOTES FROM EMAILS:

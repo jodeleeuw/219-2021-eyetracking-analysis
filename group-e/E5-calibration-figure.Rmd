@@ -1,0 +1,55 @@
+---
+title: "Experiment 5: Calibration Figure"
+output: pdf
+---
+
+```{r include=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+```{r include=FALSE}
+# calib: [25,25],[25,75],[50,50],[75,25],[75,75],[25,50],[75,50],[15,50],[85,50]
+calibration_points <- matrix(c(
+  c(25,25),
+  c(25,75),
+  c(50,50),
+  c(75,25),
+  c(75,75),
+  c(25,50),
+  c(75,50),
+  c(15,50),
+  c(85,50)
+), ncol=2, byrow=T)
+# valid: 
+#      [,1] [,2]
+# [1,]   25   50
+# [2,]   75   50
+# [3,]   50   50
+validation_points <- matrix(c(
+  c(25,50),
+  c(75,50),
+  c(50,50)
+), ncol=2, byrow=T)
+
+colnames(calibration_points) <- c("x","y")
+colnames(validation_points) <- c("x","y")
+
+df <- as_tibble(calibration_points) %>% bind_rows(as_tibble(validation_points))
+df$point <- c(rep("calibration", nrow(calibration_points)), rep("validation", nrow(validation_points)))
+```
+
+```{r echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 5. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
+ggplot(df, aes(x=x, y=y, shape=point, color=point))+
+  geom_point(size=3, stroke=1)+
+  scale_shape_manual(values=c(16,3))+
+  scale_color_manual(values=c("black", "red"))+
+  coord_cartesian(xlim=c(0,100), ylim=c(100,0), expand=FALSE)+
+  theme_void()+
+  labs(color=NULL, shape=NULL)+
+  theme(panel.border = element_rect(color="black", fill=NA),
+        legend.position = c(0.995,0.01),
+        legend.justification = c(1,0),
+        legend.background = element_rect(color="black", fill=NA),
+        legend.margin = margin(2,3,3,3))
+```
