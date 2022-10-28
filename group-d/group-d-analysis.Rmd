@@ -39,6 +39,8 @@ task.data <- all.data %>%
 Add a column that uniquely identifies the combination of images and audio shown on the screen
 
 ```{r}
+
+
 trialID.data <- task.data %>%
   group_by(audio, images) %>%
   slice(1) %>%
@@ -302,5 +304,4 @@ Instrument
 model.time.window.3 <- lmer(prop.fixations.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=data.time.window.3)
 summary(model.time.window.3)
 ```
-
 
