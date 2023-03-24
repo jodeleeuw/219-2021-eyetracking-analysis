@@ -1,0 +1,909 @@
+---
+title: "Group A"
+output: pdf_document
+---
+### Replication
+<!-- # Setup -->
+```{r setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(ggplot2)
+library(readr)
+library(afex)
+library(forcats)
+library(papaja)
+source("~/round.comm.R")
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<!-- # Import Data -->
+
+<!-- Read JSON files and bind together into a tibble. -->
+
+```{r import-data}
+data.files <- list.files('data', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+<!-- Mutate value types as needed -->
+
+```{r value-types}
+all.data <- all.data %>%
+  mutate(subject_id = factor(subject_id))
+```
+
+<!-- Get a list of subject IDs. -->
+
+```{r Get subj IDs}
+subjects <- unique(all.data$subject_id)
+```
+
+<!-- # Extract Relevant Data -->
+
+<!-- Get data from critical trials, select relevant columns, unnest/unpack webgazer data to get a tidy tibble, -->
+<!-- and add gaze measurements as a percentage. -->
+
+```{r Get data}
+task.data <- all.data %>%
+  filter(verb_type %in% c("restricting", "non-restricting")) %>%
+  select(subject_id, stimulus, response, verb_type, webgazer_data, webgazer_targets) %>%
+  tidyr::unpack(webgazer_targets) %>%
+  tidyr::unpack(`#scenes`) %>%
+  select(-x,-y) %>%
+  unnest(webgazer_data) %>%
+  mutate(gaze.x.percent = (x - left) / width * 100) %>%
+  mutate(gaze.y.percent = (y - top) / height * 100)
+```
+
+<!-- # Add Stimulus Info -->
+
+<!-- Merge in info on visual ROIs and audio onsets. -->
+
+```{r Merge stim info, message=FALSE, warning=FALSE}
+ref.image.height <- 1500 # height of images that were measured for ROIs
+ref.image.width <- 1875 # width of images that were measured for ROIs
+padding <- 20 # padding in pixels around the ROIs.
+
+image.data <- read_csv('info/image_measurements.csv') %>%
+  mutate(roi_top = (top_object_distance - padding) / ref.image.height * 100,
+         roi_bottom = (bottom_object_distance + padding) / ref.image.height * 100,
+         roi_left = (left_object_distance - padding) / ref.image.width * 100,
+         roi_right = (right_object_distance + padding) / ref.image.width * 100) %>%
+  mutate(object_class = if_else(object_type %in% c('subject', 'target.object'), object_type, 'distractor')) %>%
+  select(image_name, object_type, object_class, roi_top, roi_bottom, roi_left, roi_right)
+
+audio.data <- read_csv('info/audio_timestamps.csv') %>% filter(!is.na(stimulus))
+
+critical.trials <- task.data %>%
+  left_join(audio.data) %>%
+  left_join(image.data) 
+
+#check for weirdness
+discrep <- audio.data$delay_bw_onset_of_verb_and_onset_of_target_noun - 
+  (audio.data$duration_of_verb + 
+     audio.data$duration_of_intervening_determiner + 
+     audio.data$intonation_break_bw_verb_and_determiner)
+sum(discrep) #this should be zero, but it's 0.59! Check out the 3rd (audio/2r.mp3) and 22nd item (audio/11nr.mp3)
+```
+
+<!--Figure out word durations by condition (AK Table 2)-->
+```{r Word durations}
+#First, grab the columns that match stimulus to condition name
+stim.cond <- distinct(data.frame(critical.trials$stimulus, critical.trials$verb_type))
+colnames(stim.cond) <- c("stimulus", "verb_type")
+
+#Then merge with audio data
+word.dur.data <- left_join(audio.data, stim.cond)
+
+#Then summarize by condition
+#word.dur.avg <- round.comm(colMeans(word.dur.data[,2:10])*1000)
+word.dur.avg <- word.dur.data %>%
+  group_by(verb_type) %>%
+  summarise(Verb = round.comm(mean(duration_of_verb)*1000),
+            Post_verbal_break = round.comm(mean(intonation_break_bw_verb_and_determiner)*1000),
+            Determiner = round.comm(mean(duration_of_intervening_determiner)*1000),
+            Total = Verb + Post_verbal_break + Determiner)
+
+```
+
+```{r Duration table, echo=FALSE}
+#Set up a df of our data
+our_table2 <- data.frame(
+  Duration = c(
+    "Verb",
+    "Post-verbal break",
+    "Determiner",
+    "Verb + break + determiner"),
+  Eat = c(
+    word.dur.avg$Verb[2],
+    word.dur.avg$Post_verbal_break[2],
+    word.dur.avg$Determiner[2],
+    word.dur.avg$Total[2]),
+  Move = c(
+    word.dur.avg$Verb[1],
+    word.dur.avg$Post_verbal_break[1],
+    word.dur.avg$Determiner[1],
+    word.dur.avg$Total[1]),
+  Difference = c(
+    word.dur.avg$Verb[1] - word.dur.avg$Verb[2],
+    word.dur.avg$Post_verbal_break[1] - word.dur.avg$Post_verbal_break[2],
+    word.dur.avg$Determiner[1] - word.dur.avg$Determiner[2],
+    word.dur.avg$Total[1] - word.dur.avg$Total[2])
+  )
+
+#Set up a df of our data
+AK_table2 <- data.frame(
+  AK_Eat = c(
+    383,
+    192,
+    122,
+    697),
+  AK_Move = c(
+    423,
+    180,
+    107,
+    710),
+  AK_Difference = c(
+    40,
+    -12,
+    -15,
+    13)
+)
+
+table2 <- cbind(our_table2,AK_table2)
+
+knitr::kable(table2)
+  
+# apa_table(
+#   table2,
+#   caption = "Word durations for the restrictive ('eat') and non-restrictive ('move') sentences, in ms.",
+#   font_size = "small"
+# )    
+#can I add a third dimension i.e. have two headings to group our data vs. AK data?
+```
+
+<!-- # Compute Gaze in ROI -->
+
+<!-- Define a function for determining if `x,y` value falls in box. -->
+
+```{r Gaze in ROI}
+in.box <- function(x, y, left, right, top, bottom, padding){
+  is.in.the.box <- x >= left - padding & x <= right + padding & y >= top - padding & y <= bottom + padding
+  return(is.in.the.box)
+}
+```
+
+<!-- Add a column with boolean value for whether gaze was in the ROI. -->
+
+```{r Yes/No in ROI}
+critical.trials <- critical.trials %>%
+  mutate(is.fixating = in.box(gaze.x.percent, gaze.y.percent, roi_left, roi_right, roi_top, roi_bottom, 0))
+```
+
+<!-- # Subject Exclusion Criteria -->
+
+<!-- We'll try this two ways. First if we adopt minimal exclusion criteria, removing subjects whose eye tracking data is essentially unusable. Second if we adopt aggressive exclusion criteria, removing subjects with obviously worse eye tracking data. -->
+
+<!--###MINIMAL EXCLUSION-->
+<!-- Set which mode here: -->
+```{r Exclusion mode}
+# 'AGGRESSIVE' or 'MINIMAL'
+exclusion.mode <- 'MINIMAL' 
+```
+
+<!-- ## Proportion of measured data in an ROI. -->
+
+<!-- Check the proportion of samples that were in at least one ROI for subjects. 
+Which is to say: at each event time "t" per trial per subject, check whether they were looking at ANY of the objects (vs background/off-screen). What proportion of fixation events (total number varies by trial/subj) were in ANY ROI? -->
+
+```{r prop-in-ROI}
+prop.in.roi.by.subject <- critical.trials %>%
+  group_by(subject_id, t, image_name) %>%
+  summarize(fixation.in.roi = any(is.fixating)) %>%
+  group_by(subject_id) %>%
+  summarize(prop.of.samples.in.roi = mean(fixation.in.roi))
+```
+<!-- Visualize proportion of samples in ROI by subject. -->
+
+```{r roi histogram}
+hist(prop.in.roi.by.subject$prop.of.samples.in.roi, breaks=20)
+```
+
+
+<!-- Exclude subjects below a threshold -->
+
+```{r exclude by prop in roi}
+prop.samples.threshold.min <- 0
+
+
+bad.subjects.prop.samples.min <- prop.in.roi.by.subject %>%
+  filter(prop.of.samples.in.roi <= prop.samples.threshold.min) %>%
+  pull(subject_id)
+```
+
+<!-- ## Validation accuracy -->
+
+```{r get validation data}
+validation.accuracy.data <- all.data %>%
+  filter(trial_type == 'webgazer-validate')
+```
+
+<!-- What % of subjects needed to recalibrate because of poor initial calibration? -->
+
+```{r summarize something}
+validation.accuracy.data %>% 
+  group_by(subject_id) %>%
+  count() %>%
+  group_by(n) %>%
+  count()
+```
+
+<!-- Get final average distance for each subject -->
+
+```{r save validation percent in roi during validation}
+validation.percent <- validation.accuracy.data %>%
+  group_by(subject_id) %>%
+  slice_tail() %>%
+  select(subject_id, percent_in_roi) %>%
+  unnest(percent_in_roi) %>%
+  group_by(subject_id) %>%
+  summarise(M = mean(percent_in_roi), MAX = max(percent_in_roi), MIN = min(percent_in_roi)) %>%
+  mutate(subject_id = fct_reorder(subject_id, M))
+
+save(validation.percent, file = "validation.percent.RData")
+```
+
+```{r plot subjects by validation}
+ggplot(validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
+  geom_pointrange() +
+  theme_classic()
+```
+<!-- Set criteria for minimal exclusions (aggresive is later) -->
+
+```{r filter by validation}
+validation.threshold.min <- 10
+
+bad.subjects.validation.min <- validation.percent %>%
+  filter(M <= validation.threshold.min) %>%
+  pull(subject_id) %>%
+  as.character()
+```
+
+
+<!-- ## Final exclusion data -->
+
+```{r summarize exclusions}
+bad.subjects.min <- unique(c(bad.subjects.prop.samples.min, bad.subjects.validation.min))
+
+critical.trials.filtered.min <- critical.trials %>%
+  filter(!subject_id %in% bad.subjects.min)
+
+n.bad.subjects.min <- length(bad.subjects.min)
+#There's a mysterious participant "55" who appears in bad.subjects but NOT in bad.subjects.prop.samples or in bad.subjects.validation...or anywhere? So there's really only 5 real bad subjects (leaving 57-5 = 52 participants in the filtered data)
+```
+<!-- This is where I should say how many people were excluded, right? -->
+__Regions of Interest__. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions. 
+
+__Minimal Exclusion__. The first set of analyses used minimal exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.min*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.min)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.min` percent, resulting in an additional `r n.bad.subjects.min - length(bad.subjects.prop.samples.min)` excluded participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.min$subject_id))` participants. 
+
+<!-- # Calculating cumulative fixation probability -->
+
+<!-- We start by calculating cumulative fixation probability on the objects after the verb onset. (Any fixations prior to the verb onset are not relevant to the core research questions.) -->
+
+
+*TO-DO: Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset (I think I should be able to tell from looking at the code); whether there's a 200-ms scootch.
+
+
+<!-- First, add a column for time relative to verb onset, bin this to 50ms chunks, and filter the data to the 2,000 ms window after verb onset. -->
+
+```{r set up 50 ms bins}
+cumulative.fixation.data.min <- critical.trials.filtered.min %>%
+  mutate(t.relative.to.verb.onset = t - (verb_onset*1000)) %>%
+  filter(t.relative.to.verb.onset >= 0 & t.relative.to.verb.onset <2000) %>%
+  mutate(t.w = floor(t.relative.to.verb.onset/50)*50)
+```
+
+<!-- Now check every time window within a trial to account for sparse samples. This calculating is time consuming, so we cache the result in a CSV file, and load from the CSV if it already exists. -->
+
+```{r slowly build cumu fix data}
+cumulative.fixation.calculation <- function(df){
+  time <- seq(0,1950,50)
+  fixations <- logical(length(time))
+  hit.flag <- FALSE
+  for(i in 1:length(fixations)){
+    if(hit.flag){
+      fixations[i] <- TRUE
+    } else {
+      val <- df %>% filter(t.w <= time[i]) %>% pull(is.fixating) %>% any()
+      if(val == TRUE) {
+        hit.flag <- TRUE
+      }
+      fixations[i] <- val
+    }
+  }
+  out <- tibble(t.window = time, has.fixated = fixations)
+  return(out)
+}
+
+setwd("/Users/ajames2/Documents/GitHub/219-2021-eyetracking-analysis/group-a")
+
+if(file.exists("data/generated/cumulative_fixation_data_min.csv")){
+  cumulative.fixation.windows.data.min <- read_csv("data/generated/cumulative_fixation_data_min.csv")
+} else {
+
+  cumulative.fixation.windows.data.min <- cumulative.fixation.data.min %>%
+    group_by(subject_id, verb_type, image_name, object_type, object_class) %>%
+    summarize(cumulative.fixation.calculation(cur_data()))
+  
+  write_csv(cumulative.fixation.windows.data.min, file="data/generated/cumulative_fixation_data_min.csv")
+}
+```
+
+<!-- Then group by object class to calculate fixation probability for each kind of object, normalizing by the number of objects of that type. -->
+
+```{r group cumu fix by object}
+cumulative.fixation.windows.grouped.data.min <- cumulative.fixation.windows.data.min %>%
+  filter(!subject_id %in% bad.subjects.min) %>%
+  group_by(subject_id, verb_type, image_name, object_class, t.window) %>%
+  summarize(cumulative.fixation.p = mean(has.fixated)) 
+```
+
+<!-- Then collapse over trials to get a cumulative probability for the whole window for each subject -->
+
+```{r collapse sumu fix over trials}
+cumulative.fixation.windows.grouped.average.data.min <- cumulative.fixation.windows.grouped.data.min %>%
+  group_by(subject_id, verb_type, object_class, t.window) %>%
+  summarize(cumulative.fixation.p = mean(cumulative.fixation.p))
+```
+
+<!-- Collapse across subjects to generate the equivalent of the figure from Altmann & Kamide. -->
+
+```{r create summary data for spag plot}
+cumulative.fixation.data.summary.min <- cumulative.fixation.windows.grouped.average.data.min %>%
+  filter(object_class %in% c('target.object', 'distractor')) %>%
+  group_by(t.window, verb_type, object_class) %>%
+  summarize(cumulative.fixation.m = mean(cumulative.fixation.p))
+```
+
+__Cumulative Fixation Probabilities__. For each sentence target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure X. *I dunno how to make the figure show up when I knit the doc :-/
+
+```{r make spag plot} 
+#|E1-spaghetti-fig, 
+#|fig.cap = "Cumulative probability of fixating distractor 
+#|,and target objects across conditions."
+E1_spag_fig <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
+  scale_fill_grey(start=1.0, end=0.0)+
+  scale_shape_manual(values=c(22,21))+
+  geom_line()+
+  geom_point(size=2)+
+  theme_bw()+
+  theme(panel.grid=element_blank())+
+  scale_y_continuous(limits=c(0,1))+
+  scale_x_continuous(expand=c(0.01,0.01))+
+  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")
+
+E1_spag_fig
+#we should insert a vertical line for the average noun onset
+```
+
+ 
+
+<!-- __Question 1: Are there more pre-noun first looks to the target object than to the distractors?__
+
+First, grab the noun onset times to merge into our cumulative fixation data.-->
+
+```{r set up noun onset times}
+noun.onset.times.min <- critical.trials.filtered.min %>%
+  group_by(image_name, verb_type) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(image_name, verb_type, delay_bw_onset_of_verb_and_onset_of_target_noun) %>%
+  mutate(relative.noun.onset = delay_bw_onset_of_verb_and_onset_of_target_noun * 1000) %>%
+  select(-delay_bw_onset_of_verb_and_onset_of_target_noun)
+
+trial.level.cumulative.fixation.data.min <- cumulative.fixation.windows.grouped.data.min %>%
+  left_join(noun.onset.times.min, by=c("image_name", "verb_type"))
+```
+
+<!--Then, grab the last time window before the noun onset for each trial. This is the critical data for this test.-->
+
+```{r find prenoun window data}
+pre.noun.first.looks.data.min <- trial.level.cumulative.fixation.data.min %>%
+  group_by(subject_id, image_name, verb_type) %>%
+  filter(t.window < relative.noun.onset) %>%
+  filter(t.window == max(t.window)) %>%
+  filter(object_class %in% c("target.object", "distractor"))
+```
+
+```{r save prenoun window data}
+pre.noun.first.looks.data.min$verb_type <- as.factor(pre.noun.first.looks.data.min$verb_type)
+pre.noun.first.looks.data.min$object_class <- as.factor(pre.noun.first.looks.data.min$object_class)
+
+save(pre.noun.first.looks.data.min, file = "pre.noun.first.looks.data.min.RData")
+```
+<!--Fit the model, with no covariance between random effects because the model cannot converge with full covariance matrix.-->
+
+```{r run model 1}
+E1_model1.min <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.noun.first.looks.data.min)
+summary(E1_model1.min)
+
+E1_model1_tab.min = broom.mixed::tidy(E1_model1.min) 
+E1_model1_obj.min = E1_model1_tab.min %>% filter(term == "object_classtarget.object")
+E1_model1_verb.min = E1_model1_tab.min %>% filter(term == "verb_typerestricting")
+E1_model1_obj_verb.min = E1_model1_tab.min %>% filter(term == "object_classtarget.object:verb_typerestricting")
+```
+__Pre-noun fixations.__ In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation proportion in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs. non-restricting = 0), object type (target = 1 vs. distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction [bar graph?] (_b_ = `r E1_model1_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`). [should i use a table? should i change to effects coding like other Exps? i think 0/1 is intuitive in this case]
+
+
+<!--Verb offset times-->
+
+```{r find verb offset data}
+verb.offset.times.min <- critical.trials.filtered.min %>%
+  group_by(image_name, verb_type) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(image_name, verb_type, duration_of_verb) %>%
+  mutate(relative.verb.offset = duration_of_verb * 1000) %>%
+  select(-duration_of_verb)
+
+trial.level.cumulative.fixation.data.verb.offset.min <- cumulative.fixation.windows.grouped.data.min %>%
+  left_join(verb.offset.times.min, by=c("image_name", "verb_type"))
+```
+
+```{r save verb offset data}
+pre.verb.offset.first.looks.data.min <- trial.level.cumulative.fixation.data.verb.offset.min %>%
+  group_by(subject_id, image_name, verb_type) %>%
+  filter(t.window < relative.verb.offset) %>%
+  filter(t.window == max(t.window)) %>%
+  filter(object_class %in% c("target.object", "distractor"))
+
+save(pre.verb.offset.first.looks.data.min, file = "pre.verb.offset.first.looks.data.min.RData")
+```
+
+
+```{r run model 2}
+#model <- lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data.min)
+#summary(model)
+
+E1_model2.min <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data.min)
+summary(E1_model2.min)
+
+E1_model2_tab.min = broom.mixed::tidy(E1_model2.min) 
+E1_model2_obj.min = E1_model2_tab.min %>% filter(term == "object_classtarget.object")
+E1_model2_verb.min = E1_model2_tab.min %>% filter(term == "verb_typerestricting")
+E1_model2_obj_verb.min = E1_model2_tab.min %>% filter(term == "object_classtarget.object:verb_typerestricting")
+```
+__Pre-verb-offset fixations.__ Altmann & Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (_b_ = `r E1_model2_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+
+<!--Relative to noun onset, when is the first (post-verb) fixation on the target?-->
+
+```{r}
+first.fixation.after.verb.onset.min <- critical.trials.filtered.min %>%
+  group_by(subject_id, image_name) %>%
+  filter(t >= verb_onset*1000) %>%
+  filter(object_type == "target.object") %>%
+  filter(is.fixating == TRUE) %>%
+  filter(t == min(t)) %>%
+  mutate(noun_relative.t = t - (postverbal_noun_onset*1000)) %>%
+  mutate(von_relative.t = t - (verb_onset*1000)) %>%
+  mutate(voff_relative.t = t - (verb_offset*1000)) %>%
+  mutate(det_relative.t = t -(postverbal_determiner_onset*1000))
+```
+
+```{r Table1, echo=FALSE}
+#summarize data for table
+first.fix.avg.min <- first.fixation.after.verb.onset.min %>%
+  group_by(verb_type) %>%
+  summarise(Verb.on = round.comm(mean(von_relative.t)),
+            Verb.off = round.comm(mean(voff_relative.t)),
+            Det.on = round.comm(mean(det_relative.t)),
+            Noun.on = round.comm(mean(noun_relative.t)))
+
+#put data into a data frame
+our_table1_min <- data.frame(
+  Time = c("Verb onset", "Verb offset", "Determiner onset", "Noun onset"),
+  Eat = c(first.fix.avg.min$Verb.on[2],
+           first.fix.avg.min$Verb.off[2],
+           first.fix.avg.min$Det.on[2],
+           first.fix.avg.min$Noun.on[2]),
+  Move = c(first.fix.avg.min$Verb.on[1],
+           first.fix.avg.min$Verb.off[1],
+           first.fix.avg.min$Det.on[1],
+           first.fix.avg.min$Noun.on[1]),
+  Difference = c(first.fix.avg.min$Verb.on[1]-first.fix.avg.min$Verb.on[2],
+                  first.fix.avg.min$Verb.off[1]-first.fix.avg.min$Verb.off[2],
+                  first.fix.avg.min$Det.on[1]-first.fix.avg.min$Det.on[2],
+                  first.fix.avg.min$Noun.on[1]-first.fix.avg.min$Noun.on[2])
+)
+
+AK_table1 <- data.frame(
+  Time = c("Verb onset", "Verb offset", "Determiner onset", "Noun onset"),
+  Eat = c(611, 228, 37, -85),
+  Move = c(838, 415, 234, 127),
+  Difference = c(227, 187, 197, 212))
+
+table1_min <- merge(our_table1_min, AK_table1, by = "Time")
+  
+# apa_table(
+#   table1_min,
+#   caption = "Onset of first post-verb-onset saccade, relative to verb onset, verb offset, determiner onset, and noun onset, in ms.",
+#   font_size = "small",
+#    col_spanners = list(`Current Exp. 1` = c(2, 4), `Altmann $ Kamide Exp. 1` = c(5, 7))
+# )    
+
+
+#can I add a third dimension i.e. have two headings to group our data vs. AK data?
+
+knitr::kable(table1_min)
+```
+
+```{r}
+first.fixation.after.verb.onset.analysis.data.min <- first.fixation.after.verb.onset.min %>%
+  ungroup() %>%
+  select(subject_id, image_name, verb_type, duration_of_verb, noun_relative.t) %>%
+  mutate(dur_verb_ms_c = scale(duration_of_verb, scale = FALSE)*1000) #mean-center verb duration
+
+save(first.fixation.after.verb.onset.analysis.data.min, file = "first.fixation.after.verb.onset.analysis.data.min.RData")
+```
+
+
+```{r}
+E1_model3.min <- lmer_alt(noun_relative.t ~ verb_type*dur_verb_ms_c + (verb_type || subject_id) + (verb_type || image_name), data=first.fixation.after.verb.onset.analysis.data.min)
+
+summary(E1_model3.min)
+
+E1_model3_tab.min = broom.mixed::tidy(E1_model3.min) 
+E1_model3_verb.min = E1_model3_tab.min %>% filter(term == "verb_typerestricting")
+
+```
+__First target fixations after verb.__ Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [On average, participants looked to the target X ms after (AK's Table 1)..., I'll also want to say the lengths of the verbs. AK's Table 2] We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+
+```{r}
+first.fixation.after.verb.onset.subject.summary.min <- first.fixation.after.verb.onset.min %>%
+  group_by(subject_id, verb_type) %>%
+  summarize(m.t = mean(noun_relative.t), ct = n())
+
+first.fixation.after.verb.onset.summary.min <- first.fixation.after.verb.onset.subject.summary.min %>%
+  group_by(verb_type) %>%
+  summarize(m=mean(m.t), sd=sd(m.t), se=sd/sqrt(n()))
+
+save(first.fixation.after.verb.onset.summary.min, file = "first.fixation.after.verb.onset.subject.summary.min.RData")
+```
+
+
+```{r}
+ggplot(first.fixation.after.verb.onset.summary.min, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
+  geom_col()+
+  geom_errorbar(width=0.2)
+```
+
+
+<!--###AGGRESSIVE EXCLUSION-->
+<!-- Set which mode here: -->
+```{r}
+# 'AGGRESSIVE' or 'MINIMAL'
+exclusion.mode <- 'AGGRESSIVE' 
+```
+
+<!-- ## Proportion of measured data in an ROI. -->
+
+<!-- Check the proportion of samples that were in at least one ROI for subjects. 
+Which is to say: at each event time "t" per trial per subject, check whether they were looking at ANY of the objects (vs background/off-screen). What proportion of fixation events (total number varies by trial/subj) were in ANY ROI? -->
+
+<!-- Exclude subjects below a threshold -->
+
+```{r}
+prop.samples.threshold.aggro <- 0.2
+
+bad.subjects.prop.samples.aggro <- prop.in.roi.by.subject %>%
+  filter(prop.of.samples.in.roi <= prop.samples.threshold.aggro) %>%
+  pull(subject_id)
+```
+
+<!-- Set criteria for minimal and aggressive exclusions -->
+
+```{r}
+validation.threshold.aggro <- 50
+
+
+bad.subjects.validation.aggro <- validation.percent %>%
+  filter(M <= validation.threshold.aggro) %>%
+  pull(subject_id) %>%
+  as.character()
+```
+
+
+<!-- ## Final exclusion data -->
+
+```{r}
+bad.subjects.aggro <- unique(c(bad.subjects.prop.samples.aggro, bad.subjects.validation.aggro))
+
+critical.trials.filtered.aggro <- critical.trials %>%
+  filter(!subject_id %in% bad.subjects.aggro)
+
+n.bad.subjects.aggro <- length(bad.subjects.aggro)
+```
+__Aggressive Exclusion__. The second set of analyses used more aggressive exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.aggro*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.aggro)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.aggro` percent, which eliminated an additional `r n.bad.subjects.aggro - length(bad.subjects.prop.samples.aggro)` participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.aggro$subject_id))` participants. 
+
+<!-- # Calculating cumulative fixation probability -->
+
+<!-- We start by calculating cumulative fixation probability on the objects after the verb onset. (Any fixations prior to the verb onset are not relevant to the core research questions.) -->
+
+<!-- First, add a column for time relative to verb onset, bin this to 50ms chunks, and filter the data to the 2,000 ms window after verb onset. -->
+
+```{r}
+cumulative.fixation.data.aggro <- critical.trials.filtered.aggro %>%
+  mutate(t.relative.to.verb.onset = t - (verb_onset*1000)) %>%
+  filter(t.relative.to.verb.onset >= 0 & t.relative.to.verb.onset <2000) %>%
+  mutate(t.w = floor(t.relative.to.verb.onset/50)*50)
+```
+
+<!-- Now check every time window within a trial to account for sparse samples. This calculating is time consuming, so we cache the result in a CSV file, and load from the CSV if it already exists. -->
+
+```{r}
+# cumulative.fixation.calculation <- function(df){
+#   time <- seq(0,1950,50)
+#   fixations <- logical(length(time))
+#   hit.flag <- FALSE
+#   for(i in 1:length(fixations)){
+#     if(hit.flag){
+#       fixations[i] <- TRUE
+#     } else {
+#       val <- df %>% filter(t.w <= time[i]) %>% pull(is.fixating) %>% any()
+#       if(val == TRUE) {
+#         hit.flag <- TRUE
+#       }
+#       fixations[i] <- val
+#     }
+#   }
+#   out <- tibble(t.window = time, has.fixated = fixations)
+#   return(out)
+# }
+# 
+# setwd("/Users/ajames2/Documents/GitHub/219-2021-eyetracking-analysis/group-a")
+
+if(file.exists("data/generated/cumulative_fixation_data_aggro.csv")){
+  cumulative.fixation.windows.data.aggro <- read_csv("data/generated/cumulative_fixation_data_aggro.csv")
+} else {
+
+  cumulative.fixation.windows.data.aggro <- cumulative.fixation.data.aggro %>%
+    group_by(subject_id, verb_type, image_name, object_type, object_class) %>%
+    summarize(cumulative.fixation.calculation(cur_data()))
+  
+  write_csv(cumulative.fixation.windows.data.aggro, file ="data/generated/cumulative_fixation_data_aggro.csv")
+}
+```
+
+<!-- Then group by object class to calculate fixation probability for each kind of object, normalizing by the number of objects of that type. -->
+
+```{r}
+cumulative.fixation.windows.grouped.data.aggro <- cumulative.fixation.windows.data.aggro %>%
+  filter(!subject_id %in% bad.subjects.aggro) %>%
+  group_by(subject_id, verb_type, image_name, object_class, t.window) %>%
+  summarize(cumulative.fixation.p = mean(has.fixated)) 
+```
+
+<!-- Then collapse over trials to get a cumulative probability for the whole window for each subject -->
+
+```{r}
+cumulative.fixation.windows.grouped.average.data.aggro <- cumulative.fixation.windows.grouped.data.aggro %>%
+  group_by(subject_id, verb_type, object_class, t.window) %>%
+  summarize(cumulative.fixation.p = mean(cumulative.fixation.p))
+```
+
+<!-- Collapse across subjects to generate the equivalent of the figure from Altmann & Kamide. -->
+
+```{r}
+cumulative.fixation.data.summary.aggro <- cumulative.fixation.windows.grouped.average.data.aggro %>%
+  filter(object_class %in% c('target.object', 'distractor')) %>%
+  group_by(t.window, verb_type, object_class) %>%
+  summarize(cumulative.fixation.m = mean(cumulative.fixation.p))
+```
+
+
+```{r} 
+#|E1-spaghetti-fig, 
+#|fig.cap = "Cumulative probability of fixating distractor 
+#|,and target objects across conditions."
+E1_spag_fig <- ggplot(cumulative.fixation.data.summary.aggro, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
+  scale_fill_grey(start=1.0, end=0.0)+
+  scale_shape_manual(values=c(22,21))+
+  geom_line()+
+  geom_point(size=2)+
+  theme_bw()+
+  theme(panel.grid=element_blank())+
+  scale_y_continuous(limits=c(0,1))+
+  scale_x_continuous(expand=c(0.01,0.01))+
+  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")
+
+E1_spag_fig
+#we should insert a vertical line for the average noun onset
+```
+
+ 
+
+<!-- __Question 1: Are there more pre-noun first looks to the target object than to the distractors?__
+
+First, grab the noun onset times to merge into our cumulative fixation data.-->
+
+```{r}
+noun.onset.times.aggro <- critical.trials.filtered.aggro %>%
+  group_by(image_name, verb_type) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(image_name, verb_type, delay_bw_onset_of_verb_and_onset_of_target_noun) %>%
+  mutate(relative.noun.onset = delay_bw_onset_of_verb_and_onset_of_target_noun * 1000) %>%
+  select(-delay_bw_onset_of_verb_and_onset_of_target_noun)
+
+trial.level.cumulative.fixation.data.aggro <- cumulative.fixation.windows.grouped.data.aggro %>%
+  left_join(noun.onset.times.aggro, by=c("image_name", "verb_type"))
+```
+
+<!--Then, grab the last time window before the noun onset for each trial. This is the critical data for this test.-->
+
+```{r}
+pre.noun.first.looks.data.aggro <- trial.level.cumulative.fixation.data.aggro %>%
+  group_by(subject_id, image_name, verb_type) %>%
+  filter(t.window < relative.noun.onset) %>%
+  filter(t.window == max(t.window)) %>%
+  filter(object_class %in% c("target.object", "distractor"))
+```
+
+```{r}
+pre.noun.first.looks.data.aggro$verb_type <- as.factor(pre.noun.first.looks.data.aggro$verb_type)
+pre.noun.first.looks.data.aggro$object_class <- as.factor(pre.noun.first.looks.data.aggro$object_class)
+```
+<!--Fit the model, with no covariance between random effects because the model cannot converge with full covariance matrix.-->
+
+```{r}
+E1_model1.aggro <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.noun.first.looks.data.aggro)
+summary(E1_model1.aggro)
+
+E1_model1_tab.aggro = broom.mixed::tidy(E1_model1.aggro) 
+E1_model1_obj.aggro = E1_model1_tab.aggro %>% filter(term == "object_classtarget.object")
+E1_model1_verb.aggro = E1_model1_tab.aggro %>% filter(term == "verb_typerestricting")
+E1_model1_obj_verb.aggro = E1_model1_tab.aggro %>% filter(term == "object_classtarget.object:verb_typerestricting")
+```
+
+
+<!--Verb offset times-->
+
+```{r}
+verb.offset.times.aggro <- critical.trials.filtered.aggro %>%
+  group_by(image_name, verb_type) %>%
+  slice(1) %>%
+  ungroup() %>%
+  select(image_name, verb_type, duration_of_verb) %>%
+  mutate(relative.verb.offset = duration_of_verb * 1000) %>%
+  select(-duration_of_verb)
+
+trial.level.cumulative.fixation.data.verb.offset.aggro <- cumulative.fixation.windows.grouped.data.aggro %>%
+  left_join(verb.offset.times.aggro, by=c("image_name", "verb_type"))
+```
+
+```{r}
+pre.verb.offset.first.looks.data.aggro <- trial.level.cumulative.fixation.data.verb.offset.aggro %>%
+  group_by(subject_id, image_name, verb_type) %>%
+  filter(t.window < relative.verb.offset) %>%
+  filter(t.window == max(t.window)) %>%
+  filter(object_class %in% c("target.object", "distractor"))
+```
+
+
+```{r}
+#model <- lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data.aggro)
+#summary(model)
+
+E1_model2.aggro <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data.aggro)
+summary(E1_model2.aggro)
+
+E1_model2_tab.aggro = broom.mixed::tidy(E1_model2.aggro) 
+E1_model2_obj.aggro = E1_model2_tab.aggro %>% filter(term == "object_classtarget.object")
+E1_model2_verb.aggro = E1_model2_tab.aggro %>% filter(term == "verb_typerestricting")
+E1_model2_obj_verb.aggro = E1_model2_tab.aggro %>% filter(term == "object_classtarget.object:verb_typerestricting")
+```
+
+<!--Relative to noun onset, when is the first (post-verb) fixation on the target?-->
+
+```{r}
+first.fixation.after.verb.onset.aggro <- critical.trials.filtered.aggro %>%
+  group_by(subject_id, image_name) %>%
+  filter(t >= verb_onset*1000) %>%
+  filter(object_type == "target.object") %>%
+  filter(is.fixating == TRUE) %>%
+  filter(t == min(t)) %>%
+  mutate(noun_relative.t = t - (postverbal_noun_onset*1000)) %>%
+  mutate(von_relative.t = t - (verb_onset*1000)) %>%
+  mutate(voff_relative.t = t - (verb_offset*1000)) %>%
+  mutate(det_relative.t = t -(postverbal_determiner_onset*1000))
+```
+
+```{r, echo=FALSE}
+# #summarize data for table
+# first.fix.avg.aggro <- first.fixation.after.verb.onset.aggro %>%
+#   group_by(verb_type) %>%
+#   summarise(Verb.on = round.comm(mean(von_relative.t)),
+#             Verb.off = round.comm(mean(voff_relative.t)),
+#             Det.on = round.comm(mean(det_relative.t)),
+#             Noun.on = round.comm(mean(noun_relative.t)))
+# 
+# #put data into a data frame
+# our_table1_aggro <- data.frame(
+#   Time = c("Verb onset", "Verb offset", "Determiner onset", "Noun onset"),
+#   Eat = c(first.fix.avg.aggro$Verb.on[2],
+#            first.fix.avg.aggro$Verb.off[2],
+#            first.fix.avg.aggro$Det.on[2],
+#            first.fix.avg.aggro$Noun.on[2]),
+#   Move = c(first.fix.avg.aggro$Verb.on[1],
+#            first.fix.avg.aggro$Verb.off[1],
+#            first.fix.avg.aggro$Det.on[1],
+#            first.fix.avg.aggro$Noun.on[1]),
+#   Difference = c(first.fix.avg.aggro$Verb.on[1]-first.fix.avg.aggro$Verb.on[2],
+#                   first.fix.avg.aggro$Verb.off[1]-first.fix.avg.aggro$Verb.off[2],
+#                   first.fix.avg.aggro$Det.on[1]-first.fix.avg.aggro$Det.on[2],
+#                   first.fix.avg.aggro$Noun.on[1]-first.fix.avg.aggro$Noun.on[2])
+# )
+# 
+# AK_table1 <- data.frame(
+#   Time = c("Verb onset", "Verb offset", "Determiner onset", "Noun onset"),
+#   Eat = c(611, 228, 37, -85),
+#   Move = c(838, 415, 234, 127),
+#   Difference = c(227, 187, 197, 212))
+# 
+# table1_aggro <- merge(our_table1_aggro, AK_table1, by = "Time")
+#   
+# apa_table(
+#   table1_aggro,
+#   caption = "Onset of first post-verb-onset saccade, relative to verb onset, verb offset, determiner onset, and noun onset, in ms.",
+#   font_size = "small",
+#    col_spanners = list(`Current Exp. 1` = c(2, 4), `Altmann $ Kamide Exp. 1` = c(5, 7))
+# )    
+# #can I add a third dimension i.e. have two headings to group our data vs. AK data?
+```
+
+```{r}
+first.fixation.after.verb.onset.analysis.data.aggro <- first.fixation.after.verb.onset.aggro %>%
+  ungroup() %>%
+  select(subject_id, image_name, verb_type, duration_of_verb, noun_relative.t) %>%
+  mutate(dur_verb_ms_c = scale(duration_of_verb, scale = FALSE)*1000) #mean-center verb duration
+```
+
+
+```{r}
+E1_model3.aggro <- lmer_alt(noun_relative.t ~ verb_type*dur_verb_ms_c + (verb_type || subject_id) + (verb_type || image_name), data=first.fixation.after.verb.onset.analysis.data.aggro)
+
+summary(E1_model3.aggro)
+
+E1_model3_tab.aggro = broom.mixed::tidy(E1_model3.aggro) 
+E1_model3_verb.aggro = E1_model3_tab.aggro %>% filter(term == "verb_typerestricting")
+
+```
+We tested the same three models under these more aggressive exclusion criteria. The first two models, comparing target and distractor fixations in the predictive window, produced very similar results; the critical interaction  was not statistically significant (Pre-noun-onset window: _b_ = `r E1_model1_obj_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.aggro %>% pull(p.value) %>% round(digits = 2)`; Pre-verb-offset window: _b_ = `r E1_model2_obj_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.aggro %>% pull(p.value) %>% round(digits = 2)`). However, the final model, which tested the effect of verb condition on saccades to the target, yielded a statistically significant result, unlike in the previous set of analyses (_b_ = `r E1_model3_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.aggro %>% pull(p.value) %>% round(digits = 2)`).
+
+```{r}
+first.fixation.after.verb.onset.subject.summary.aggro <- first.fixation.after.verb.onset.aggro %>%
+  group_by(subject_id, verb_type) %>%
+  summarize(m.t = mean(noun_relative.t), ct = n())
+
+first.fixation.after.verb.onset.summary.aggro <- first.fixation.after.verb.onset.subject.summary.aggro %>%
+  group_by(verb_type) %>%
+  summarize(m=mean(m.t), sd=sd(m.t), se=sd/sqrt(n()))
+```
+
+
+```{r}
+ggplot(first.fixation.after.verb.onset.summary.aggro, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
+  geom_col()+
+  geom_errorbar(width=0.2)
+```
+
+
+```{r Lab comparison}
+
+```
