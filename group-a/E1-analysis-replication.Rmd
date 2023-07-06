@@ -2,9 +2,8 @@
 title: "Group A"
 output: pdf_document
 ---
-### Replication
 <!-- # Setup -->
-```{r setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
+```{r E1-setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
 library(dplyr)
 library(tidyr)
 library(jsonlite)
@@ -89,7 +88,8 @@ discrep <- audio.data$delay_bw_onset_of_verb_and_onset_of_target_noun -
   (audio.data$duration_of_verb + 
      audio.data$duration_of_intervening_determiner + 
      audio.data$intonation_break_bw_verb_and_determiner)
-sum(discrep) #this should be zero, but it's 0.59! Check out the 3rd (audio/2r.mp3) and 22nd item (audio/11nr.mp3)
+#sum(discrep) 
+#this should be zero, but it's 0.59! TO-DO: Check out the 3rd (audio/2r.mp3) and 22nd item (audio/11nr.mp3)
 ```
 
 <!--Figure out word durations by condition (AK Table 2)-->
@@ -112,14 +112,9 @@ word.dur.avg <- word.dur.data %>%
 
 ```
 
-```{r Duration table, echo=FALSE}
+```{r E1_word_dur_table, echo=FALSE, eval=FALSE}
 #Set up a df of our data
 our_table2 <- data.frame(
-  Duration = c(
-    "Verb",
-    "Post-verbal break",
-    "Determiner",
-    "Verb + break + determiner"),
   Eat = c(
     word.dur.avg$Verb[2],
     word.dur.avg$Post_verbal_break[2],
@@ -136,7 +131,6 @@ our_table2 <- data.frame(
     word.dur.avg$Determiner[1] - word.dur.avg$Determiner[2],
     word.dur.avg$Total[1] - word.dur.avg$Total[2])
   )
-
 #Set up a df of our data
 AK_table2 <- data.frame(
   AK_Eat = c(
@@ -156,16 +150,25 @@ AK_table2 <- data.frame(
     13)
 )
 
-table2 <- cbind(our_table2,AK_table2)
+#E1_word_dur_table <- cbind(our_table2,AK_table2)
+E1_word_dur_table <- structure(list(
+  Segment = c(
+    "Verb",
+    "Post-verbal break",
+    "Determiner",
+    "Verb + break + determiner"),
+  our_table2, AK_table2),
+  class = "data.frame",
+  row.names = c(NA, 4L))
 
-knitr::kable(table2)
+#knitr::kable(table2)
   
-# apa_table(
-#   table2,
-#   caption = "Word durations for the restrictive ('eat') and non-restrictive ('move') sentences, in ms.",
-#   font_size = "small"
-# )    
-#can I add a third dimension i.e. have two headings to group our data vs. AK data?
+ # apa_table(
+ #  E1_word_dur_table,
+ #   caption = "Word durations for the restrictive ('eat') and non-restrictive ('move') sentences, in ms.",
+ #   font_size = "small"
+ # )    
+#TO-DO: can I add a third dimension i.e. have two headings to group our data vs. AK data?
 ```
 
 <!-- # Compute Gaze in ROI -->
@@ -211,7 +214,8 @@ prop.in.roi.by.subject <- critical.trials %>%
 ```
 <!-- Visualize proportion of samples in ROI by subject. -->
 
-```{r roi histogram}
+```{r roi histogram, eval=F}
+#printed?
 hist(prop.in.roi.by.subject$prop.of.samples.in.roi, breaks=20)
 ```
 
@@ -236,7 +240,8 @@ validation.accuracy.data <- all.data %>%
 
 <!-- What % of subjects needed to recalibrate because of poor initial calibration? -->
 
-```{r summarize something}
+```{r summarize calibration data, eval=F}
+#printed?
 validation.accuracy.data %>% 
   group_by(subject_id) %>%
   count() %>%
@@ -259,12 +264,13 @@ validation.percent <- validation.accuracy.data %>%
 save(validation.percent, file = "validation.percent.RData")
 ```
 
-```{r plot subjects by validation}
+```{r plot subjects by validation, eval=F}
+#printed?
 ggplot(validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
   geom_pointrange() +
   theme_classic()
 ```
-<!-- Set criteria for minimal exclusions (aggresive is later) -->
+<!-- Set criteria for minimal exclusions (aggressive is later) -->
 
 ```{r filter by validation}
 validation.threshold.min <- 10
@@ -297,7 +303,7 @@ __Minimal Exclusion__. The first set of analyses used minimal exclusion criteria
 <!-- We start by calculating cumulative fixation probability on the objects after the verb onset. (Any fixations prior to the verb onset are not relevant to the core research questions.) -->
 
 
-*TO-DO: Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset (I think I should be able to tell from looking at the code); whether there's a 200-ms scootch.
+*TO-DO: Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset (I think I should be able to tell from looking at the code) whether there's a 200-ms scootch.
 
 
 <!-- First, add a column for time relative to verb onset, bin this to 50ms chunks, and filter the data to the 2,000 ms window after verb onset. -->
@@ -371,12 +377,9 @@ cumulative.fixation.data.summary.min <- cumulative.fixation.windows.grouped.aver
   summarize(cumulative.fixation.m = mean(cumulative.fixation.p))
 ```
 
-__Cumulative Fixation Probabilities__. For each sentence target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure X. *I dunno how to make the figure show up when I knit the doc :-/
+__Cumulative Fixation Probabilities__. For each sentence target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:E1-spaghetti-fig).
 
-```{r make spag plot} 
-#|E1-spaghetti-fig, 
-#|fig.cap = "Cumulative probability of fixating distractor 
-#|,and target objects across conditions."
+```{r E1-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions. The vertical line marks the mean noun onset across trials and conditions."} 
 E1_spag_fig <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
   scale_fill_grey(start=1.0, end=0.0)+
   scale_shape_manual(values=c(22,21))+
@@ -386,10 +389,10 @@ E1_spag_fig <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cu
   theme(panel.grid=element_blank())+
   scale_y_continuous(limits=c(0,1))+
   scale_x_continuous(expand=c(0.01,0.01))+
-  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")
+  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")+
+  geom_vline(xintercept = mean(word.dur.avg$Total))
 
 E1_spag_fig
-#we should insert a vertical line for the average noun onset
 ```
 
  
@@ -431,7 +434,7 @@ save(pre.noun.first.looks.data.min, file = "pre.noun.first.looks.data.min.RData"
 
 ```{r run model 1}
 E1_model1.min <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.noun.first.looks.data.min)
-summary(E1_model1.min)
+#summary(E1_model1.min)
 
 E1_model1_tab.min = broom.mixed::tidy(E1_model1.min) 
 E1_model1_obj.min = E1_model1_tab.min %>% filter(term == "object_classtarget.object")
@@ -472,7 +475,7 @@ save(pre.verb.offset.first.looks.data.min, file = "pre.verb.offset.first.looks.d
 #summary(model)
 
 E1_model2.min <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data.min)
-summary(E1_model2.min)
+#summary(E1_model2.min)
 
 E1_model2_tab.min = broom.mixed::tidy(E1_model2.min) 
 E1_model2_obj.min = E1_model2_tab.min %>% filter(term == "object_classtarget.object")
@@ -496,7 +499,7 @@ first.fixation.after.verb.onset.min <- critical.trials.filtered.min %>%
   mutate(det_relative.t = t -(postverbal_determiner_onset*1000))
 ```
 
-```{r Table1, echo=FALSE}
+```{r E1-latency-table-min, echo=FALSE, eval=FALSE}
 #summarize data for table
 first.fix.avg.min <- first.fixation.after.verb.onset.min %>%
   group_by(verb_type) %>%
@@ -528,19 +531,19 @@ AK_table1 <- data.frame(
   Move = c(838, 415, 234, 127),
   Difference = c(227, 187, 197, 212))
 
-table1_min <- merge(our_table1_min, AK_table1, by = "Time")
+E1_latency_table_min <- merge(our_table1_min, AK_table1, by = "Time")
   
-# apa_table(
-#   table1_min,
-#   caption = "Onset of first post-verb-onset saccade, relative to verb onset, verb offset, determiner onset, and noun onset, in ms.",
-#   font_size = "small",
-#    col_spanners = list(`Current Exp. 1` = c(2, 4), `Altmann $ Kamide Exp. 1` = c(5, 7))
-# )    
+apa_table(
+  E1_latency_table_min,
+  caption = "Onset of first post-verb-onset saccade, relative to verb onset, verb offset, determiner onset, and noun onset, in ms.",
+  font_size = "small",
+   col_spanners = list(`Current Exp. 1` = c(2, 4), `Altmann $ Kamide Exp. 1` = c(5, 7))
+)
 
 
 #can I add a third dimension i.e. have two headings to group our data vs. AK data?
 
-knitr::kable(table1_min)
+#knitr::kable(table1_min)
 ```
 
 ```{r}
@@ -553,10 +556,10 @@ save(first.fixation.after.verb.onset.analysis.data.min, file = "first.fixation.a
 ```
 
 
-```{r}
+```{r run model 3}
 E1_model3.min <- lmer_alt(noun_relative.t ~ verb_type*dur_verb_ms_c + (verb_type || subject_id) + (verb_type || image_name), data=first.fixation.after.verb.onset.analysis.data.min)
 
-summary(E1_model3.min)
+#summary(E1_model3.min)
 
 E1_model3_tab.min = broom.mixed::tidy(E1_model3.min) 
 E1_model3_verb.min = E1_model3_tab.min %>% filter(term == "verb_typerestricting")
@@ -578,7 +581,7 @@ save(first.fixation.after.verb.onset.summary.min, file = "first.fixation.after.v
 
 
 ```{r}
-ggplot(first.fixation.after.verb.onset.summary.min, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
+E1_first_fix_plot <- ggplot(first.fixation.after.verb.onset.summary.min, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
   geom_col()+
   geom_errorbar(width=0.2)
 ```
@@ -722,8 +725,8 @@ E1_spag_fig <- ggplot(cumulative.fixation.data.summary.aggro, aes(x=t.window, y=
   scale_x_continuous(expand=c(0.01,0.01))+
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")
 
-E1_spag_fig
-#we should insert a vertical line for the average noun onset
+
+#TO-DO: insert a vertical line for the average noun onset
 ```
 
  
@@ -763,7 +766,7 @@ pre.noun.first.looks.data.aggro$object_class <- as.factor(pre.noun.first.looks.d
 
 ```{r}
 E1_model1.aggro <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.noun.first.looks.data.aggro)
-summary(E1_model1.aggro)
+#summary(E1_model1.aggro)
 
 E1_model1_tab.aggro = broom.mixed::tidy(E1_model1.aggro) 
 E1_model1_obj.aggro = E1_model1_tab.aggro %>% filter(term == "object_classtarget.object")
@@ -801,7 +804,7 @@ pre.verb.offset.first.looks.data.aggro <- trial.level.cumulative.fixation.data.v
 #summary(model)
 
 E1_model2.aggro <- afex::lmer_alt(cumulative.fixation.p ~ object_class * verb_type + (object_class * verb_type || image_name) + (object_class * verb_type || subject_id) , data=pre.verb.offset.first.looks.data.aggro)
-summary(E1_model2.aggro)
+#summary(E1_model2.aggro)
 
 E1_model2_tab.aggro = broom.mixed::tidy(E1_model2.aggro) 
 E1_model2_obj.aggro = E1_model2_tab.aggro %>% filter(term == "object_classtarget.object")
@@ -878,7 +881,7 @@ first.fixation.after.verb.onset.analysis.data.aggro <- first.fixation.after.verb
 ```{r}
 E1_model3.aggro <- lmer_alt(noun_relative.t ~ verb_type*dur_verb_ms_c + (verb_type || subject_id) + (verb_type || image_name), data=first.fixation.after.verb.onset.analysis.data.aggro)
 
-summary(E1_model3.aggro)
+#summary(E1_model3.aggro)
 
 E1_model3_tab.aggro = broom.mixed::tidy(E1_model3.aggro) 
 E1_model3_verb.aggro = E1_model3_tab.aggro %>% filter(term == "verb_typerestricting")
@@ -898,12 +901,8 @@ first.fixation.after.verb.onset.summary.aggro <- first.fixation.after.verb.onset
 
 
 ```{r}
-ggplot(first.fixation.after.verb.onset.summary.aggro, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
+E1_first_fix_plot_aggro <- ggplot(first.fixation.after.verb.onset.summary.aggro, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
   geom_col()+
   geom_errorbar(width=0.2)
 ```
 
-
-```{r Lab comparison}
-
-```

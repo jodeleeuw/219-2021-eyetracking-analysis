@@ -3,21 +3,21 @@
 #Correlates subjects' experimental effects with their calibration quality (from df called "validation.percent").
 ```
 <!-- # Setup -->
-```{r setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
-library(dplyr)
-library(tidyr)
-library(jsonlite)
-library(ggplot2)
-library(readr)
-library(afex)
-library(forcats)
-library(papaja)
-source("~/round.comm.R")
+```{r E1-c-setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
+# library(dplyr)
+# library(tidyr)
+# library(jsonlite)
+# library(ggplot2)
+# library(readr)
+# library(afex)
+# library(forcats)
+# library(papaja)
+# source("~/round.comm.R")
 
 knitr::opts_chunk$set(include = FALSE, echo = FALSE)
 #knitr::opts_knit$set(root.dir =)
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
 ```{r Load data}
@@ -118,6 +118,6 @@ m3_diff_cor_r <- m3_diff_cor$estimate
 m3_diff_cor_p <- m3_diff_cor$p.value
 ```
 
-Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality varied widely, ranging from `r min(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)`%) to `r max(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2`%. 
+Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality varied widely, ranging from `r min(validation.percent$M) %>% round(digits = 2)`% to `r max(validation.percent$M) %>% round(digits = 2)`%. 
 
 We tested whether a participant's calibration quality was correlated with their effect size. The quality of a participant's calibration was not significantly correlated with the participant's effect size. There were three effects of interest: the verb-by-object interaction in predicting fixation probabilities, both in the (1) pre-noun-onset and (2) pre-verb-offset windows (calculated as the difference in target-over-distractor preference between verb conditions), and (3) the effect of verb on the timing of the first target fixation (calculated as the difference in target latency between verb conditions). Across the three effects of interest, calibration quality was not significantly correlated (Effect 1: Pearson's _r_ = `r m1_diffdiff_cor_r`, _p_ = `r m1_diffdiff_cor_p`, Effect 2: Pearson's _r_ = `r m2_diffdiff_cor_r`, _p_ = `r m2_diffdiff_cor_p`, Effect 3: Pearson's _r_ = `r m3_diff_cor_r`, _p_ = `r m3_diff_cor_p`. However, when the two interaction effects are calculated as the target advantage in the restricting condition only (i.e. rather than a difference of differences), we see a significant correlation between target advantage and calibration quality in the wider pre-noun window (Pearson's _r_ = `r m1_diff_cor_r`, _p_ = `r m1_diff_cor_p`).

@@ -515,11 +515,9 @@ onset of the target noun.
 
 ### Replication
 
--   here we will describe the analyses that are as close as possible to
-    the original paper with a minimal validation cutoff
+```{r E1-analysis-replication, child = 'group-a/E1-analysis-replication.Rmd'}
 
--   same analysis but with stricter validation cutoff
-
+```
 ### Comparison to in-lab data
 
 -   here we will describe a direct comparison to data collected in the
@@ -527,8 +525,9 @@ onset of the target noun.
 
 ### Calibration
 
--   here we will describe the analyses that correlate calibration
-    quality with effect size at the individual level
+```{r E1-analysis-calibration, child = 'group-a/E1-analysis-calibration.Rmd'}
+
+```
 
 ## Discussion
 
