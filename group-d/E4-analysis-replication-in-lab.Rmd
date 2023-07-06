@@ -8,7 +8,8 @@ output: pdf_document
 ```{r , include=FALSE}
 library(papaja)
 library(jsonlite)
-library(dplyr)
+library(purrr)
+#library(dplyr)
 library(readr)
 library(tidyr)
 library(ggplot2)
@@ -28,21 +29,37 @@ in.box <- function(x, y, left, right, top, bottom, padding){
 ```
 
 ```{r E4-in-lab-load-data}
-# data.files <- list.files('data/run-2', full.names = TRUE)
+user.data.files <- list.files('data/in-lab-merced', pattern = "pushkin_users_*",full.names = TRUE)
+
+all.user.data <- map_dfr(user.data.files, readRDS) 
+
+data.files <- list.files('data/in-lab-merced', pattern = "lex_*",full.names = TRUE)
 # data.tables <- lapply(data.files, function(file){
 #   data.table <- fromJSON(file)
 #   return(data.table)
 # })
-data.tables = readRDS("data/in-lab-merced/verb_bias_ET_data_10_13_2022.rds")
-all.data <- bind_rows(data.tables)
+
+#data.tables = readRDS("data/in-lab-merced/lex_stimulusResponses_2023-05-01.rds")
+all.data <- map_dfr(data.files, readRDS) %>% 
+  bind_rows(readRDS("data/in-lab-merced/verb_bias_ET_data_10_13_2022.rds")) %>% 
+  arrange(user_id, trial_index, time_elapsed) %>% 
+  group_by(user_id, trial_index) %>% 
+  mutate(subjnum = 1:n(),
+         unique_id = str_c(subjnum,"__", user_id)) %>% 
+  ungroup() %>% 
+  arrange(unique_id, trial_index)
+
+
 ```
+
+*TO DO:* cross ref with angela's list of participant times/dates
 
 ### Replication
 
 ```{r E4-filter-data-for-replication-analysis}
 task.data <- all.data %>%
   dplyr::filter(compatibility != 'NA', compatibility != 'filler') %>%
-  dplyr::select(user_id, trial_index, rt, images, webgazer_data, mouse_events, compatibility, audio, target_instrument, target_animal, webgazer_targets)
+  dplyr::select(unique_id, trial_index, rt, images, webgazer_data, mouse_events, compatibility, audio, target_instrument, target_animal, webgazer_targets)
 
 # Add a column that uniquely identifies the combination of images and audio shown on the screen
 trialID.data <- task.data %>%
@@ -78,8 +95,8 @@ The location of initial mouse movements was used to assess whether the final int
 #First, create a data set with each trial, adding column for which object the mouse moves over first.
 # WTF IS HAPPENING with TRIAL ID?? 
 first.move <- mousetracking.data %>%
-  select(user_id, trialID, object, type, compatibility, target_instrument, target_animal, images) %>%
-  group_by(user_id, trialID) %>%
+  select(unique_id, trialID, object, type, compatibility, target_instrument, target_animal, images, audio) %>%
+  group_by(unique_id, trialID) %>%
   filter(type=="enter") %>%
   slice(1) %>%
   rowwise() %>%
@@ -99,10 +116,12 @@ first.move <- mousetracking.data %>%
 ```{r E4-summarizing-first-mouse-moves-for-plotting}
 # Summarize the data by subject, calculating proportion of trials the the first move was to the animal, instrument, or other.
 first.move.subject.summary <- first.move %>%
-  group_by(user_id, compatibility) %>%
+  group_by(unique_id, compatibility) %>%
   summarize(prop.animal = mean(first.move.type == 'animal'),
             prop.instrument = mean(first.move.type == 'instrument'),
-            prop.other = mean(first.move.type == 'other')) %>%
+            prop.other = mean(first.move.type == 'other'),
+            n_trials= n()) %>%
+  filter(n_trials > 9) %>% ## CAHNGE WHEN THERE'S A BETTER WAY TO CROSSREF
   pivot_longer(c('prop.animal', 'prop.instrument', 'prop.other'), names_to="target_type", values_to="proportion")
 
 # Summarize the condition-level data for a barplot.
@@ -128,10 +147,11 @@ ggplot(first.move.summary, aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+S
 #write_csv(first.move, "output/E4_mouse_data.csv")
 ```
 
-```{r E4-mouse-moves-analysis}
+```{r E4-mouse-moves-analysis-lab}
 contrasts(first.move$compatibility) <- cbind(c(1/3, -2/3, 1/3), c(-1/2, 0, 1/2))
 
-E4_mouse_moves_model <- glmer(is.mouse.instrument ~ compatibility + (1 + compatibility | subject) + (1 | trialID), data=first.move, family="binomial",
+E4_mouse_moves_model <- glmer(is.mouse.instrument ~ compatibility + (1 + compatibility | unique_id) + (1 | trialID), 
+                              data=first.move, family="binomial",
                               glmerControl(optimizer = "bobyqa"))
 
 ```
@@ -213,11 +233,28 @@ eyetracking.data.with.time.windows <- eyetracking.data.with.time.windows %>%
   mutate(t.window = floor(time.from.verb/50)*50)
 ```
 
+```{r E4-summarizing-gaze-data-for-plotting, eval = FALSE, warning = FALSE}
+#Summarize data for plotting
+eyetracking.data.with.time.windows %>%
+  filter(between(t.window , -200, 4000)) %>%
+  filter(unique_id %in% unique(first.move.subject.summary$unique_id)) %>% #CHANGE WHEN CROSSREF
+  group_by(unique_id, compatibility, t.window) %>%
+  summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
+  pivot_longer(c('p.animal', 'p.instrument'), names_to="object_type", values_to="prop_fixations") %>%
+  ggplot()+
+  stat_summary(aes(x = t.window, y=prop_fixations,  color = object_type), fun="mean")+
+  facet_wrap(~unique_id)
+  #mutate(prop_fixations = if_else(is.na(prop_fixations), 0, prop_fixations)) %>%
+ # group_by(compatibility, t.window, object_type) %>%
+ # summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
+```
+
 ```{r E4-summarizing-gaze-data-for-plotting}
 #Summarize data for plotting
 eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
   filter(between(t.window , -200, 4000)) %>%
-  group_by(user_id, compatibility, t.window) %>%
+  filter(unique_id %in% unique(first.move.subject.summary$unique_id)) %>% #CHANGE WHEN CROSSREF
+  group_by(unique_id, compatibility, t.window) %>%
   summarize(p.animal = mean(in.roi.animal), p.instrument = mean(in.roi.instrument)) %>%
   pivot_longer(c('p.animal', 'p.instrument'), names_to="object_type", values_to="prop_fixations") %>%
   #mutate(prop_fixations = if_else(is.na(prop_fixations), 0, prop_fixations)) %>%
@@ -245,14 +282,14 @@ fig2<-ggplot(eyetracking.figure.2.data %>%
 fig2
 ```
 ```{r, eval=FALSE}
-saveRDS(fig2, "output/ETfig.rds")
-ggsave("output/ETfig.png", plot = fig2, height = 4, width = 6)
+saveRDS(fig2, "output/ETfig-in-lab.rds")
+ggsave("output/ETfig-in-lab.png", plot = fig2, height = 4, width = 6)
 ```
 
 ```{r E4-compute-proportion-gaze-data-by-trial}
 #Summarize fixations on target and instrument
 eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
-  group_by(subject, trialID, sound, compatibility, time.window) %>%
+  group_by(unique_id, trialID, sound, compatibility, time.window) %>%
   summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
             prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
   mutate(compatibility = factor(compatibility))
@@ -271,7 +308,7 @@ contrasts(eyetracking.window.summary.by.trial$compatibility) <- cbind(c(-2/3, 1/
 ```{r E4-ET-analysis-verb-to-animal-window}
 data.time.window.1 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-verb-onset-pre-animal-onset")
 
-model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.1,
+model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1  | unique_id) + (1 | trialID), data=data.time.window.1,
                             control = lmerControl(optimizer = "bobyqa",
                                                   optCtrl = list(maxfun = 2e6)))
 
@@ -279,13 +316,13 @@ model.time.window.1 <- lmer(prop.fixations.animal ~ compatibility + (1  | subjec
 ```{r E4-ET-analysis-animal-to-inst-window}
 data.time.window.2 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-animal-onset-pre-instrument-onset")
 
-model.time.window.2 <- lmer(prop.fixations.animal ~ compatibility + (1  | subject) + (1 | trialID), data=data.time.window.2)
+model.time.window.2 <- lmer(prop.fixations.animal ~ compatibility + (1  | unique_id) + (1 | trialID), data=data.time.window.2)
 ```
 
 ```{r E4-ET-analysis-post-inst-window}
 data.time.window.3 <- eyetracking.window.summary.by.trial %>% filter(time.window == "post-instrument-onset")
 
-model.time.window.3 <- lmer(prop.fixations.animal ~ compatibility + (1 | subject) + (1 | trialID), data=data.time.window.3)
+model.time.window.3 <- lmer(prop.fixations.animal ~ compatibility + (1 | unique_id) + (1 | trialID), data=data.time.window.3)
 ```
 ```{r E4-ET-analysis-tables}
 E4_ET_model1_tab = broom.mixed::tidy(model.time.window.1) 
