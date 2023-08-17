@@ -1,0 +1,137 @@
+---
+title: "E1-analysis-comparison-to-JMW23"
+author: "Ariel James"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(papaja)
+library(jsonlite)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(lmerTest)
+library(afex)
+library(forcats)
+library(broom.mixed)
+```
+
+```{r import JMW23}
+JMW1_info <- read_csv("group-a/JMW23-data/fyptrialinfo.csv")
+JMW1_data <- read.delim("group-a/JMW23-data/FYPTimecourse_by_subj.txt", header = FALSE, sep = ",")
+#Add meaningful header row
+tc_header = c("TARGET","AGENT", "COMP1", "COMP2", "COMP3", 
+              "NON1", "NON2", "NON3", "NON4", "NON5",
+              "ORDER", "SUBJ", "BIN", "COND", "AID") #AID is a unique item number
+
+colnames(JMW1_data) <- tc_header
+
+#Recode condition
+JMW1_data$COND <- as.factor(recode(JMW1_data$COND, "0" = "filler", 
+                                "1" = "pred", "2" = "neut"))
+JMW1_info$Condition <- as.factor(recode(JMW1_info$Condition, "0" = "filler", 
+                                "1" = "pred", "2" = "neut"))
+
+#Remove fillers
+JMW1_data_crit <- JMW1_data %>%
+  filter(COND != "filler")
+JMW1_data_crit <- droplevels(JMW1_data_crit)
+
+#Pull out useful item info
+JMW1_info$Non.relative <- JMW1_info$Non-JMW1_info$Von
+
+
+```
+
+```{r reshape data for comparison}
+JMW.long <- JMW1_data_crit %>%
+  select(!NON2:ORDER) %>%
+  group_by(SUBJ, AID, BIN) %>%
+  gather(key = "obj_type", value = "duration", TARGET, AGENT, COMP1, COMP2, COMP3, NON1) %>%
+  #create "obj_class" col: name everything that isn't a targeT or agenT "DISTRACTOR" 
+  mutate(obj_class = ifelse(str_ends(obj_type, "T"), obj_type, "DISTRACTOR")) %>%
+  #create binary "is.fixating" variable
+  mutate(is.fixating = ifelse(duration > 0, TRUE, FALSE)) %>%
+  filter(BIN >= 0)
+```
+
+```{r compute cumulative fix}
+#Write function (i.e. copy/paste function Josh deLeeuw wrote)
+cumulative.fixation.calculation <- function(df){
+  time <- seq(0,1950,50)
+  fixations <- logical(length(time))
+  hit.flag <- FALSE
+  for(i in 1:length(fixations)){
+    if(hit.flag){
+      fixations[i] <- TRUE
+    } else {
+      val <- df %>% filter(BIN <= time[i]) %>% pull(is.fixating) %>% any()
+      if(val == TRUE) {
+        hit.flag <- TRUE
+      }
+      fixations[i] <- val
+    }
+  }
+  out <- tibble(t.window = time, has.fixated = fixations)
+  return(out)
+}
+
+#Now use it to summarize timecourse data
+if(file.exists("group-a/JMW23-data/generated/JMW_cumulative.csv")){
+  JMW_cumu<- read_csv("group-a/JMW23-data/generated/JMW_cumulative.csv")
+} else {
+
+  JMW_cumu <-  JMW.long%>%
+    group_by(SUBJ, COND, AID, obj_type, obj_class) %>%
+    summarize(cumulative.fixation.calculation(cur_data()))
+  
+  write_csv(JMW_cumu, file="group-a/JMW23-data/generated/JMW_cumulative.csv")
+}
+```
+
+<!-- Then group by object class to calculate fixation probability for each kind of object, normalizing by the number of objects of that type. -->
+
+```{r group cumu fix by object}
+JMW_cumu.windows.grouped <- JMW_cumu %>%
+  group_by(SUBJ, COND, AID, obj_class, t.window) %>%
+  summarize(cumu.p = mean(has.fixated)) 
+```
+
+<!-- Then collapse over trials to get a cumulative probability for the whole window for each subject -->
+
+```{r collapse cumu fix over trials}
+JMW_cumu.windows.grouped.average <- JMW_cumu.windows.grouped %>%
+  group_by(SUBJ, COND, obj_class, t.window) %>%
+  summarize(cumu.p.avg = mean(cumu.p))
+```
+
+<!-- Collapse across subjects to generate the equivalent of the figure from Altmann & Kamide. -->
+
+```{r create summary data for spag plot}
+JMW_cumu.summary <- JMW_cumu.windows.grouped.average %>%
+  filter(obj_class %in% c('TARGET', 'DISTRACTOR')) %>%
+  group_by(t.window, COND, obj_class) %>%
+  summarize(cumulative.fixation.m = mean(cumu.p.avg))
+```
+```{r JMW-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
+
+#AJ: this is where you left off. Everything above should work :)
+JMW_spag_fig <- ggplot(JMW_cumu.summary, aes(x=t.window, y=cumulative.fixation.m, fill=obj_class, shape=COND, group=interaction(COND, obj_class)))+
+  scale_fill_manual(values=c("white", "black"))+
+  scale_shape_manual(values=c(22,21))+
+  geom_line()+
+  geom_point(size=2)+
+  theme_bw()+
+  theme(panel.grid=element_blank())+
+  scale_y_continuous(limits=c(0,1))+
+  scale_x_continuous(expand=c(0.01,0.01))+
+  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type") +
+  geom_vline(xintercept = mean(JMW1_info$Non.relative))
+
+JMW_spag_fig
+
+#The "Object type" part of the key doesn't actually show which color is which
+```

@@ -362,7 +362,7 @@ cumulative.fixation.windows.grouped.data.min <- cumulative.fixation.windows.data
 
 <!-- Then collapse over trials to get a cumulative probability for the whole window for each subject -->
 
-```{r collapse sumu fix over trials}
+```{r collapse cumu fix over trials}
 cumulative.fixation.windows.grouped.average.data.min <- cumulative.fixation.windows.grouped.data.min %>%
   group_by(subject_id, verb_type, object_class, t.window) %>%
   summarize(cumulative.fixation.p = mean(cumulative.fixation.p))
@@ -377,22 +377,26 @@ cumulative.fixation.data.summary.min <- cumulative.fixation.windows.grouped.aver
   summarize(cumulative.fixation.m = mean(cumulative.fixation.p))
 ```
 
-__Cumulative Fixation Probabilities__. For each sentence target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:E1-spaghetti-fig).
+__Cumulative Fixation Probabilities__. For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:E1-spaghetti-fig).
 
-```{r E1-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions. The vertical line marks the mean noun onset across trials and conditions."} 
-E1_spag_fig <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
-  scale_fill_grey(start=1.0, end=0.0)+
-  scale_shape_manual(values=c(22,21))+
+```{r E1-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
+E1_spag_fig <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill= object_class, shape=verb_type))+
   geom_line()+
-  geom_point(size=2)+
+  geom_point(size=2, aes(fill=object_class, shape=verb_type))+
+  #scale_fill_grey(start=1.0, end=0.0)+
+  scale_fill_manual(name = "Object Type",values=c(distractor = "white", target.object = "black"))+
+  scale_shape_manual(name = "Verb Type", values=c(22,21))+
+  labs(x="Time from Verb Onset (ms)", y="Probability")+#, shape="Verb Type", fill="Object Type")+
+  #geom_line(aes(group=interaction(verb_type, object_class)))+
   theme_bw()+
   theme(panel.grid=element_blank())+
   scale_y_continuous(limits=c(0,1))+
   scale_x_continuous(expand=c(0.01,0.01))+
-  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")+
   geom_vline(xintercept = mean(word.dur.avg$Total))
 
 E1_spag_fig
+
+#The "Object type" part of the key doesn't actually show which color is which
 ```
 
  
@@ -441,7 +445,7 @@ E1_model1_obj.min = E1_model1_tab.min %>% filter(term == "object_classtarget.obj
 E1_model1_verb.min = E1_model1_tab.min %>% filter(term == "verb_typerestricting")
 E1_model1_obj_verb.min = E1_model1_tab.min %>% filter(term == "object_classtarget.object:verb_typerestricting")
 ```
-__Pre-noun fixations.__ In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation proportion in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs. non-restricting = 0), object type (target = 1 vs. distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction [bar graph?] (_b_ = `r E1_model1_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`). [should i use a table? should i change to effects coding like other Exps? i think 0/1 is intuitive in this case]
+__Pre-noun fixations.__ In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation probability in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs. non-restricting = 0), object type (target = 1 vs. distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction [bar graph?] (_b_ = `r E1_model1_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`). 
 
 
 <!--Verb offset times-->
@@ -565,7 +569,7 @@ E1_model3_tab.min = broom.mixed::tidy(E1_model3.min)
 E1_model3_verb.min = E1_model3_tab.min %>% filter(term == "verb_typerestricting")
 
 ```
-__First target fixations after verb.__ Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [On average, participants looked to the target X ms after (AK's Table 1)..., I'll also want to say the lengths of the verbs. AK's Table 2] We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+__First target fixations after verb.__ Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [TO-DO: On average, participants looked to the target X ms after (AK's Table 1)..., I'll also want to say the lengths of the verbs. AK's Table 2] We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
 
 ```{r}
 first.fixation.after.verb.onset.subject.summary.min <- first.fixation.after.verb.onset.min %>%
@@ -714,7 +718,7 @@ cumulative.fixation.data.summary.aggro <- cumulative.fixation.windows.grouped.av
 #|E1-spaghetti-fig, 
 #|fig.cap = "Cumulative probability of fixating distractor 
 #|,and target objects across conditions."
-E1_spag_fig <- ggplot(cumulative.fixation.data.summary.aggro, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
+E1_spag_fig_aggro <- ggplot(cumulative.fixation.data.summary.aggro, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
   scale_fill_grey(start=1.0, end=0.0)+
   scale_shape_manual(values=c(22,21))+
   geom_line()+
