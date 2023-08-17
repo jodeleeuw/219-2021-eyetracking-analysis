@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  6 JUL 2023 17:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  7 JUL 2023 12:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -325,9 +325,9 @@ Language: nil 2022/08/29 3.79 Nil language
 \everypar=\toks27
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
 Package babel Info: Importing data for english
-(babel)             from babel-en.ini. Reported on input line 90.
+(babel)             from babel-en.ini. Reported on input line 93.
 Package babel Info: Hyphen rules for 'english' set to \l@english
-(babel)             (\language0). Reported on input line 90.
+(babel)             (\language0). Reported on input line 93.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
 Package: upgreek 2003/02/12 v2.0 (WaS)
 Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
@@ -550,24 +550,24 @@ Package csquotes Info: Redefining alias 'default' -> 'english'.
 (./manuscript.aux)
 \openout1 = `manuscript.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 200.
-LaTeX Font Info:    ... okay on input line 200.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 203.
+LaTeX Font Info:    ... okay on input line 203.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -618,178 +618,178 @@ Package caption Info: longtable package is loaded.
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 200.
+Package hyperref Info: Link coloring OFF on input line 203.
 (./manuscript.out) (./manuscript.out)
 \@outlinefile=\write5
 \openout5 = `manuscript.out'.
 
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 202.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 202.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 202.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 202.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 202.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 202.
+(Font)              <12> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 202.
+(Font)              <8> on input line 205.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 202.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 202.
+(Font)              <6> on input line 205.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 202.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 205.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{/Users/ajames2/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2] [3]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 207.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 210.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [4]
 
-LaTeX Warning: Reference `(' on page 5 undefined on input line 227.
+LaTeX Warning: Reference `(' on page 5 undefined on input line 230.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 238.
+(Font)              <10.95> on input line 241.
 
-Overfull \hbox (60.6078pt too wide) in paragraph at lines 233--253
+Overfull \hbox (60.6078pt too wide) in paragraph at lines 236--256
  [] 
  []
 
 [5]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 281.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 284.
 (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [6] [7]
 
-LaTeX Warning: Reference `fig:E1-calibration-figure' on page 8 undefined on input line 369.
+LaTeX Warning: Reference `fig:E1-calibration-figure' on page 8 undefined on input line 372.
 
 [8]
 <manuscript_files/figure-latex/unnamed-chunk-3-1.pdf, id=308, 433.62pt x 289.08pt>
 File: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 382.
+Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 385.
 (pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
 [9 <./manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>]
 <group-a/E1-example-trial.jpeg, id=321, 2007.5pt x 1606.0pt>
 File: group-a/E1-example-trial.jpeg Graphic file (type jpg)
 <use group-a/E1-example-trial.jpeg>
-Package pdftex.def Info: group-a/E1-example-trial.jpeg  used on input line 409.
+Package pdftex.def Info: group-a/E1-example-trial.jpeg  used on input line 412.
 (pdftex.def)             Requested size: 469.74086pt x 375.7927pt.
 [10 <./group-a/E1-example-trial.jpeg>]
 <manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf, id=327, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf  used on input line 442.
+Package pdftex.def Info: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf  used on input line 445.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [12 <./manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>] [13] [14]
 
-LaTeX Warning: Reference `fig:E2-calibration-figure' on page 15 undefined on input line 507.
+LaTeX Warning: Reference `fig:E2-calibration-figure' on page 15 undefined on input line 510.
 
 
-LaTeX Warning: Reference `fig:E2-example-trial' on page 15 undefined on input line 512.
+LaTeX Warning: Reference `fig:E2-example-trial' on page 15 undefined on input line 515.
 
 [15]
 
-LaTeX Warning: Reference `fig:E2-gaze-fig-both-conds' on page 16 undefined on input line 558.
+LaTeX Warning: Reference `fig:E2-gaze-fig-both-conds' on page 16 undefined on input line 561.
 
 [16]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 560.
+(Font)              <10> on input line 563.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 560.
+(Font)              <7> on input line 563.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 560.
+(Font)              <5> on input line 563.
 
-LaTeX Warning: Reference `fig:E2-rt-acc-fig' on page 17 undefined on input line 562.
+LaTeX Warning: Reference `fig:E2-rt-acc-fig' on page 17 undefined on input line 565.
 
 [17]
 Underfull \vbox (badness 5490) has occurred while \output is active []
 
 [18]
 
-LaTeX Warning: Reference `fig:E3-calibration-figure' on page 19 undefined on input line 634.
+LaTeX Warning: Reference `fig:E3-calibration-figure' on page 19 undefined on input line 637.
 
 [19] [20]
 
-LaTeX Warning: Reference `fig:E3-design-schematic' on page 21 undefined on input line 674.
+LaTeX Warning: Reference `fig:E3-design-schematic' on page 21 undefined on input line 677.
 
 [21] [22] [23]
 
-LaTeX Warning: Reference `fig:E4-calibration-figure' on page 24 undefined on input line 777.
+LaTeX Warning: Reference `fig:E4-calibration-figure' on page 24 undefined on input line 780.
 
 
-LaTeX Warning: Reference `fig:E4-example-trial' on page 24 undefined on input line 789.
+LaTeX Warning: Reference `fig:E4-example-trial' on page 24 undefined on input line 792.
 
 [24]
 
-LaTeX Warning: Reference `fig:E4-mouse-moves-fig' on page 25 undefined on input line 827.
+LaTeX Warning: Reference `fig:E4-mouse-moves-fig' on page 25 undefined on input line 830.
 
 [25]
 
-LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig' on page 26 undefined on input line 831.
+LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig' on page 26 undefined on input line 834.
 
 [26]
 
-LaTeX Warning: Reference `fig:E4-mouse-moves-fig-web-and-orig' on page 27 undefined on input line 839.
+LaTeX Warning: Reference `fig:E4-mouse-moves-fig-web-and-orig' on page 27 undefined on input line 842.
 
 
-LaTeX Warning: Reference `fig:E4-proportion-fix-by-window-both' on page 27 undefined on input line 842.
+LaTeX Warning: Reference `fig:E4-proportion-fix-by-window-both' on page 27 undefined on input line 845.
 
 [27]
 
-LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 28 undefined on input line 863.
+LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 28 undefined on input line 866.
 
 
-LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 28 undefined on input line 863.
+LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 28 undefined on input line 866.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [28]
 
-LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig-quadrants' on page 29 undefined on input line 865.
+LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig-quadrants' on page 29 undefined on input line 868.
 
 [29]
 
-LaTeX Warning: Reference `fig:E5-calibration-figure' on page 30 undefined on input line 912.
+LaTeX Warning: Reference `fig:E5-calibration-figure' on page 30 undefined on input line 915.
 
 
-LaTeX Warning: Reference `fig:E5-example-trial' on page 30 undefined on input line 915.
+LaTeX Warning: Reference `fig:E5-example-trial' on page 30 undefined on input line 918.
 
 [30]
 
-LaTeX Warning: Reference `fig:Shimojo' on page 31 undefined on input line 964.
+LaTeX Warning: Reference `fig:Shimojo' on page 31 undefined on input line 967.
 
 [31]
 
-LaTeX Warning: Reference `fig:E5cal' on page 32 undefined on input line 973.
+LaTeX Warning: Reference `fig:E5cal' on page 32 undefined on input line 976.
 
 
-LaTeX Warning: Reference `fig:E5calcorr' on page 32 undefined on input line 976.
+LaTeX Warning: Reference `fig:E5calcorr' on page 32 undefined on input line 979.
 
 
-LaTeX Warning: Reference `fig:groupEMainrev' on page 32 undefined on input line 980.
+LaTeX Warning: Reference `fig:groupEMainrev' on page 32 undefined on input line 983.
 
 [32] [33] [34]
 Underfull \vbox (badness 1028) has occurred while \output is active []
