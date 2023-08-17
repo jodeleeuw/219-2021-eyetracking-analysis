@@ -203,17 +203,19 @@ ADD LATER
 \begin{document}
 \maketitle
 
-Intro stuff:
+The use of eye-tracking to study cognition took off when Alfred Yarbus used suction cups to affix a mirror system to the sclera of the eye in order to monitor eye position during the perception of images (Yarbus, 1967). In one study, participants viewed a painting depicting multiple people in a complex interaction inside of a 19th century Russian home. Yarbus showed, among other things, that the scan paths and locations of fixations were largely dependent on the instructions given to participants (e.g., View the picture freely vs.~Remember the position of the people and objects in the room). In other words, the cognitive processing that the individual is engaged in drives the visuo-motor system. Since these findings, eye-tracking has become a central method in cognitive science research Rayner (1998). For example, gaze location during natural scene perception is used to test theories of visual attention (e.g., Henderson \& Hayes, 2017). And eye-movements during auditory language comprehension, using the ``visual world paradigm,'' demonstrated the context-dependent and incremental nature of language processing (e.g., Tanenhaus, Spivey-Knowlton, Eberhard, \& Sedivy, 1995).
 
-\begin{itemize}
-\item
-  Eye-tracking as a key method in cognitive science research
-\item
-  Online data collection is more and more popular \& let's us ask new
-  questions, test more diverse populations
-\item
-  But, concerns over quality + little known about eye-tracking online
-\end{itemize}
+An important limitation of the eye-tracking methodology is that it has typically required costly equipment (eye-trackers can range in price from a few thousand dollars to tens of thousands of dollars), particular laboratory conditions (a quiet room with consistent indoor lighting conditions), and a substantial time investment (e.g., bringing participants into a laboratory one at a time). This limits who can conduct eye-tracking research -- not all researchers have the necessary resources -- and who can participate in eye-tracking research. Most eye-tracking study participants are from western, educated, industrialized, rich, and democratic {[}WEIRD; Henrich, Heine, and Norenzayan (2010){]} convenience samples (but see Ryskin, Salinas, Piantadosi, \& Gibson, 2023), which diminishes the generalizability of the findings and the scope of conclusions that can be drawn about human cognition.
+
+Advances in software for online data collection (de Leeuw, 2015; Papoutsaki et al., 2016) have the potential to address this shortcoming by expanding access to eye-tracking technology for researchers and making it feasible to broaden and diversify the participant samples. In particular, Webgazer.js (Papoutsaki et al., 2016) is a webcam-based Javascript plug-in that works in the browser. It can be integrated with any Javascript web interface. As a result, it can be used in conjunction with many existing platforms for online behavioral data collection that are familiar to cognitive scientists, such as jsPsych (de Leeuw, 2015), Gorilla (Anwyl-Irvine, Massonnié, Flitton, Kirkham, \& Evershed, 2020), or lab.js (Henninger, Shevchenko, Mertens, Kieslich, \& Hilbig, 2021). However, the added convenience comes at the cost of spatial and temporal resolution. The extent of this loss of precision and its impact on the kinds of research questions that webcam eye-tracking is appropriate for are not yet known.
+
+A few previous studies have used webcam eye-tracking in the context of behavioral/cognitive science experiments and reported on the quality of the data. In what follows, we provide a brief review of the published work that we are aware of (note that we focus on studies with adult participants as the considerations for eye-tracking of children are substantially different, but see e.g., Bánki, Eccher, Falschlehner, Hoehl, \& Markova, 2022).
+
+Semmelmann and Weigelt (2018) compared eye-tracking results between in-lab (n=29) and online (n=28) studies in three tasks: fixation, pursuit, and free viewing. They used the Webgazer.js library (Papoutsaki et al., 2016) and programmed tasks in HTML/Javascript directly. The first two tasks tested measurement of basic gaze properties. In the fixation task, participants were asked to fixate a dot, and in the pursuit task, they were asked to follow a dot with their eyes. In the free viewing task, the eye movements may have been more semantically driven: participants were shown a picture of a human face and asked to look wherever they wanted to on the image. Webgazer was successful in accurately detecting fixation locations and saccades in all three tasks, though online data (collected through a crowdsourcing platform) were slightly more variable and delayed. The free viewing task replicated previously observed statistical patterns (e.g., more fixations on eyes than mouths).
+
+Similarly, Yang and Krajbich (2021) used the Webgazer.js library (Papoutsaki et al., 2016) combined with the jsPsych library for conducting behavioral experiments in a web browser (de Leeuw, 2015), to replicate a well-established link between value-based decision-making and eye gaze Krajbich, Armel, \& Rangel (2010). Online participants (n=38) first saw a series of images of 70 snack foods and rated how much they liked each one. During the primary task, on each of 100 trials, two of the snack food images were displayed on the left and right sides of the display and participants chose the one that they preferred while their gaze was monitored. As in previous work, participants were biased to choose the option they had spent more time looking at. The authors also implemented a code modification to address temporal delays in WebGazer.
+
+Finally, Slim and Hartsuiker (2022) used the Webgazer.js library via the PCIbex online experiment platform (Zehr \& Schwarz, 2018) to replicate a visual world paradigm study in which participants (n=90) listened to sentences (e.g., Mary reads a letter) while viewing four pictures displayed across the four quadrants of the screen (e.g., a letter, a backpack, a car and a wheelchair) (Dijkgraaf, Hartsuiker, \& Duyck, 2017). When the verb in the sentence was \emph{constraining} (e.g., read) with respect to the display (only the letter would be an appropriate continuation), listeners made more fixations to the target image (letter) than when the verb was \emph{neutral} (e.g., Mary steals a letter), as in previous work. However, they observed a substantial delay of \textasciitilde200ms in the onset of the effect relative to the in-lab study with an infrared eyetracker and a reduction in effect size (despite a threefold increase in sample size relative to the original). The authors noted that delay was particularly problematic given that the purpose of the original study was to capture aspects of predictive or anticipatory processing: in the original study, but not in the web replication, the difference between \emph{constraining} and \emph{neutral} conditions emerged before the onset of the final noun (e.g., letter).
 
 \hypertarget{present-work}{%
 \section{Present work}\label{present-work}}
@@ -329,14 +331,14 @@ the study.
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R (Version 4.2.1; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.2.1; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.4; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.10; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.2; Wickham, 2021a), \emph{ggplot2} (Version 3.4.0; Wickham, 2016), \emph{jsonlite} (Version 1.8.4; Ooms, 2014), \emph{lme4} (Version 1.1.31; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.5.3; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2020), \emph{readr} (Version 2.1.3; Wickham \& Hester, 2020), \emph{shiny} (Version 1.7.4; Chang et al., 2021), \emph{stringr} (Version 1.5.0; Wickham, 2019), \emph{tidyr} (Version 1.2.1; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R (Version 4.2.1; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.1.1; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.4; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.10; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.2; Wickham, 2021a), \emph{ggplot2} (Version 3.4.0; Wickham, 2016), \emph{jsonlite} (Version 1.8.4; Ooms, 2014), \emph{lme4} (Version 1.1.31; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.5.1; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2020), \emph{readr} (Version 2.1.3; Wickham \& Hester, 2020), \emph{shiny} (Version 1.7.3; Chang et al., 2021), \emph{stringr} (Version 1.5.0; Wickham, 2019), \emph{tidyr} (Version 1.3.0; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
 
 The first study was a replication attempt of
 Altmann and Kamide (1999). Altmann and Kamide used the
-visual world eye-tracking paradigm (Tanenhaus, Spivey-Knowlton, Eberhard, \& Sedivy, 1995) to show that
+visual world eye-tracking paradigm (Tanenhaus et al., 1995) to show that
 meanings of verbs rapidly constrain the set of potential subsequent
 referents in sentence processing. For example, when looking at the
 display in Figure~\ref{fig:E1-example-trial} and listening to a sentence like
@@ -408,9 +410,7 @@ inappropriate sentences. The correct keyboard response for the filler
 trials was ``no.''
 
 \begin{figure}
-\centering
-\includegraphics{group-a/E1-example-trial.jpeg}
-\caption{\label{fig:E1-example-trial}Example trial from Experiment 1. Participants would hear a sentence (e.g., ``The boy will eat the cake'') and respond according to whether the sentence matched the picture.}
+\includegraphics[width=6.67in]{group-a/E1-example-trial} \caption{Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.}\label{fig:E1-example-trial}
 \end{figure}
 
 Each participant was presented with sixteen critical trials (eight in
@@ -432,30 +432,6 @@ onset of the target noun.
 \hypertarget{replication}{%
 \subsubsection{Replication}\label{replication}}
 
-\textbf{Regions of Interest}. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.
-
-\textbf{Minimal Exclusion}. The first set of analyses used minimal exclusion criteria. First, we eliminated participants with 0 percent of fixations in any ROIs. This resulted in the elimination of 1 participants. Second, we excluded participants with validation accuracy under 10 percent, resulting in an additional 5 excluded participants. The following analyses included 52 participants.
-
-*TO-DO: Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset (I think I should be able to tell from looking at the code) whether there's a 200-ms scootch.
-
-\textbf{Cumulative Fixation Probabilities}. For each sentence target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \ref{fig:E1-spaghetti-fig}.
-
-\begin{figure}
-\centering
-\includegraphics{manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf}
-\caption{\label{fig:E1-spaghetti-fig}Cumulative probability of fixating distractor and target objects across conditions. The vertical line marks the mean noun onset across trials and conditions.}
-\end{figure}
-
-\textbf{Pre-noun fixations.} In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation proportion in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs.~non-restricting = 0), object type (target = 1 vs.~distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction {[}bar graph?{]} (\emph{b} = 0.05, \emph{SE} = 0.03, \emph{p}=0.15). {[}should i use a table? should i change to effects coding like other Exps? i think 0/1 is intuitive in this case{]}
-
-\textbf{Pre-verb-offset fixations.} Altmann \& Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (\emph{b} = 0.05, \emph{SE} = 0.03, \emph{p}=0.20).
-
-\textbf{First target fixations after verb.} Finally, we address whether participants look to the target faster in the restrictive vs.~the non-restrictive condition, starting after the onset of the verb. {[}On average, participants looked to the target X ms after (AK's Table 1)\ldots, I'll also want to say the lengths of the verbs. AK's Table 2{]} We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (\emph{b} = -121.91, \emph{SE} = 90.57, \emph{p}=0.20).
-
-\textbf{Aggressive Exclusion}. The second set of analyses used more aggressive exclusion criteria. First, we eliminated participants with 20 percent of fixations in any ROIs. This resulted in the elimination of 15 participants. Second, we excluded participants with validation accuracy under 50 percent, which eliminated an additional 35 participants. The following analyses included 22 participants.
-
-We tested the same three models under these more aggressive exclusion criteria. The first two models, comparing target and distractor fixations in the predictive window, produced very similar results; the critical interaction was not statistically significant (Pre-noun-onset window: \emph{b} = 0.07, \emph{SE} = 0.06, \emph{p}=0.23; Pre-verb-offset window: \emph{b} = 0.05, \emph{SE} = 0.05, \emph{p}=0.28). However, the final model, which tested the effect of verb condition on saccades to the target, yielded a statistically significant result, unlike in the previous set of analyses (\emph{b} = -193.35, \emph{SE} = 96.33, \emph{p}=0.05).
-
 \hypertarget{comparison-to-in-lab-data}{%
 \subsubsection{Comparison to in-lab data}\label{comparison-to-in-lab-data}}
 
@@ -468,10 +444,6 @@ We tested the same three models under these more aggressive exclusion criteria. 
 
 \hypertarget{calibration}{%
 \subsubsection{Calibration}\label{calibration}}
-
-Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality varied widely, ranging from 3.16\% to 98.87\%.
-
-We tested whether a participant's calibration quality was correlated with their effect size. The quality of a participant's calibration was not significantly correlated with the participant's effect size. There were three effects of interest: the verb-by-object interaction in predicting fixation probabilities, both in the (1) pre-noun-onset and (2) pre-verb-offset windows (calculated as the difference in target-over-distractor preference between verb conditions), and (3) the effect of verb on the timing of the first target fixation (calculated as the difference in target latency between verb conditions). Across the three effects of interest, calibration quality was not significantly correlated (Effect 1: Pearson's \emph{r} = 0.03, \emph{p} = 0.83, Effect 2: Pearson's \emph{r} = -0.05, \emph{p} = 0.73, Effect 3: Pearson's \emph{r} = 0.04, \emph{p} = 0.78. However, when the two interaction effects are calculated as the target advantage in the restricting condition only (i.e.~rather than a difference of differences), we see a significant correlation between target advantage and calibration quality in the wider pre-noun window (Pearson's \emph{r} = 0.21, \emph{p} = 0.14).
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -509,6 +481,12 @@ were included in all analyses to follow.
 The task began with a 9-point eye-tracker calibration
 and validation (Figure~\ref{fig:E2-calibration-figure}).
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/unnamed-chunk-6-1.pdf}
+\caption{\label{fig:unnamed-chunk-6}Calibration and validation point locations for Experiment 2. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.(In this experiment all the same locations were used for both calibration and validation.)}
+\end{figure}
+
 The experiment consisted of two blocks each composed of an encoding
 phase and a recall phase. During the encoding phase, participants saw a
 grid indicating the four quadrants of the screen. Each quadrant
@@ -523,6 +501,10 @@ orientation of each item in the quadrant. Finally, after all four quadrants
 were presented, participants were shown the full grid of
 24 items and had 60 seconds to further encode the name and orientation
 of each item.
+
+\begin{figure}
+\includegraphics[width=5.47in]{group-b/E2-example-figure} \caption{Example trial from Experiment 2.}\label{fig:E2-example-trial}
+\end{figure}
 
 During the recall phase, participants listened to statements and
 responded by pressing the `F' key for false statements and `T' for true
@@ -560,7 +542,19 @@ location of the to-be-remembered item.
 
 \textbf{Eye-gaze}. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled ``first'', ``second,'' third'' (e.g., when the critical quadrant was in the top left, the ``first'' quadrant was the top right quadrant, but when the critical quadrant was in the top right, ``first'' corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \ref{fig:E2-gaze-fig-both-conds}). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was (somewhat) effective.
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E2-gaze-fig-both-conds-1.pdf}
+\caption{\label{fig:E2-gaze-fig-both-conds}Proportion of eye-gaze to critical quadrant and other three quadrants during memory retrieval in a) fixed and b) free viewing conditions.}
+\end{figure}
+
 The proportions of looks across quadrants in the free-viewing condition were analyzed using a linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants\footnote{ \texttt{lme4} syntax: \texttt{lmer(proportion\ \textasciitilde{}\ quadrant\ +\ (1+quadrant\textbar{}subject\_id))}. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.}. Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: \emph{b} = -0.06, \emph{SE} = 0.01, \emph{p}\textless0.001, second: \emph{b} = -0.08, \emph{SE} = 0.01, \emph{p}\textless0.001, third: \emph{b} = -0.05, \emph{SE} = 0.01, \emph{p}\textless0.001 )
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E2-rt-acc-fig-1.pdf}
+\caption{\label{fig:E2-rt-acc-fig}Accuracy and response times during memory retrieval.}
+\end{figure}
 
 \textbf{Response Time and Accuracy}. Participants' response times and accuracies on memory questions are summarized in Figure \ref{fig:E2-rt-acc-fig}.
 Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing\_condition (fixed = -0.5, free=0.5) and their interaction as the predictors.
@@ -636,6 +630,12 @@ presented once). The point locations were designed to focus calibration
 on the center of the screen and the middle of the left and right halves
 of the screen (Figure~\ref{fig:E3-calibration-figure}).
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/unnamed-chunk-42-1.pdf}
+\caption{\label{fig:unnamed-chunk-42}Calibration and validation point locations for Experiment 3. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.}
+\end{figure}
+
 The experiment was administered over the course of two
 consecutive days. It consisted of three sections: a presentation phase,
 a test phase, and a recognition test. The first two phases occurred on
@@ -676,6 +676,10 @@ the screen. No feedback on their responses was given during the test.
 
 The experimental design is visually depicted in Figure~\ref{fig:E3-design-schematic}
 
+\begin{figure}
+\includegraphics[width=3.41in]{group-c/E3-example-figure} \caption{Schematic of the design of Experiment 3}\label{fig:E3-design-schematic}
+\end{figure}
+
 \hypertarget{materials}{%
 \subsubsection{Materials}\label{materials}}
 
@@ -701,6 +705,12 @@ Of the 1248 trials in the experiment, 78 had no fixations in either ROI, and so 
 
 The mean looking score was 0.55 (\emph{SD} = 0.10). This significantly greater than 0.5, \emph{t}(49) = 3.29, \emph{p} = 0.00, indicating that participants did show a preference for looking at the novel objects.
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/plot-cumulative-looking-score-1.pdf}
+\caption{\label{fig:plot-cumulative-looking-score}Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM.}
+\end{figure}
+
 \hypertarget{day-2}{%
 \paragraph{Day 2}\label{day-2}}
 
@@ -710,6 +720,8 @@ Participants correctly identified whether the image was familiar or unfamiliar 8
 
 To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on day 2, we computed the correlation coefficient between day 1 looking scores and day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, we found no significant different from 0 for the correlation between looking score and confidence ratings, t(38) = 0.46, p = 0.65 (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looking score and RT, t(46) = 0.49, p = 0.63.
 
+\includegraphics{manuscript_files/figure-latex/Plot Looking Score Correlations-1.pdf}
+
 \hypertarget{effects-of-rois}{%
 \subsubsection{Effects of ROIs}\label{effects-of-rois}}
 
@@ -717,10 +729,22 @@ In the original experiment, the two objects on day 1 were presented on two separ
 
 The correlation between looking scores using the ROI method and the halves method is 0.76.
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E3-roi correlation of looking score-1.pdf}
+\caption{(\#fig:E3-roi correlation of looking score)Correlation between looking scores calculated using ROIs and using screen halves.}
+\end{figure}
+
 \hypertarget{looking-scores}{%
 \paragraph{Looking Scores}\label{looking-scores}}
 
 When looking scores are coded as left vs.~right half of the screen, we find that participants looked more at the novel object. The mean looking score was 0.54 (\emph{SD} = 0.08). This was significantly greater than 0.5, \emph{t}(50) = 3.51, \emph{p} = 0.00.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E3-roi Plot of cumulative looking score-1.pdf}
+\caption{(\#fig:E3-roi Plot of cumulative looking score)Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM.}
+\end{figure}
 
 \hypertarget{correlations-with-day-2-performance}{%
 \paragraph{Correlations with Day 2 Performance}\label{correlations-with-day-2-performance}}
@@ -733,6 +757,8 @@ Performance on day 2 remained uncorrelated with day 1 looking scores after switc
 \hypertarget{calibration-accuracy}{%
 \paragraph{Calibration Accuracy}\label{calibration-accuracy}}
 
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot Calibration Accuracy-1.pdf}
+
 \hypertarget{correlation-with-effects}{%
 \paragraph{Correlation with Effects}\label{correlation-with-effects}}
 
@@ -740,7 +766,13 @@ To see if calibration success is correlated with the eye tracking effects, we ca
 
 Calibration scores were not correlated with looking scores, regardless of which method was used to calculate looking scores.
 
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot looking score (halves) by calibration-1.pdf}
+
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot looking score (roi) by calibration-1.pdf}
+
 We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation.
+
+\includegraphics{manuscript_files/figure-latex/E3-cal Plot correlations with calibration score-1.pdf}
 
 \hypertarget{discussion-2}{%
 \subsection{Discussion}\label{discussion-2}}
@@ -785,6 +817,12 @@ should do their best to use their mouse to act out the instructions.
 They then went through three practice trials which were followed by 54
 critical trials and 24 filler trials presented in a random order.
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/unnamed-chunk-45-1.pdf}
+\caption{\label{fig:unnamed-chunk-45}Calibration and validation point locations for Experiment 4. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.(In this experiment all the same locations were used for both calibration and validation.)}
+\end{figure}
+
 During a trial, four pictures were displayed (target animal, target
 instrument, distractor animal, distractor instrument), one in each
 corner of the screen, and participants heard an audio prompt that
@@ -804,6 +842,10 @@ order to remove bias in the eye and mouse movements from the previous
 trial. The experiment only allowed the participants to move on to the
 next trial once the audio was completely done playing and the mouse had
 been moved over at least one object.
+
+\begin{figure}
+\includegraphics[width=4.5in]{group-d/E4-example-figure} \caption{An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.}\label{fig:E4-example-trial}
+\end{figure}
 
 \hypertarget{materials-1}{%
 \subsubsection{Materials}\label{materials-1}}
@@ -829,9 +871,29 @@ used can be found in Appendix A of the original study.
 
 The location of initial mouse movements was used to assess whether the final interpretation of ambiguous sentences was biased by the verb. Figure \ref{fig:E4-mouse-moves-fig} suggests that listeners were more likely to move their mouse first over the target instrument when the verb was equi-biased than when the verb was modifier-biased and even more so when the verb was instrument-biased. The opposite graded pattern can be observed for mouse movements over the target animal.
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf}
+\caption{\label{fig:E4-mouse-moves-fig}Proportion of first mouse movements by location and verb bias.}
+\end{figure}
+
 A mixed-effects logistic regression model was used to predict whether the first movement was on the target instrument with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts with by-participant varying slopes for verb bias condition\footnote{\texttt{lme4} syntax: \texttt{glmer(is.mouse.over.instrument\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ family="binomial",\ data=d)}}. Participants were more likely to first move their mouse over target instruments in the instrument-biased condition relative to the equi-biased and modifier-biased condition (\emph{b} = -1.50, \emph{SE} = 0.25, \emph{p} \textless{} 0.01). Further, participants were more likely to first move their mouse over target instruments in the equi-biased condition relative to the modifier-biased condition (\emph{b} = -1.10, \emph{SE} = 0.29, \emph{p} \textless{} 0.01)
 
 Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. Figure \ref{fig:E4-gaze-timecourse-fig} suggests that the participants made more fixations to the target animal when the verb was modifier-biased compared to when the the verb was equi-biased and they looked at the target animal least when the verb was instrument-biased. The pattern was reversed for looks to the target instrument.
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-gaze-timecourse-fig-1.pdf}
+\caption{\label{fig:E4-gaze-timecourse-fig}Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms.}
+\end{figure}
 
 In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Mixed-effects linear regression models were used to predict the proportions of fixations to the target animal within each time window with the verb bias condition as an orthogonally contrast-coded (instrument vs.~equi \& modifier: inst = -2/3, equi = 1/3, mod = 1/3; equi vs.~modifier: inst = 0, equi = -1/2, mod = 1/2 ) fixed effect. Participants and items were entered as varying intercepts\footnote{\texttt{lme4} syntax: \texttt{lmer(prop.fix.target.animal\ \textasciitilde{}\ verb\_bias\ +\ (1\ +\ verb\_bias\ \textbar{}\ participant)\ +\ (1\ \textbar{}\ item),\ data=d)}. A model with by-participant varying slopes for verb bias condition was first attempted but did not converge.}. In the \emph{verb-to-noun} window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs.~Equi and Modifier: \emph{b} = -0.01, \emph{SE} = 0.02, \emph{p} = 0.59; Equi vs.~Modifier: \emph{b} = 0, \emph{SE} = 0.02, \emph{p} = 1 ). In the \emph{noun-to-instrument} window, participants looked more at the target animal in the modifier-biased condition and equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.01, \emph{p} \textless{} 0.01) and in the modifier biased relative to the equi-biased condition ( \emph{b} = 0.02, \emph{SE} = 0.01, \emph{p} \textless{} 0.05). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) but not significantly so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.03, \emph{SE} = 0.02, \emph{p} = 0.15).
 
@@ -842,10 +904,22 @@ The web version of the study qualitatively replicates the action and eye-trackin
 The mouse click results from both studies are summarized in Figure \ref{fig:E4-mouse-moves-fig-web-and-orig}.
 The quantitative patterns of clicks were similar to those observed in the original dataset, though for Instrument-biased verbs, clicks were closer to evenly split between the animal and the instrument relative to the in-lab study where they were very clearly biased toward the instrument.
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-mouse-moves-fig-web-and-orig-1.pdf}
+\caption{\label{fig:E4-mouse-moves-fig-web-and-orig}Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.}
+\end{figure}
+
 The eye-tracking results from both studies are summarized in Figure \ref{fig:E4-proportion-fix-by-window-both}.
 For simplicity, and to reflect the dependent variable used in analyses, we average the proportion of fixations to the target animal within each time window.
 Though the qualitative patterns are replicated, proportions of fixations to the target animal were much lower in the web version of the study.
 This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-proportion-fix-by-window-both-1.pdf}
+\caption{\label{fig:E4-proportion-fix-by-window-both}Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95\% CIs over subject means}
+\end{figure}
 
 \hypertarget{calibration-3}{%
 \subsubsection{Calibration}\label{calibration-3}}
@@ -865,6 +939,18 @@ Participants looked more at the target animal in the modifier-biased condition a
 Eye-tracking on the web differs critically from in-lab eye-tracking in that the size of the display differs across participants. Thus the size of the ROIs differs across participants. The current version of the web experiment used a bounding box around each image to determine the ROI.
 This approach is flexible and accomodates variability in image size, but may exclude looks that are directed at the image but fall outside of the image (due to participant or eye-tracker noise) as show in Figure \ref{fig:E4-example-subj-looks-ROI}a. Alternatively, The display can be split into 4 quadrants which jointly cover the entire screen (see Figure \ref{fig:E4-example-subj-looks-ROI}b).
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-example-subj-looks-ROI-1.pdf}
+\caption{\label{fig:E4-example-subj-looks-ROI}Example participant's gaze coordinates categorized into ROIs based on a) image bounding boxes and b) screen quadrants. Magenta points indicate looks that were not categorized into an ROI}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/E4-gaze-timecourse-fig-quadrants-1.pdf}
+\caption{\label{fig:E4-gaze-timecourse-fig-quadrants}Timecourse of eye-gaze to target animal and target instrument by verb bias condition with gaze categorized based on which quadrant of the screen the coordinates fall in (as opposed to a bounding box around the image). Vertical lines indicate average onsets of animal and instrument offset by 200ms.}
+\end{figure}
+
 Categorizing gaze location based on which of the four quadrants of the screen the coordinates fell in, increases the overall proportions of fixations (see Figure \ref{fig:E4-gaze-timecourse-fig-quadrants}). In the \emph{post-instrument} window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( \emph{b} = 0.08, \emph{SE} = 0.02, \emph{p} \textless{} 0.01) and marginally so in the modifier biased condition relative to the equi-biased condition ( \emph{b} = 0.04, \emph{SE} = 0.02, \emph{p} = 0.05). Effect size estimates appeared somewhat larger and noise was somewhat reduced when using the quadrant categorization relative to the bounding box-based ROIs.
 
 \hypertarget{discussion-3}{%
@@ -873,7 +959,7 @@ Categorizing gaze location based on which of the four quadrants of the screen th
 \hypertarget{experiment-5}{%
 \section{Experiment 5}\label{experiment-5}}
 
-The fifth study was a replication attempt of Shimojo, Simion, Shimojo, and Scheier (2003),
+The fifth study was a replication attempt of Shimojo et al. (2003),
 which found that human gaze is actively involved in preference
 formation. Separate sets of participants were shown pairs of human faces
 and asked either to choose which one they found more attractive or which
@@ -914,6 +1000,12 @@ At the beginning of the experimental task, participants completed a
 order) and 3-point validation. The validation point appeared once at
 center, middle left, and middle right locations in random order (see Figure~\ref{fig:E5-calibration-figure}).
 
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/unnamed-chunk-89-1.pdf}
+\caption{\label{fig:unnamed-chunk-89}Calibration and validation point locations for Experiment 5. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.}
+\end{figure}
+
 During each trial of the main task, two faces were displayed on the two
 halves of the screen, one on the left and one on the right (as in Figure~\ref{fig:E5-example-trial}). Participants were randomly assigned to one of two tasks:
 attractiveness or shape judgment. In the attractiveness task,
@@ -925,6 +1017,10 @@ right. A fixation cross appeared in the center of the screen between
 each set of faces. Participants were asked to look at this fixation
 cross in order to reset their gaze in between trials (???). The order of
 the 19 face pairs was random for each participant.
+
+\begin{figure}
+\includegraphics[width=3.41in]{group-e/E5-example-figure} \caption{An example of a critical trial from Experiment 5. (Text did not appear on each screen.)}\label{fig:E5-example-trial}
+\end{figure}
 
 \hypertarget{materials-and-norming}{%
 \subsubsection{Materials and Norming}\label{materials-and-norming}}
@@ -964,6 +1060,10 @@ Due to large variation in response time latency, Shimojo and colleagues analyzed
 
 
 
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{figGroupEOrigA} \includegraphics[width=0.45\linewidth]{figGroupEOrigB} \includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMain-3} \includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMain-4} \caption{Primary results from Exp. 5. \emph{Top} shows the original results from Shimojo and colleagues (Figures reprinted with permission{[}TODO{]}). The attractiveness judgment along with the best-fitting sigmoid is shown in the \emph{top left}. Results for the roundness judgment are show in the \emph{top right}, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison (\emph{top right}). (\emph{Bottom}) shows the analogous results from the replication, with the attractiveness judgments on the \emph{bottom left} and the roundness judgments on the \emph{bottom right}. Again, the best-fitting sigmoid for the attractiveness judgments are plotted with a dashed line alongside the roundness results, for purposes of comparison.}\label{fig:groupEMain}
+\end{figure}
+
 Following Shimojo and colleagues, data for each condition were fit using a four-parameter sigmoid (Fig. \ref{fig:Shimojo}). These fit less well than in the original paper for both the attractiveness judgment (R\textsuperscript{2} = 0.84 vs.~0.91) and the roundness judgment (R\textsuperscript{2} = 0.54 vs.~0.91).
 
 From these curves, Shimojo and colleagues focus on two qualitative findings. First, they note a higher asymptote for the attractiveness discrimination task relative to roundness discrimination. Qualitatively, this appears to replicate. However, their statistical analysis -- a Kolmogorov-Smirnov test for distance between two distributions -- is not significant (D = 0.19, p = 0.53), though it should be noted that this is a very indirect statistical test of the hypothesis and probably not very sensitive.
@@ -976,13 +1076,25 @@ The second qualitative finding they note is that the curve for the roundness jud
 As in the previous experiments, calibration score was defined as the average proportion of samples within 200 pixels of the validation point during the final validation phase before the eye tracking is performed. The distribution across participants is shown in Fig. \ref{fig:E5cal}.
 
 
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/E5cal-1} \caption{Histogram of calibration success in Exp. 5. Where participants required more than one calibration (N=8), only the final calibration was considered.}\label{fig:E5cal}
+\end{figure}
+
 To determine whether calibration accuracy influenced our key effects, we calculated the percentage of samples during the task in which the participant was fixating the face they ultimately chose. There was a significant correlation for both the attractiveness judgments (r = 0.47 {[}0.04, 0.75{]}, p = 0.03) and the roundness judgments (r = 0.60 {[}0.23, 0.82{]}, p = 0). Inspection of Fig. \ref{fig:E5calcorr} reveals that this correlation is due to a handful of particpiants with calibration values below 50\%.
 
 
 
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{manuscript_files/figure-latex/E5calcorr-1} \caption{Correlation between calibration accuracy (x-axis) and percentage of samples fixating target (y-axis) in Exp. 5.}\label{fig:E5calcorr}
+\end{figure}
+
 Thus, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50\%. This slightly improved the fits of the sigmoids (Attractiveness: R\textsuperscript{2} = 0.79; Roundness: R\textsuperscript{2} = 0.60). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = 0.22, p = 0.36). Descriptively, the results do not look substantially different (Fig. \ref{fig:groupEMainrev}).
 
 
+
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMainrev-1} \includegraphics[width=0.45\linewidth]{manuscript_files/figure-latex/groupEMainrev-2} \caption{Revised results for Exp. 5 after removing low-calibration accuracy participants. \emph{Left}: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. \emph{Right}: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).}\label{fig:groupEMainrev}
+\end{figure}
 
 \hypertarget{effects-of-rois-2}{%
 \subsubsection{Effects of ROIs}\label{effects-of-rois-2}}
@@ -1044,8 +1156,14 @@ Only a small percentage of samples (7.00\%) involved looks to anything other tha
 \leavevmode\vadjust pre{\hypertarget{ref-altmannIncrementalInterpretationVerbs1999}{}}%
 Altmann, G. T. M., \& Kamide, Y. (1999). Incremental interpretation at verbs: Restricting the domain of subsequent reference. \emph{Cognition}, \emph{73}(3), 247--264. \url{https://doi.org/10.1016/S0010-0277(99)00059-1}
 
+\leavevmode\vadjust pre{\hypertarget{ref-anwyl2020gorilla}{}}%
+Anwyl-Irvine, A. L., Massonnié, J., Flitton, A., Kirkham, N., \& Evershed, J. K. (2020). Gorilla in our midst: An online behavioral experiment builder. \emph{Behavior Research Methods}, \emph{52}, 388--407.
+
 \leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
 Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\vadjust pre{\hypertarget{ref-banki2022comparing}{}}%
+Bánki, A., Eccher, M. de, Falschlehner, L., Hoehl, S., \& Markova, G. (2022). Comparing online webcam-and laboratory-based eye-tracking for the assessment of infants' audio-visual synchrony perception. \emph{Frontiers in Psychology}, \emph{12}, 733933.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-tinylabels}{}}%
 Barth, M. (2022). \emph{{tinylabels}: Lightweight variable labels}. Retrieved from \url{https://cran.r-project.org/package=tinylabels}
@@ -1065,8 +1183,26 @@ Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y., \ldots{}
 \leavevmode\vadjust pre{\hypertarget{ref-deleeuwJsPsychJavaScriptLibrary2015}{}}%
 de Leeuw, J. R. (2015). {jsPsych}: {A JavaScript} library for creating behavioral experiments in a {Web} browser. \emph{Behavior Research Methods}, \emph{47}(1), 1--12. \url{https://doi.org/10.3758/s13428-014-0458-y}
 
+\leavevmode\vadjust pre{\hypertarget{ref-dijkgraaf2017predicting}{}}%
+Dijkgraaf, A., Hartsuiker, R. J., \& Duyck, W. (2017). Predicting upcoming information in native-language and non-native-language auditory word recognition. \emph{Bilingualism: Language and Cognition}, \emph{20}(5), 917--930.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hayhoe2005eye}{}}%
+Hayhoe, M., \& Ballard, D. (2005). Eye movements in natural behavior. \emph{Trends in Cognitive Sciences}, \emph{9}(4), 188--194.
+
+\leavevmode\vadjust pre{\hypertarget{ref-henderson2017meaning}{}}%
+Henderson, J. M., \& Hayes, T. R. (2017). Meaning-based guidance of attention in scenes as revealed by meaning maps. \emph{Nature Human Behaviour}, \emph{1}(10), 743--747.
+
+\leavevmode\vadjust pre{\hypertarget{ref-henninger2021lab}{}}%
+Henninger, F., Shevchenko, Y., Mertens, U. K., Kieslich, P. J., \& Hilbig, B. E. (2021). Lab. Js: A free, open, online study builder. \emph{Behavior Research Methods}, 1--18.
+
+\leavevmode\vadjust pre{\hypertarget{ref-henrich2010weirdest}{}}%
+Henrich, J., Heine, S. J., \& Norenzayan, A. (2010). The weirdest people in the world? \emph{Behavioral and Brain Sciences}, \emph{33}(2-3), 61--83.
+
 \leavevmode\vadjust pre{\hypertarget{ref-johanssonLookHereEye2014}{}}%
 Johansson, R., \& Johansson, M. (2014). Look {Here}, {Eye Movements Play} a {Functional Role} in {Memory Retrieval}. \emph{Psychological Science}, \emph{25}(1), 236--242. \url{https://doi.org/10.1177/0956797613498260}
+
+\leavevmode\vadjust pre{\hypertarget{ref-krajbich2010visual}{}}%
+Krajbich, I., Armel, C., \& Rangel, A. (2010). Visual fixations and the computation and comparison of value in simple choice. \emph{Nature Neuroscience}, \emph{13}(10), 1292--1298.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-lmerTest}{}}%
 Kuznetsova, A., Brockhoff, P. B., \& Christensen, R. H. B. (2017). {lmerTest} package: Tests in linear mixed effects models. \emph{Journal of Statistical Software}, \emph{82}(13), 1--26. \url{https://doi.org/10.18637/jss.v082.i13}
@@ -1083,8 +1219,20 @@ Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
 
+\leavevmode\vadjust pre{\hypertarget{ref-rayner1998eye}{}}%
+Rayner, K. (1998). Eye movements in reading and information processing: 20 years of research. \emph{Psychological Bulletin}, \emph{124}(3), 372.
+
+\leavevmode\vadjust pre{\hypertarget{ref-richardsonEyeTrackingResearch2004}{}}%
+Richardson, D. C., \& Spivey, M. J. (2004). Eye tracking: {Research} areas and applications. In G. Wnek \& G. Bowlin (Eds.), \emph{Encyclopedia of biomaterials and biomedical engineering} (Vol. 572). New York: Marcel Dekker.
+
 \leavevmode\vadjust pre{\hypertarget{ref-ryskinVerbBiasesAre2017}{}}%
 Ryskin, R., Qi, Z., Duff, M. C., \& Brown-Schmidt, S. (2017). Verb biases are shaped through lifelong learning. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{43}(5), 781--794. \url{https://doi.org/10.1037/xlm0000341}
+
+\leavevmode\vadjust pre{\hypertarget{ref-ryskin2023real}{}}%
+Ryskin, R., Salinas, M., Piantadosi, S., \& Gibson, E. (2023). Real-time inference in communication across cultures: Evidence from a nonindustrialized society. \emph{Journal of Experimental Psychology: General}, \emph{152}(5), 1245.
+
+\leavevmode\vadjust pre{\hypertarget{ref-semmelmann2018online}{}}%
+Semmelmann, K., \& Weigelt, S. (2018). Online webcam-based eye tracking in cognitive science: A first look. \emph{Behavior Research Methods}, \emph{50}, 451--465.
 
 \leavevmode\vadjust pre{\hypertarget{ref-shimojoGazeBiasBoth2003}{}}%
 Shimojo, S., Simion, C., Shimojo, E., \& Scheier, C. (2003). Gaze bias both reflects and influences preference. \emph{Nature Neuroscience}, \emph{6}(12), 1317--1322. \url{https://doi.org/10.1038/nn1150}
@@ -1094,6 +1242,9 @@ Simonsohn, U. (2015). Small telescopes: Detectability and the evaluation of repl
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-afex}{}}%
 Singmann, H., Bolker, B., Westfall, J., Aust, F., \& Ben-Shachar, M. S. (2021). \emph{Afex: Analysis of factorial experiments}. Retrieved from \url{https://CRAN.R-project.org/package=afex}
+
+\leavevmode\vadjust pre{\hypertarget{ref-slim2022moving}{}}%
+Slim, M. S., \& Hartsuiker, R. J. (2022). Moving visual world experiments online? A web-based replication of dijkgraaf, hartsuiker, and duyck (2017) using PCIbex and WebGazer. js. \emph{Behavior Research Methods}, 1--19.
 
 \leavevmode\vadjust pre{\hypertarget{ref-snedekerDevelopingConstraintsParsing2004a}{}}%
 Snedeker, J., \& Trueswell, J. C. (2004). The developing constraints on parsing decisions: {The} role of lexical-biases and referential scenes in child and adult sentence processing. \emph{Cognitive Psychology}, \emph{49}(3), 238--299. \url{https://doi.org/10.1016/j.cogpsych.2004.03.001}
@@ -1124,6 +1275,12 @@ Wickham, H., \& Hester, J. (2020). \emph{Readr: Read rectangular text data}. Ret
 
 \leavevmode\vadjust pre{\hypertarget{ref-yang2021webcam}{}}%
 Yang, X., \& Krajbich, I. (2021). Webcam-based online eye-tracking for behavioral research. \emph{Judgment and Decision Making}, \emph{16}(6), 1486.
+
+\leavevmode\vadjust pre{\hypertarget{ref-yarbus1967eye}{}}%
+Yarbus, A. L. (1967). \emph{Eye movements and vision}. Plenum Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-zehr2018PCIbex}{}}%
+Zehr, J., \& Schwarz, F. (2018). \emph{PennController for internet based experiments (IBEX)}. Retrieved from \url{https://doi.org/10.17605/OSF.IO/MD832}
 
 \end{CSLReferences}
 
