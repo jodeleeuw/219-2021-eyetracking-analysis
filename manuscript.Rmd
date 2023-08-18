@@ -348,9 +348,11 @@ age or older, fluency in English, and access to a webcam. All
 participants provided informed consent. The studies were approved by the
 Vassar College Institutional Review Board.
 
+In addition, in-person replications were conducted for Experiments 1 and 4. Information about those samples is given in the corresponding Method sections.
+
 In order to have adequate statistical power and precision, we aimed for
 2.5x the sample size of the original experiment, following the heuristic
-of Simonsohn [@simonsohn2015]. In study 5, the original sample size was so
+of Simonsohn [@simonsohn2015]. In Experiment 5, the original sample size was so
 small that we opted to collect 5x the number of participants to increase
 precision. Because of budget and time constraints we were unable to
 replace the data for subjects who were excluded or whose data was
@@ -424,21 +426,27 @@ train, presumably because cakes are edible and trains are not. Semantic
 information available at the verb is used to anticipate upcoming
 linguistic input.
 
-```{r read_groupA_data}
+<!--AJ: Here's an organizational thing I'm trying-- Mention here that there are two experiments (Prolific and in Josh H's lab) and divide subsequent sections where appropriate. Good idea?-->
 
+We first collected data from participants via Prolific, then conducted a follow-up in-lab replication; both the original and the replication used WebGazer and identical materials and procedures. 
+
+
+```{r read_groupA_data}
+#AJ: We don't need this, right? Can I delete?
 ```
 
 ## Methods
 
 <!-- since there are not the analysis scripts we're using, I'm not sure about the best way to link to this -->
+<!--AJ: I don't know what the above comment means. -->
 
 All stimuli, experiment scripts, data, analysis scripts, and a
 pre-registration are available on the Open Science Framework at
 <https://osf.io/s82kz>.
 
 ### Participants
-
-60 participants were paid \$2.60 for their participation. Our sample size
+#### Remote sample
+Sixty participants were paid \$2.60 for their participation. Our sample size
 of participants was determined by the total run time of our experiment,
 \~10 minutes, and the allotted funding from the Vassar College Cognitive
 Science Department. From this information, we calculated a reasonable
@@ -446,6 +454,9 @@ number of participants we could afford to compensate on Prolific. Note
 that the sample size of the original study was 24. For unknown reasons,
 2 of the subjects' results were not recorded, so in the analysis, we
 worked with data collected from 58 participants.
+
+####In-lab sample
+Forty-nine participants were (AJ: help. Insert how they were compensated, relevant IRB/funding stuff, any other info).
 
 ### Procedure
 
@@ -506,25 +517,25 @@ subject-by-subject basis.<!-- right?-->
 
 Looks to the objects in the scene were time-locked to the onset of the
 verb, the offset of the verb, onset of the post-verbal determiner, and
-onset of the target noun.
+onset of the target noun. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.
 
 ## Results
 
-### Replication
+### Remote sample
 
 ```{r E1-analysis-replication,eval=FALSE, child = 'group-a/E1-analysis-replication.Rmd'}
 
 ```
-### Comparison to in-lab data
 
--   here we will describe a direct comparison to data collected in the
-    lab
-
-### Calibration
-
+#### Calibration
 ```{r E1-analysis-calibration,eval=FALSE, child = 'group-a/E1-analysis-calibration.Rmd'}
-
 ```
+
+### In-lab sample
+```{r E1-analysis-JoshH-lab,eval=FALSE, child = 'group-a/E1-analysis-comparison-to-Hartshorne.Rmd'}
+#Includes calibration analysis 
+```
+
 
 ## Discussion
 

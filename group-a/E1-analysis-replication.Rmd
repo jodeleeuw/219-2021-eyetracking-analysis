@@ -293,9 +293,10 @@ critical.trials.filtered.min <- critical.trials %>%
 n.bad.subjects.min <- length(bad.subjects.min)
 #There's a mysterious participant "55" who appears in bad.subjects but NOT in bad.subjects.prop.samples or in bad.subjects.validation...or anywhere? So there's really only 5 real bad subjects (leaving 57-5 = 52 participants in the filtered data)
 ```
-<!-- This is where I should say how many people were excluded, right? -->
-__Regions of Interest__. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions. 
+<!-- I'm moving the ROI blurb to the main manuscript file since it's the same for Hartshorne analyses
+__Regions of Interest__. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.-->
 
+<!-- This is where I should say how many people were excluded, right? -->
 __Minimal Exclusion__. The first set of analyses used minimal exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.min*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.min)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.min` percent, resulting in an additional `r n.bad.subjects.min - length(bad.subjects.prop.samples.min)` excluded participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.min$subject_id))` participants. 
 
 <!-- # Calculating cumulative fixation probability -->
