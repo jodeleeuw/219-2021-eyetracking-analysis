@@ -10,7 +10,7 @@ output: pdf_document
 #Correlates subjects' experimental effects with their calibration quality (from df called "validation.percent").
 ```
 <!-- # Setup -->
-```{r E1-c-setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
+```{r E1-c-JH-setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
 library(dplyr)
 library(tidyr)
 library(jsonlite)

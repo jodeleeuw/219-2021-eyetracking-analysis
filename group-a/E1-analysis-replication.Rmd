@@ -14,7 +14,7 @@ library(forcats)
 library(papaja)
 source("~/round.comm.R")
 
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 ```
 
 <!-- # Import Data -->
@@ -297,7 +297,8 @@ n.bad.subjects.min <- length(bad.subjects.min)
 __Regions of Interest__. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.-->
 
 <!-- This is where I should say how many people were excluded, right? -->
-__Minimal Exclusion__. The first set of analyses used minimal exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.min*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.min)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.min` percent, resulting in an additional `r n.bad.subjects.min - length(bad.subjects.prop.samples.min)` excluded participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.min$subject_id))` participants. 
+#### Minimal Exclusion 
+The first set of analyses used minimal exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.min*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.min)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.min` percent, resulting in an additional `r n.bad.subjects.min - length(bad.subjects.prop.samples.min)` excluded participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.min$subject_id))` participants. 
 
 <!-- # Calculating cumulative fixation probability -->
 
@@ -318,7 +319,7 @@ cumulative.fixation.data.min <- critical.trials.filtered.min %>%
 
 <!-- Now check every time window within a trial to account for sparse samples. This calculating is time consuming, so we cache the result in a CSV file, and load from the CSV if it already exists. -->
 
-```{r slowly build cumu fix data}
+```{r slowly build cumu fix data, message=FALSE}
 cumulative.fixation.calculation <- function(df){
   time <- seq(0,1950,50)
   fixations <- logical(length(time))
@@ -338,7 +339,6 @@ cumulative.fixation.calculation <- function(df){
   return(out)
 }
 
-setwd("/Users/ajames2/Documents/GitHub/219-2021-eyetracking-analysis/group-a")
 
 if(file.exists("data/generated/cumulative_fixation_data_min.csv")){
   cumulative.fixation.windows.data.min <- read_csv("data/generated/cumulative_fixation_data_min.csv")
@@ -348,7 +348,7 @@ if(file.exists("data/generated/cumulative_fixation_data_min.csv")){
     group_by(subject_id, verb_type, image_name, object_type, object_class) %>%
     summarize(cumulative.fixation.calculation(cur_data()))
   
-  write_csv(cumulative.fixation.windows.data.min, file="data/generated/cumulative_fixation_data_min.csv")
+  write_csv(cumulative.fixation.windows.data.min, file="~/group-a/data/generated/cumulative_fixation_data_min.csv")
 }
 ```
 
@@ -378,7 +378,8 @@ cumulative.fixation.data.summary.min <- cumulative.fixation.windows.grouped.aver
   summarize(cumulative.fixation.m = mean(cumulative.fixation.p))
 ```
 
-__Cumulative Fixation Probabilities__. For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:E1-spaghetti-fig).
+#### Cumulative Fixation Probabilities
+For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:E1-spaghetti-fig).
 
 ```{r E1-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
 E1_spag_fig <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill= object_class, shape=verb_type))+
@@ -446,7 +447,8 @@ E1_model1_obj.min = E1_model1_tab.min %>% filter(term == "object_classtarget.obj
 E1_model1_verb.min = E1_model1_tab.min %>% filter(term == "verb_typerestricting")
 E1_model1_obj_verb.min = E1_model1_tab.min %>% filter(term == "object_classtarget.object:verb_typerestricting")
 ```
-__Pre-noun fixations.__ In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation probability in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs. non-restricting = 0), object type (target = 1 vs. distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction [bar graph?] (_b_ = `r E1_model1_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`). 
+#### Pre-noun fixations
+In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation probability in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs. non-restricting = 0), object type (target = 1 vs. distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction [bar graph?] (_b_ = `r E1_model1_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`). 
 
 
 <!--Verb offset times-->
@@ -487,7 +489,8 @@ E1_model2_obj.min = E1_model2_tab.min %>% filter(term == "object_classtarget.obj
 E1_model2_verb.min = E1_model2_tab.min %>% filter(term == "verb_typerestricting")
 E1_model2_obj_verb.min = E1_model2_tab.min %>% filter(term == "object_classtarget.object:verb_typerestricting")
 ```
-__Pre-verb-offset fixations.__ Altmann & Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (_b_ = `r E1_model2_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+#### Pre-verb-offset fixations
+Altmann & Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (_b_ = `r E1_model2_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`).
 
 <!--Relative to noun onset, when is the first (post-verb) fixation on the target?-->
 
@@ -570,7 +573,8 @@ E1_model3_tab.min = broom.mixed::tidy(E1_model3.min)
 E1_model3_verb.min = E1_model3_tab.min %>% filter(term == "verb_typerestricting")
 
 ```
-__First target fixations after verb.__ Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [TO-DO: On average, participants looked to the target X ms after (AK's Table 1)..., I'll also want to say the lengths of the verbs. AK's Table 2] We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+#### First target fixations after verb
+Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [TO-DO: On average, participants looked to the target X ms after (AK's Table 1)..., I'll also want to say the lengths of the verbs. AK's Table 2] We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
 
 ```{r}
 first.fixation.after.verb.onset.subject.summary.min <- first.fixation.after.verb.onset.min %>%
@@ -637,7 +641,8 @@ critical.trials.filtered.aggro <- critical.trials %>%
 
 n.bad.subjects.aggro <- length(bad.subjects.aggro)
 ```
-__Aggressive Exclusion__. The second set of analyses used more aggressive exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.aggro*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.aggro)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.aggro` percent, which eliminated an additional `r n.bad.subjects.aggro - length(bad.subjects.prop.samples.aggro)` participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.aggro$subject_id))` participants. 
+#### Aggressive Exclusion
+The second set of analyses used more aggressive exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.aggro*100` percent of fixations in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.aggro)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.aggro` percent, which eliminated an additional `r n.bad.subjects.aggro - length(bad.subjects.prop.samples.aggro)` participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.aggro$subject_id))` participants. 
 
 <!-- # Calculating cumulative fixation probability -->
 

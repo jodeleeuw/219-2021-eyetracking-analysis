@@ -455,7 +455,7 @@ that the sample size of the original study was 24. For unknown reasons,
 2 of the subjects' results were not recorded, so in the analysis, we
 worked with data collected from 58 participants.
 
-####In-lab sample
+#### In-lab sample
 Forty-nine participants were (AJ: help. Insert how they were compensated, relevant IRB/funding stuff, any other info).
 
 ### Procedure
@@ -523,16 +523,15 @@ onset of the target noun. Regions of interest (ROIs) were defined by creating bo
 
 ### Remote sample
 
-```{r E1-analysis-replication,eval=FALSE, child = 'group-a/E1-analysis-replication.Rmd'}
+```{r E1-analysis-replication, child = 'group-a/E1-analysis-replication.Rmd'}
 
 ```
 
-#### Calibration
-```{r E1-analysis-calibration,eval=FALSE, child = 'group-a/E1-analysis-calibration.Rmd'}
+```{r E1-analysis-calibration, child = 'group-a/E1-analysis-calibration.Rmd'}
 ```
 
 ### In-lab sample
-```{r E1-analysis-JoshH-lab,eval=FALSE, child = 'group-a/E1-analysis-comparison-to-Hartshorne.Rmd'}
+```{r E1-analysis-JoshH-lab, child = 'group-a/E1-analysis-comparison-to-Hartshorne.Rmd'}
 #Includes calibration analysis 
 ```
 
