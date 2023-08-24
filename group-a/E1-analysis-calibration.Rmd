@@ -12,7 +12,7 @@ library(readr)
 library(afex)
 library(forcats)
 library(papaja)
-source("~/round.comm.R")
+source('round.comm.R')
 
 knitr::opts_chunk$set(include = FALSE, echo = FALSE, warning = FALSE)
 #knitr::opts_knit$set(root.dir =)

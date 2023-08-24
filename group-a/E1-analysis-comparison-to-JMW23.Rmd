@@ -23,7 +23,11 @@ knitr::opts_chunk$set(message=FALSE, warning=FALSE, echo = FALSE)
 
 ```{r import JMW23}
 JMW1_info <- read_csv("group-a/JMW23-data/fyptrialinfo.csv")
+
+JMW1_latency <- read.delim("group-a/JMW23-data/FYPAKFixationLatenciesPOSTVERB.txt", header = FALSE, sep = ",") #I'll come back to this
+
 JMW1_data <- read.delim("group-a/JMW23-data/FYPTimecourse_by_subj.txt", header = FALSE, sep = ",")
+
 #Add meaningful header row
 tc_header = c("TARGET","AGENT", "COMP1", "COMP2", "COMP3", 
               "NON1", "NON2", "NON3", "NON4", "NON5",
@@ -132,8 +136,5 @@ JMW_spag_fig <- ggplot(JMW_cumu.summary, aes(x=t.window, y=cumulative.fixation.m
   scale_x_continuous(expand=c(0.01,0.01))+
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type") +
   geom_vline(xintercept = mean(JMW1_info$Non.relative))
-
-JMW_spag_fig
-
 #The "Object type" part of the key doesn't actually show which color is which
 ```

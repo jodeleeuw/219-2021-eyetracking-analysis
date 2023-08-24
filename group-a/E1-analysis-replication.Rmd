@@ -12,7 +12,7 @@ library(readr)
 library(afex)
 library(forcats)
 library(papaja)
-source("~/round.comm.R")
+source('round.comm.R') #does "commercial" i.e. normal rounding
 
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 ```
@@ -305,7 +305,7 @@ The first set of analyses used minimal exclusion criteria. First, we eliminated 
 <!-- We start by calculating cumulative fixation probability on the objects after the verb onset. (Any fixations prior to the verb onset are not relevant to the core research questions.) -->
 
 
-*TO-DO: Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset (I think I should be able to tell from looking at the code) whether there's a 200-ms scootch.
+<!--Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset;  whether there's a 200-ms scootch. Answer: fixations beginning at or before verb onset are not included in cumulative fixation data or first fixation data. There is no 200-ms scootch.-->
 
 
 <!-- First, add a column for time relative to verb onset, bin this to 50ms chunks, and filter the data to the 2,000 ms window after verb onset. -->
@@ -313,7 +313,7 @@ The first set of analyses used minimal exclusion criteria. First, we eliminated 
 ```{r set up 50 ms bins}
 cumulative.fixation.data.min <- critical.trials.filtered.min %>%
   mutate(t.relative.to.verb.onset = t - (verb_onset*1000)) %>%
-  filter(t.relative.to.verb.onset >= 0 & t.relative.to.verb.onset <2000) %>%
+  filter(t.relative.to.verb.onset >= 0 & t.relative.to.verb.onset <2000) %>% 
   mutate(t.w = floor(t.relative.to.verb.onset/50)*50)
 ```
 
@@ -490,17 +490,17 @@ E1_model2_verb.min = E1_model2_tab.min %>% filter(term == "verb_typerestricting"
 E1_model2_obj_verb.min = E1_model2_tab.min %>% filter(term == "object_classtarget.object:verb_typerestricting")
 ```
 #### Pre-verb-offset fixations
-Altmann & Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (_b_ = `r E1_model2_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+Altmann and Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (_b_ = `r E1_model2_obj_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.min %>% pull(p.value) %>% round(digits = 2)`).
 
 <!--Relative to noun onset, when is the first (post-verb) fixation on the target?-->
 
 ```{r}
 first.fixation.after.verb.onset.min <- critical.trials.filtered.min %>%
   group_by(subject_id, image_name) %>%
-  filter(t >= verb_onset*1000) %>%
+  filter(t >= verb_onset*1000) %>% #excludes fixations initiating on or before verb
   filter(object_type == "target.object") %>%
   filter(is.fixating == TRUE) %>%
-  filter(t == min(t)) %>%
+  filter(t == min(t)) %>% #earliest fixation
   mutate(noun_relative.t = t - (postverbal_noun_onset*1000)) %>%
   mutate(von_relative.t = t - (verb_onset*1000)) %>%
   mutate(voff_relative.t = t - (verb_offset*1000)) %>%
@@ -574,7 +574,9 @@ E1_model3_verb.min = E1_model3_tab.min %>% filter(term == "verb_typerestricting"
 
 ```
 #### First target fixations after verb
-Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [TO-DO: On average, participants looked to the target X ms after (AK's Table 1)..., I'll also want to say the lengths of the verbs. AK's Table 2] We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
+Finally, we address whether participants look to the target faster in the restrictive vs. the non-restrictive condition, starting after the onset of the verb. [TO-DO: On average, participants looked to the target `r E1_latency_table_min$Eat.x[2]` ms after the noun onset in the restrictive condition (compared to ) and `r E1_latency_table_min$Eat.x[2]` ms after the noun onset in the non-restrictive condition (compared to )]. Thus, first fixations were not only delayed relative to those in the previous studies compared here, but also showed a smaller difference between conditions. 
+
+We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (_b_ = `r E1_model3_verb.min %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.min %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.min %>% pull(p.value) %>% round(digits = 2)`).
 
 ```{r}
 first.fixation.after.verb.onset.subject.summary.min <- first.fixation.after.verb.onset.min %>%

@@ -4,7 +4,7 @@ author: "Ariel James"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
-
+<!-- NO LONGER USED! CRAMMED EVERYTHING INTO E1-ANALYSIS-COMPARISON-TO-HARTSHORNE-->
 ```{r}
 #To be run after E1-analysis-replication.Rmd
 #Correlates subjects' experimental effects with their calibration quality (from df called "validation.percent").
