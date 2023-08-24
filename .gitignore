@@ -30,3 +30,4 @@ vignettes/*.pdf
 manuscript_files/*
 group-e/group-e-analysis_files/
 *.DS_Store
+.DS_Store
