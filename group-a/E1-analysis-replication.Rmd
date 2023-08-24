@@ -507,7 +507,7 @@ first.fixation.after.verb.onset.min <- critical.trials.filtered.min %>%
   mutate(det_relative.t = t -(postverbal_determiner_onset*1000))
 ```
 
-```{r E1-latency-table-min, echo=FALSE, eval=FALSE}
+```{r E1-latency-table-min, echo=FALSE}
 #summarize data for table
 first.fix.avg.min <- first.fixation.after.verb.onset.min %>%
   group_by(verb_type) %>%
@@ -541,12 +541,12 @@ AK_table1 <- data.frame(
 
 E1_latency_table_min <- merge(our_table1_min, AK_table1, by = "Time")
   
-apa_table(
-  E1_latency_table_min,
-  caption = "Onset of first post-verb-onset saccade, relative to verb onset, verb offset, determiner onset, and noun onset, in ms.",
-  font_size = "small",
-   col_spanners = list(`Current Exp. 1` = c(2, 4), `Altmann $ Kamide Exp. 1` = c(5, 7))
-)
+# apa_table(
+#   E1_latency_table_min,
+#   caption = "Onset of first post-verb-onset saccade, relative to verb onset, verb offset, determiner onset, and noun onset, in ms.",
+#   font_size = "small",
+#    col_spanners = list(`Current Exp. 1` = c(2, 4), `Altmann $ Kamide Exp. 1` = c(5, 7))
+# )
 
 
 #can I add a third dimension i.e. have two headings to group our data vs. AK data?

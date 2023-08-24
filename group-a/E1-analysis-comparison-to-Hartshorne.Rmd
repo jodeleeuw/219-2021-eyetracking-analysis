@@ -446,7 +446,7 @@ jh.first.fixation.after.verb.onset.min <- jh.critical.trials.filtered.min %>%
   mutate(det_relative.t = t -(postverbal_determiner_onset*1000))
 ```
 
-```{r E1-latency-table-min-JH, echo=FALSE, eval=FALSE}
+```{r E1-latency-table-min-JH, echo=FALSE}
 #summarize data for table
 jh.first.fix.avg.min <- jh.first.fixation.after.verb.onset.min %>%
   group_by(verb_type) %>%
