@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.16)  24 AUG 2023 20:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.16)  5 OCT 2023 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -676,168 +676,164 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 220.
 
-Underfull \vbox (badness 1796) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [7] [8]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 247.
-[9] [10] [11]
+(Font)              <10.95> on input line 246.
 
-LaTeX Warning: Reference `fig:E1-calibration-figure' on page 12 undefined on input line 390.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[12]
-<manuscript_files/figure-latex/unnamed-chunk-3-1.pdf, id=100, 433.62pt x 289.08pt>
+[9] [10]
+Underfull \vbox (badness 3758) has occurred while \output is active []
+
+[11] [12]
+
+LaTeX Warning: Reference `fig:E1-calibration-figure' on page 13 undefined on input line 395.
+
+[13]
+<manuscript_files/figure-latex/unnamed-chunk-3-1.pdf, id=109, 433.62pt x 289.08pt>
 File: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 403.
+Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 408.
 (pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
-[13 <./manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<group-a/E1-example-trial.png, id=116, 712.0197pt x 569.61577pt>
+[14 <./manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>]
+<group-a/E1-example-trial.png, id=123, 712.0197pt x 569.61577pt>
 File: group-a/E1-example-trial.png Graphic file (type png)
 <use group-a/E1-example-trial.png>
-Package pdftex.def Info: group-a/E1-example-trial.png  used on input line 429.
+Package pdftex.def Info: group-a/E1-example-trial.png  used on input line 434.
 (pdftex.def)             Requested size: 482.0484pt x 385.63873pt.
 
-Overfull \hbox (12.29338pt too wide) in paragraph at lines 429--429
+Overfull \hbox (12.29338pt too wide) in paragraph at lines 434--434
 [][] 
  []
 
-[14]
+[15 <./group-a/E1-example-trial.png>]
 <manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf, id=131, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf  used on input line 463.
+Package pdftex.def Info: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf  used on input line 468.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[16]
+Underfull \vbox (badness 1817) has occurred while \output is active []
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[17 <./manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>] [18]
 
-[15 <./group-a/E1-example-trial.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: Reference `fig:jh-E1-spaghetti-fig' on page 19 undefined on input line 514.
 
-[16 <./manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>] [17]
+[19] [20]
 
-LaTeX Warning: Reference `fig:jh-E1-spaghetti-fig' on page 18 undefined on input line 509.
-
-
-Underfull \vbox (badness 4156) has occurred while \output is active []
-
-[18] [19]
-Underfull \vbox (badness 3907) has occurred while \output is active []
-
-[20]
-
-LaTeX Warning: Reference `fig:E2-calibration-figure' on page 21 undefined on input line 567.
-
-
-LaTeX Warning: Reference `fig:E2-example-trial' on page 21 undefined on input line 572.
+LaTeX Warning: Reference `fig:E2-calibration-figure' on page 21 undefined on input line 572.
 
 [21]
 
-LaTeX Warning: Reference `fig:E2-gaze-fig-both-conds' on page 22 undefined on input line 618.
+LaTeX Warning: Reference `fig:E2-example-trial' on page 22 undefined on input line 577.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [22]
 
-LaTeX Warning: Reference `fig:E2-rt-acc-fig' on page 23 undefined on input line 622.
+LaTeX Warning: Reference `fig:E2-gaze-fig-both-conds' on page 23 undefined on input line 623.
 
-[23] [24]
+[23]
 
-LaTeX Warning: Reference `fig:E3-calibration-figure' on page 25 undefined on input line 694.
+LaTeX Warning: Reference `fig:E2-rt-acc-fig' on page 24 undefined on input line 627.
 
-[25]
-Underfull \vbox (badness 3977) has occurred while \output is active []
+[24] [25]
+
+LaTeX Warning: Reference `fig:E3-calibration-figure' on page 26 undefined on input line 699.
 
 [26]
 
-LaTeX Warning: Reference `fig:E3-design-schematic' on page 27 undefined on input line 734.
+LaTeX Warning: Reference `fig:E3-design-schematic' on page 27 undefined on input line 739.
 
-[27] [28] [29]
+[27] [28] [29] [30]
 
-LaTeX Warning: Reference `fig:E4-calibration-figure' on page 30 undefined on input line 837.
+LaTeX Warning: Reference `fig:E4-calibration-figure' on page 31 undefined on input line 844.
 
 
-LaTeX Warning: Reference `fig:E4-example-trial' on page 30 undefined on input line 849.
-
-[30]
-
-LaTeX Warning: Reference `fig:E4-mouse-moves-fig' on page 31 undefined on input line 887.
+LaTeX Warning: Reference `fig:E4-example-trial' on page 31 undefined on input line 856.
 
 [31]
 
-LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig' on page 32 undefined on input line 891.
+LaTeX Warning: Reference `fig:E4-mouse-moves-fig' on page 32 undefined on input line 894.
 
 [32]
 
-LaTeX Warning: Reference `fig:E4-mouse-moves-fig-web-and-orig' on page 33 undefined on input line 899.
-
-
-LaTeX Warning: Reference `fig:E4-proportion-fix-by-window-both' on page 33 undefined on input line 902.
+LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig' on page 33 undefined on input line 898.
 
 [33]
 
-LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 34 undefined on input line 923.
+LaTeX Warning: Reference `fig:E4-mouse-moves-fig-web-and-orig' on page 34 undefined on input line 906.
 
 
-LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 34 undefined on input line 923.
+LaTeX Warning: Reference `fig:E4-proportion-fix-by-window-both' on page 34 undefined on input line 909.
 
 [34]
 
-LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig-quadrants' on page 35 undefined on input line 925.
+LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 35 undefined on input line 930.
+
+
+LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 35 undefined on input line 930.
 
 [35]
 
-LaTeX Warning: Reference `fig:E5-calibration-figure' on page 36 undefined on input line 972.
-
-
-LaTeX Warning: Reference `fig:E5-example-trial' on page 36 undefined on input line 975.
+LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig-quadrants' on page 36 undefined on input line 932.
 
 [36]
 
-LaTeX Warning: Reference `fig:Shimojo' on page 37 undefined on input line 1024.
-
-[37]
-
-LaTeX Warning: Reference `fig:E5cal' on page 38 undefined on input line 1033.
+LaTeX Warning: Reference `fig:E5-calibration-figure' on page 37 undefined on input line 981.
 
 
-LaTeX Warning: Reference `fig:E5calcorr' on page 38 undefined on input line 1036.
+LaTeX Warning: Reference `fig:E5-example-trial' on page 37 undefined on input line 984.
+
+[37] [38]
+
+LaTeX Warning: Reference `fig:Shimojo' on page 39 undefined on input line 1033.
 
 
-LaTeX Warning: Reference `fig:groupEMainrev' on page 38 undefined on input line 1040.
+LaTeX Warning: Reference `fig:E5cal' on page 39 undefined on input line 1042.
 
-[38]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1060.
-(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [39]
+
+LaTeX Warning: Reference `fig:E5calcorr' on page 39 undefined on input line 1045.
+
+
+LaTeX Warning: Reference `fig:groupEMainrev' on page 39 undefined on input line 1049.
+
+[39] [40] [41] [42] [43]
 Underfull \vbox (badness 1028) has occurred while \output is active []
 
-[40]
+[44]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[41]
+[45]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[42]
+[46]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[43] AED endfloat: Processing end Figures and Tables [44] (./manuscript.aux)
+[47]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[48] AED endfloat: Processing end Figures and Tables [49] (./manuscript.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 16795 strings out of 477989
- 275741 string characters out of 5838053
+ 16769 strings out of 477989
+ 274928 string characters out of 5838053
  1862346 words of memory out of 5000000
- 36400 multiletter control sequences out of 15000+600000
- 601331 words of font info for 110 fonts, out of 8000000 for 9000
+ 36371 multiletter control sequences out of 15000+600000
+ 600956 words of font info for 109 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 89i,11n,90p,2230b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on manuscript.pdf (44 pages, 477103 bytes).
+ 89i,11n,90p,2230b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on manuscript.pdf (49 pages, 485138 bytes).
 PDF statistics:
- 777 PDF objects out of 1000 (max. 8388607)
- 697 compressed objects within 7 object streams
- 266 named destinations out of 1000 (max. 500000)
+ 797 PDF objects out of 1000 (max. 8388607)
+ 712 compressed objects within 8 object streams
+ 273 named destinations out of 1000 (max. 500000)
  496 words of extra memory for PDF output out of 10000 (max. 10000000)
 
