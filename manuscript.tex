@@ -207,48 +207,52 @@ The use of eye-tracking to study cognition took off when Alfred Yarbus used suct
 
 An important limitation of the eye-tracking methodology is that it has typically required costly equipment (eye-trackers can range in price from a few thousand dollars to tens of thousands of dollars), particular laboratory conditions (a quiet room with consistent indoor lighting conditions), and a substantial time investment (e.g., bringing participants into a laboratory one at a time). This limits who can conduct eye-tracking research -- not all researchers have the necessary resources -- and who can participate in eye-tracking research. Most eye-tracking study participants are from western, educated, industrialized, rich, and democratic {[}WEIRD; Henrich, Heine, and Norenzayan (2010){]} convenience samples (but see Ryskin, Salinas, Piantadosi, \& Gibson, 2023), which diminishes the generalizability of the findings and the scope of conclusions that can be drawn about human cognition.
 
-Advances in software for online data collection (de Leeuw, 2015; Papoutsaki et al., 2016) have the potential to address this shortcoming by expanding access to eye-tracking technology for researchers and making it feasible to broaden and diversify the participant samples. In particular, Webgazer.js (Papoutsaki et al., 2016) is a webcam-based Javascript plug-in that works in the browser. It can be integrated with any Javascript web interface. As a result, it can be used in conjunction with many existing platforms for online behavioral data collection that are familiar to cognitive scientists, such as jsPsych (de Leeuw, 2015), Gorilla (Anwyl-Irvine, Massonnié, Flitton, Kirkham, \& Evershed, 2020), or lab.js (Henninger, Shevchenko, Mertens, Kieslich, \& Hilbig, 2021). However, the added convenience comes at the cost of spatial and temporal resolution. The extent of this loss of precision and its impact on the kinds of research questions that webcam eye-tracking is appropriate for are not yet known.
+Advances in software for online data collection (de Leeuw, 2015; Papoutsaki et al., 2016) have the potential to address this shortcoming by expanding access to eye-tracking technology for researchers and making it feasible to broaden and diversify the participant samples. In particular, \texttt{Webgazer.js} (Papoutsaki et al., 2016) is a webcam-based Javascript plug-in that works in the browser. It can be integrated with any Javascript web interface. As a result, it can be used in conjunction with many existing platforms for online behavioral data collection that are familiar to cognitive scientists, such as \texttt{jsPsych} (de Leeuw, 2015), \texttt{Gorilla} (Anwyl-Irvine, Massonnié, Flitton, Kirkham, \& Evershed, 2020), or \texttt{lab.js} (Henninger, Shevchenko, Mertens, Kieslich, \& Hilbig, 2021). However, the added convenience comes at the cost of spatial and temporal resolution. The extent of this loss of precision and its impact on the kinds of research questions that webcam eye-tracking is appropriate for are not yet known.
 
 A few previous studies have used webcam eye-tracking in the context of behavioral/cognitive science experiments and reported on the quality of the data. In what follows, we provide a brief review of the published work that we are aware of (note that we focus on studies with adult participants as the considerations for eye-tracking of children are substantially different, but see e.g., Bánki, Eccher, Falschlehner, Hoehl, \& Markova, 2022).
 
-Semmelmann and Weigelt (2018) compared eye-tracking results between in-lab (n=29) and online (n=28) studies in three tasks: fixation, pursuit, and free viewing. They used the Webgazer.js library (Papoutsaki et al., 2016) and programmed tasks in HTML/Javascript directly. The first two tasks tested measurement of basic gaze properties. In the fixation task, participants were asked to fixate a dot, and in the pursuit task, they were asked to follow a dot with their eyes. In the free viewing task, the eye movements may have been more semantically driven: participants were shown a picture of a human face and asked to look wherever they wanted to on the image. Webgazer was successful in accurately detecting fixation locations and saccades in all three tasks, though online data (collected through a crowdsourcing platform) were slightly more variable and delayed. The free viewing task replicated previously observed statistical patterns (e.g., more fixations on eyes than mouths).
+Semmelmann and Weigelt (2018) compared eye-tracking results between in-lab (n=29) and online (n=28) studies in three tasks: fixation, pursuit, and free viewing. They used the \texttt{Webgazer.js} library (Papoutsaki et al., 2016) and programmed tasks in HTML/Javascript directly. The first two tasks tested measurement of basic gaze properties. In the fixation task, participants were asked to fixate a dot, and in the pursuit task, they were asked to follow a dot with their eyes. In the free viewing task, the eye movements may have been more semantically driven: participants were shown a picture of a human face and asked to look wherever they wanted to on the image. Webgazer was successful in accurately detecting fixation locations and saccades in all three tasks, though online data (collected through a crowdsourcing platform) were slightly more variable and delayed. The free viewing task replicated previously observed statistical patterns (e.g., more fixations on eyes than mouths).
 
-Similarly, Yang and Krajbich (2021) used the Webgazer.js library (Papoutsaki et al., 2016) combined with the jsPsych library for conducting behavioral experiments in a web browser (de Leeuw, 2015), to replicate a well-established link between value-based decision-making and eye gaze Krajbich, Armel, \& Rangel (2010). Online participants (n=38) first saw a series of images of 70 snack foods and rated how much they liked each one. During the primary task, on each of 100 trials, two of the snack food images were displayed on the left and right sides of the display and participants chose the one that they preferred while their gaze was monitored. As in previous work, participants were biased to choose the option they had spent more time looking at. The authors also implemented a code modification to address temporal delays in WebGazer.
+Similarly, Yang and Krajbich (2021) used the \texttt{Webgazer.js} library (Papoutsaki et al., 2016) combined with the \texttt{jsPsych} library for conducting behavioral experiments in a web browser (de Leeuw, 2015), to replicate a well-established link between value-based decision-making and eye gaze Krajbich, Armel, \& Rangel (2010). Online participants (n=38) first saw a series of images of 70 snack foods and rated how much they liked each one. During the primary task, on each of 100 trials, two of the snack food images were displayed on the left and right sides of the display and participants chose the one that they preferred while their gaze was monitored. As in previous work, participants were biased to choose the option they had spent more time looking at. The authors also implemented a code modification to address temporal delays in \texttt{WebGazer}.
 
-Finally, Slim and Hartsuiker (2022) used the Webgazer.js library via the PCIbex online experiment platform (Zehr \& Schwarz, 2018) to replicate a visual world paradigm study in which participants (n=90) listened to sentences (e.g., Mary reads a letter) while viewing four pictures displayed across the four quadrants of the screen (e.g., a letter, a backpack, a car and a wheelchair) (Dijkgraaf, Hartsuiker, \& Duyck, 2017). When the verb in the sentence was \emph{constraining} (e.g., read) with respect to the display (only the letter would be an appropriate continuation), listeners made more fixations to the target image (letter) than when the verb was \emph{neutral} (e.g., Mary steals a letter), as in previous work. However, they observed a substantial delay of \textasciitilde200ms in the onset of the effect relative to the in-lab study with an infrared eyetracker and a reduction in effect size (despite a threefold increase in sample size relative to the original). The authors noted that delay was particularly problematic given that the purpose of the original study was to capture aspects of predictive or anticipatory processing: in the original study, but not in the web replication, the difference between \emph{constraining} and \emph{neutral} conditions emerged before the onset of the final noun (e.g., letter).
+Finally, several papers have used the \texttt{WebGazer.js} library (via different interfaces) to replicate visual world paradigm studies. Slim and Hartsuiker (2022) used the \texttt{PCIbex} online experiment platform (Zehr \& Schwarz, 2018) to replicate a study in which participants (n=90) listened to sentences (e.g., Mary reads a letter) while viewing four pictures displayed across the four quadrants of the screen (e.g., a letter, a backpack, a car and a wheelchair) (Dijkgraaf, Hartsuiker, \& Duyck, 2017). When the verb in the sentence was \emph{constraining} (e.g., read) with respect to the display (only the letter would be an appropriate continuation), listeners made more fixations to the target image (letter) than when the verb was \emph{neutral} (e.g., Mary steals a letter), as in previous work. However, they observed a substantial delay of \textasciitilde200ms in the onset of the effect relative to the in-lab study with an infrared eyetracker and a reduction in effect size (despite a threefold increase in sample size relative to the original). The authors noted that delay was particularly problematic given that the purpose of the original study was to capture aspects of predictive or anticipatory processing: in the original study, but not in the web replication, the difference between \emph{constraining} and \emph{neutral} conditions emerged before the onset of the final noun (e.g., letter). Similarly, Degen, Kursat, and Leigh (2021) reported that effects of scalar implicature processing (comparing looks to the target in a four quadrant display for sentences such as ``Click on the girl that has \emph{some} apples'' vs.~``Click on the girl that has \emph{three} apples'' ) were smaller and delayed relative to those observed in the lab (Sun \& Breheny, 2020).
+
+In contrast, using the \texttt{Gorilla} experiment platform (Anwyl-Irvine et al., 2020), Prystauka, Altmann, and Rothman (2023) observed robust effects of verb semantics and lexical interference in similar time windows to previous in-lab studies (Altmann \& Kamide, 1999; Kukona, Cho, Magnuson, \& Tabor, 2014), though a direct comparison was not possible because their studies used different materials than the in-lab experiments they were conceptually replicating. Furthermore, using \texttt{jsPsych}, Vos, Minor, and Ramchand (2022) closely replicated the magnitude and timecourse of effects in a lab-based visual world paradigm where the regions of interest (ROIs) consisted of the left and right halves of the display, suggesting that the concerns about poor temporal resolution can be mitigated. Indeed, the eye-tracking plug-in in \texttt{jsPsych} uses a fork of \texttt{Webgazer.js} in which certain modifications have been made to minimize processing time. \footnote{See discussion at \url{https://github.com/jspsych/jsPsych/discussions/1892}}
+
+In sum, webcam eye-tracking has been used to varying degrees of success across a small set of paradigms that are used in cognitive science research. One configuration, \texttt{jsPsych} with a modification of \texttt{WebGazer.js}, appears to have circumvented initial limitations in temporal precision (Krajbich et al., 2010; Vos et al., 2022) but has only been tested with paradigms with minimal requirements in terms of spatial precision (both experiments used the two sides of the display as the ROIs). In the current work, we evaluate a broad variety of paradigms in terms of their suitability for webcam eye-tracking, in order to provide guidance for cognitive scientists aiming to increase and diversify participation in their eye-tracking-based research.
 
 \hypertarget{present-work}{%
 \section{Present work}\label{present-work}}
 
-In order to validate online eyetracking measures, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. Ideally, we would only attempt to replicate studies where the original measurements have small error bars and are known to replicate; otherwise, it can be difficult to distinguish a failure of the method (online eyetracking does not work) from a failure of the original study to replicate.
+In order to validate the online eyetracking methodology, with the particular configuration known to have the greatest temporal precision, \texttt{jsPsych} and a modification of \texttt{Webgazer}, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science. Ideally, we would only attempt to replicate studies where the original measurements have small standard errors and are known to replicate; otherwise, it can be difficult to distinguish a failure of the method (online eyetracking does not work) from a failure of the original study to replicate.
 
-In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several ``sanity check'\,' analyses, such as the correlation between calibration accuracy and effect size. (If the effect is real but there is noise from low-accuracy eyetracking, this correlation should be substantial.) Third, for XXX of the studies, we had comparison data collected in-lab either using jsPsych or a more traditional eyetracker technology, allowing us to direct assess the impact of differences in subject population and equipment.
+In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several `'sanity check'' analyses, such as the correlation between calibration accuracy and effect size. (If the effect is real but there is noise from low-accuracy eyetracking, this correlation should be substantial.) Third, for two of the studies, we had comparison data collected in-lab either using \texttt{jsPsych} or a more traditional eyetracker technology, allowing us to direct assess the impact of differences in subject population and equipment.
 
 \hypertarget{selection-of-studies}{%
 \subsection{Selection of Studies}\label{selection-of-studies}}
 
 We chose five high-impact eyetracking studies involving adult subjects. (Given the additional difficulties of recruiting and retaining child participants, we excluded developmental studies.) Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two
 halves of the screen, visual world paradigm with four quadrants, visual
-world paradigm with ``natural'' scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table~\ref(tab:studies-table) provides an overview of the five studies we selected.
+world paradigm with ``natural'' scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table \ref{tab:studies-table} provides an overview of the five studies we selected.
 
 \begin{table}[tbp]
 
 \begin{center}
 \begin{threeparttable}
 
-\caption{\label{tab:studies-table}Studies selected for replication attempts}
+\caption{\label{tab:studies-table}Studies selected for replication attempts. Citation counts based on Google Scholar (August 2023).}
 
 \small{
 
 \begin{tabular}{llll}
 \toprule
-Citation & \multicolumn{1}{c}{Topic Area} & \multicolumn{1}{c}{Paradigm} & \multicolumn{1}{c}{Citations (June 2022, Google Scholar)}\\
+Citation & \multicolumn{1}{c}{Topic Area} & \multicolumn{1}{c}{Paradigm} & \multicolumn{1}{c}{Citations}\\
 \midrule
-Altmann \& Kamide, 1999 & Psycholinguistics & Natural Scenes & 1,840.00\\
-Johansson \& Johansson, 2013 & Memory & Four Quadrants & 190.00\\
-Manns, Stark, \& Squire, 2000 & Memory & Two Halves & 127.00\\
-Snedeker \& Trueswell, 2004 & Psycholinguistics & Four Quadrants & 448.00\\
-Shimojo et al., 2003 & Decision Making & Two Halves & 964.00\\
+Altmann \& Kamide, 1999 & Psycholinguistics & Natural Scenes & 2,007\\
+Johansson \& Johansson, 2014 & Memory & Four Quadrants & 228\\
+Manns, Stark, \& Squire, 2000 & Memory & Two Halves & 131\\
+Snedeker \& Trueswell, 2004 & Psycholinguistics & Four Quadrants & 472\\
+Shimojo et al., 2003 & Decision Making & Two Halves & 1,073\\
 \bottomrule
 \end{tabular}
 
@@ -289,7 +293,7 @@ We used a fork of the \texttt{webgazer.js} library for webcam eyetracking
 (Papoutsaki et al., 2016), implemented in \texttt{jsPsych}, a Javascript
 library for running behavioral experiments in a web browser
 (de Leeuw, 2015). Our fork included changes to
-webgazer.js in order to improve data quality for experiments in which
+\texttt{webgazer.js} in order to improve data quality for experiments in which
 the precise timing of stimulus onsets is relevant. Specifically, we
 implemented a polling mode so that gaze predictions could be requested
 at a regular interval, which improved the sampling rate considerably in
@@ -333,7 +337,7 @@ the study.
 \hypertarget{data-pre-processing}{%
 \subsection{Data pre-processing}\label{data-pre-processing}}
 
-We used R (Version 4.2.1; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.2.1; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.4; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.10; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.2; Wickham, 2021a), \emph{ggplot2} (Version 3.4.0; Wickham, 2016), \emph{jsonlite} (Version 1.8.4; Ooms, 2014), \emph{lme4} (Version 1.1.31; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.5.3; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2020), \emph{readr} (Version 2.1.3; Wickham \& Hester, 2020), \emph{shiny} (Version 1.7.4; Chang et al., 2021), \emph{stringr} (Version 1.5.0; Wickham, 2019), \emph{tidyr} (Version 1.3.0; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R (Version 4.2.1; R Core Team, 2021) and the R-packages \emph{afex} (Version 1.1.1; Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2021), \emph{broom.mixed} (Version 0.2.9.4; Bolker \& Robinson, 2020), \emph{dplyr} (Version 1.0.10; Wickham, François, Henry, \& Müller, 2021), \emph{forcats} (Version 0.5.2; Wickham, 2021a), \emph{ggplot2} (Version 3.4.0; Wickham, 2016), \emph{jsonlite} (Version 1.8.4; Ooms, 2014), \emph{lme4} (Version 1.1.31; Bates, Mächler, Bolker, \& Walker, 2015), \emph{lmerTest} (Version 3.1.3; Kuznetsova, Brockhoff, \& Christensen, 2017), \emph{Matrix} (Version 1.5.1; Bates \& Maechler, 2021), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2020), \emph{readr} (Version 2.1.3; Wickham \& Hester, 2020), \emph{shiny} (Version 1.7.3; Chang et al., 2021), \emph{stringr} (Version 1.5.0; Wickham, 2019), \emph{tidyr} (Version 1.3.0; Wickham, 2021b), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 \hypertarget{experiment-1}{%
 \section{Experiment 1}\label{experiment-1}}
@@ -377,13 +381,13 @@ worked with data collected from 58 participants.
 \hypertarget{in-lab-sample}{%
 \paragraph{In-lab sample}\label{in-lab-sample}}
 
-Forty-nine participants were (AJ: help. Insert how they were compensated, relevant IRB/funding stuff, any other info).
+Forty-nine participants were \textcolor{red}{AJ: help. Insert how they were compensated, relevant IRB/funding stuff, any other info}.
 
 \hypertarget{procedure}{%
 \subsubsection{Procedure}\label{procedure}}
 
 The task began with a 9-point eye-tracker calibration
-and validation (Figure~\ref{fig:E1-calibration-figure}).
+and validation (Figure~\ref{fig:E1-calibration-figure} ).
 During the experiment, the participants were
 simultaneously presented with a visual image and a corresponding audio
 recording of a spoken sentence. Participants had to input a keyboard
@@ -404,7 +408,7 @@ were recorded for each trial.
 \subsubsection{Materials \& Design}\label{materials-design}}
 
 The visual stimuli were created through Canva and depicted an agent
-accompanied by four to five objects in the scene (see Figure~\ref{fig:E1-example-trial}). On
+accompanied by four to five objects in the scene (see Figure ~\ref{fig:E1-example-trial}). On
 critical trials, participants heard one of two sentences associated with
 the scene. In the restrictive condition, the sentence (e.g., ``The boy
 will eat the cake'') contained a verb (e.g., ``eat'') which restricts the
@@ -422,9 +426,7 @@ inappropriate sentences. The correct keyboard response for the filler
 trials was ``no.''
 
 \begin{figure}
-\centering
-\includegraphics{group-a/E1-example-trial.jpeg}
-\caption{\label{fig:E1-example-trial}Example trial from Experiment 1. Participants would hear a sentence (e.g., ``The boy will eat the cake'') and respond according to whether the sentence matched the picture.}
+\includegraphics[width=6.67in]{group-a/E1-example-trial} \caption{Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.}\label{fig:E1-example-trial}
 \end{figure}
 
 Each participant was presented with sixteen critical trials (eight in
@@ -438,7 +440,7 @@ subject-by-subject basis.
 
 Looks to the objects in the scene were time-locked to the onset of the
 verb, the offset of the verb, onset of the post-verbal determiner, and
-onset of the target noun. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.
+onset of the target noun. ROIs were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
@@ -450,8 +452,6 @@ onset of the target noun. Regions of interest (ROIs) were defined by creating bo
 \paragraph{Minimal Exclusion}\label{minimal-exclusion}}
 
 The first set of analyses used minimal exclusion criteria. First, we eliminated participants with 0 percent of fixations in any ROIs. This resulted in the elimination of 1 participants. Second, we excluded participants with validation accuracy under 10 percent, resulting in an additional 5 excluded participants. The following analyses included 52 participants.
-
-*TO-DO: Confirm: what was done with fixations initiated prior to verb onset that persisted past verb onset (I think I should be able to tell from looking at the code) whether there's a 200-ms scootch.
 
 \hypertarget{cumulative-fixation-probabilities}{%
 \paragraph{Cumulative Fixation Probabilities}\label{cumulative-fixation-probabilities}}
@@ -472,12 +472,14 @@ In our first two analyses, we ask whether participants looked more to the target
 \hypertarget{pre-verb-offset-fixations}{%
 \paragraph{Pre-verb-offset fixations}\label{pre-verb-offset-fixations}}
 
-Altmann \& Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (\emph{b} = 0.05, \emph{SE} = 0.03, \emph{p}=0.20).
+Altmann and Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (\emph{b} = 0.05, \emph{SE} = 0.03, \emph{p}=0.20).
 
 \hypertarget{first-target-fixations-after-verb}{%
 \paragraph{First target fixations after verb}\label{first-target-fixations-after-verb}}
 
-Finally, we address whether participants look to the target faster in the restrictive vs.~the non-restrictive condition, starting after the onset of the verb. {[}TO-DO: On average, participants looked to the target X ms after (AK's Table 1)\ldots, I'll also want to say the lengths of the verbs. AK's Table 2{]} We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (\emph{b} = -121.91, \emph{SE} = 90.57, \emph{p}=0.20).
+Finally, we address whether participants look to the target faster in the restrictive vs.~the non-restrictive condition, starting after the onset of the verb. {[}TO-DO: On average, participants looked to the target 349 ms after the noun onset in the restrictive condition (compared to ) and 349 ms after the noun onset in the non-restrictive condition (compared to ){]}. Thus, first fixations were not only delayed relative to those in the previous studies compared here, but also showed a smaller difference between conditions.
+
+We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (\emph{b} = -121.91, \emph{SE} = 90.57, \emph{p}=0.20).
 
 \hypertarget{aggressive-exclusion}{%
 \paragraph{Aggressive Exclusion}\label{aggressive-exclusion}}
@@ -1126,6 +1128,9 @@ Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y., \ldots{}
 \leavevmode\vadjust pre{\hypertarget{ref-deleeuwJsPsychJavaScriptLibrary2015}{}}%
 de Leeuw, J. R. (2015). {jsPsych}: {A JavaScript} library for creating behavioral experiments in a {Web} browser. \emph{Behavior Research Methods}, \emph{47}(1), 1--12. \url{https://doi.org/10.3758/s13428-014-0458-y}
 
+\leavevmode\vadjust pre{\hypertarget{ref-degen2021seeing}{}}%
+Degen, J., Kursat, L., \& Leigh, D. D. (2021). Seeing is believing: Testing an explicit linking assumption for visual world eye-tracking in psycholinguistics. \emph{Proceedings of the Annual Meeting of the Cognitive Science Society}, \emph{43}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-dijkgraaf2017predicting}{}}%
 Dijkgraaf, A., Hartsuiker, R. J., \& Duyck, W. (2017). Predicting upcoming information in native-language and non-native-language auditory word recognition. \emph{Bilingualism: Language and Cognition}, \emph{20}(5), 917--930.
 
@@ -1147,6 +1152,9 @@ Johansson, R., \& Johansson, M. (2014). Look {Here}, {Eye Movements Play} a {Fun
 \leavevmode\vadjust pre{\hypertarget{ref-krajbich2010visual}{}}%
 Krajbich, I., Armel, C., \& Rangel, A. (2010). Visual fixations and the computation and comparison of value in simple choice. \emph{Nature Neuroscience}, \emph{13}(10), 1292--1298.
 
+\leavevmode\vadjust pre{\hypertarget{ref-kukona2014lexical}{}}%
+Kukona, A., Cho, P. W., Magnuson, J. S., \& Tabor, W. (2014). Lexical interference effects in sentence processing: Evidence from the visual world paradigm and self-organizing models. \emph{Journal of Experimental Psychology: Learning, Memory, and Cognition}, \emph{40}(2), 326.
+
 \leavevmode\vadjust pre{\hypertarget{ref-R-lmerTest}{}}%
 Kuznetsova, A., Brockhoff, P. B., \& Christensen, R. H. B. (2017). {lmerTest} package: Tests in linear mixed effects models. \emph{Journal of Statistical Software}, \emph{82}(13), 1--26. \url{https://doi.org/10.18637/jss.v082.i13}
 
@@ -1158,6 +1166,9 @@ Ooms, J. (2014). The jsonlite package: A practical and consistent mapping betwee
 
 \leavevmode\vadjust pre{\hypertarget{ref-papoutsaki2016webgazer}{}}%
 Papoutsaki, A., Sangkloy, P., Laskey, J., Daskalova, N., Huang, J., \& Hays, J. (2016). {WebGazer}: {Scalable} webcam eye tracking using user interactions. \emph{Proceedings of the 25th International Joint Conference on Artificial Intelligence ({IJCAI})}, 3839--3845. {AAAI}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-prystauka2023online}{}}%
+Prystauka, Y., Altmann, G. T., \& Rothman, J. (2023). Online eye tracking and real-time sentence processing: On opportunities and efficacy for capturing psycholinguistic effects of different magnitudes and diversity. \emph{Behavior Research Methods}, 1--19.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
 R Core Team. (2021). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
@@ -1195,8 +1206,14 @@ Snedeker, J., \& Trueswell, J. C. (2004). The developing constraints on parsing 
 \leavevmode\vadjust pre{\hypertarget{ref-spiveyOculomotorMechanismsActivated2001}{}}%
 Spivey, M. J., \& Geng, J. J. (2001). Oculomotor mechanisms activated by imagery and memory: Eye movements to absent objects. \emph{Psychological Research}, \emph{65}(4), 235--241. \url{https://doi.org/10.1007/s004260100059}
 
+\leavevmode\vadjust pre{\hypertarget{ref-sun2020another}{}}%
+Sun, C., \& Breheny, R. (2020). Another look at the online processing of scalar inferences: An investigation of conflicting findings from visual-world eye-tracking studies. \emph{Language, Cognition and Neuroscience}, \emph{35}(8), 949--979.
+
 \leavevmode\vadjust pre{\hypertarget{ref-tanenhaus1995}{}}%
 Tanenhaus, M. K., Spivey-Knowlton, M. J., Eberhard, K. M., \& Sedivy, J. C. (1995). Integration of visual and linguistic information in spoken language comprehension. \emph{Science}, \emph{268}(5217), 1632--1634.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vos2022comparing}{}}%
+Vos, M., Minor, S., \& Ramchand, G. C. (2022). Comparing infrared and webcam eye tracking in the visual world paradigm. \emph{Glossa Psycholinguistics}, \emph{1}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
 Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. Retrieved from \url{https://ggplot2.tidyverse.org}

@@ -110,7 +110,7 @@ ggplot(subject.calibration.score, aes(x=mean_percent_in_roi))+
 
 #### Correlation with Effects
 
-To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within XXX pixels of the validation points during the final validation phase before the eye tracking is performed.
+To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within 200 pixels of the validation points during the final validation phase before the eye tracking is performed.
 
 Calibration scores were not correlated with looking scores, regardless of which method was used to calculate looking scores.
 

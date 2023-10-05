@@ -1,16 +1,16 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  18 AUG 2023 17:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.16)  24 AUG 2023 20:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **manuscript.tex
 (./manuscript.tex
-LaTeX2e <2022-06-01> patch level 5
-L3 programming layer <2022-08-30> (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/apa6/apa6.cls
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-02-07> (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/apa6/apa6.cls
 Document Class: apa6 2020/01/13 v2.34 APA formatting (6th edition)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count185
 \c@section=\count186
@@ -20,15 +20,15 @@ File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \c@subparagraph=\count190
 \c@figure=\count191
 \c@table=\count192
-\abovecaptionskip=\skip47
-\belowcaptionskip=\skip48
-\bibindent=\dimen138
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count193
 )
 Class apa6 Info: No bibliography package was specified; defaulting to (but not loading) Biblatex on input line 213.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -62,93 +62,93 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 112.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ))
 \Gm@cnth=\count194
 \Gm@cntv=\count195
 \c@Gm@tempcnt=\count196
-\Gm@bindingoffset=\dimen139
-\Gm@wd@mp=\dimen140
-\Gm@odd@mp=\dimen141
-\Gm@even@mp=\dimen142
-\Gm@layoutwidth=\dimen143
-\Gm@layoutheight=\dimen144
-\Gm@layouthoffset=\dimen145
-\Gm@layoutvoffset=\dimen146
+\Gm@bindingoffset=\dimen141
+\Gm@wd@mp=\dimen142
+\Gm@odd@mp=\dimen143
+\Gm@even@mp=\dimen144
+\Gm@layoutwidth=\dimen145
+\Gm@layoutheight=\dimen146
+\Gm@layouthoffset=\dimen147
+\Gm@layoutvoffset=\dimen148
 \Gm@dimlist=\toks17
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen147
-\Gin@req@width=\dimen148
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+\Gin@req@height=\dimen149
+\Gin@req@width=\dimen150
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen149
-\lightrulewidth=\dimen150
-\cmidrulewidth=\dimen151
-\belowrulesep=\dimen152
-\belowbottomsep=\dimen153
-\aboverulesep=\dimen154
-\abovetopsep=\dimen155
-\cmidrulesep=\dimen156
-\cmidrulekern=\dimen157
-\defaultaddspace=\dimen158
+\heavyrulewidth=\dimen151
+\lightrulewidth=\dimen152
+\cmidrulewidth=\dimen153
+\belowrulesep=\dimen154
+\belowbottomsep=\dimen155
+\aboverulesep=\dimen156
+\abovetopsep=\dimen157
+\cmidrulesep=\dimen158
+\cmidrulekern=\dimen159
+\defaultaddspace=\dimen160
 \@cmidla=\count197
 \@cmidlb=\count198
-\@aboverulesep=\dimen159
-\@belowrulesep=\dimen160
+\@aboverulesep=\dimen161
+\@belowrulesep=\dimen162
 \@thisruleclass=\count199
 \@lastruleclass=\count266
-\@thisrulewidth=\dimen161
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+\@thisrulewidth=\dimen163
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box51
 )
-\b@level@one@skip=\skip49
-\e@level@one@skip=\skip50
-\b@level@two@skip=\skip51
-\e@level@two@skip=\skip52
-\b@level@three@skip=\skip53
-\e@level@three@skip=\skip54
-\b@level@four@skip=\skip55
-\e@level@four@skip=\skip56
-\b@level@five@skip=\skip57
-\e@level@five@skip=\skip58
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+\b@level@one@skip=\skip50
+\e@level@one@skip=\skip51
+\b@level@two@skip=\skip52
+\e@level@two@skip=\skip53
+\b@level@three@skip=\skip54
+\e@level@three@skip=\skip55
+\b@level@four@skip=\skip56
+\e@level@four@skip=\skip57
+\b@level@five@skip=\skip58
+\e@level@five@skip=\skip59
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2022/03/01 v3.6b Customizing captions (AR)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
-\caption@tempdima=\dimen162
-\captionmargin=\dimen163
-\caption@leftmargin=\dimen164
-\caption@rightmargin=\dimen165
-\caption@width=\dimen166
-\caption@indent=\dimen167
-\caption@parindent=\dimen168
-\caption@hangindent=\dimen169
+\caption@tempdima=\dimen164
+\captionmargin=\dimen165
+\caption@leftmargin=\dimen166
+\caption@rightmargin=\dimen167
+\caption@width=\dimen168
+\caption@indent=\dimen169
+\caption@parindent=\dimen170
+\caption@hangindent=\dimen171
 Package caption Info: Standard document class detected.
 )
 \c@caption@flags=\count267
@@ -156,11 +156,11 @@ Package caption Info: Standard document class detected.
 Package caption Info: threeparttable package is loaded.
 )
 \c@APAenum=\count269
-\@text@par@indent=\skip59
+\@text@par@indent=\skip60
 \gr@box=\box52
-\gr@boxwidth=\skip60
-\gr@boxheight=\skip61
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty
+\gr@boxwidth=\skip61
+\gr@boxheight=\skip62
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2022/01/05 v1.2f Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup4
 \symboldletters=\mathgroup5
@@ -169,18 +169,18 @@ Package bm Info: No bold for \OMX/lmex/m/n, using \pmb.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 )
 \c@appendix=\count270
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-Package: fancyhdr 2022/05/18 v4.0.3 Extensive control of page headers and footers
-\f@nch@headwidth=\skip62
-\f@nch@O@elh=\skip63
-\f@nch@O@erh=\skip64
-\f@nch@O@olh=\skip65
-\f@nch@O@orh=\skip66
-\f@nch@O@elf=\skip67
-\f@nch@O@erf=\skip68
-\f@nch@O@olf=\skip69
-\f@nch@O@orf=\skip70
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/endfloat/endfloat.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
+\f@nch@headwidth=\skip63
+\f@nch@O@elh=\skip64
+\f@nch@O@erh=\skip65
+\f@nch@O@olh=\skip66
+\f@nch@O@orh=\skip67
+\f@nch@O@elf=\skip68
+\f@nch@O@erf=\skip69
+\f@nch@O@olf=\skip70
+\f@nch@O@orf=\skip71
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/endfloat/endfloat.sty
 Package: endfloat 2019/04/15 v2.7 LaTeX2e package puts figures and tables at end (jdm)
 \c@posttable=\count271
 \efloat@postttt=\write3
@@ -188,28 +188,28 @@ Package: endfloat 2019/04/15 v2.7 LaTeX2e package puts figures and tables at end
 \c@postfigure=\count273
 \efloat@postfff=\write4
 \@ef@fffopen=\count274
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count275
 \float@exts=\toks18
 \float@box=\box53
 \@float@everytoks=\toks19
 \@floatcapt=\box54
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2022/04/08 v2.17n AMS math features
-\@mathmargin=\skip71
+\@mathmargin=\skip72
 For additional information on amsmath, use the `?' option.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks20
-\ex@=\dimen170
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+\ex@=\dimen172
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 LaTeX Info: Redefining \boldsymbol on input line 28.
-\pmbraise@=\dimen171
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+\pmbraise@=\dimen173
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count276
@@ -229,7 +229,7 @@ LaTeX Info: Redefining \big on input line 722.
 LaTeX Info: Redefining \Big on input line 723.
 LaTeX Info: Redefining \bigg on input line 724.
 LaTeX Info: Redefining \Bigg on input line 725.
-\big@size=\dimen172
+\big@size=\dimen174
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \macc@depth=\count281
@@ -247,42 +247,42 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \column@=\count286
 \maxfields@=\count287
 \andhelp@=\toks22
-\eqnshift@=\dimen173
-\alignsep@=\dimen174
-\tagshift@=\dimen175
-\tagwidth@=\dimen176
-\totwidth@=\dimen177
-\lineht@=\dimen178
+\eqnshift@=\dimen175
+\alignsep@=\dimen176
+\tagshift@=\dimen177
+\tagwidth@=\dimen178
+\totwidth@=\dimen179
+\lineht@=\dimen180
 \@envbody=\toks23
-\multlinegap=\skip72
-\multlinetaggap=\skip73
+\multlinegap=\skip73
+\multlinetaggap=\skip74
 \mathdisplay@stack=\toks24
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup7
 \symAMSb=\mathgroup8
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks25
 \inpenc@posthook=\toks26
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 227.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
 Package xcolor Info: Model `RGB' extended on input line 1369.
@@ -293,55 +293,53 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 )
-\cslhangindent=\skip74
-\csllabelwidth=\skip75
-\cslentryspacingunit=\skip76
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+\cslhangindent=\skip75
+\csllabelwidth=\skip76
+\cslentryspacingunit=\skip77
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count288
 \calc@Bcount=\count289
-\calc@Adimen=\dimen179
-\calc@Bdimen=\dimen180
-\calc@Askip=\skip77
-\calc@Bskip=\skip78
+\calc@Adimen=\dimen181
+\calc@Bdimen=\dimen182
+\calc@Askip=\skip78
+\calc@Bskip=\skip79
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count290
-\calc@Cskip=\skip79
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2022/08/29 3.79 The Babel package
+\calc@Cskip=\skip80
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2023/02/13 3.86 The Babel package
 \babel@savecnt=\count291
-\U@D=\dimen181
+\U@D=\dimen183
 \l@unhyphenated=\language3
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def)
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
 \bbl@dirlevel=\count292
-Package babel Info: You haven't specified a language. I'll use 'nil'
-(babel)             as the main language. Reported on input line 4411.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/babel/nil.ldf
-Language: nil 2022/08/29 3.79 Nil language
+Package babel Info: You haven't specified a language as a class or package
+(babel)             option. I'll load 'nil'. Reported on input line 4422.
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/babel/nil.ldf
+Language: nil 2023/02/13 3.86 Nil language
 \l@nil=\language4
 ))
 \everypar=\toks27
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
 Package babel Info: Importing data for english
 (babel)             from babel-en.ini. Reported on input line 93.
-Package babel Info: Hyphen rules for 'english' set to \l@english
-(babel)             (\language0). Reported on input line 93.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
 Package: upgreek 2003/02/12 v2.0 (WaS)
 Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
 \symugrf@m=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `ugrf@m' in version `bold'
 (Font)                  U/eur/m/n --> U/eur/b/n on input line 38.
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
-\LTleft=\skip80
-\LTright=\skip81
-\LTpre=\skip82
-\LTpost=\skip83
+\LTleft=\skip81
+\LTright=\skip82
+\LTpre=\skip83
+\LTpost=\skip84
 \LTchunksize=\count293
-\LTcapwidth=\dimen182
+\LTcapwidth=\dimen184
 \LT@head=\box57
 \LT@firsthead=\box58
 \LT@foot=\box59
@@ -352,197 +350,203 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \c@LT@tables=\count296
 \c@LT@chunks=\count297
 \LT@p@ftn=\toks28
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip84
+\multirow@colwidth=\skip85
 \multirow@cntb=\count298
-\multirow@dima=\skip85
-\bigstrutjot=\dimen183
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
+\multirow@dima=\skip86
+\bigstrutjot=\dimen185
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2022/03/10 v2.5f Tabular extension package (FMi)
-\col@sep=\dimen184
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen186
 \ar@mcellbox=\box62
-\extrarowheight=\dimen185
+\extrarowheight=\dimen187
 \NC@list=\toks29
-\extratabsurround=\skip86
-\backup@length=\skip87
+\extratabsurround=\skip87
+\backup@length=\skip88
 \ar@cellbox=\box63
 )
-\TX@col@width=\dimen186
-\TX@old@table=\dimen187
-\TX@old@col=\dimen188
-\TX@target=\dimen189
-\TX@delta=\dimen190
+\TX@col@width=\dimen188
+\TX@old@table=\dimen189
+\TX@old@col=\dimen190
+\TX@target=\dimen191
+\TX@delta=\dimen192
 \TX@cols=\count299
 \TX@ftn=\toks30
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
 Package: threeparttablex 2013/07/23 v0.3 by daleif
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
 Package: environ 2014/05/04 v0.3 A new way to define environments
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\TPTL@width=\skip88
+\TPTL@width=\skip89
 )
-\longtablewidth=\skip89
+\longtablewidth=\skip90
 Failed to patch abstract.
 Failed to patch title.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2022-08-30 L3 programming layer (loader) 
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-08-30 L3 backend support: PDF output (pdfTeX)
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2023-02-07 L3 programming layer (loader) 
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count300
 \l__pdf_internal_box=\box64
 ))
 Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2022-06-22 L3 Experimental document command parser
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2023-02-02 L3 Experimental document command parser
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2023/01/19 line numbers on paragraphs v5.1
 \linenopenalty=\count301
 \output=\toks31
 \linenoprevgraf=\count302
-\linenumbersep=\dimen191
-\linenumberwidth=\dimen192
+\linenumbersep=\dimen193
+\linenumberwidth=\dimen194
 \c@linenumber=\count303
 \c@pagewiselinenumber=\count304
 \c@LN@truepage=\count305
 \c@internallinenumber=\count306
 \c@internallinenumbers=\count307
-\quotelinenumbersep=\dimen193
-\bframerule=\dimen194
-\bframesep=\dimen195
+\quotelinenumbersep=\dimen195
+\bframerule=\dimen196
+\bframesep=\dimen197
 \bframebox=\box65
-LaTeX Info: Redefining \\ on input line 3056.
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.sty
+\linenoamsmath@ams@eqpen=\count308
+LaTeX Info: Redefining \\ on input line 3131.
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2022-09-14 v5.2n context-sensitive quotations (JAW)
-\csq@reset=\count308
-\csq@gtype=\count309
-\csq@glevel=\count310
-\csq@qlevel=\count311
-\csq@maxlvl=\count312
-\csq@tshold=\count313
+\csq@reset=\count309
+\csq@gtype=\count310
+\csq@glevel=\count311
+\csq@qlevel=\count312
+\csq@maxlvl=\count313
+\csq@tshold=\count314
 \csq@ltx@everypar=\toks32
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.def
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2022-09-14 v5.2n csquotes generic definitions (JAW)
 )
 Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
 Package csquotes Info: ... configuration file loaded successfully.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.cfg
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.cfg
 File: csquotes.cfg 
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2022-06-20 v7.00s Hypertext links for LaTeX
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2023-02-07 v7.00v Hypertext links for LaTeX
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count314
+\c@section@level=\count315
 )
-\@linkdim=\dimen196
-\Hy@linkcounter=\count315
-\Hy@pagecounter=\count316
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2022-06-20 v7.00s Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen198
+\Hy@linkcounter=\count316
+\Hy@pagecounter=\count317
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2023-02-07 v7.00v Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
-) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count317
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2022-06-20 v7.00s Hyperref: PDF Unicode definition (HO)
+\Hy@SavedSpaceFactor=\count318
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2023-02-07 v7.00v Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `unicode' set `true' on input line 4045.
-Package hyperref Info: Hyper figures OFF on input line 4162.
-Package hyperref Info: Link nesting OFF on input line 4167.
-Package hyperref Info: Hyper index ON on input line 4170.
-Package hyperref Info: Plain pages OFF on input line 4177.
-Package hyperref Info: Backreferencing OFF on input line 4182.
+Package hyperref Info: Option `unicode' set `true' on input line 4060.
+Package hyperref Info: Hyper figures OFF on input line 4177.
+Package hyperref Info: Link nesting OFF on input line 4182.
+Package hyperref Info: Hyper index ON on input line 4185.
+Package hyperref Info: Plain pages OFF on input line 4192.
+Package hyperref Info: Backreferencing OFF on input line 4197.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4408.
-\c@Hy@tempcnt=\count318
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
+Package hyperref Info: Bookmarks ON on input line 4425.
+\c@Hy@tempcnt=\count319
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4746.
-\XeTeXLinkMargin=\dimen197
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen199
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count319
-\Field@Width=\dimen198
-\Fld@charsize=\dimen199
-Package hyperref Info: Hyper figures OFF on input line 6024.
-Package hyperref Info: Link nesting OFF on input line 6029.
-Package hyperref Info: Hyper index ON on input line 6032.
-Package hyperref Info: backreferencing OFF on input line 6039.
-Package hyperref Info: Link coloring OFF on input line 6044.
-Package hyperref Info: Link coloring with OCG OFF on input line 6049.
-Package hyperref Info: PDF/A mode OFF on input line 6054.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+\Fld@menulength=\count320
+\Field@Width=\dimen256
+\Fld@charsize=\dimen257
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring OFF on input line 6062.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count320
-\c@Item=\count321
-\c@Hfootnote=\count322
+\Hy@abspage=\count321
+\c@Item=\count322
+\c@Hfootnote=\count323
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2022-06-20 v7.00s Hyperref driver for pdfTeX
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2023-02-07 v7.00v Hyperref driver for pdfTeX
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count323
-\c@bookmark@seq@number=\count324
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+\Fld@listcount=\count324
+\c@bookmark@seq@number=\count325
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip90
-)
+\Hy@SectionHShift=\skip91
+) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count326
+))
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
@@ -602,45 +606,41 @@ LaTeX Font Info:    ... okay on input line 203.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-)) (/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/apa6/config/APAamerican.txt
+)) (/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/apa6/config/APAamerican.txt
 File: APAamerican.txt 2012/02/23 v1.25 apa6 configuration for American English
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 203.
-(./manuscript.out) (./manuscript.out)
-\@outlinefile=\write5
-\openout5 = `manuscript.out'.
-
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -650,156 +650,166 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 205.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 205.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{/Users/ajames2/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+) [1{/Users/rachelryskin1/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2] [3]
 Underfull \vbox (badness 1838) has occurred while \output is active []
 
 [4]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 210.
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 Underfull \vbox (badness 3977) has occurred while \output is active []
 
 [5] [6]
-
-LaTeX Warning: Reference `(' on page 7 undefined on input line 232.
-
-[7]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 243.
+(Font)              <10> on input line 220.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 220.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 220.
 
-Overfull \hbox (60.6078pt too wide) in paragraph at lines 238--258
- [] 
- []
+Underfull \vbox (badness 1796) has occurred while \output is active []
 
-[8]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 288.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [9] [10]
+[7] [8]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 247.
+[9] [10] [11]
 
-LaTeX Warning: Reference `fig:E1-calibration-figure' on page 11 undefined on input line 386.
+LaTeX Warning: Reference `fig:E1-calibration-figure' on page 12 undefined on input line 390.
 
-[11]
-<manuscript_files/figure-latex/unnamed-chunk-3-1.pdf, id=320, 433.62pt x 289.08pt>
+[12]
+<manuscript_files/figure-latex/unnamed-chunk-3-1.pdf, id=100, 433.62pt x 289.08pt>
 File: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 399.
+Package pdftex.def Info: manuscript_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 403.
 (pdftex.def)             Requested size: 433.63878pt x 289.09251pt.
-[12 <./manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<group-a/E1-example-trial.jpeg, id=333, 2007.5pt x 1606.0pt>
-File: group-a/E1-example-trial.jpeg Graphic file (type jpg)
-<use group-a/E1-example-trial.jpeg>
-Package pdftex.def Info: group-a/E1-example-trial.jpeg  used on input line 426.
-(pdftex.def)             Requested size: 469.74086pt x 375.7927pt.
-[13] [14 <./group-a/E1-example-trial.jpeg>]
-<manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf, id=352, 469.755pt x 325.215pt>
+[13 <./manuscript_files/figure-latex/unnamed-chunk-3-1.pdf>]
+<group-a/E1-example-trial.png, id=116, 712.0197pt x 569.61577pt>
+File: group-a/E1-example-trial.png Graphic file (type png)
+<use group-a/E1-example-trial.png>
+Package pdftex.def Info: group-a/E1-example-trial.png  used on input line 429.
+(pdftex.def)             Requested size: 482.0484pt x 385.63873pt.
+
+Overfull \hbox (12.29338pt too wide) in paragraph at lines 429--429
+[][] 
+ []
+
+[14]
+<manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf, id=131, 469.755pt x 325.215pt>
 File: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>
 Package pdftex.def Info: manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf  used on input line 463.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15 <./manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>] [16]
 
-LaTeX Warning: Reference `fig:jh-E1-spaghetti-fig' on page 17 undefined on input line 507.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[17] [18] [19]
+[15 <./group-a/E1-example-trial.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:E2-calibration-figure' on page 20 undefined on input line 565.
+[16 <./manuscript_files/figure-latex/E1-spaghetti-fig-1.pdf>] [17]
+
+LaTeX Warning: Reference `fig:jh-E1-spaghetti-fig' on page 18 undefined on input line 509.
 
 
-LaTeX Warning: Reference `fig:E2-example-trial' on page 20 undefined on input line 570.
+Underfull \vbox (badness 4156) has occurred while \output is active []
+
+[18] [19]
+Underfull \vbox (badness 3907) has occurred while \output is active []
 
 [20]
 
-LaTeX Warning: Reference `fig:E2-gaze-fig-both-conds' on page 21 undefined on input line 616.
+LaTeX Warning: Reference `fig:E2-calibration-figure' on page 21 undefined on input line 567.
 
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 618.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 618.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 618.
+
+LaTeX Warning: Reference `fig:E2-example-trial' on page 21 undefined on input line 572.
+
 [21]
 
-LaTeX Warning: Reference `fig:E2-rt-acc-fig' on page 22 undefined on input line 620.
+LaTeX Warning: Reference `fig:E2-gaze-fig-both-conds' on page 22 undefined on input line 618.
 
-[22] [23]
+[22]
 
-LaTeX Warning: Reference `fig:E3-calibration-figure' on page 24 undefined on input line 692.
+LaTeX Warning: Reference `fig:E2-rt-acc-fig' on page 23 undefined on input line 622.
 
-[24]
+[23] [24]
 
-LaTeX Warning: Reference `fig:E3-design-schematic' on page 25 undefined on input line 732.
+LaTeX Warning: Reference `fig:E3-calibration-figure' on page 25 undefined on input line 694.
 
-[25] [26] [27] [28]
+[25]
+Underfull \vbox (badness 3977) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:E4-calibration-figure' on page 29 undefined on input line 835.
+[26]
+
+LaTeX Warning: Reference `fig:E3-design-schematic' on page 27 undefined on input line 734.
+
+[27] [28] [29]
+
+LaTeX Warning: Reference `fig:E4-calibration-figure' on page 30 undefined on input line 837.
 
 
-LaTeX Warning: Reference `fig:E4-example-trial' on page 29 undefined on input line 847.
-
-[29]
-
-LaTeX Warning: Reference `fig:E4-mouse-moves-fig' on page 30 undefined on input line 885.
-
-
-Underfull \vbox (badness 1406) has occurred while \output is active []
+LaTeX Warning: Reference `fig:E4-example-trial' on page 30 undefined on input line 849.
 
 [30]
 
-LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig' on page 31 undefined on input line 889.
+LaTeX Warning: Reference `fig:E4-mouse-moves-fig' on page 31 undefined on input line 887.
 
 [31]
 
-LaTeX Warning: Reference `fig:E4-mouse-moves-fig-web-and-orig' on page 32 undefined on input line 897.
-
-
-LaTeX Warning: Reference `fig:E4-proportion-fix-by-window-both' on page 32 undefined on input line 900.
+LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig' on page 32 undefined on input line 891.
 
 [32]
 
-LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 33 undefined on input line 921.
+LaTeX Warning: Reference `fig:E4-mouse-moves-fig-web-and-orig' on page 33 undefined on input line 899.
 
 
-LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 33 undefined on input line 921.
+LaTeX Warning: Reference `fig:E4-proportion-fix-by-window-both' on page 33 undefined on input line 902.
+
+[33]
+
+LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 34 undefined on input line 923.
 
 
-LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig-quadrants' on page 33 undefined on input line 923.
+LaTeX Warning: Reference `fig:E4-example-subj-looks-ROI' on page 34 undefined on input line 923.
 
-[33] [34]
+[34]
 
-LaTeX Warning: Reference `fig:E5-calibration-figure' on page 35 undefined on input line 970.
-
-
-LaTeX Warning: Reference `fig:E5-example-trial' on page 35 undefined on input line 973.
+LaTeX Warning: Reference `fig:E4-gaze-timecourse-fig-quadrants' on page 35 undefined on input line 925.
 
 [35]
 
-LaTeX Warning: Reference `fig:Shimojo' on page 36 undefined on input line 1022.
+LaTeX Warning: Reference `fig:E5-calibration-figure' on page 36 undefined on input line 972.
+
+
+LaTeX Warning: Reference `fig:E5-example-trial' on page 36 undefined on input line 975.
 
 [36]
 
-LaTeX Warning: Reference `fig:E5cal' on page 37 undefined on input line 1031.
-
-
-LaTeX Warning: Reference `fig:E5calcorr' on page 37 undefined on input line 1034.
-
-
-LaTeX Warning: Reference `fig:groupEMainrev' on page 37 undefined on input line 1038.
+LaTeX Warning: Reference `fig:Shimojo' on page 37 undefined on input line 1024.
 
 [37]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1058.
-(/Users/ajames2/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [38]
-Underfull \vbox (badness 1028) has occurred while \output is active []
 
-[39]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: Reference `fig:E5cal' on page 38 undefined on input line 1033.
+
+
+LaTeX Warning: Reference `fig:E5calcorr' on page 38 undefined on input line 1036.
+
+
+LaTeX Warning: Reference `fig:groupEMainrev' on page 38 undefined on input line 1040.
+
+[38]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1060.
+(/Users/rachelryskin1/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [39]
+Underfull \vbox (badness 1028) has occurred while \output is active []
 
 [40]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -807,26 +817,27 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [41]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[42] AED endfloat: Processing end Figures and Tables [43] (./manuscript.aux)
+[42]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[43] AED endfloat: Processing end Figures and Tables [44] (./manuscript.aux)
 
 LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: 1B2375A0C3467D233E415191329E6C94;7728.
  ) 
 Here is how much of TeX's memory you used:
- 16512 strings out of 477035
- 269728 string characters out of 5827382
- 632971 words of memory out of 5000000
- 37079 multiletter control sequences out of 15000+600000
- 558303 words of font info for 106 fonts, out of 8000000 for 9000
+ 16795 strings out of 477989
+ 275741 string characters out of 5838053
+ 1862346 words of memory out of 5000000
+ 36400 multiletter control sequences out of 15000+600000
+ 601331 words of font info for 110 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,77p,2230b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/Users/ajames2/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/Users/ajames2/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/ajames2/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on manuscript.pdf (43 pages, 520471 bytes).
+ 89i,11n,90p,2230b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/rachelryskin1/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
+Output written on manuscript.pdf (44 pages, 477103 bytes).
 PDF statistics:
- 761 PDF objects out of 1000 (max. 8388607)
- 683 compressed objects within 7 object streams
- 259 named destinations out of 1000 (max. 500000)
+ 777 PDF objects out of 1000 (max. 8388607)
+ 697 compressed objects within 7 object streams
+ 266 named destinations out of 1000 (max. 500000)
  496 words of extra memory for PDF output out of 10000 (max. 10000000)
 
