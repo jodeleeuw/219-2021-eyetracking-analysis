@@ -8,6 +8,14 @@ library(ggplot2)
 library(dplyr)
 ```
 
+After the eye-tracking calibration and validation (Figure\ \@ref(fig:E4-calibration-figure)), participants went through an audio
+test so they could adjust the audio on their computer to a comfortable
+level. Before beginning the experiment, they were given instructions
+that four objects would appear, an audio prompt would play, and they
+should do their best to use their mouse to act out the instructions.
+They then went through three practice trials which were followed by 54
+critical trials and 24 filler trials presented in a random order.
+
 ```{r include=FALSE}
 # calib: [25,25],[25,75],[50,50],[75,25],[75,75]
 calibration_points <- matrix(c(
@@ -39,7 +47,7 @@ df <- as_tibble(calibration_points) %>% bind_rows(as_tibble(validation_points))
 df$point <- c(rep("calibration", nrow(calibration_points)), rep("validation", nrow(validation_points)))
 ```
 
-```{r echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 4. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.(In this experiment all the same locations were used for both calibration and validation.)", fig.width=6, fig.height=4}
+```{r E4-calibration-figure, echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 4. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.(In this experiment all the same locations were used for both calibration and validation.)", fig.width=6, fig.height=4}
 ggplot(df, aes(x=x, y=y, shape=point, color=point))+
   geom_point(size=3, stroke=1)+
   scale_shape_manual(values=c(16,3))+

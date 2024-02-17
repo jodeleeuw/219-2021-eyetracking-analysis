@@ -8,6 +8,19 @@ library(ggplot2)
 library(dplyr)
 ```
 
+
+The task began with a 9-point eye-tracker calibration
+and validation (Figure\ \@ref(fig:E1-calibration-figure)). 
+During the experiment, the participants were
+simultaneously presented with a visual image and a corresponding audio
+recording of a spoken sentence. Participants had to input a keyboard
+response indicating "yes" or "no" as to whether the sentence they heard
+was feasible given the visual image. There were two practice trials to
+ensure that participants understood the instructions
+before they undertook the main portion of the experiment. Participants'
+reaction times, keyboard responses, and looks to objects in the scene
+were recorded for each trial.
+
 ```{r include=FALSE}
 # calib: 
     # //top
@@ -66,7 +79,7 @@ df <- as_tibble(calibration_points) %>% bind_rows(as_tibble(validation_points))
 df$point <- c(rep("calibration", nrow(calibration_points)), rep("validation", nrow(validation_points)))
 ```
 
-```{r echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 1. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
+```{r E1-calibration-figure, echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 1. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
 ggplot(df, aes(x=x, y=y, shape=point, color=point))+
   geom_point(size=3, stroke=1)+
   scale_shape_manual(values=c(16,3))+

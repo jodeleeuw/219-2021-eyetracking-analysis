@@ -1,8 +1,7 @@
-```{r}
+
+<!-- # Setup 
 #To be run after E1-analysis-replication.Rmd
-#Correlates subjects' experimental effects with their calibration quality (from df called "validation.percent").
-```
-<!-- # Setup -->
+#Correlates subjects' experimental effects with their calibration quality (from df called "validation.percent"). -->
 ```{r E1-c-setup, message=FALSE, warning=FALSE, include = FALSE, echo = FALSE}
 library(dplyr)
 library(tidyr)

@@ -8,6 +8,12 @@ library(ggplot2)
 library(dplyr)
 ```
 
+At the beginning of the experimental task, participants completed a
+9-point eye-tracker calibration (each point appeared 3 times in random
+order) and 3-point validation. The validation point appeared once at
+center, middle left, and middle right locations in random order (see Figure\ \@ref(fig:E5-calibration-figure)).
+<!-- does 9 points here mean that there were actually only 3 calibration points but each was shown 3 times so 9 total or is it 9 points shown 3 times so 27 total? If the latter, why is the coverage denser than for Experiment 4? -->
+
 ```{r include=FALSE}
 # calib: [25,25],[25,75],[50,50],[75,25],[75,75],[25,50],[75,50],[15,50],[85,50]
 calibration_points <- matrix(c(
@@ -39,7 +45,7 @@ df <- as_tibble(calibration_points) %>% bind_rows(as_tibble(validation_points))
 df$point <- c(rep("calibration", nrow(calibration_points)), rep("validation", nrow(validation_points)))
 ```
 
-```{r echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 5. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
+```{r E5-calibration-figure, echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 5. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
 ggplot(df, aes(x=x, y=y, shape=point, color=point))+
   geom_point(size=3, stroke=1)+
   scale_shape_manual(values=c(16,3))+

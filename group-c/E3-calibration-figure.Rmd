@@ -8,6 +8,13 @@ library(ggplot2)
 library(dplyr)
 ```
 
+
+The task began with a 7-point eye-tracker calibration (each point was
+presented 3 times in a random order) and validation with 3 points (each
+presented once). The point locations were designed to focus calibration
+on the center of the screen and the middle of the left and right halves
+of the screen (Figure\ \@ref(fig:E3-calibration-figure)). 
+
 ```{r include=FALSE}
 calibration_points <- matrix(c(
   c(10,50),
@@ -32,7 +39,7 @@ df <- as_tibble(calibration_points) %>% bind_rows(as_tibble(validation_points))
 df$point <- c(rep("calibration", nrow(calibration_points)), rep("validation", nrow(validation_points)))
 ```
 
-```{r echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 3. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
+```{r E3-calibration-figure, echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 3. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
 ggplot(df, aes(x=x, y=y, shape=point, color=point))+
   geom_point(size=3, stroke=1)+
   scale_shape_manual(values=c(16,3))+

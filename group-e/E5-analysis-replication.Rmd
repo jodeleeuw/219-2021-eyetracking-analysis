@@ -143,7 +143,7 @@ plot.A
 plot.R
 ```
 
-Following Shimojo and colleagues, data for each condition were fit using a four-parameter sigmoid (Fig. \@ref(fig:Shimojo)). These fit less well than in the original paper for both the attractiveness judgment (R^2^ = `r round(R2.A,2)` vs. 0.91) and the roundness judgment (R^2^ = `r round(R2.R,2)` vs. 0.91). 
+Following Shimojo and colleagues, data for each condition were fit using a four-parameter sigmoid (Fig. \@ref(fig:groupEMain)). These fit less well than in the original paper for both the attractiveness judgment (R^2^ = `r round(R2.A,2)` vs. 0.91) and the roundness judgment (R^2^ = `r round(R2.R,2)` vs. 0.91). 
 
 From these curves, Shimojo and colleagues focus on two qualitative findings. First, they note a higher asymptote for the attractiveness discrimination task relative to roundness discrimination. Qualitatively, this appears to replicate. However, their statistical analysis -- a Kolmogorov-Smirnov test for distance between two distributions -- is not significant (D = `r round(KS$statistic, 2)`, p = `r round(KS$p.value, 2)`), though it should be noted that this is a very indirect statistical test of the hypothesis and probably not very sensitive.
 

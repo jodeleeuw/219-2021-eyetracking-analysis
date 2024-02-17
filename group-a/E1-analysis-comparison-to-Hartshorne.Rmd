@@ -319,10 +319,11 @@ jh.cumulative.fixation.data.summary.min <- jh.cumulative.fixation.windows.groupe
 ```
 
 #### Cumulative Fixation Probabilities
-For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:jh-E1-spaghetti-fig).
+For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure  \@ref(fig:E1-JH-spaghetti-fig).
 
-```{r jh-E1-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
-jh.E1_spag_fig <- ggplot(jh.cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
+```{r E1-JH-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
+
+jh_E1_spag_fig <- ggplot(jh.cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill=object_class, shape=verb_type, group=interaction(verb_type, object_class)))+
   scale_fill_grey(start=1.0, end=0.0)+
   scale_shape_manual(values=c(22,21))+
   geom_line()+
@@ -334,7 +335,7 @@ jh.E1_spag_fig <- ggplot(jh.cumulative.fixation.data.summary.min, aes(x=t.window
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")+
   geom_vline(xintercept = mean(jh.word.dur.avg$Total))
 
-jh.E1_spag_fig
+jh_E1_spag_fig
 
 #The "Object type" part of the key doesn't actually show which color is which
 ```
