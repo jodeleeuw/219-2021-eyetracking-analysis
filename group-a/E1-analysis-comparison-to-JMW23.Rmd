@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup JMW23, include=FALSE}
 library(papaja)
 library(jsonlite)
 library(dplyr)
@@ -22,11 +22,11 @@ knitr::opts_chunk$set(message=FALSE, warning=FALSE, echo = FALSE)
 ```
 
 ```{r import JMW23}
-JMW1_info <- read_csv("group-a/JMW23-data/fyptrialinfo.csv")
+JMW1_info <- read_csv("JMW23-data/fyptrialinfo.csv")
 
-JMW1_latency <- read.delim("group-a/JMW23-data/FYPAKFixationLatenciesPOSTVERB.txt", header = FALSE, sep = ",") #I'll come back to this
+JMW1_latency <- read.delim("JMW23-data/FYPAKFixationLatenciesPOSTVERB.txt", header = TRUE) #it's actual onset times (relative to trial start). 
 
-JMW1_data <- read.delim("group-a/JMW23-data/FYPTimecourse_by_subj.txt", header = FALSE, sep = ",")
+JMW1_data <- read.delim("JMW23-data/FYPTimecourse_by_subj.txt", header = FALSE, sep = ",")
 
 #Add meaningful header row
 tc_header = c("TARGET","AGENT", "COMP1", "COMP2", "COMP3", 
@@ -86,21 +86,21 @@ cumulative.fixation.calculation <- function(df){
 }
 
 #Now use it to summarize timecourse data
-if(file.exists("group-a/JMW23-data/generated/JMW_cumulative.csv")){
-  JMW_cumu<- read_csv("group-a/JMW23-data/generated/JMW_cumulative.csv")
+if(file.exists("JMW23-data/generated/JMW_cumulative.csv")){
+  JMW_cumu<- read_csv("JMW23-data/generated/JMW_cumulative.csv")
 } else {
 
   JMW_cumu <-  JMW.long%>%
     group_by(SUBJ, COND, AID, obj_type, obj_class) %>%
     summarize(cumulative.fixation.calculation(cur_data()))
   
-  write_csv(JMW_cumu, file="group-a/JMW23-data/generated/JMW_cumulative.csv")
+  write_csv(JMW_cumu, file="JMW23-data/generated/JMW_cumulative.csv")
 }
 ```
 
 <!-- Then group by object class to calculate fixation probability for each kind of object, normalizing by the number of objects of that type. -->
 
-```{r group cumu fix by object, message=FALSE, warning=FALSE}
+```{r group cumu fix by object jmw, message=FALSE, warning=FALSE}
 JMW_cumu.windows.grouped <- JMW_cumu %>%
   group_by(SUBJ, COND, AID, obj_class, t.window) %>%
   summarize(cumu.p = mean(has.fixated)) 
@@ -108,7 +108,7 @@ JMW_cumu.windows.grouped <- JMW_cumu %>%
 
 <!-- Then collapse over trials to get a cumulative probability for the whole window for each subject -->
 
-```{r collapse cumu fix over trials, message=FALSE, warning=FALSE}
+```{r collapse cumu fix over trials jmw, message=FALSE, warning=FALSE}
 JMW_cumu.windows.grouped.average <- JMW_cumu.windows.grouped %>%
   group_by(SUBJ, COND, obj_class, t.window) %>%
   summarize(cumu.p.avg = mean(cumu.p))
@@ -116,25 +116,53 @@ JMW_cumu.windows.grouped.average <- JMW_cumu.windows.grouped %>%
 
 <!-- Collapse across subjects to generate the equivalent of the figure from Altmann & Kamide. -->
 
-```{r create summary data for spag plot, message=FALSE, warning=FALSE}
+```{r create summary data for spag plot jmw, message=FALSE, warning=FALSE}
 JMW_cumu.summary <- JMW_cumu.windows.grouped.average %>%
   filter(obj_class %in% c('TARGET', 'DISTRACTOR')) %>%
   group_by(t.window, COND, obj_class) %>%
   summarize(cumulative.fixation.m = mean(cumu.p.avg))
 ```
+
+
 ```{r JMW-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
 
-#AJ: this is where you left off. Everything above should work :)
-JMW_spag_fig <- ggplot(JMW_cumu.summary, aes(x=t.window, y=cumulative.fixation.m, fill=obj_class, shape=COND, group=interaction(COND, obj_class)))+
-  scale_fill_manual(values=c("white", "black"))+
-  scale_shape_manual(values=c(22,21))+
+
+JMW_spag_fig <- ggplot(JMW_cumu.summary, aes(x=t.window, y=cumulative.fixation.m, fill=obj_class, shape=COND))+
   geom_line()+
-  geom_point(size=2)+
+  geom_point(aes(fill = obj_class), size=2, color = "black")+ 
+  scale_fill_manual(name = "Object Type",values=c("white", "black"), labels = c("distractor", "target"))+
+  guides(fill = guide_legend(override.aes=list(shape=21))) +
+  scale_shape_manual(name = "Verb Type", values=c(22,21), labels = c("non-resticting", "restricting"))+
   theme_bw()+
-  theme(panel.grid=element_blank())+
   scale_y_continuous(limits=c(0,1))+
   scale_x_continuous(expand=c(0.01,0.01))+
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type") +
-  geom_vline(xintercept = mean(JMW1_info$Non.relative))
-#The "Object type" part of the key doesn't actually show which color is which
+  geom_vline(xintercept = mean(JMW1_info$Non.relative)) +
+  theme(panel.grid=element_blank(), legend.position = "none", axis.title.x = element_blank())+
+  ggtitle('James et al. (2023), Exp. 1')
+
+#JMW_spag_fig
+```
+
+```{r JMW23 latency info}
+#View(JMW1_latency)
+JMW1_latency$COND <- recode(JMW1_latency$COND, "0" = "filler", "1" = "pred", "2" = "neut")
+
+#Merge with data about word onset times to get relative onsets
+JMW1_latency_info <- merge(JMW1_latency, JMW1_info, by.x = "ITEM", by.y = "AID") #in the second spreadsheet, TARGET etc mean the coordinates (now TARGET.y, AGENT.y, etc.). in the first, it means the first fixation time (now TARGET.x, etc.) 
+
+#Get relative target fixation times
+JMW1_lat <- JMW1_latency_info %>%
+  filter(TARGET.x >= Von) %>%
+  mutate(von_relative_t = TARGET.x - Von,
+         voff_relative_t = TARGET.x - Voff,
+         non_relative_t = TARGET.x - Non)
+
+#hist(JMW1_lat$von_relative_t) 
+
+first.fix.avg.JMW <- JMW1_lat %>%
+  group_by(COND) %>%
+  summarize(Verb.on = round.comm(mean(von_relative_t, na.rm = T)),
+            Verb.off = round.comm(mean(voff_relative_t, na.rm = T)),
+            Noun.on = round.comm(mean(non_relative_t, na.rm = T)))
 ```
