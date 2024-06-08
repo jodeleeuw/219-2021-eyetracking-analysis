@@ -24,7 +24,7 @@ jobs:
       - uses: r-lib/actions/setup-tinytex@v1
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("rmarkdown", "papaja", "patchwork", "jsonlite", "dplyr", "readr", "tidyr", "ggplot2", "stringr", "lmerTest", "afex", "forcats", "broom.mixed"))'
+          Rscript -e 'install.packages(c("rmarkdown", "papaja", "tidyverse", "patchwork", "jsonlite", "dplyr", "readr", "tidyr", "ggplot2", "stringr", "lmerTest", "afex", "forcats", "broom.mixed"))'
       - name: Render manuscript
         run: |
           Rscript -e 'rmarkdown::render("manuscript.Rmd")'
