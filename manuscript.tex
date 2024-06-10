@@ -363,11 +363,7 @@ linguistic input.
 
 We first collected data from participants via Prolific, then conducted a follow-up in-lab replication; both the remote and the in-lab replications used WebGazer and identical materials and procedures.
 
-<<<<<<< HEAD
 \subsection{Method}\label{method}
-=======
-\subsection{Methods}\label{methods}
->>>>>>> main
 
 All stimuli, experiment scripts, data, analysis scripts, and a
 pre-registration are available on the Open Science Framework at
@@ -536,77 +532,12 @@ Across all three models, results were in line with analyses using the minimal ex
 \caption{\label{fig:E1-spaghetti-fig}Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.}
 \end{figure}
 
-<<<<<<< HEAD
 \subsection{Discussion}\label{discussion}
-=======
-\paragraph{Pre-noun fixations}\label{pre-noun-fixations}
->>>>>>> main
 
 Overall, the results of Experiment 1 paint a sobering picture of web-based eye-tracking. In the remote sample, results were in the expected direction but effects were smaller and delayed relative to previous work and failed to reach statistical significance; the one exception was in comparing first target fixation latencies across verb conditions, but only when aggressive exclusion criteria were applied to participants (INSERT WHAT THOSE CRITERIA WERE). To test whether this could be explained by the variability in experimental settings across participants, we replicated our procedure in a lab setting. Surprisingly, the results in the in-lab study were less aligned with previous work; critical effects were not significant nor were they in the expected direction numerically.
 
-<<<<<<< HEAD
 Taken together, the instability of these effects might suggest that this paradigm is not well-suited for web-based eye-tracking. Notably, the ROIs were tightly drawn around the five to six objects in each scene (larger ROIs would have led to overlapping objects) and thus, analyses were unforgiving of inaccurate calibration. The next four experiments test paradigms with more generous ROIs.
 
-=======
-\paragraph{Pre-verb-offset fixations}\label{pre-verb-offset-fixations}
-
-Altmann and Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (\emph{b} = 0.05, \emph{SE} = 0.03, \emph{p}=0.20).
-
-\paragraph{First target fixations after verb}\label{first-target-fixations-after-verb}
-
-Finally, we address whether participants look to the target faster in the restrictive vs.~the non-restrictive condition, starting after the onset of the verb. {[}TO-DO: On average, participants looked to the target 349 ms after the noun onset in the restrictive condition (compared to ) and 349 ms after the noun onset in the non-restrictive condition (compared to ){]}. Thus, first fixations were not only delayed relative to those in the previous studies compared here, but also showed a smaller difference between conditions.
-
-We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (\emph{b} = -121.91, \emph{SE} = 90.57, \emph{p}=0.20).
-
-\paragraph{Aggressive Exclusion}\label{aggressive-exclusion}
-
-The second set of analyses used more aggressive exclusion criteria. First, we eliminated participants with 20 percent of fixations in any ROIs. This resulted in the elimination of 15 participants. Second, we excluded participants with validation accuracy under 50 percent, which eliminated an additional 35 participants. The following analyses included 22 participants.
-
-We tested the same three models under these more aggressive exclusion criteria. The first two models, comparing target and distractor fixations in the predictive window, produced very similar results; the critical interaction was not statistically significant (Pre-noun-onset window: \emph{b} = 0.07, \emph{SE} = 0.06, \emph{p}=0.23; Pre-verb-offset window: \emph{b} = 0.05, \emph{SE} = 0.05, \emph{p}=0.28). However, the final model, which tested the effect of verb condition on saccades to the target, yielded a statistically significant result, unlike in the previous set of analyses (\emph{b} = -193.35, \emph{SE} = 96.33, \emph{p}=0.05).
-
-\paragraph{Calibration}\label{calibration}
-
-Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality varied widely, ranging from 3.16\% to 98.87\%.
-
-We tested whether a participant's calibration quality was correlated with their effect size. There were three effects of interest: the verb-by-object interaction in predicting fixation probabilities, both in the (1) pre-noun-onset and (2) pre-verb-offset windows (calculated as the difference in target-over-distractor preference between verb conditions), and (3) the effect of verb on the timing of the first target fixation (calculated as the difference in target latency between verb conditions). Across the three effects of interest, calibration quality was not significantly correlated (Effect 1: Pearson's \emph{r} = 0.03, \emph{p} = 0.83, Effect 2: Pearson's \emph{r} = -0.05, \emph{p} = 0.73, Effect 3: Pearson's \emph{r} = 0.04, \emph{p} = 0.78. However, when the two interaction effects are calculated as the target advantage in the restricting condition only (i.e.~rather than a difference of differences), we see a significant correlation between target advantage and calibration quality in the wider pre-noun window (Pearson's \emph{r} = 0.21, \emph{p} = 0.14).
-
-\subsubsection{In-lab sample}\label{in-lab-sample-1}
-
-\paragraph{Minimal Exclusion}\label{minimal-exclusion-1}
-
-As in the remote sample, we checked whether there were participants with 0 percent of fixations in any ROIs and there were none. We then excluded participants with validation accuracy under 10 percent, resulting in 2 excluded participants. The following analyses included 47 participants.
-
-\paragraph{Cumulative Fixation Probabilities}\label{cumulative-fixation-probabilities-1}
-
-For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \ref{fig:E1-JH-spaghetti-fig}.
-
-\begin{figure}
-\centering
-\includegraphics{manuscript_files/figure-latex/E1-JH-spaghetti-fig-1.pdf}
-\caption{\label{fig:E1-JH-spaghetti-fig}Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.}
-\end{figure}
-
-\paragraph{Pre-noun fixations}\label{pre-noun-fixations-1}
-
-In our first two analyses, we ask whether participants looked more to the target than to the distractor during the predictive time window, given that the verb is restricting. The first model tested whether there were more fixations to the target object than to the distractor in the time window before the onset of the target noun. We ran a regression model predicting the cumulative fixation probability in the last 50-ms bin before noun onset from the verb condition (restricting = 1 vs.~non-restricting = 0), object type (target = 1 vs.~distractor = 0), and their interaction, along with random effects for participants and images (with no covariance between random effects because the model cannot converge with full covariance matrix). There were no significant effects, although the critical interaction was in the right direction {[}bar graph?{]} (\emph{b} = -0.05, \emph{SE} = 0.05, \emph{p}=0.25).
-
-\paragraph{Pre-verb-offset fixations}\label{pre-verb-offset-fixations-1}
-
-Altmann \& Kamide tested a second model, aligning the predictive time window with the offset of the verb rather than the onset of the noun as above. When we do the same, we again see that the critical interaction is not significant but numerically in the expected direction (\emph{b} = -0.06, \emph{SE} = 0.04, \emph{p}=0.17).
-
-\paragraph{First target fixations after verb}\label{first-target-fixations-after-verb-1}
-
-Finally, we address whether participants look to the target faster in the restrictive vs.~the non-restrictive condition, starting after the onset of the verb. {[}TO-DO: On average, participants looked to the target X ms after (AK's Table 1)\ldots, I'll also want to say the lengths of the verbs. AK's Table 2{]} We ran a regression model predicting the timing of the first fixation to the target object, relative to the onset of the noun, with verb condition as a predictor, mean-centered verb duration as a covariate, and random intercepts and condition slopes for participants and scenes. There were no significant effects; participants looked sooner at the target in the restrictive condition, while accounting for verb duration and its interaction with condition, but this was not a statistically significant effect (\emph{b} = 21.70, \emph{SE} = 115.32, \emph{p}=0.85).
-
-\paragraph{Calibration}\label{calibration-1}
-
-As before, participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality ranged from 5.13\% to 97.89\%.
-
-We tested whether a participant's calibration quality was correlated with their effect size. Across the three condition effects of interest, calibration quality was not significantly correlated (Effect 1 (pre-noun-onset): Pearson's \emph{r} = -0.24, \emph{p} = 0.11, Effect 2 (pre-verb-offset): Pearson's \emph{r} = -0.19, \emph{p} = 0.20, Effect 3 (first fixation): Pearson's \emph{r} = -0.12, \emph{p} = 0.41. However, when the two interaction effects are calculated as the target advantage in the restricting condition only (i.e.~rather than a difference of differences), we see a significant correlation between target advantage and calibration quality in the wider pre-noun window (Pearson's \emph{r} = -0.16, \emph{p} = 0.29).
-
-\subsection{Discussion}\label{discussion}
-
->>>>>>> main
 \section{Experiment 2}\label{experiment-2}
 
 The second study was a replication attempt of Johansson and Johansson (2014),
@@ -616,11 +547,7 @@ spontaneously look to blank screen locations where pictures were located
 during encoding (see Spivey \& Geng, 2001) and that
 this spatial reinstatement facilitates retrieval of the picture.
 
-<<<<<<< HEAD
 \subsection{Method}\label{method-1}
-=======
-\subsection{Methods}\label{methods-1}
->>>>>>> main
 
 All stimuli, experiment scripts, data, analysis scripts, and a
 pre-registration are available on the Open Science Framework at
@@ -756,11 +683,7 @@ that participants were more likely to recall images that they had spent
 less time looking at during the visual paired-comparison task the
 previous day.
 
-<<<<<<< HEAD
 \subsection{Method}\label{method-2}
-=======
-\subsection{Methods}\label{methods-2}
->>>>>>> main
 
 The stimuli, experimental code, and data and analysis scripts can be
 found on the Open Science Framework at \url{https://osf.io/k63b9/}.
@@ -942,11 +865,7 @@ itself) are available in the visual display, listeners rely on the
 verb's ``bias'' (statistical co-occurrence either in norming or corpora)
 to rapidly choose an action while the sentence is unfolding. .
 
-<<<<<<< HEAD
 \subsection{Method}\label{method-3}
-=======
-\subsection{Methods}\label{methods-3}
->>>>>>> main
 
 The stimuli, experimental code, and data and original analysis scripts can be
 found on the Open Science Framework at the following link,
@@ -1111,11 +1030,7 @@ replicate only the two that figure most prominently in their
 conclusions: the ``face-attractiveness-difficult task'' and the
 ``face-roundness task''.
 
-<<<<<<< HEAD
 \subsection{Method}\label{method-4}
-=======
-\subsection{Methods}\label{methods-4}
->>>>>>> main
 
 All stimuli, experiment scripts, data, and analysis scripts are
 available on the Open Science Framework at \url{https://osf.io/eubsc/}.
@@ -1378,12 +1293,9 @@ Snedeker, J., \& Trueswell, J. C. (2004). The developing constraints on parsing 
 \bibitem[\citeproctext]{ref-spiveyOculomotorMechanismsActivated2001}
 Spivey, M. J., \& Geng, J. J. (2001). Oculomotor mechanisms activated by imagery and memory: Eye movements to absent objects. \emph{Psychological Research}, \emph{65}(4), 235--241. \url{https://doi.org/10.1007/s004260100059}
 
-<<<<<<< HEAD
 \bibitem[\citeproctext]{ref-steffan2024validation}
 Steffan, A., Zimmer, L., Arias-Trejo, N., Bohn, M., Dal Ben, R., Flores-Coronado, M. A., et al.others. (2024). Validation of an open source, remote web-based eye-tracking method (WebGazer) for research in early childhood. \emph{Infancy}, \emph{29}(1), 31--55.
 
-=======
->>>>>>> main
 \bibitem[\citeproctext]{ref-sun2020another}
 Sun, C., \& Breheny, R. (2020). Another look at the online processing of scalar inferences: An investigation of conflicting findings from visual-world eye-tracking studies. \emph{Language, Cognition and Neuroscience}, \emph{35}(8), 949--979.
 
