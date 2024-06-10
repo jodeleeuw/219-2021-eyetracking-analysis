@@ -143,7 +143,10 @@ subjects.100.percent.accurate <- day2.test.data %>%
 confidence.test.data.filtered <- confidence.test.data %>%
   filter(!subject_id %in% subjects.100.percent.accurate)
 
-confidence.t.test <- t.test(M.confidence ~ correct_recognition, data=confidence.test.data.filtered, paired=T)
+confidence.t.test <- t.test(
+  confidence.test.data.filtered$M.confidence[confidence.test.data.filtered$correct_recognition == TRUE],
+  confidence.test.data.filtered$M.confidence[confidence.test.data.filtered$correct_recognition == FALSE],
+  paired=T)
 ```
 
 ```{r Compute RT data, include=FALSE}
@@ -155,7 +158,10 @@ rt.test.data <- day2.test.data %>%
 rt.test.data.filtered <- rt.test.data %>%
   filter(!subject_id %in% subjects.100.percent.accurate)
 
-rt.t.test <- t.test(M.rt ~ correct_recognition, data=rt.test.data.filtered, paired=T)
+rt.t.test <- t.test(
+  rt.test.data.filtered$M.rt[rt.test.data.filtered$correct_recognition == TRUE],
+  rt.test.data.filtered$M.rt[rt.test.data.filtered$correct_recognition == FALSE],
+  paired=T)
 ```
 
 In all of these analyses, we excluded the `r day2.test.data %>% filter(rt_recognition > 10000) %>% nrow()` (out of `r day2.test.data %>% nrow()`) trials where the response time for the recognition judgment was greater than 10 seconds. 
