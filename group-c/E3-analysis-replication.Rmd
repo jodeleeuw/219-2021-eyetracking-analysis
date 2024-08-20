@@ -201,7 +201,9 @@ looking.rt.correlation.t.test <-t.test(looking.rt.correlations.subjects.filtered
 To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on day 2, we computed the correlation coefficient between day 1 looking scores and day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, we found no significant different from 0 for the correlation between looking score and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looking score and RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
 
 ```{r Plot Looking Score Correlations, echo=FALSE, warning=FALSE}
-ggplot(looking.plus.behavioral %>% filter(rt_recognition < 10000), aes(x=looking.score, y=rt_recognition))+
-  geom_point()+
-  theme_bw()
+# #This isn't referred to in the text--it's between Figs 10 and 11
+# ggplot(looking.plus.behavioral %>% filter(rt_recognition < 10000), aes(x=looking.score, y=rt_recognition))+
+#   geom_point()+
+#   theme_bw()
+#   
 ```

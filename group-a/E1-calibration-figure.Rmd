@@ -79,7 +79,7 @@ df <- as_tibble(calibration_points) %>% bind_rows(as_tibble(validation_points))
 df$point <- c(rep("calibration", nrow(calibration_points)), rep("validation", nrow(validation_points)))
 ```
 
-```{r E1-calibration-figure, echo=FALSE, fig.cap="Calibration and validation point locations for Experiment 1. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
+```{r E1-calibration-figure, echo=FALSE, warning=FALSE, fig.cap="Calibration and validation point locations for Experiment 1. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.", fig.width=6, fig.height=4}
 ggplot(df, aes(x=x, y=y, shape=point, color=point))+
   geom_point(size=3, stroke=1)+
   scale_shape_manual(values=c(16,3))+

@@ -215,7 +215,7 @@ affiliation:
     institution: Department of Psychology & Neuroscience, Boston College
 
 abstract: |
-  Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: js.psych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 & 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution should be adapted to coarser quadrant or split-half displays. 
+  Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: js.psych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution should be adapted to coarser quadrant or split-half displays. 
   
 keywords          : "eye-tracking, online, webcam, jsPsych, cognitive science"
 wordcount         : "X"
@@ -345,11 +345,11 @@ Participants completed the experiment remotely and were recruited
 through the Prolific platform. In order to have access to the
 experiment, participants had to meet the following criteria: 18 years of
 age or older, fluency in English, and access to a webcam. All
-participants provided informed consent. The studies were approved by the
+participants provided informed consent. The online studies were approved by the
 Vassar College Institutional Review Board.
 
-In addition, an in-person replication was conducted for Experiment 1. 
-Information about the sample is given in the Experiment 1 Method sections.
+In addition, an in-lab replication was conducted for Experiment 1. 
+Information about the sample is given in the Experiment 1 Method sections. This study was approved by the Institutional Review Board at Boston College. 
 
 In order to have adequate statistical power and precision, we aimed for
 2.5x the sample size of the original experiment, following the heuristic
@@ -411,11 +411,11 @@ the study.
 
 These data were collected within the context of an undergraduate research methods course. Groups of students (co-authors) designed and programmed experiments in jsPsych, pre-registered their planned analyses, and collected data through Prolific under the supervision of the first author. The OSF repositories associated with these experiments are linked in the methods sections of each individual study. Note that in the current paper we expand on those pre-registered analyses (e.g., including analyses of the calibration quality). All analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis 
 
-## Data pre-processing
+## Data Pre-processing
 
 We used `r cite_r("references.bib")` for all our analyses.
 
-# Experiment 1
+# Experiment 1a
 
 <!-- group a -->
 
@@ -431,14 +431,6 @@ train, presumably because cakes are edible and trains are not. Semantic
 information available at the verb is used to anticipate upcoming
 linguistic input.
 
-<!--AJ: Here's an organizational thing I'm trying-- Mention here that there are two experiments (Prolific and in Josh H's lab) and divide subsequent sections where appropriate. Good idea?-->
-
-We first collected data from participants via Prolific, then conducted a follow-up in-lab replication; both the remote and the in-lab replications used WebGazer and identical materials and procedures. 
-
-
-```{r read_groupA_data}
-#AJ: We don't need this, right? Can I delete?
-```
 
 ## Method
 
@@ -447,7 +439,6 @@ pre-registration are available on the Open Science Framework at
 <https://osf.io/s82kz>.
 
 ### Participants
-#### Remote sample
 Sixty participants were paid \$2.60 for their participation. Our sample size
 of participants was determined by the total run time of our experiment,
 \~10 minutes, and the allotted funding from the Vassar College Cognitive
@@ -457,8 +448,6 @@ that the sample size of the original study was 24. For unknown reasons,
 2 of the subjects' results were not recorded, so in the analysis, we
 worked with data collected from 58 participants.
 
-#### In-lab sample
-Forty-nine participants completed the study in a lab setting. They were recruited via the college subject pool. Participants needed to be 18 years of age or older and native speakers of English. The study was approved by the Institutional Review Board at Boston College. 
 
 ### Procedure
 
@@ -473,7 +462,7 @@ Forty-nine participants completed the study in a lab setting. They were recruite
 -Any delay between when visual scene appears and the audio starts? 
 -Does trial end as soon as participant responds?-->
 ```
-### Materials & Design
+### Materials and Design
 
 The visual stimuli were created through Canva and depicted an agent
 accompanied by four to five objects in the scene (see Figure\ \@ref(fig:E1-example-trial)). On
@@ -497,42 +486,53 @@ knitr::include_graphics("group-a/E1-example-trial.jpeg")
 ```
 
 
-Each participant was presented with sixteen critical trials (eight in
+Each participant was presented with 16 critical trials (eight in
 the restrictive condition, eight in the non-restrictive condition) and
-sixteen fillers for a total of 32 trials. The order of trials and the
+16 fillers for a total of 32 trials. The order of trials and the
 assignment of critical scene to condition was random on a
 subject-by-subject basis.<!-- right?-->
 
-### Data pre-processing and analysis
-
+## Results
 Looks to the objects in the scene were time-locked to the onset of the
 verb, the offset of the verb, onset of the post-verbal determiner, and
 onset of the target noun. ROIs were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.
-
-## Results
-
-
 
 ```{r E1-analysis-replication, child = 'group-a/E1-analysis-replication.Rmd'}
 
 ```
 
+## Discussion
+Across three different tests of the hypothesis that listeners will use verb semantics to anticipate the upcoming referent, we found results that were numerically consistent with the hypothesis but not statistically significant. A comparison to published data [@james2023language] demonstrates that looks to the objects in the scene (relative to background or off-screen looks) were depressed across conditions and objects. After eliminating participants with validation accuracy under 50% and/or 10% or fewer fixations to any ROIs, we were left with only 22 of the original 60 participants. Analyses on this subset resulted in one effect reaching statistical significance (shorter target fixation latencies in the restricting vs. non-restricting verb condition). 
+Given that nearly two-thirds of participants had poor data quality, we ran a follow-up webcam study in a lab setting order to isolate the potential causes. 
+
+# Experiment 1b
+Experiment 1b tested whether the failure to replicate significant condition effects in Experiment 1a was due to features of conducting the study remotely (i.e. varied experimental settings and apparatuses, lower compliance) rather than webcam-based eye-tracking or `webgazer` _per se_. Thus, Experiment 1b took place in a lab setting with undergraduate participants but otherwise used the same Method as Experiment 1a. 
+
+## Method
+
+### Participants
+Forty-nine participants completed the study in a lab setting. They were recruited via the Boston College subject pool. Participants needed to be 18 years of age or older and native speakers of English.
+
+### Procedure
+After being greeted by the experimenter and completing the informed consent form, participants followed on-screen prompts to complete the study, including calibration, as described in the Experiment 1a Procedure. 
+
+### Apparatus
+HELP
+
+### Materials and Design
+Materials were identical to those in Experiment 1a. 
+
+## Results
+```{r E1-analysis-JoshH-lab, child = 'E1-analysis-comparison-to-Hartshorne.Rmd'}
+
+```
 
 ## Discussion
+Overall, the results of Experiment 1 paint a sobering picture of web-based eye-tracking. In Experiment 1a, results from the remote samplewere in the expected direction but effects were smaller and delayed relative to previous work and failed to reach statistical significance. To test whether this could be explained by the variability in experimental settings across participants, we replicated our procedure in a lab setting. Surprisingly, the results in the in-lab study were less aligned with previous work; critical effects were not significant nor were they in the expected direction numerically. This suggests the problem was not with running the study online or due to working with a more diverse population via Prolific.
 
-Overall, the results of Experiment 1 paint a sobering picture of web-based eye-tracking. In the remote sample, results were in the expected direction but effects were smaller and delayed relative to previous work and failed to reach statistical significance; the one exception was in comparing first target fixation latencies across verb conditions, but only when aggressive exclusion criteria were applied to participants (INSERT WHAT THOSE CRITERIA WERE). To test whether this could be explained by the variability in experimental settings across participants, we replicated our procedure in a lab setting. Surprisingly, the results in the in-lab study were less aligned with previous work; critical effects were not significant nor were they in the expected direction numerically. This suggests the problem was not with running the study online or due to working with a more diverse population.
+Taken together, the instability of these effects might suggest that this paradigm is not well-suited for webcam-based eye-tracking. Notably, the ROIs were tightly drawn around the five to six objects in each scene (drawing larger ROIs in these scenes would have led to overlapping objects) and thus, analyses were unforgiving of inaccurate calibration. Further evidence comes from a recent `webgazer` study that successfully replicated a modified version of the Altmann and Kamide study with only four objects, each in separate quadrants, allowing for larger, more distinct ROIs [@prystauka2023online]. 
 
-Taken together, the instability of these effects might suggest that this paradigm is not well-suited for webcam-based eye-tracking. Notably, the ROIs were tightly drawn around the five to six objects in each scene (larger ROIs would have led to overlapping objects) and thus, analyses were unforgiving of inaccurate calibration. Further evidence comes from [@prystauka2023online], who ran a modified version of the Altmann and Kamide study with only 4 objects, allowing larger, more distinct ROIs.
-
- The next four experiments test paradigms with more generous ROIs.
- <!-- bullet points from Ariel
- 
-  • Note that the ROIs are only the sizes of the objects in the scene (plus padding), so much smaller than a 5th or 6th of the whole screen (because there are 5 or 6 ROIs per scene; should I figure out how much smaller?)
- 
-
- • Effect sizes (target adv in eat vs. move cond) were uncorrelated with calibration accuracy in both samples, but in the remote sample (but not JH lab), calibration was correlated with target adv in eat condition alone [I need to look into this real quick--I think scatterplots would help]
-
--->
+The next four experiments test paradigms with more generous ROIs.
 
 # Experiment 2
 

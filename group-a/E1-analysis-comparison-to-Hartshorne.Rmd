@@ -211,7 +211,7 @@ save(jh.validation.percent, file = "jh.validation.percent.RData")
 ```
 
 ```{r plot subjects by validation-JH, eval=F}
-#printed?
+#printed? No: eval=F
 ggplot(jh.validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
   geom_pointrange() +
   theme_classic()
@@ -319,7 +319,7 @@ jh.cumulative.fixation.data.summary.min <- jh.cumulative.fixation.windows.groupe
 ```
 
 #### Cumulative Fixation Probabilities
-For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure  \@ref(fig:E1-spaghetti-fig), Panel (c).
+For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure  \@ref(fig:E1b-spaghetti-fig), Panel (b). The results from Experiment 1a are copied here for ease of comparison (Panel a).
 
 ```{r make jh spaghetti plot} 
 
@@ -637,8 +637,9 @@ jh.m3_diff_cor_p <- jh.m3_diff_cor$p.value
 ```
 #### Calibration
 As before, participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality ranged from `r min(jh.validation.percent$M) %>% round(digits = 2)`% to `r max(jh.validation.percent$M) %>% round(digits = 2)`%. 
+Across the three condition effects of interest, calibration quality was not significantly correlated (pre-noun: Pearson's _r_ = `r jh.m1_diffdiff_cor_r`, _p_ = `r jh.m1_diffdiff_cor_p`; pre-verb-offset: Pearson's _r_ = `r jh.m2_diffdiff_cor_r`, _p_ = `r jh.m2_diffdiff_cor_p`; first fixation: Pearson's _r_ = `r jh.m3_diff_cor_r`, _p_ = `r jh.m3_diff_cor_p`. 
 
-We tested whether a participant's calibration quality was correlated with their effect size. Across the three condition effects of interest, calibration quality was not significantly correlated (pre-noun: Pearson's _r_ = `r jh.m1_diffdiff_cor_r`, _p_ = `r jh.m1_diffdiff_cor_p`; pre-verb-offset: Pearson's _r_ = `r jh.m2_diffdiff_cor_r`, _p_ = `r jh.m2_diffdiff_cor_p`; first fixation: Pearson's _r_ = `r jh.m3_diff_cor_r`, _p_ = `r jh.m3_diff_cor_p`. However, when the two interaction effects are calculated as the target advantage in the restricting condition only (i.e. rather than a difference of differences), we see a significant correlation between target advantage and calibration quality in the wider pre-noun window (Pearson's _r_ = `r jh.m1_diff_cor_r`, _p_ = `r jh.m1_diff_cor_p`).
+In the remote sample, we saw that calibration quality was correlated with target advantage in the pre-noun window in the restricting condition alone. This was not the case in the in-lab sample (Pearson's _r_ = `r jh.m1_diff_cor_r`, _p_ = `r jh.m1_diff_cor_p`).
 
 <!--###AGGRESSIVE EXCLUSION-->
 <!-- Set which mode here: -->
@@ -881,5 +882,10 @@ E1_model3_verb.aggro.jh = E1_model3_tab.aggro.jh %>% filter(term == "verb_typere
 Across all three models, results were in line with analyses using the minimal exclusion criteria; none of the critical effects were statistically significant, nor were they in the expected direction (Pre-noun-onset window, verb x object interaction: _b_ = `r E1_model1_obj_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`; Pre-verb-offset window, verb x object interaction: _b_ = `r E1_model2_obj_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`; Verb effect on first target fixation: _b_ = `r E1_model3_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`).
 
 
+```{r E1b-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
 
+E1_panel_fig <- E1_spag_fig_remote / jh_E1_spag_fig
+E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect',  heights = unit(6, 'cm')) 
+  
+```
 

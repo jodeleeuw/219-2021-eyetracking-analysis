@@ -17,6 +17,7 @@ library(lmerTest)
 library(afex)
 library(forcats)
 library(broom.mixed)
+source('round.comm.R') #does "commercial" i.e. normal rounding
 
 knitr::opts_chunk$set(message=FALSE, warning=FALSE, echo = FALSE)
 ```
