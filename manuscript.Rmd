@@ -781,12 +781,12 @@ for the study can be found at <https://osf.io/3v4pg>.
 
 ### Participants
 
-57 participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that the original study had a sample size of 24. 
+Fifty-seven participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that Ryskin et al. (2017) Experiment 1 had a sample size of 24. 
 
-### Materials
+### Materials and Design
 
 The images and audios presented to the participants were the same
-stimuli used in the original study (available here <link>). The critical
+stimuli used in the original study. The critical
 trials were divided into modifier-biased, instrument-biased, and
 equibiased conditions, and the filler trials did not contain ambiguous
 instructions. Two lists of critical trials were made with different verb
@@ -795,8 +795,7 @@ and "crayon" in one list and "panda" and "violin" in the second list).
 Within each list, the same verb was presented twice but each time with a
 different target instrument and animal. The lists were randomly assigned
 to the participants to make sure the effects were not caused by the
-properties of the animal or instrument images used. The list of verbs
-used can be found in Appendix A of the original study.
+properties of the animal or instrument images used. There were 54 critical trials per list (3 verb conditions x 9 verbs per condition x 2 presentations) and 24 filler trials. The list of the 27 verbs used, along with their verb bias norms, can be found in Appendix A of the original study.
 
 ### Procedure
 
@@ -840,7 +839,6 @@ knitr::include_graphics("group-d/E4-example-figure.jpeg")
 
 ```
 
-### Comparison to in-lab data
 
 ```{r E4-analysis-comparison-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
 
@@ -860,7 +858,7 @@ knitr::include_graphics("group-d/E4-example-figure.jpeg")
 
 ## Discussion
 
-As in @ryskinVerbBiasesAre2017 and @snedekerDevelopingConstraintsParsing2004a, listeners' gaze patterns during sentences with globally ambiguous syntactic interpretations differed depending on the bias of the verb (i.e., modifier, instrument or equi). For modifier-biased verbs, participants looked more quickly at the target animal and less at the potential instrument than for instrument-biased verbs (and equi-biased verbs elicited a gaze pattern between these extremes). This pattern was stronger for those who achieved higher calibration accuracy and when quadrant-based ROIs were used compared to image-based ROIs.
+As in @ryskinVerbBiasesAre2017 and @snedekerDevelopingConstraintsParsing2004a, listeners' gaze patterns during sentences with globally ambiguous syntactic interpretations differed depending on the bias of the verb (i.e., modifier-, instrument-, or equi-). For modifier-biased verbs, participants looked more quickly at the target animal and less at the potential instrument than for instrument-biased verbs (and equi-biased verbs elicited a gaze pattern between these extremes). This pattern was stronger for those who achieved higher calibration accuracy and when quadrant-based ROIs were used compared to image-based ROIs.
 
 # Experiment 5
 
