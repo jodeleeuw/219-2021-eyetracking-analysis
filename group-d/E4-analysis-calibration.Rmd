@@ -93,6 +93,7 @@ eyetracking.effects.by.subj = read_csv( "output/E4_eye-tracking_data.csv") %>%
 
 
 ```
+
 ```{r, eval = F}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = modifier))+
   geom_point()+

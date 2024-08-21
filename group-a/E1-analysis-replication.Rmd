@@ -248,7 +248,6 @@ validation.accuracy.data <- all.data %>%
 <!-- What % of subjects needed to recalibrate because of poor initial calibration? -->
 
 ```{r summarize calibration data, eval=F}
-#printed?
 validation.accuracy.data %>% 
   group_by(subject_id) %>%
   count() %>%
@@ -272,7 +271,6 @@ save(validation.percent, file = "validation.percent.RData")
 ```
 
 ```{r plot subjects by validation, eval=F}
-#printed?
 ggplot(validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
   geom_pointrange() +
   theme_classic()
@@ -401,7 +399,7 @@ E1_spag_fig_remote <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.windo
   scale_y_continuous(limits=c(0,1))+
   scale_x_continuous(expand=c(0.01,0.01))+
   geom_vline(xintercept = mean(word.dur.avg$Total)) +
-  theme(panel.grid=element_blank(), axis.title.x = element_blank())+
+  theme(panel.grid.minor=element_blank(), axis.title.x = element_blank())+
   ggtitle('Remote sample')
 
 #E1_spag_fig_remote
@@ -929,6 +927,8 @@ E1_first_fix_plot_aggro <- ggplot(first.fixation.after.verb.onset.summary.aggro,
   geom_errorbar(width=0.2)
 ```
 
+
+
 ```{r Load data}
 # load("pre.noun.first.looks.data.min.RData") 
 # load("pre.verb.offset.first.looks.data.min.RData")
@@ -958,6 +958,7 @@ pre.noun.effects <- pre.noun.by.verb %>%
   mutate(effect = restricting - non_restricting)
 ```
 
+<!--CALIBRATION ANALYSIS-->
 ```{r Model 1 effect size by calibration}
 #merge with validation percent
 
@@ -1032,7 +1033,9 @@ m3_diff_cor_p <- m3_diff_cor$p.value
 ggplot(cali.analy.1, aes(x=M, y=restricting))+
   geom_point()+
   geom_smooth(method="lm", formula = y ~ x)+
-  labs(x="Calibration Score", y="Target Advantage Score")
+  labs(x="Calibration Score", y="Target Advantage Score")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 
 ```
 

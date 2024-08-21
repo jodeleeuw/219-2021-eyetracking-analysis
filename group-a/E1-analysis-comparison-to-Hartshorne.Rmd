@@ -334,7 +334,7 @@ jh_E1_spag_fig <- ggplot(jh.cumulative.fixation.data.summary.min, aes(x=t.window
   scale_x_continuous(expand=c(0.01,0.01))+
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")+
   geom_vline(xintercept = mean(jh.word.dur.avg$Total)) +
-  theme(panel.grid=element_blank(), legend.position = "none")+
+  theme(panel.grid.minor=element_blank(), legend.position = "none")+
   ggtitle('In-lab sample')
 
 #jh_E1_spag_fig
