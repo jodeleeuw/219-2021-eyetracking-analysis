@@ -174,7 +174,7 @@ m_calib_good_c1 = m_calib_good %>% filter(term == "condition1")
 m_calib_good_c2 = m_calib_good %>% filter(term == "condition2")
 
 ```
-
+#### Re-analysis After Exclusions
 Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 35 participants with calibration quality >50% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r m_calib_good_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r m_calib_good_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_good_c2 %>% pull(p.value) %>% round(digits = 2)`). 
 
 ```{r}
@@ -200,5 +200,7 @@ m_calib_great_c1 = m_calib_great %>% filter(term == "condition1")
 m_calib_great_c2 = m_calib_great %>% filter(term == "condition2")
 ```
 
+<!--AJ: Cutting this for consistency with the other Expts
 Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 19 participants with calibration quality >75% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. 
 Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r m_calib_great_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_great_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r m_calib_great_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_great_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_great_c2 %>% pull(p.value) %>% round(digits = 2)`). 
+-->

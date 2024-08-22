@@ -401,11 +401,11 @@ calibration was completed, the validation began. Participants were asked
 to go through the same steps as the calibration, except that they only
 fixated the dots as they appeared in different locations on the screen.
 If accuracy on the validation was too low (fewer than 50% of looks
-landed within a 200 px radius of the validation points<!--check!-->),
+landed within a 200 px radius of the validation points),
 participants were given an opportunity to re-start the calibration and
-validation steps. If the second attempt also lead to low validation
+validation steps. <!--If the second attempt also lead to low validation
 accuracy, participants were informed that they could not participate in
-the study.
+the study.(AJ: I don't think this is true, as there are Ps included that have under 50% on the second round of calibration)-->
 
 ## Pre-registration
 

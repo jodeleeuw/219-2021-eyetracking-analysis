@@ -260,11 +260,15 @@ validation.accuracy.data %>%
 ```{r save validation percent in roi during validation}
 validation.percent <- validation.accuracy.data %>%
   group_by(subject_id) %>%
-  slice_tail() %>%
-  select(subject_id, percent_in_roi) %>%
+  #slice_tail() %>%
+  select(subject_id, percent_in_roi, trial_index, phase) %>%
   unnest(percent_in_roi) %>%
-  group_by(subject_id) %>%
+  group_by(subject_id, trial_index, phase) %>%
   summarise(M = mean(percent_in_roi), MAX = max(percent_in_roi), MIN = min(percent_in_roi)) %>%
+  group_by(subject_id) %>%
+  mutate(calib_num = row_number()) %>%
+  filter(calib_num == max(calib_num)) %>%
+  select(subject_id, M, calib_num) %>%
   mutate(subject_id = fct_reorder(subject_id, M))
 
 save(validation.percent, file = "validation.percent.RData")
@@ -292,8 +296,10 @@ bad.subjects.validation.min <- validation.percent %>%
 ```{r summarize exclusions}
 bad.subjects.min <- unique(c(bad.subjects.prop.samples.min, bad.subjects.validation.min))
 
-critical.trials.filtered.min <- critical.trials %>%
-  filter(!subject_id %in% bad.subjects.min)
+#AJ: I'm not going to do any exclusions initially to be consistent with the other Exps
+# critical.trials.filtered.min <- critical.trials %>%
+#   filter(!subject_id %in% bad.subjects.min)
+critical.trials.filtered.min <- critical.trials #the name is a convenient lie
 
 n.bad.subjects.min <- length(bad.subjects.min)
 #There's a mysterious participant "55" who appears in bad.subjects but NOT in bad.subjects.prop.samples or in bad.subjects.validation...or anywhere? So there's really only 5 real bad subjects (leaving 57-5 = 52 participants in the filtered data)
@@ -301,9 +307,10 @@ n.bad.subjects.min <- length(bad.subjects.min)
 <!-- I'm moving the ROI blurb to the main manuscript file since it's the same for Hartshorne analyses
 __Regions of Interest__. Regions of interest (ROIs) were defined by creating boxes around each object in the scene. The size of each box was determined by taking the height and width of the given object and adding 20 pixels of padding. Each scene contained an agent region, a target region, and three or four distractor regions.-->
 
-<!-- This is where I should say how many people were excluded, right? -->
+<!-- 
 #### Minimal Exclusion 
 The first set of analyses used minimal exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.min*100` percent of fixations in any ROIs. This resulted in the elimination of one participant. Second, we excluded participants with validation accuracy under `r validation.threshold.min` percent, resulting in an additional `r n.bad.subjects.min - length(bad.subjects.prop.samples.min)` excluded participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.min$subject_id))` participants. 
+(AJ: I'm not going to do any exclusions initially to be consistent with the other Exps) -->
 
 <!-- # Calculating cumulative fixation probability -->
 
@@ -361,7 +368,7 @@ if(file.exists("data/generated/cumulative_fixation_data_min.csv")){
 
 ```{r group cumu fix by object}
 cumulative.fixation.windows.grouped.data.min <- cumulative.fixation.windows.data.min %>%
-  filter(!subject_id %in% bad.subjects.min) %>%
+  #filter(!subject_id %in% bad.subjects.min) %>%
   group_by(subject_id, verb_type, image_name, object_class, t.window) %>%
   summarize(cumulative.fixation.p = mean(has.fixated)) 
 ```
@@ -622,6 +629,7 @@ Which is to say: at each event time "t" per trial per subject, check whether the
 <!-- Exclude subjects below a threshold -->
 
 ```{r}
+
 prop.samples.threshold.aggro <- 0.2
 
 bad.subjects.prop.samples.aggro <- prop.in.roi.by.subject %>%
@@ -647,13 +655,18 @@ bad.subjects.validation.aggro <- validation.percent %>%
 ```{r}
 bad.subjects.aggro <- unique(c(bad.subjects.prop.samples.aggro, bad.subjects.validation.aggro))
 
+#AJ: we're actually just gonna use the validation criterion (for consistency)
 critical.trials.filtered.aggro <- critical.trials %>%
-  filter(!subject_id %in% bad.subjects.aggro)
+  #filter(!subject_id %in% bad.subjects.aggro)
+  filter(!subject_id %in% bad.subjects.validation.aggro)
 
 n.bad.subjects.aggro <- length(bad.subjects.aggro)
+n.bad.subjects.validation.aggro <- length(bad.subjects.validation.aggro)
 ```
+<!--AJ: moving this discussion to the Calibration section
 #### Aggressive Exclusion
 The second set of analyses used more aggressive exclusion criteria. First, we eliminated participants with `r prop.samples.threshold.aggro*100` percent of their fixations or fewer landing in any ROIs. This resulted in the elimination of `r length(bad.subjects.prop.samples.aggro)` participants. Second, we excluded participants with validation accuracy under `r validation.threshold.aggro` percent, which eliminated an additional `r n.bad.subjects.aggro - length(bad.subjects.prop.samples.aggro)` participants. The following analyses included `r nlevels(droplevels(critical.trials.filtered.aggro$subject_id))` participants. 
+-->
 
 <!-- # Calculating cumulative fixation probability -->
 
@@ -708,7 +721,7 @@ if(file.exists("data/generated/cumulative_fixation_data_aggro.csv")){
 
 ```{r}
 cumulative.fixation.windows.grouped.data.aggro <- cumulative.fixation.windows.data.aggro %>%
-  filter(!subject_id %in% bad.subjects.aggro) %>%
+  filter(!subject_id %in% bad.subjects.validation.aggro) %>%
   group_by(subject_id, verb_type, image_name, object_class, t.window) %>%
   summarize(cumulative.fixation.p = mean(has.fixated)) 
 ```
@@ -908,7 +921,6 @@ E1_model3_tab.aggro = broom.mixed::tidy(E1_model3.aggro)
 E1_model3_verb.aggro = E1_model3_tab.aggro %>% filter(term == "verb_typerestricting")
 
 ```
-We tested the same three models under these more aggressive exclusion criteria. The first two models, comparing target and distractor fixations in the predictive window, produced very similar results; the critical interaction  was not statistically significant (Pre-noun-onset window: _b_ = `r E1_model1_obj_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.aggro %>% pull(p.value) %>% round(digits = 2)`; Pre-verb-offset window: _b_ = `r E1_model2_obj_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.aggro %>% pull(p.value) %>% round(digits = 2)`). However, the final model, which tested the effect of verb condition on saccades to the target, yielded a statistically significant result, unlike in the previous set of analyses (_b_ = `r E1_model3_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.aggro %>% pull(p.value) %>% round(digits = 2)`).
 
 ```{r}
 first.fixation.after.verb.onset.subject.summary.aggro <- first.fixation.after.verb.onset.aggro %>%
@@ -927,7 +939,7 @@ E1_first_fix_plot_aggro <- ggplot(first.fixation.after.verb.onset.summary.aggro,
   geom_errorbar(width=0.2)
 ```
 
-
+<!--Calibration stuff-->
 
 ```{r Load data}
 # load("pre.noun.first.looks.data.min.RData") 
@@ -1028,22 +1040,26 @@ m3_diff_cor_r <- m3_diff_cor$estimate
 m3_diff_cor_p <- m3_diff_cor$p.value
 ```
 
-```{r E1-calib-effect, fig.cap='Calibration scores plotted against target advantage scores (cumulative proportion of fixations to the target minus cumulative proportion of fixations to competitors) at the end of the pre-noun time window.'}
-#The one corr that came out: noun window, restricting condition only
-ggplot(cali.analy.1, aes(x=M, y=restricting))+
+```{r E1-calib-effect, fig.cap='Calibration scores plotted against the verb effect on first fixations (the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition).'}
+#I picked this one because the DV is easiest to explain, and because it's the DV where the effect comes out once you drop the "bad" participants
+ggplot(cali.analy.3, aes(x=M, y=diff))+
   geom_point()+
   geom_smooth(method="lm", formula = y ~ x)+
-  labs(x="Calibration Score", y="Target Advantage Score")+
+  labs(x="Calibration Score", y="Verb Effect (ms)")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
 ```
 
-#### Calibration
+### Calibration
 Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point. Calibration quality varied widely, ranging from `r min(validation.percent$M) %>% round(digits = 2)`% to `r max(validation.percent$M) %>% round(digits = 2)`%. 
 
-We tested whether a participant's calibration quality was correlated with their effect size. There were three effects of interest: the verb-by-object interaction in predicting fixation probabilities, both in the (1) pre-noun-onset and (2) pre-verb-offset windows (calculated as the difference in target-over-distractor preference between verb conditions), and (3) the effect of verb on the timing of the first target fixation (calculated as the difference in target latency between verb conditions). Across the three effects of interest, calibration quality was not significantly correlated (Effect 1: Pearson's _r_ = `r m1_diffdiff_cor_r`, _p_ = `r m1_diffdiff_cor_p`, Effect 2: Pearson's _r_ = `r m2_diffdiff_cor_r`, _p_ = `r m2_diffdiff_cor_p`, Effect 3: Pearson's _r_ = `r m3_diff_cor_r`, _p_ = `r m3_diff_cor_p`. However, when the two interaction effects were calculated as the target advantage in the restricting condition only (i.e. rather than a difference of differences), we see a significant correlation between target advantage and calibration quality in the wider pre-noun window (Pearson's _r_ = `r m1_diff_cor_r`, _p_ = `r m1_diff_cor_p`). This is shown in Figure\ \@ref(fig:E1-calib-effect).
+We tested whether a participant's calibration quality was correlated with their effect size. There were three effects of interest: the verb-by-object interaction in predicting fixation probabilities, both in the (1) pre-noun-onset and (2) pre-verb-offset windows (calculated as the difference in target-over-distractor preference between verb conditions), and (3) the effect of verb on the timing of the first target fixation (calculated as the difference in target latency between verb conditions). Across the three effects of interest, calibration quality was not significantly correlated (Effect 1: Pearson's _r_ = `r m1_diffdiff_cor_r`, _p_ = `r m1_diffdiff_cor_p`, Effect 2: Pearson's _r_ = `r m2_diffdiff_cor_r`, _p_ = `r m2_diffdiff_cor_p`, Effect 3: Pearson's _r_ = `r m3_diff_cor_r`, _p_ = `r m3_diff_cor_p`. Figure\ \@ref(fig:E1-calib-effect) plots the relation between calibration scores and Effect 3. The figure makes clear that there is a large proportion of participants with calibration scores under 50%.  
 
+#### Re-analysis After Exclusions
+We re-analyzed the data after excluding participants with calibration scores under 50% (N = `r n.bad.subjects.validation.aggro`). The following analyses thus included `r nlevels(droplevels(critical.trials.filtered.aggro$subject_id))` participants.
+
+We tested the same three models under these more aggressive exclusion criteria. The first two models, comparing target and distractor fixations in the predictive window, produced very similar results; the critical interaction  was not statistically significant (Pre-noun-onset window: _b_ = `r E1_model1_obj_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.aggro %>% pull(p.value) %>% round(digits = 2)`; Pre-verb-offset window: _b_ = `r E1_model2_obj_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.aggro %>% pull(p.value) %>% round(digits = 2)`). However, the final model, which tested the effect of verb condition on the timing of fixations to the target, yielded a statistically significant result, unlike in the previous set of analyses with all participants included (_b_ = `r E1_model3_verb.aggro %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.aggro %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.aggro %>% pull(p.value) %>% round(digits = 2)`).
 
 
 

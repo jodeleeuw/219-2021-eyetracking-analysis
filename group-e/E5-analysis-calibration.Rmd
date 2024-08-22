@@ -186,8 +186,8 @@ plot.R<-ggplot(rescore[rescore$task=="Roundness",], aes(x=time.window, y=prop.in
   labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
 
 ```
-
-Thus, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50%. This slightly improved the fits of the sigmoids (Attractiveness: R^2^ = `r round(R2.A,2)`; Roundness: R^2^ = `r round(R2.R,2)`). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = `r round(KS$statistic, 2)`, p = `r round(KS$p.value, 2)`). Descriptively, the results do not look substantially different (Fig. \@ref(fig:groupEMainrev)).
+#### Re-analysis After Exclusions
+As in the previous experiments, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50%. This slightly improved the fits of the sigmoids (Attractiveness: R^2^ = `r round(R2.A,2)`; Roundness: R^2^ = `r round(R2.R,2)`). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = `r round(KS$statistic, 2)`, p = `r round(KS$p.value, 2)`). Descriptively, the results do not look substantially different (Fig. \@ref(fig:groupEMainrev)).
 
 (ref:groupEMainrev-caption) Revised results for Exp. 5 after removing low-calibration accuracy participants. *Left*: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. *Right*: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).
 

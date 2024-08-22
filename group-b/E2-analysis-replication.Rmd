@@ -341,7 +341,7 @@ E2_gaze_model_q2 = E2_gaze_model_tab %>% filter(term == "normalized_quadrantseco
 E2_gaze_model_q3 = E2_gaze_model_tab %>% filter(term == "normalized_quadrantthird")
 ```
 
-The proportions of looks across quadrants in the free-viewing condition were analyzed using a linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants^[ `lme4` syntax: `lmer(proportion ~ quadrant + (1+quadrant|subject_id))`. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.]. Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: _b_ =  `r E2_gaze_model_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 )
+The proportions of looks across quadrants in the free-viewing condition were analyzed using a linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants^[ `lme4` syntax: `lmer(proportion ~ quadrant + (1+quadrant|subject_id))`. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.]. Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: _b_ =  `r E2_gaze_model_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001).
 
 
 ```{r E2-compute-accuracy}
@@ -351,7 +351,7 @@ behavioral.data <- task.data %>%
 ```
 
 ```{r E2-compute-acc-v2}
-# *note that paper computer accuracy as hit rate - false alarm rate*
+# *note that paper computes accuracy as hit rate - false alarm rate*
 acc.behavioral.subject.data <- behavioral.data %>%
   group_by(subject_id, relation, condition) %>%
   summarize(hit.rate = sum(correct == TRUE & response == 't') / sum(correct_response == 't'),
