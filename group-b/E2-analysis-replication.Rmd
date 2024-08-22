@@ -97,7 +97,6 @@ free.view.data <- free.view.data %>%
   ))
 ```
 
-### Replication
 <!--Summarize proportion of views in each quadrant for each trial-->
 ```{r}
 free.view.summary.trial.data <- free.view.data %>%
@@ -272,7 +271,8 @@ view.summary.subject.data <- view.summary.trial.data %>%
 write_csv(view.summary.subject.data, 'output/E2_eye-tracking_data_subj.csv')
 ```
 
-__Eye-gaze__. Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were semi-randomly labeled "first", "second," third" (e.g., when the critical quadrant was in the top left, the "first" quadrant was the top right quadrant, but when the critical quadrant was in the top right, "first" corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \@ref(fig:E2-gaze-fig-both-conds)). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was (somewhat) effective.
+### Eye-gaze
+Looks during the retrieval period were categorized as belonging to one of four quadrants based on the x,y coordinates. The critical quadrant was the one in which the to-be-retrieved object had been previously located during encoding. The other three quadrants were labeled "first", "second," and "third" depending upon the location of the critical quadrant (e.g., when the critical quadrant was in the top left, the "first" quadrant was the top right quadrant, but when the critical quadrant was in the top right, "first" corresponded to bottom right, etc.). In both the fixed- and free-viewing condition, participants directed a larger proportion of looks to the critical quadrant (see Figure \@ref(fig:E2-gaze-fig-both-conds)). This bias appeared larger in the free-viewing condition, suggesting that the manipulation was somewhat effective.
 
 ```{r}
 free.view.summary.condition1.data <- free.view.summary.subject.data %>%
@@ -341,7 +341,7 @@ E2_gaze_model_q2 = E2_gaze_model_tab %>% filter(term == "normalized_quadrantseco
 E2_gaze_model_q3 = E2_gaze_model_tab %>% filter(term == "normalized_quadrantthird")
 ```
 
-The proportions of looks across quadrants in the free-viewing condition were analyzed using a linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants^[ `lme4` syntax: `lmer(proportion ~ quadrant + (1+quadrant|subject_id))`. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.]. Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: _b_ =  `r E2_gaze_model_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 )
+The proportions of looks across quadrants in the free-viewing condition were analyzed using a linear mixed-effects model with quadrant as the predictor (critical as the reference level). The model included random intercepts and slopes for participants^[ `lme4` syntax: `lmer(proportion ~ quadrant + (1+quadrant|subject_id))`. Among other limitations, this approach violates the independence assumptions of the linear model because looks to the four locations are not independent. This analysis was chosen because it is analogous to the ANOVA analysis conducted in the original paper.]. Proportions of looks were significantly higher for the critical quadrant compared to the other three (first: _b_ =  `r E2_gaze_model_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001).
 
 
 ```{r E2-compute-accuracy}
@@ -351,7 +351,7 @@ behavioral.data <- task.data %>%
 ```
 
 ```{r E2-compute-acc-v2}
-# *note that paper computer accuracy as hit rate - false alarm rate*
+# *note that paper computes accuracy as hit rate - false alarm rate*
 acc.behavioral.subject.data <- behavioral.data %>%
   group_by(subject_id, relation, condition) %>%
   summarize(hit.rate = sum(correct == TRUE & response == 't') / sum(correct_response == 't'),
@@ -436,7 +436,8 @@ E2_RT_model_rel = E2_RT_model_tab %>% filter(term == "relation1")
 E2_RT_model_cond = E2_RT_model_tab %>% filter(term == "condition1")
 ```
 
-__Response Time and Accuracy__. Participants' response times and accuracies on memory questions are summarized in Figure \@ref(fig:E2-rt-acc-fig). 
+### Response Time and Accuracy
+Participants' response times and accuracies on memory questions are summarized in Figure \@ref(fig:E2-rt-acc-fig). 
 Both dependent variables were analyzed with linear mixed-effects model with relation type (interobject = -0.5, intraobject=0.5) and viewing_condition (fixed = -0.5, free=0.5) and their interaction as the predictors. 
 The model included random intercepts for participants^[ `lme4` syntax: `lmer(DV ~ relation_type*viewing_condition + (1|subject_id))`]. 
 Accuracy did not differ significantly between interobject and intraobject questions (_b_ =  `r E2_acc_model_rel %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_acc_model_rel %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E2_acc_model_rel %>% pull(p.value) %>% round(digits = 2)`). Participants were less accurate in the free viewing condition than the fixed condition (_b_ =  `r E2_acc_model_cond %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_acc_model_cond %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E2_acc_model_cond %>% pull(p.value) %>% round(digits = 2)`). 
@@ -466,7 +467,7 @@ E2_RT_model2_rel = E2_RT_model_tab %>% filter(term == "relation1")
 E2_RT_model2_cond = E2_RT_model_tab %>% filter(term == "condition1")
 ```
 
-One possibility is that in-lab participants were much more compliant with the instruction to keep their gaze on central fixation (though these data are not reported in the original paper). When  analyzing results from the subset of participants (N = `r length(successful_fixed)`) who were most compliant during the fixed-viewing block (at least 25% of their looks fell within 20% of the center of the display), the viewing condition effects and the interactions were not signficant. Given the smaller sample size we do not interpret these results further.
+One possibility is that the in-lab participants in @johanssonLookHereEye2014 were much more compliant with the instruction to keep their gaze on central fixation (though these data are not reported in the original paper). When  analyzing results from the subset of participants (N = `r length(successful_fixed)`) who were most compliant during the fixed-viewing block (at least 25% of their looks fell within 20% of the center of the display), the viewing condition effects and the interactions were not signficant. Given the smaller sample size we do not interpret these results further.
 
 ```{r, eval = F}
 #Goal: ANOVA with RT as DV, condition, statement as IVs
