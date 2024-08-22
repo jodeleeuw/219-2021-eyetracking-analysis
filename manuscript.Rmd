@@ -524,7 +524,7 @@ After being greeted by the experimenter and completing the informed consent form
 HELP
 
 ## Results
-```{r E1-analysis-JoshH-lab, child = 'E1-analysis-comparison-to-Hartshorne.Rmd'}
+```{r E1-analysis-JoshH-lab, child = 'group-a/E1-analysis-comparison-to-Hartshorne.Rmd'}
 
 ```
 

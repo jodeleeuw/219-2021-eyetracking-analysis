@@ -116,7 +116,7 @@ m_calib_r = m_calib %>% pull(estimate )
 ```
 
 
-```{r E4-calib-corr-plot, fig.cap= 'Calibration scores plotted against the verb bias effect (the difference in target animal fixations between modifier and instrument conditions).}
+```{r E4-calib-corr-plot, fig.cap= 'Calibration scores plotted against the verb bias effect (the difference in target animal fixations between modifier and instrument conditions).'}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = bias_effect))+
   geom_point()+
   geom_smooth(method = "lm") +
