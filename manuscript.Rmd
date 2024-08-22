@@ -887,15 +887,31 @@ The study pre-registration is available at
 
 ### Participants
 
-50 participants for the main task were recruited on Prolific and were
-paid \$10/hour. 8 subjects, 4 from the attractiveness task group and 4 from
+Fifty participants for the main task were recruited on Prolific and were
+paid \$10/hour. <!-- Eight subjects, 4 from the attractiveness task group and 4 from
 the roundness task group, were excluded for incorrect validations.
-<!-- they were able to proceed despite bad validation?--> After this
+(They were able to proceed despite bad validation?) After this
 data exclusion, we ended up with 21 participants each for the
-attractiveness task and the roundness task. The original sample size in
-Shimojo et al. (2003) was 10 participants total. 
+attractiveness task and the roundness task. AJ: I can't figure out why these 8 were excluded so I'm adding them back for now--> For one subject (roundess task group), eye gaze data failed to record.<!--This was one of the excluded 8--> We ended up with 25 participants in the attractiveness condition and 24 in the roundness condition. The original sample size in Shimojo et al. (2003) was 10 participants total. 
 
-### Procedure and Design
+### Materials and Design
+
+The faces in our replication were selected from a set of 1,000 faces
+within the Flickr-Faces-HQ Dataset (the face images used in Shimojo et
+al. were from the Ekman face database and the AR face database). These
+images were chosen because the person in each image was looking at the
+camera with a fairly neutral facial expression and appeared to be over
+the age of 18. Twenty-seven participants were recruited on Prolific to participate in stimulus norming (for attractiveness). They each viewed all 172 faces and were asked to rate them on a scale from 1 (less attractive) to 7 (more attractive) using a slider. Faces were presented one at a time and in a random  order for each participant. Data from three participants were excluded because
+their modal response made up more than 50% of their total responses, for a total of 24 participants in the norming. 
+
+Following Shimojo et al., 19 face pairs were selected by
+identifying two faces that 1) had a difference in mean attractiveness ratings
+that was 0.25 points or lower and 2) matched in gender, race, and age
+group (young adult, adult, or older adult).
+
+Participants were presented with each of the 19 face pairs; task condition was manipulated between subjects, such that half of participants made judgments about facial attractiveness and the other half made judgments about facial shape. 
+
+### Procedure
 
 
 ```{r E5 calibration figure, child='group-e/E5-calibration-figure.Rmd'}
@@ -903,8 +919,7 @@ Shimojo et al. (2003) was 10 participants total.
 ```
 
 During each trial of the main task, two faces were displayed on the two
-halves of the screen, one on the left and one on the right (as in Figure\ \@ref(fig:E5-example-trial)). Participants were randomly assigned to one of two tasks:
-attractiveness or shape judgment. In the attractiveness task,
+halves of the screen, one on the left and one on the right (as in Figure\ \@ref(fig:E5-example-trial)). In the attractiveness task,
 participants were asked to chose the more attractice face in the pair
 and in the shape judgment task participants were asked to pick the face
 that appeared rounder. They pressed the "a" key on their keyboard to
@@ -914,40 +929,17 @@ each set of faces. Participants were asked to look at this fixation
 cross in order to reset their gaze in between trials. The order of
 the 19 face pairs was random for each participant.
 
-```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5. (Text did not appear on each screen.)'}
+```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5 (text did not appear on each screen).'}
 knitr::include_graphics("group-e/E5-example-figure.jpeg")
 ```
 
-### Materials and Norming
-
-The faces in our replication were selected from a set of 1,000 faces
-within the Flickr-Faces-HQ Dataset. (The face images used in Shimojo et
-al. were from the Ekman face database and the AR face database.) These
-images were chosen because the person in each image was looking at the
-camera with a fairly neutral facial expression and appeared to be over
-the age of 18. 27 participants were recruited on Prolific to participate
-in stimulus norming (for attractiveness). They each viewed all 172 faces and were asked to rate
-them on a scale from 1 (less attractive) to 7 (more attractive) using a
-slider. Faces were presented one at a time and in a random order for
-each participant. Data from 3 participants were excluded because
-their mode response made up more than 50% of their total responses, for a total of 24 participants
-in the norming. 
-
-Following Shimojo et al., 19 face pairs were selected by
-identifying two faces that 1) had a difference in mean attractiveness ratings
-that was 0.25 points or lower and 2) matched in gender, race, and age
-group (young adult, adult, or older adult).
-
-### Data analysis
-
+## Results
 In the original study, a video-based eye tracker was used. The eye
 movements of participants were recorded with a digital camera
-downsampled to 33.3 Hz, with eye position was then determined
+downsampled to 33.3 Hz, with eye position determined
 automatically with MediaAnalyzer software. In our study, subjects
 supplied their own cameras, so hardware sampling rate varied. However,
-data was collected at 20 Hz.`r colorize("[TODO - CONFIRM]", 'red')`
-
-## Results
+data was collected at 20 Hz. <!--`r colorize("[TODO - CONFIRM]", 'red')` AJ: I don't know how to confirm this! -->
 
 ```{r E5-analysis-replication, child='group-e/E5-analysis-replication.Rmd'}
 
