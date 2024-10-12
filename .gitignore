@@ -2,7 +2,7 @@
 .Rhistory
 .Rapp.history
 # Session Data files
-.RData
+*.RData
 # User-specific files
 .Ruserdata
 # Example code in package build process
@@ -31,3 +31,8 @@ manuscript_files/*
 group-e/group-e-analysis_files/
 *.DS_Store
 .DS_Store
+
+# Ignore generated manuscript
+*.pdf
+*.tex
+*.log
