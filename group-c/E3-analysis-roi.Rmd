@@ -79,9 +79,9 @@ looking.score.correlation.data <- looking.score.data %>%
 ls.cor <- cor(looking.score.correlation.data$looking.score.half, looking.score.correlation.data$looking.score.roi)
 ```
 
-The correlation between looking scores using the ROI method and the halves method is `r ls.cor`.
+The correlation between looking scores using the ROI method and the halves method is `r ls.cor` (see Figure\ \@ref(fig:E3-roi-correlation-of-looking-score).
 
-```{r E3-roi correlation of looking score, echo=FALSE, fig.cap="Correlation between looking scores calculated using ROIs and using screen halves."}
+```{r E3-roi-correlation-of-looking-score, echo=FALSE, fig.cap="Correlation between looking scores calculated using ROIs and using screen halves."}
 ggplot(looking.score.data %>% filter(!is.nan(looking.score.roi)), aes(x=looking.score.roi, y=looking.score.half))+
   geom_point()+
   geom_smooth(method="lm", formula = y~x)+
@@ -125,7 +125,8 @@ day.1.looking.by.time.summary <- day.1.looking.by.time %>%
   summarize(M = mean(cumulative.looks.new), SE=sd(cumulative.looks.new) / sqrt(n()))
 ```
 
-```{r E3-roi Plot of cumulative looking score, echo=FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
+```{r E3-roi Plot of cumulative looking score, echo=FALSE, eval = FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
+#This (the fig and the DV) isn't referred to in the body of the text, so I'm cutting this for now
 ggplot(day.1.looking.by.time.summary, aes(x=t, y=M, ymin=M-SE, ymax=M+SE))+
   geom_pointrange()+
   labs(x = "Time (ms)", y = "Cumulative Looking Score (Halves)")+

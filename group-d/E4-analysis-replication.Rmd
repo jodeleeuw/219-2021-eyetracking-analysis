@@ -36,7 +36,6 @@ data.tables <- lapply(data.files, function(file){
 all.data <- bind_rows(data.tables)
 ```
 
-### Replication
 
 ```{r E4-filter-data-for-replication-analysis}
 task.data <- all.data %>%

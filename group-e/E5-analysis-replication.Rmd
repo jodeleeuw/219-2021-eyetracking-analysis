@@ -22,9 +22,13 @@ all.data <- bind_rows(data.tables)
 ```
 
 ```{r}
-# Excluding Subjects
-all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6" & subject_id!="5ce1372c55fe0d001869c8d8" & subject_id!="5f47d860b56e68220cb86be1" & subject_id!="607eaf87ac02229ef4fa8f4a" & subject_id!="5d30857eb2f0ad00163470f3" & subject_id!="5e272684f205790453c2c4b8" & subject_id!="5f5b5881b17fa72756b8ff2a" & subject_id!="5fae5291ec402509e2885604")
-E5.excluded.n = 8
+# Excluding Subjects (AJ: why/how? I can't figure it out, so I'm putting them back in)
+# all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6" & subject_id!="5ce1372c55fe0d001869c8d8" & subject_id!="5f47d860b56e68220cb86be1" & subject_id!="607eaf87ac02229ef4fa8f4a" & subject_id!="5d30857eb2f0ad00163470f3" & subject_id!="5e272684f205790453c2c4b8" & subject_id!="5f5b5881b17fa72756b8ff2a" & subject_id!="5fae5291ec402509e2885604")
+# E5.excluded.n = 8
+
+#There's an issue with Subject 603ea6a51c38def3e4140ba6: their webgazer_data is a list of length 0 instead of a dataframe like the others.
+all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6")
+
 
 # Convert data to long format for gaze measurements
 task.data <- all.data %>%
@@ -137,8 +141,8 @@ plot.R<-ggplot(summary.gaze.view[summary.gaze.view$task=="Roundness",], aes(x=ti
 
 ```{r groupEMain, fig.show="hold", out.width="45%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:groupEMain-caption)"}
 # All defaults
-include_graphics("figGroupEOrigA")
-include_graphics("figGroupEOrigB")
+include_graphics("figGroupEOrigA.png")
+include_graphics("figGroupEOrigB.png")
 plot.A
 plot.R
 ```

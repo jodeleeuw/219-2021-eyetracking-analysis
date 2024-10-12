@@ -401,11 +401,11 @@ calibration was completed, the validation began. Participants were asked
 to go through the same steps as the calibration, except that they only
 fixated the dots as they appeared in different locations on the screen.
 If accuracy on the validation was too low (fewer than 50% of looks
-landed within a 200 px radius of the validation points<!--check!-->),
+landed within a 200 px radius of the validation points),
 participants were given an opportunity to re-start the calibration and
-validation steps. If the second attempt also lead to low validation
+validation steps. <!--If the second attempt also lead to low validation
 accuracy, participants were informed that they could not participate in
-the study.
+the study.(AJ: I don't think this is true, as there are Ps included that have under 50% on the second round of calibration)-->
 
 ## Pre-registration
 
@@ -449,19 +449,6 @@ that the sample size of the original study was 24. For unknown reasons,
 worked with data collected from 58 participants.
 
 
-### Procedure
-
-
-```{r E1 calibration figure, child = 'group-a/E1-calibration-figure.Rmd' }
-
-```
-
-```{=html}
-<!-- Qs: 
--keyboard keys? what was the exact phrasing of the instruction? 
--Any delay between when visual scene appears and the audio starts? 
--Does trial end as soon as participant responds?-->
-```
 ### Materials and Design
 
 The visual stimuli were created through Canva and depicted an agent
@@ -492,6 +479,20 @@ the restrictive condition, eight in the non-restrictive condition) and
 assignment of critical scene to condition was random on a
 subject-by-subject basis.<!-- right?-->
 
+### Procedure
+
+
+```{r E1 calibration figure, child = 'group-a/E1-calibration-figure.Rmd' }
+
+```
+
+```{=html}
+<!-- Qs: 
+-keyboard keys? what was the exact phrasing of the instruction? 
+-Any delay between when visual scene appears and the audio starts? 
+-Does trial end as soon as participant responds?-->
+```
+
 ## Results
 Looks to the objects in the scene were time-locked to the onset of the
 verb, the offset of the verb, onset of the post-verbal determiner, and
@@ -513,14 +514,14 @@ Experiment 1b tested whether the failure to replicate significant condition effe
 ### Participants
 Forty-nine participants completed the study in a lab setting. They were recruited via the Boston College subject pool. Participants needed to be 18 years of age or older and native speakers of English.
 
+### Materials and Design
+Materials were identical to those in Experiment 1a.
+
 ### Procedure
 After being greeted by the experimenter and completing the informed consent form, participants followed on-screen prompts to complete the study, including calibration, as described in the Experiment 1a Procedure. 
 
 ### Apparatus
 HELP
-
-### Materials and Design
-Materials were identical to those in Experiment 1a. 
 
 ## Results
 ```{r E1-analysis-JoshH-lab, child = 'group-a/E1-analysis-comparison-to-Hartshorne.Rmd'}
@@ -553,28 +554,42 @@ pre-registration are available on the Open Science Framework at
 
 ### Participants
 
-60 participants were paid for their participation.
+Sixty participants were paid for their participation.
 The sample size was motivated in part by budget constraints, but was
 nonetheless 2.5x larger than the original sample size of 24). 
-Data from 1 participant were not properly
+Data from one participant were not properly
 recorded due to unknown technical issues, so data from 59 participants
 were included in all analyses to follow.
 
-### Procedure
+### Materials and Design
 
+The experiment consisted of two blocks each composed of an encoding
+phase and a recall phase. The two blocks differed by whether the recall phase was in the free-viewing or fixed-viewing condition, as described in the Procedure. Participants were randomly assigned to see the
+fixed-viewing or free-viewing block first. 
+During each encoding phase, participants saw a
+grid indicating the four quadrants of the screen. Each quadrant
+contained six cartoon images of items belonging to the same category. The four categories were humanoids, household objects, animals, and
+methods of transportation (see Figure\ \@ref(fig:E2-example-trial)). Different images were used in each block; there were 48 unique images total across the experiment. 
+
+Each recall phase presented participants with a blank screen with a central fixation cross as they listened to true/false statements testing their recall of the previous grid. Each statement fell into either an interobject or intraobject
+condition. Interobject statements were those that compared two different
+items in the grid (e.g. "The skeleton is to the left of the robot"),
+while intraobject statements were those that asked about the orientation
+of a single item (e.g. "The bus is facing right"). There were 48 total
+statements in each block, such that each object was the subject of both an intraobject and an intraobject statement; there were 96 unique statements total across the experiment.
+
+```{r E2-example-trial, fig.cap='Example trial from Experiment 2.'}
+knitr::include_graphics("group-b/E2-example-figure.jpeg")
+```
+
+### Procedure
 
 
 ```{r E2 calibration figure, child='group-b/E2-calibration-figure.Rmd'}
 
 ```
 
-The experiment consisted of two blocks each composed of an encoding
-phase and a recall phase. During the encoding phase, participants saw a
-grid indicating the four quadrants of the screen. Each quadrant
-contained six images of items belonging to the same category (see Figure\ \@ref(fig:E2-example-trial)). 
-The four categories were humanoids, household objects, animals, and
-methods of transportation. 
-Each of the four quadrants was presented one at a time. First, a list of
+Participants received instructions that included an example grid and an explicit request that they not use any tools to help them during encoding. Participants then began their first encoding phase. Each of the four quadrants was presented one at a time. First, a list of
 the items in the quadrant was shown, then the pictures of items were displayed in the quadrant. 
 For each item, participants used their arrow keys to indicate whether the object was facing left or right. After the participant identified the direction of each
 item, they would have an additional 30 seconds to encode the name and
@@ -583,29 +598,16 @@ were presented, participants were shown the full grid of
 24 items and had 60 seconds to further encode the name and orientation
 of each item.
 
-
-```{r E2-example-trial, fig.cap='Example trial from Experiment 2.'}
-knitr::include_graphics("group-b/E2-example-figure.jpeg")
-```
-
-
-During the recall phase, participants listened to statements and
+Participants then entered the first recall phase, in which they listened to the 48 statements and
 responded by pressing the 'F' key for false statements and 'T' for true
-ones. Each statement fell into either an interobject or intraobject
-condition. Interobject statements were those that compared two different
-items in the grid (e.g. "The skeleton is to the left of the robot"),
-while intraobject statements were those that asked about the orientation
-of a single item (e.g. "The bus is facing right"). There were 48 total
-statements, with 24 interobject and 24 intraobject statements split
-evenly among the four quadrants. While listening to these statements, in
+ones. While listening to these statements, in
 the free-viewing block, participants saw a blank screen and were allowed
 to freely gaze around the screen. During the fixed-viewing block,
 participants were asked to fixate a small cross in the center of the
 screen throughout the recall phase. In both cases, the mouse was
-obscured from the screen. Participants were randomly assigned to see the
-fixed-viewing or free-viewing block first. Different images were used in each block.
+obscured from the screen. 
 
-After completing both encoding-recall blocks, participants were asked to
+Participants then proceded to the second encoding and recall phases as described above. After completing both encoding-recall blocks, participants were asked to
 answer a few survey questions (such as whether they wore glasses or
 encountered any distractions).
 
@@ -616,7 +618,6 @@ due to time constraints. In those two conditions, participant were
 prompted to look to a specific quadrant (rather than free viewing or
 central fixation) which either matched or mismatched the original
 location of the to-be-remembered item.
-
 
 ## Results
 
@@ -679,6 +680,13 @@ performance on the recognition memory test because this prevents
 comparison of gaze data for recalled vs. non-recalled images. Our final
 sample size was 45 participants.
 
+### Materials and Design
+
+Stimuli consisted of color photographs of common objects (e.g. an apple, a key, etc.). We selected 96 unique images from the stimulus set provided by @konkle2010conceptual, which contains multiple objects from hundreds of unique categories. We selected images in 48 pairs from the same object category such that each critical object had a corresponding foil object during the recognition test (e.g. one red apple and one green apple). All images are of a single object on a white background. <!-- There are 98 unique images on OSF. One pair (lighter and lighter-alternate) isn't used. -->
+
+Stimulus sets were created to present participants with 24 presentation trials and 24 test trials on Day 1, and 48 recognition trials on Day 2. Each presentation trial screen presented two identical images (e.g. red apple and red apple). The test trial screens presented each of the previously-seen ("old") images paired with a new image (e.g. red apple and bicycle key). The recognition trial screens presented a single image that was either from the original set of 24 (seen twice across the first two phases) or was a corresponding foil for the original set (e.g. red apple or green apple). Thus, each participant was exposed to 72 unique images over the course of the experiment (the 24 foils for the "new" images in the test phase are never seen). Two full stimulus lists were created to counterbalance images across participants; the images that composed the "old" set for one list made up the "new" set for the list. The experimental design is visually depicted in Figure\ \@ref(fig:E3-design-schematic).
+
+
 ### Procedure
 
 
@@ -687,12 +695,11 @@ sample size was 45 participants.
 ```
 
 The experiment was administered over the course of two
-consecutive days. It consisted of three sections: a presentation phase,
-a test phase, and a recognition test. The first two phases occurred on
+consecutive days. The presentation phase and test phase occurred on
 the first day, while the recognition test occurred on the second day.
 
 During the presentation phase, participants viewed 24 pairs of identical
-color photographs depicting common objects. Each pair was presented for
+images. Each pair was presented for
 5 seconds and an interval of 5 seconds elapsed before the next pair was
 shown. The order of the photographs was randomized and different for
 each participant. After completion of the presentation phase,
@@ -701,30 +708,16 @@ away from the screen.
 
 After the break, they were prompted to complete the eye-tracking
 calibration again before beginning the test phase. During this phase,
-participants again viewed 24 pairs of photographs with an interstimulus
-duration of 5 seconds. In each pair, one photograph was previously seen
-during the presentation phase, while the other was new. Which pictures
-were old or new was counterbalanced across participants.<!-- 2 lists?-->
-For half of the participants in each counterbalancing group, the new and
-old photographs were
-reversed.<!-- not sure what that last sentence means: is it about the side of the screen? or still just describing that there were 2 lists-->
+participants again viewed 24 pairs of photographs (old and new) with an interstimulus
+duration of 5 seconds. 
 
 Approximately 24 hours after completing the first session, with a leeway
 interval of 12 hours to accommodate busy schedules, participants were
-given the recognition test. It consisted of 48 photographs, presented
-one at a time. Each was shown on the screen for 1 second, followed by a
-1 second interstimulus interval. Half of the photographs had been
-viewed twice on the previous day and were deemed the "targets." The
-other half depicted an object with the same name as an object in one of
-the old photographs, but had not been viewed before, deemed "foils."
-Each photograph remained on the screen until the participants indicated
-whether or not they had seen it before by pressing 'y' for yes and 'n'
-for no. After they pressed one of the two keys, a prompt on the screen
+given the recognition test. Each image was shown on the screen for 1 second, followed by a
+1 second interstimulus interval. Each photograph remained on the screen until the participants indicated whether or not they had seen it before by pressing 'y' for yes and 'n' for no. After they pressed one of the two keys, a prompt on the screen
 asked them to rate their confidence in their answer from 1 as a "pure
 guess" to 5 as "very sure." by clicking on the corresponding number on
 the screen. No feedback on their responses was given during the test.
-
-The experimental design is visually depicted in Figure\ \@ref(fig:E3-design-schematic).
 
 There were two modifications we made to the methods of the original
 experiment. As we were only replicating the declarative memory component
@@ -739,15 +732,15 @@ online experiment format.
 knitr::include_graphics("group-c/E3-example-figure.jpeg")
 ```
 
-### Materials
-
-`r colorize('Images were selected XXX...','red')`
-
-
-
 ## Results
 
 ```{r E3-analysis-replication, child='group-c/E3-analysis-replication.Rmd'}
+
+```
+
+### Calibration
+
+```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
 
 ```
 
@@ -757,11 +750,6 @@ knitr::include_graphics("group-c/E3-example-figure.jpeg")
 
 ```
 
-### Calibration
-
-```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
-
-```
 
 ## Discussion
 
@@ -793,7 +781,21 @@ for the study can be found at <https://osf.io/3v4pg>.
 
 ### Participants
 
-57 participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that the original study had a sample size of 24. 
+Fifty-seven participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that Ryskin et al. (2017) Experiment 1 had a sample size of 24. 
+
+### Materials and Design
+
+The images and audios presented to the participants were the same
+stimuli used in the original study. The critical
+trials were divided into modifier-biased, instrument-biased, and
+equibiased conditions, and the filler trials did not contain ambiguous
+instructions. Two lists of critical trials were made with different verb
+and instrument combinations (e.g., "rub" could be paired with "panda"
+and "crayon" in one list and "panda" and "violin" in the second list).
+Within each list, the same verb was presented twice but each time with a
+different target instrument and animal. The lists were randomly assigned
+to the participants to make sure the effects were not caused by the
+properties of the animal or instrument images used. There were 54 critical trials per list (3 verb conditions x 9 verbs per condition x 2 presentations) and 24 filler trials. The list of the 27 verbs used, along with their verb bias norms, can be found in Appendix A of the original study.
 
 ### Procedure
 
@@ -830,20 +832,6 @@ been moved over at least one object.
 knitr::include_graphics("group-d/E4-example-figure.jpeg")
 ```
 
-### Materials
-
-The images and audios presented to the participants were the same
-stimuli used in the original study (available here <link>). The critical
-trials were divided into modifier-biased, instrument-biased, and
-equibiased conditions, and the filler trials did not contain ambiguous
-instructions. Two lists of critical trials were made with different verb
-and instrument combinations (e.g., "rub" could be paired with "panda"
-and "crayon" in one list and "panda" and "violin" in the second list).
-Within each list, the same verb was presented twice but each time with a
-different target instrument and animal. The lists were randomly assigned
-to the participants to make sure the effects were not caused by the
-properties of the animal or instrument images used. The list of verbs
-used can be found in Appendix A of the original study.
 
 ## Results
 
@@ -851,7 +839,6 @@ used can be found in Appendix A of the original study.
 
 ```
 
-### Comparison to in-lab data
 
 ```{r E4-analysis-comparison-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
 
@@ -871,7 +858,7 @@ used can be found in Appendix A of the original study.
 
 ## Discussion
 
-As in @ryskinVerbBiasesAre2017 and @snedekerDevelopingConstraintsParsing2004a, listeners' gaze patterns during sentences with globally ambiguous syntactic interpretations differed depending on the bias of the verb (i.e., modifier, instrument or equi). For modifier-biased verbs, participants looked more quickly at the target animal and less at the potential instrument than for instrument-biased verbs (and equi-biased verbs elicited a gaze pattern between these extremes). This pattern was stronger for those who achieved higher calibration accuracy and when quadrant-based ROIs were used compared to image-based ROIs.
+As in @ryskinVerbBiasesAre2017 and @snedekerDevelopingConstraintsParsing2004a, listeners' gaze patterns during sentences with globally ambiguous syntactic interpretations differed depending on the bias of the verb (i.e., modifier-, instrument-, or equi-). For modifier-biased verbs, participants looked more quickly at the target animal and less at the potential instrument than for instrument-biased verbs (and equi-biased verbs elicited a gaze pattern between these extremes). This pattern was stronger for those who achieved higher calibration accuracy and when quadrant-based ROIs were used compared to image-based ROIs.
 
 # Experiment 5
 
@@ -900,15 +887,31 @@ The study pre-registration is available at
 
 ### Participants
 
-50 participants for the main task were recruited on Prolific and were
-paid \$10/hour. 8 subjects, 4 from the attractiveness task group and 4 from
+Fifty participants for the main task were recruited on Prolific and were
+paid \$10/hour. <!-- Eight subjects, 4 from the attractiveness task group and 4 from
 the roundness task group, were excluded for incorrect validations.
-<!-- they were able to proceed despite bad validation?--> After this
+(They were able to proceed despite bad validation?) After this
 data exclusion, we ended up with 21 participants each for the
-attractiveness task and the roundness task. The original sample size in
-Shimojo et al. (2003) was 10 participants total. 
+attractiveness task and the roundness task. AJ: I can't figure out why these 8 were excluded so I'm adding them back for now--> For one subject (roundess task group), eye gaze data failed to record.<!--This was one of the excluded 8--> We ended up with 25 participants in the attractiveness condition and 24 in the roundness condition. The original sample size in Shimojo et al. (2003) was 10 participants total. 
 
-### Procedure and Design
+### Materials and Design
+
+The faces in our replication were selected from a set of 1,000 faces
+within the Flickr-Faces-HQ Dataset (the face images used in Shimojo et
+al. were from the Ekman face database and the AR face database). These
+images were chosen because the person in each image was looking at the
+camera with a fairly neutral facial expression and appeared to be over
+the age of 18. Twenty-seven participants were recruited on Prolific to participate in stimulus norming (for attractiveness). They each viewed all 172 faces and were asked to rate them on a scale from 1 (less attractive) to 7 (more attractive) using a slider. Faces were presented one at a time and in a random  order for each participant. Data from three participants were excluded because
+their modal response made up more than 50% of their total responses, for a total of 24 participants in the norming. 
+
+Following Shimojo et al., 19 face pairs were selected by
+identifying two faces that 1) had a difference in mean attractiveness ratings
+that was 0.25 points or lower and 2) matched in gender, race, and age
+group (young adult, adult, or older adult).
+
+Participants were presented with each of the 19 face pairs; task condition was manipulated between subjects, such that half of participants made judgments about facial attractiveness and the other half made judgments about facial shape. 
+
+### Procedure
 
 
 ```{r E5 calibration figure, child='group-e/E5-calibration-figure.Rmd'}
@@ -916,8 +919,7 @@ Shimojo et al. (2003) was 10 participants total.
 ```
 
 During each trial of the main task, two faces were displayed on the two
-halves of the screen, one on the left and one on the right (as in Figure\ \@ref(fig:E5-example-trial)). Participants were randomly assigned to one of two tasks:
-attractiveness or shape judgment. In the attractiveness task,
+halves of the screen, one on the left and one on the right (as in Figure\ \@ref(fig:E5-example-trial)). In the attractiveness task,
 participants were asked to chose the more attractice face in the pair
 and in the shape judgment task participants were asked to pick the face
 that appeared rounder. They pressed the "a" key on their keyboard to
@@ -927,40 +929,17 @@ each set of faces. Participants were asked to look at this fixation
 cross in order to reset their gaze in between trials. The order of
 the 19 face pairs was random for each participant.
 
-```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5. (Text did not appear on each screen.)'}
+```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5 (text did not appear on each screen).'}
 knitr::include_graphics("group-e/E5-example-figure.jpeg")
 ```
 
-### Materials and Norming
-
-The faces in our replication were selected from a set of 1,000 faces
-within the Flickr-Faces-HQ Dataset. (The face images used in Shimojo et
-al. were from the Ekman face database and the AR face database.) These
-images were chosen because the person in each image was looking at the
-camera with a fairly neutral facial expression and appeared to be over
-the age of 18. 27 participants were recruited on Prolific to participate
-in stimulus norming (for attractiveness). They each viewed all 172 faces and were asked to rate
-them on a scale from 1 (less attractive) to 7 (more attractive) using a
-slider. Faces were presented one at a time and in a random order for
-each participant. Data from 3 participants were excluded because
-their mode response made up more than 50% of their total responses, for a total of 24 participants
-in the norming. 
-
-Following Shimojo et al., 19 face pairs were selected by
-identifying two faces that 1) had a difference in mean attractiveness ratings
-that was 0.25 points or lower and 2) matched in gender, race, and age
-group (young adult, adult, or older adult).
-
-### Data analysis
-
+## Results
 In the original study, a video-based eye tracker was used. The eye
 movements of participants were recorded with a digital camera
-downsampled to 33.3 Hz, with eye position was then determined
+downsampled to 33.3 Hz, with eye position determined
 automatically with MediaAnalyzer software. In our study, subjects
 supplied their own cameras, so hardware sampling rate varied. However,
-data was collected at 20 Hz.`r colorize("[TODO - CONFIRM]", 'red')`
-
-## Results
+data was collected at 20 Hz. <!--`r colorize("[TODO - CONFIRM]", 'red')` AJ: I don't know how to confirm this! -->
 
 ```{r E5-analysis-replication, child='group-e/E5-analysis-replication.Rmd'}
 

@@ -139,7 +139,7 @@ JMW_spag_fig <- ggplot(JMW_cumu.summary, aes(x=t.window, y=cumulative.fixation.m
   scale_x_continuous(expand=c(0.01,0.01))+
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type") +
   geom_vline(xintercept = mean(JMW1_info$Non.relative)) +
-  theme(panel.grid=element_blank(), legend.position = "none", axis.title.x = element_blank())+
+  theme(panel.grid.minor=element_blank(), legend.position = "none", axis.title.x = element_blank())+
   ggtitle('James et al. (2023), Exp. 1')
 
 #JMW_spag_fig

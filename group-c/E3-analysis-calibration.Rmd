@@ -95,9 +95,10 @@ merged.eyetracking <- looking.score.data %>%
 ```
 
 
-#### Calibration Accuracy
+<!--#### Calibration Accuracy-->
 
-```{r E3-cal Plot Calibration Accuracy, echo=FALSE}
+```{r E3-cal Plot Calibration Accuracy, echo=FALSE, eval=FALSE}
+#This figure isn't referred to in the body of the text, and we have the scatterplots, so I'm cutting this for now
 ggplot(subject.calibration.score, aes(x=mean_percent_in_roi))+
   stat_bin(binwidth = 10)+
   labs(x="Calibration Accuracy\n(% of samples within 200px of calibration point)")+
@@ -108,25 +109,31 @@ ggplot(subject.calibration.score, aes(x=mean_percent_in_roi))+
         axis.title.y = element_blank())
 ```
 
-#### Correlation with Effects
+<!--#### Correlation with Effects-->
 
 To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within 200 pixels of the validation points during the final validation phase before the eye tracking is performed.
 
-Calibration scores were not correlated with looking scores, regardless of which method was used to calculate looking scores.
+Calibration scores were not correlated with looking scores, regardless of whether scores were computed using the halves coding method (see Figure \ \@ref(fig:E3-cal-Plot-looking-score-(halves)-by-calibration) or the ROI coding method (see  Figure \ \@ref(fig:E3-cal-Plot-looking-score-(roi)-by-calibration)).
 
 
-```{r E3-cal Plot looking score (halves) by calibration, echo=FALSE}
+```{r E3-cal-Plot-looking-score-(halves)-by-calibration, echo=FALSE, warning=FALSE, fig.cap = 'Calibration scores plotted against looking scores using the left-vs.-right halves coding method (proportion of gaze samples to the half of the screen containing the new image out of all gaze samples).'}
 ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.half))+
   geom_point()+
   geom_smooth(method="lm", formula = y ~ x)+
-  labs(x="Calibration Score", y="Looking Score (Halves)")
+  labs(x="Calibration Score", y="Looking Score (Halves)")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
 ```
 
-```{r E3-cal Plot looking score (roi) by calibration, echo=FALSE, warning=FALSE}
+```{r E3-cal-Plot-looking-score-(roi)-by-calibration, echo=FALSE, warning=FALSE, fig.cap = 'Calibration scores plotted against looking scores using the ROI coding method (proportion of gaze samples to the new image out of all gaze samples).'}
 ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.roi))+
   geom_point()+
   geom_smooth(method="lm", formula = y ~ x)+
-  labs(x="Calibration Score", y="Looking Score (ROIs)")
+  labs(x="Calibration Score", y="Looking Score (ROIs)") +
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
 ```
 
 ```{r E3-cal Prepare Day 2 data, include=FALSE}
@@ -170,13 +177,58 @@ looking.correlations.subjects.tidy <- looking.correlations.subjects %>%
   left_join(subject.calibration.score, by=c("subject_id"))
 ```
 
-We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation.
+We then looked at the correlation of calibration scores with the correlation between day 2 memory performance and day 1 looking scores for both kinds of behavioral and looking measures. None of the four relationships showed a significant correlation (see Figure\ \@ref(fig:E3-cal-Plot-correlations-with-calibration-score)).
 
-```{r E3-cal Plot correlations with calibration score, echo=FALSE, warning=FALSE}
+```{r E3-cal-Plot-correlations-with-calibration-score, echo=FALSE, warning=FALSE, fig.cap='The relation between calibration scores and experimental effect size, defined as the correlation between Day 1 looking scores and Day 2 memory performance. Looking scores were either coded using the halves method (left panels) or ROI method (right panels); memory performance was measured using confidence ratings (top panels) or reaction time for correct recognition judgments (bottom panels).'}
+# Set up facet label names for behavioral_measure variable
+behav.labs <- c("Confidence", "Reaction Time")
+names(behav.labs) <- c("confidence", "rt")
+
+# Set up facet label names for looking_measure variable
+look.labs <- c("Halves Method", "ROI Method")
+names(look.labs) <- c("half", "roi")
+
 ggplot(looking.correlations.subjects.tidy, aes(x=mean_percent_in_roi, y=z))+
   geom_point()+
   geom_smooth(method="lm", formula=y~x)+
-  facet_grid(behavioral_measure ~ looking_measure)
-
+  facet_grid(behavioral_measure ~ looking_measure,
+             labeller = labeller(behavioral_measure = behav.labs, looking_measure =
+                                   look.labs))+
+  labs(x="Calibration Score", y="Correlation (Looking Score, Memory)") +
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 ```
 
+```{r aggro exclusions}
+#Identify Ps with calibration scores under 50%
+validation.threshold.aggro <- 50
+
+e3.bad.subjects.validation.aggro <- subject.calibration.score %>%
+  filter(mean_percent_in_roi <= validation.threshold.aggro) %>%
+  pull(subject_id) %>%
+  as.character()
+
+n.e3.bad.subjects.validation.aggro <- length(e3.bad.subjects.validation.aggro)
+#26. Yikes.
+
+#Day 1: Looking scores
+t.test.data1.aggro <- t.test.data1 %>%
+  filter(!subject_id %in% e3.bad.subjects.validation.aggro)
+
+t.test.day1.aggro <- t.test(t.test.data1.aggro$M.looking.score, mu = 0.5)
+
+#Day 2: Looking scores and Confidence
+looking.confidence.correlations.subjects.filtered.aggro <- looking.confidence.correlations.subjects.filtered %>%
+  filter(!subject_id %in% e3.bad.subjects.validation.aggro)
+
+looking.confidence.correlation.t.test.aggro <- t.test(looking.confidence.correlations.subjects.filtered.aggro$r.to.z)
+
+#Day 2: Looking scores and RT
+looking.rt.correlations.subjects.filtered.aggro <- looking.rt.correlations.subjects.filtered %>%
+  filter(!subject_id %in% e3.bad.subjects.validation.aggro)
+
+looking.rt.correlation.t.test.aggro <-t.test(looking.rt.correlations.subjects.filtered.aggro$r.to.z)
+```
+
+#### Re-analysis After Exclusions
+As is clear from the preceding figures, there was a large number of participants (N = `r e2.n.bad.subjects.aggro`) that had calibration scores under 50%. When we re-analyzed the subset that remained after those participants were excluded (N = `r 45-e2.n.bad.subjects.aggro`), key results were aligned with the main analyses. The looking score result was upheld such that participants looked more at the new image on Day 1 (mean: `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`) (*t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`)), but looking scores remained unrelated to Day 2 memory outcomes (confidence: t(`r looking.confidence.correlation.t.test.aggro$parameter`) = `r looking.confidence.correlation.t.test.aggro$statistic`, p = `r looking.confidence.correlation.t.test.aggro$p.value`; RT: t(`r  looking.rt.correlation.t.test.aggro$parameter`) = `r looking.rt.correlation.t.test.aggro$statistic`, p = `r looking.rt.correlation.t.test.aggro$p.value`). 

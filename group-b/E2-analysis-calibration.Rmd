@@ -51,21 +51,21 @@ summary.data.calib.wide = summary.data.calib %>%
   select(-trial_index) %>% 
   pivot_wider(id_cols = subject_id, names_from=calib_num, values_from = mean_percent_in_roi )
 
-# correlation between initial and halfway calibration
+# correlation between initial and halfway calibration (for folks that didn't need to redo calibration)
 ggplot(summary.data.calib.wide %>% filter(is.na(`3`)), aes(x = `1`, y = `2`))+
   geom_point()+
   geom_smooth(method = 'lm')+
   theme_bw()+
   theme(legend.position = "none") 
 
-# correlation between 2 successive calibration attempts
+# correlation between 2 successive calibration attempts (only folks who redid calibration)
 ggplot(summary.data.calib.wide %>% filter(!is.na(`3`)), aes(x = `1`, y = `2`))+
   geom_point()+
   geom_smooth(method = 'lm')+
   theme_bw()+
   theme(legend.position = "none") 
 
-# correlation between second attempt calibration and halfway
+# correlation between second attempt calibration and halfway (only folks who redid calibration)
 ggplot(summary.data.calib.wide %>% filter(!is.na(`3`)), aes(x = `2`, y = `3`))+
   geom_point()+
   geom_smooth(method = 'lm')+
@@ -77,7 +77,9 @@ ggplot(summary.data.calib.wide %>% filter(!is.na(`3`)), aes(x = `2`, y = `3`))+
 
 calib.by.subj = summary.data.calib %>% 
   group_by(subject_id) %>% 
-  summarize(mean_percent_in_roi = mean(mean_percent_in_roi))
+  filter(calib_num == max(calib_num) | calib_num == max(calib_num)-1) %>% #AJ: excludes initial calibrations of those who recalibrated, to be in line with other Expts
+  summarize(mean_percent_in_roi = mean(mean_percent_in_roi),
+            calib_total = max(calib_num))
 
 eyetracking.effects.by.subj = read_csv( "output/E2_eye-tracking_data_subj.csv") %>% 
  # rename("condition" = compatibility) %>% 
@@ -91,11 +93,15 @@ eyetracking.effects.by.subj = read_csv( "output/E2_eye-tracking_data_subj.csv") 
 
 ```
 
-```{r, eval = F}
+```{r E2-calib-effect, fig.cap = 'Calibration scores plotted against gaze bias (the difference between the proportion of looks to the critical quadrant minus the average proportion of looks to the average of the other three quadrants).'}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = crit_bias))+
   geom_point()+
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm", formula = y ~ x) +
+  labs(x="Calibration Score", y="Gaze Bias")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 ```
+
 ```{r}
 
 m_calib = broom::tidy(cor.test(eyetracking.effects.by.subj$mean_percent_in_roi, eyetracking.effects.by.subj$crit_bias))
@@ -108,5 +114,59 @@ m_calib_p = m_calib %>% pull(p.value )
 
 ```
 
-Participants' calibration quality, measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)` %). 
-The quality of a participant's calibration was not significantly correlated with the participant's effect size ( _Pearson's r_= `r m_calib_r`, _p_ = `r m_calib_p`) as measured by the difference between the proportion of looks to the critical quadrant minues the average proportion of looks to the average of the other three quadrants.
+Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, averaging initial calibration (or re-calibration for participants who repeated calibration) and calibration at the halfway point. Calibration scores varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)` %). 
+The quality of a participant's calibration was not significantly correlated with the participant's effect size ( _Pearson's r_= `r m_calib_r`, _p_ = `r m_calib_p`) as measured by the difference between the proportion of looks to the critical quadrant minus the average proportion of looks to the average of the other three quadrants (see Figure\ \@ref(fig:E2-calib-effect)).
+
+```{r aggro exclusion}
+#Identify Ps with calibration scores under 50%
+validation.threshold.aggro <- 50
+
+e2.bad.subjects.validation.aggro <- calib.by.subj %>%
+  filter(mean_percent_in_roi <= validation.threshold.aggro) %>%
+  pull(subject_id) %>%
+  as.character()
+
+e2.n.bad.subjects.aggro <- length(e2.bad.subjects.validation.aggro) #It's 12
+
+#Get the critical data used in the main analyses, filter out "bad" subjs
+
+#Gaze
+free.view.summary.subject.data.aggro <- free.view.summary.subject.data %>%
+  filter(!subject_id %in% e2.bad.subjects.validation.aggro)
+
+#Accuracy
+acc.behavioral.subject.data.aggro <- acc.behavioral.subject.data %>%
+  filter(!subject_id %in% e2.bad.subjects.validation.aggro)
+#RT
+rt.behavioral.subject.data.aggro <- rt.behavioral.subject.data %>%
+  filter(!subject_id %in% e2.bad.subjects.validation.aggro)
+```
+
+```{r aggro reanalysis}
+#Re-run critical models
+
+#Gaze
+E2_gaze_model.aggro<-lmer(proportion ~ normalized_quadrant + (1+normalized_quadrant|subject_id), data = free.view.summary.subject.data.aggro)
+
+E2_gaze_model.aggro_tab = broom.mixed::tidy(E2_gaze_model.aggro) 
+E2_gaze_model.aggro_q1 = E2_gaze_model.aggro_tab %>% filter(term == "normalized_quadrantfirst")
+E2_gaze_model.aggro_q2 = E2_gaze_model.aggro_tab %>% filter(term == "normalized_quadrantsecond")
+E2_gaze_model.aggro_q3 = E2_gaze_model.aggro_tab %>% filter(term == "normalized_quadrantthird")
+
+#Accuracy
+E2_acc_model.aggro<-lmer(accuracy ~ relation*condition + (1|subject_id), data = acc.behavioral.subject.data.aggro)
+
+E2_acc_model.aggro_tab = broom.mixed::tidy(E2_acc_model.aggro) 
+E2_acc_model.aggro_rel = E2_acc_model.aggro_tab %>% filter(term == "relation1")
+E2_acc_model.aggro_cond = E2_acc_model.aggro_tab %>% filter(term == "condition1")
+
+#RT
+E2_RT_model.aggro<-lmer(rt ~ relation*condition + (1|subject_id), data = rt.behavioral.subject.data.aggro)
+
+E2_RT_model.aggro_tab = broom.mixed::tidy(E2_RT_model.aggro) 
+E2_RT_model.aggro_rel = E2_RT_model.aggro_tab %>% filter(term == "relation1")
+E2_RT_model.aggro_cond = E2_RT_model.aggro_tab %>% filter(term == "condition1")
+
+```
+#### Re-analysis After Exclusions
+There were `r e2.n.bad.subjects.aggro` participants whose calibration score was under 50%. When those participants were removed from the analyses, critical results were in line with the main analyses: there remains a clear gaze bias in the free-viewing condition (first: _b_ =  `r E2_gaze_model.aggro_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model.aggro_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model.aggro_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 ); viewing condition still did not interact with question type to predict either behavioral outcome.
