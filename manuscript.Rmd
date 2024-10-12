@@ -523,7 +523,7 @@ HELP
 Materials were identical to those in Experiment 1a. 
 
 ## Results
-```{r E1-analysis-JoshH-lab, child = 'E1-analysis-comparison-to-Hartshorne.Rmd'}
+```{r E1-analysis-JoshH-lab, child = 'group-a/E1-analysis-comparison-to-Hartshorne.Rmd'}
 
 ```
 
