@@ -135,9 +135,9 @@ ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6
 ```
 
 Eye-tracking on the web differs critically from in-lab eye-tracking in that the size of the display differs across participants. Thus the size of the ROIs differs across participants. The current version of the web experiment used a bounding box around each image to determine the ROI. 
-This approach is flexible and accomodates variability in image size, but may exclude looks that are directed at the image but fall outside of the image (due to participant or eye-tracker noise) as show in Figure \@ref(fig:E4-example-subj-looks-ROI)a. Alternatively, The display can be split into 4 quadrants which jointly cover the entire screen (see Figure \@ref(fig:E4-example-subj-looks-ROI)b). 
+This approach is flexible and accomodates variability in image size, but may exclude looks that are directed at the image but fall outside of the image (due to participant or eye-tracker noise) as shown in Figure \@ref(fig:E4-example-subj-looks-ROI)a. Alternatively, The display can be split into 4 quadrants which jointly cover the entire screen (see Figure \@ref(fig:E4-example-subj-looks-ROI)b). 
 
-```{r E4-example-subj-looks-ROI, fig.cap = "Example participant's gaze coordinates categorized into ROIs based on a) image bounding boxes and b) screen quadrants. Magenta points indicate looks that were not categorized into an ROI"}
+```{r E4-example-subj-looks-ROI, fig.cap = "Example participant's gaze coordinates categorized into ROIs based on a) image bounding boxes and b) screen quadrants. Magenta points indicate looks that were not categorized into an ROI."}
 p_box<-ggplot(eyetracking.data.with.roi %>% filter(subject == '5564e577fdf99b6c901a75a6'))+
   geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
   scale_y_reverse()+
