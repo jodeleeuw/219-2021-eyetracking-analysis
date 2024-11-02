@@ -151,7 +151,7 @@ first.move.orig.summary <- first.move.orig.subject.summary %>%
 
 
 
-```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.", out.width="50%", fig.align="center"}
+```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.", out.width="65%", fig.align="center"}
 
 ggplot(bind_rows(
   first.move.orig.summary %>% mutate(study_type = "Original"),
@@ -163,7 +163,14 @@ ggplot(bind_rows(
   coord_cartesian(ylim = c(0,1)) +
   theme_classic() +
   labs(y = "Proportion of first mouse movements", x = "Bias") +
-  facet_wrap(~study_type, ncol = 1)  # This creates vertical panels
+  facet_wrap(~study_type, ncol = 1) + theme(  # This creates vertical panels   
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
 
 ```{r, eval=FALSE}
@@ -300,7 +307,7 @@ eyetracking.window.summary.both = eyetracking.window.summary.by.subj.both %>%
 ```
 
 
-```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means", out.width="50%", fig.align="center"}
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means", out.width="65%", fig.align="center"}
 
 ggplot(eyetracking.window.summary.by.subj.both)+
   stat_summary(aes(x=time.window, color=condition, y = mean_prop, shape = study), 
@@ -315,7 +322,14 @@ ggplot(eyetracking.window.summary.by.subj.both)+
   scale_linetype_manual(values = c("dashed","solid"))+
   coord_cartesian(ylim = c(0,.8))+
   theme_classic()+
-  labs(y = "Proportion of fixations", x = NULL)
+  labs(y = "Proportion of fixations", x = NULL) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
 ```{r, eval  = F}
 orig.data.time.window.1 <- eyetracking.window1.summary.by.trial.orig %>% 
@@ -345,7 +359,14 @@ fig2<-ggplot(eyetracking.figure.2.data %>%
   geom_vline(xintercept = animal.onset + 200) + 
   geom_vline(xintercept = instrument.onset + 200)+
   labs(y = "Proportion of looks", x = "Time relative to verb onset (ms)")+
-  guides(color = guide_legend("Verb bias"),fill = guide_legend("Verb bias"), linetype = guide_legend("Gaze location"))
+  guides(color = guide_legend("Verb bias"),fill = guide_legend("Verb bias"), linetype = guide_legend("Gaze location")) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 fig2
 ```
 ```{r, eval=FALSE}

@@ -343,7 +343,11 @@ jh_E1_spag_fig <- ggplot(jh.cumulative.fixation.data.summary.min, aes(x=t.window
   labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")+
   geom_vline(xintercept = mean(jh.word.dur.avg$Total)) +
   theme(panel.grid.minor=element_blank(), legend.position = "none")+
-  ggtitle('In-lab sample')
+  ggtitle('In-lab sample') +
+  theme(panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      
+    axis.text = element_text(size=14))
+
 
 #jh_E1_spag_fig
 
@@ -641,6 +645,7 @@ jh.m3_diff_cor <- cor.test(jh.cali.analy.3$diff, jh.cali.analy.3$M, use = "pairw
 jh.m3_diff_cor_r <- jh.m3_diff_cor$estimate
 jh.m3_diff_cor_p <- jh.m3_diff_cor$p.value
 ```
+
 ```{r E1b-calib-effect, fig.cap='Calibration scores in Exp. 1b, plotted against the verb effect, operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.', out.width="50%", fig.align="center"}
 #I picked this one because it's the same as in E1a
 ggplot(jh.cali.analy.3, aes(x=M, y=diff))+
@@ -648,7 +653,11 @@ ggplot(jh.cali.analy.3, aes(x=M, y=diff))+
   geom_smooth(method="lm", formula = y ~ x)+
   labs(x="Calibration Score", y="Verb Effect (ms)")+
   theme_bw()+
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank()) +
+  theme(panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      
+    axis.text = element_text(size=14))
+
 
 ```
 
@@ -776,7 +785,11 @@ E1_spag_fig_aggro.jh <- ggplot(cumulative.fixation.data.summary.aggro.jh, aes(x=
   theme(panel.grid=element_blank())+
   scale_y_continuous(limits=c(0,1))+
   scale_x_continuous(expand=c(0.01,0.01))+
-  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")
+  labs(x="Time from Verb Onset (ms)", y="Probability", shape="Verb Type", fill="Object Type")  +
+  theme(panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      
+    axis.text = element_text(size=14))
+
 
 
 #TO-DO: insert a vertical line for the average noun onset
@@ -901,10 +914,25 @@ E1_model3_verb.aggro.jh = E1_model3_tab.aggro.jh %>% filter(term == "verb_typere
 Again, we re-analyzed the data focusing on participants with validation accuracy of at least `r validation.threshold.aggro.jh`% (N = `r nlevels(droplevels(critical.trials.filtered.aggro.jh$subject_id))`). Across all three models, results were in line with analyses using the minimal exclusion criteria; none of the critical effects were statistically significant, nor were they in the expected direction (Pre-noun-onset window, verb x object interaction: _b_ = `r E1_model1_obj_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`; Pre-verb-offset window, verb x object interaction: _b_ = `r E1_model2_obj_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`; Verb effect on first target fixation: _b_ = `r E1_model3_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`).
 
 
-```{r E1b-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="50%", fig.align="center"} 
+```{r E1b-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="75%", fig.align="center"} 
 
+E1_spag_fig_remote <- E1_spag_fig_remote +    theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
 E1_panel_fig <- E1_spag_fig_remote / jh_E1_spag_fig
-E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect',  heights = unit(6, 'cm')) 
+E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect') +
+    theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
   
 ```
 

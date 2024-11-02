@@ -1,5 +1,5 @@
 ---
-title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of five “classic” cognitive science experiments"
+title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of five prominent cognitive science experiments"
 shorttitle        : "Webcam eye-tracking paradigms"
 
 author:
@@ -722,7 +722,7 @@ the screen. No feedback on their responses was given during the test.
 One aspect of the original study that we could not replicate was that we presented all stimuli on a single screen rather than two screens due to the constraints of the online experiment format. We had no *a priori* reason to expect this to matter.
 
 
-```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3', out.width="50%", fig.align="center"}
+```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3', out.width="35%", fig.align="center"}
 knitr::include_graphics("group-c/E3-example-figure.jpeg")
 ```
 
@@ -987,7 +987,9 @@ The sixth study was a replication attempt of Posner et al. ??.
 
 # General Discussion
 
-We conducted five attempted replication studies using different experimental paradigms from across the cognitive sciences. All were successfully implemented in `jsPsych` using the `webgazer` plugin, but replication success was mixed. Experiment 1 had the smallest ROIs due to the use of an integrated visual scene with five to six ROIs of varying size per scene, as opposed to ROIs corresponding to display halves or quadrants. Both attempts to replicate @altmannIncrementalInterpretationVerbs1999 were unsuccessful, despite the success of previous in-lab replications using infrared eye-tracking [e.g. @james2023language]. A previous conceptual replication of this paradigm using webcam-based eye-tracking [@prystauka2023online] was successful but used a four-quadrant visual world paradigm, rather than the "naturalistic" scenes used in the original study and in the current replication attempts. It is worth noting that removing variability related to participant environments (by conducting the webcam-tracking study in the lab) did not appear to improve the sensitivity of the paradigm. The primary limitation is likely to be the size of the ROIs.
+We conducted five attempted replication studies using different experimental paradigms from across the cognitive sciences. All were successfully implemented in `jsPsych` using the `webgazer` plugin, though replication was not uniform. 
+
+Experiment 1 had the smallest ROIs due to the use of an integrated visual scene with five to six ROIs of varying size per scene, as opposed to ROIs corresponding to display halves or quadrants. Both attempts to replicate @altmannIncrementalInterpretationVerbs1999 were unsuccessful, despite the success of previous in-lab replications using infrared eye-tracking [e.g. @james2023language]. A previous conceptual replication of this paradigm using webcam-based eye-tracking [@prystauka2023online] was successful but used a four-quadrant visual world paradigm, rather than the "naturalistic" scenes used in the original study and in the current replication attempts. It is worth noting that removing variability related to participant environments (by conducting the webcam-tracking study in the lab) did not appear to improve the sensitivity of the paradigm. The primary limitation is likely to be the size of the ROIs.
 
 Experiment 2 used the four quadrants of the participant's screen as ROIs. As in @johanssonLookHereEye2014 and @spiveyOculomotorMechanismsActivated2001, participants spontaneously looked to blank ROIs which previously contained to-be-remembered pictures. These results appeared to be robust to calibration quality. An additional manipulation, instructing participants to keep gaze fixed on a central point, was not successful. One possibility is that participants are less motivated to follow such instructions when an experimenter is not present in the same room with them. It may be possible to improve performance by emphasizing that this is an important aspect of the experiment or by providing additional training/practice in keeping the eyes still on one particular point.  
 
@@ -996,6 +998,8 @@ Experiment 3 used two large ROIs (halves of the display in one analysis) and suc
 Experiment 4 used the four quadrants of the participant's screen as ROIs. As in @ryskinVerbBiasesAre2017, listeners used knowledge of the co-occurrence statistics of verbs and syntactic structures to resolve ambiguous linguistic input ("Rub the frog with the mitten"). Across multiple time windows, participants looked more at potential instruments (mitten), when the verb (rub) was one that was more likely to be followed by a prepositional phrase describing an instrument with which to perform the action , as opposed to describing the recipient of the action (frog). Despite the qualitative replication of past findings, the overall rates of looks to various objects were much lower than in an in-lab study using infrared eye-tracking. This reduction may be related to measurement quality: effect sizes were greater for participants with higher calibration accuracy. Using the full quadrants as ROIs, rather than bounding boxes around the four images, also appeared to improve the measurement of the effect. Crucially, there was no evidence of a delay in the onset of effects relative to in-lab work, indicating that the modifications to `webgazer` that are made within the `jsPsych` plug-in successfully address the issues noted by @dijkgraaf2017predicting and suggesting that this methodology can be fruitfully used to investigate research questions related to the timecourse of processing.
  
 Experiment 5, similar to Experiment 3, used two large ROIs (or halves of the display). As in @shimojoGazeBiasBoth2003 and in the recent webcam-based replication by @yang2021webcam, we saw that participants looked more at the face or shape that they ultimately chose during a judgment task. This gaze bias appears to be stronger for decisions about face attractiveness than shape, though this effect was not statistically significant. 
+
+The relatively large number of statistical comparisons means that we would not expect everything to come out significant even in the best-case scenario. Nonetheless, there appears to be some systematicity in the patterns of significant replication. Most of the failures to replicate seem to be due to small ROIs (e.g., Exp. 1) or effects that were small to begin with (e.g., Exp. 3) or involved insensitive statistical tests (e.g., Exp. 5). 
 
 In sum, the `webgazer` plug-in for `jsPsych` can be fruitfully used to conduct a variety of cognitive science experiments on the web, provided the limitations of the methodology are carefully considered. 
 

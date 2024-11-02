@@ -147,7 +147,13 @@ p_quad<-ggplot(eyetracking.data.with.quadrant.roi %>% filter(subject == '5564e57
   geom_point(aes(x = x, y = y, color = as.factor(which_roi)))+
   scale_y_reverse()+ 
   theme_bw()+
-  theme(legend.position = "none")
+  theme(legend.position = "none") +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
 
 p_box + p_quad + plot_annotation(tag_levels = 'a')
 ```

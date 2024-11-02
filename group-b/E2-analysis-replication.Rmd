@@ -170,7 +170,12 @@ ggplot(fixed.view.data %>% filter(subject_id == '5f7c9ab9b52d920f0aa8ab4e'))+
              aes(x = x, y = y ), color = "black")+
   scale_y_reverse()+
   theme_bw()+
-  theme(legend.position = "none")
+  theme(legend.position = "none") + theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),     
+    axis.text = element_text(size=14)
+  )
+
 
 
 ```
@@ -288,7 +293,14 @@ fig<-ggplot(free.view.summary.condition1.data, aes(x=normalized_quadrant, y=M, y
   theme_classic(base_size = 25)+
   coord_cartesian(ylim = c(0, 0.4))+
   labs(x = "Quadrant", y = "Mean proportion of looks")+
-  theme(legend.position = "none")
+  theme(legend.position = "none") + theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 fig
 ```
 ```{r saving plot, eval=FALSE}
@@ -310,7 +322,12 @@ ggplot(view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, 
   scale_fill_brewer(palette="Set1",)+
   theme_classic()+
   labs(x = "Quadrant", y = "Mean proportion of looks")+
-  theme(legend.position = "none")
+  theme(legend.position = "none") +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),  
+    axis.text = element_text(size=14)
+  )
+
 
 ```
 
@@ -328,7 +345,12 @@ fig.fixed<-ggplot(fixed.view.summary.condition1.data, aes(x=normalized_quadrant,
   scale_fill_brewer(palette="Set1",)+
   theme_classic()+
   labs(x = "Quadrant", y = "Mean proportion of looks")+
-  theme(legend.position = "none")
+  theme(legend.position = "none")    theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14), 
+    axis.text = element_text(size=14)
+  )
+
 fig.fixed
 ```
 
@@ -380,7 +402,14 @@ acc_fig<-ggplot(acc.summary.condition.data %>%
   scale_color_manual(values=c("orange2","royalblue4"))+
   coord_cartesian(ylim=c(0.3,0.8)) +
   labs(x="Statement Type", y="Accuracy", color=NULL)+
-  theme_classic()
+  theme_classic() + theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
 
 ```{r E2-rt-fig}
@@ -396,7 +425,12 @@ rt_fig<-ggplot(rt.summary.condition.data %>%
   geom_errorbar(width=0.2)+
   scale_color_manual(values=c("orange2","royalblue4"))+
   labs(x="Statement Type", y="Response Time (ms)", color=NULL)+
-  theme_classic()
+  theme_classic() +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14)
+  )
+
 ```
 
 ```{r E2-rt-acc-fig, fig.cap = "Accuracy and response times during memory retrieval.", out.width="50%", fig.align="center"}

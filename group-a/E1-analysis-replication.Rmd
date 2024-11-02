@@ -1046,7 +1046,9 @@ ggplot(cali.analy.3, aes(x=M, y=diff))+
   geom_smooth(method="lm", formula = y ~ x)+
   labs(x="Calibration Score", y="Verb Effect (ms)")+
   theme_bw()+
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      
+    axis.text = element_text(size=14))
 
 ```
 
@@ -1060,9 +1062,23 @@ The figure makes clear that there is a large proportion of participants with cal
 
 
 
-```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="50%", fig.align="center"} 
+```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="75%", fig.align="center"} 
 
+JMW_spag_fig <- JMW_spag_fig +    theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
 E1_panel_fig <- JMW_spag_fig / E1_spag_fig_remote 
-E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect',  heights = unit(6, 'cm')) 
+E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect') +
+    theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
   
 ```
