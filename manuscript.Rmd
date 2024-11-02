@@ -239,6 +239,7 @@ output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 library(papaja)
 library(jsonlite)
 library(dplyr)
@@ -260,6 +261,9 @@ colorize <- function(x, color) { # for adding colored text (e.g., for notes to s
       x)
   } else x
 }
+
+#3 digits for p-values
+options(papaja.precision = list(p_value = 3))
 ```
 
 ```{r analysis-preferences}
@@ -465,7 +469,7 @@ response for the critical trials was "yes." Filler trials consisted of
 scenes that also contained an agent surrounded by objects as in the critical trials, but corresponding sentences named an object that was not present in the scene. The correct keyboard response for the filler
 trials was "no."
 
-```{r E1-example-trial, fig.cap='Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.'}
+```{r E1-example-trial, fig.cap='Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-a/E1-example-trial.jpeg")
 ```
 
@@ -479,7 +483,7 @@ subject-by-subject basis.<!-- right?-->
 ### Procedure
 
 
-```{r E1 calibration figure, child = 'group-a/E1-calibration-figure.Rmd' }
+```{r E1 calibration figure, child = 'group-a/E1-calibration-figure.Rmd', out.width="50%", fig.align="center" }
 
 ```
 
@@ -574,14 +578,14 @@ while intraobject statements were those that asked about the orientation
 of a single item (e.g. "The bus is facing right"). There were 48 total
 statements in each block, such that each object was the subject of both an intraobject and an intraobject statement; there were 96 unique statements total across the experiment.
 
-```{r E2-example-trial, fig.cap='Example trial from Experiment 2.'}
+```{r E2-example-trial, fig.cap='Example trial from Experiment 2.', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-b/E2-example-figure.jpeg")
 ```
 
 ### Procedure
 
 
-```{r E2 calibration figure, child='group-b/E2-calibration-figure.Rmd'}
+```{r E2 calibration figure, child='group-b/E2-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -637,8 +641,8 @@ for objects. Interestingly, we did not replicate the behavior result: a memory b
 
 <!-- group c -->
 
-The third study was a partial replication attempt of
-@mannsVisualPairedcomparisonTask2000. This experiment used the visual
+The third study was a partial replication attempt of the "looking group" condition of
+@mannsVisualPairedcomparisonTask2000 (we did not replicate their priming condition). This experiment used the visual
 paired-comparison, which involves presenting a previously-viewed image
 and novel image together and measuring the proportion of time spent
 looking at each image. The expected pattern of results is that
@@ -686,7 +690,7 @@ Stimulus sets were created to present participants with 24 presentation trials a
 ### Procedure
 
 
-```{r E3 calibration figure, child='group-c/E3-calibration-figure.Rmd'}
+```{r E3 calibration figure, child='group-c/E3-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -715,16 +719,10 @@ asked them to rate their confidence in their answer from 1 as a "pure
 guess" to 5 as "very sure." by clicking on the corresponding number on
 the screen. No feedback on their responses was given during the test.
 
-There were two modifications we made to the methods of the original
-experiment. As we were only replicating the declarative memory component
-of the original experiment, we did not have a "priming group."
-Therefore, we followed only the procedure for the "looking group."
-Additionally, for each section of the study, the stimuli were presented
-on a single screen instead of two screens due to the constraints of the
-online experiment format.
+One aspect of the original study that we could not replicate was that we presented all stimuli on a single screen rather than two screens due to the constraints of the online experiment format. We had no *a priori* reason to expect this to matter.
 
 
-```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3'}
+```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-c/E3-example-figure.jpeg")
 ```
 
@@ -734,22 +732,23 @@ knitr::include_graphics("group-c/E3-example-figure.jpeg")
 
 ```
 
-### Calibration
-
-```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
-
-```
-
 ### Effects of ROIs
 
 ```{r E3-analysis-ROIs, child='group-c/E3-analysis-roi.Rmd'}
 
 ```
 
+### Calibration
+
+```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
+
+```
 
 ## Discussion
 
-As in @mannsVisualPairedcomparisonTask2000, participants looked more at novel images than previously seen images. This effect was consistent for ROIs based on the images and for the coarser ROIs based on two halves of the display. A day later, participants were also able to discriminate the images they had seen from foil images they had not seen during the previous session. However, there was no evidence that memory performance on day 2 was related to looking time on day 1. Calibration quality did not appear to impact this relationship.
+As in @mannsVisualPairedcomparisonTask2000, participants looked more at novel images than previously seen images. This effect was consistent for ROIs based on the images and for the coarser ROIs based on two halves of the display. A day later, participants were also able to discriminate the images they had seen from foil images they had not seen during the previous session. However, there was no evidence that memory performance on day 2 was related to looking time on day 1. 
+
+Thus, most of the key findings replicated. What should we make of the finding that failed to replicate? Notably, the proportion of looks to the novel object on Day 1 (54% or 55%, depending on analysis) was numerically smaller than in the original (59%), potentially decreasing the ability to detect correlations with eye-gaze. If so, the question is whether that is due to lower-quality eye-gaze tracking. This seems unlikely, because calibration quality did not appear to substantially affect this result (or any of the others). Alternative explanation include the well-documented decline effect (replications tend to find smaller effect sizes than the original) and the common finding that subject accuracy is lower when not testing undergraduates at elite universities.
 
 # Experiment 4
 
@@ -777,7 +776,7 @@ for the study can be found at <https://osf.io/3v4pg>.
 
 ### Participants
 
-Fifty-seven participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that Ryskin et al. (2017) Experiment 1 had a sample size of 24. 
+Fifty-seven participants were paid \$2.50 for their participation --- three fewer than the intended sample of 60, which was not reached due to time constraints, but double the sample in Ryskin et al. (2017) Experiment 1. 
 
 ### Materials and Design
 
@@ -796,7 +795,7 @@ properties of the animal or instrument images used. There were 54 critical trial
 ### Procedure
 
 
-```{r E4 calibration figure, child='group-d/E4-calibration-figure.Rmd'}
+```{r E4 calibration figure, child='group-d/E4-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -824,7 +823,7 @@ been moved over at least one object.
     the straw" may not involve any clicking but rather only mousing over
     the camel.
 
-```{r E4-example-trial, fig.cap='An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.'}
+```{r E4-example-trial, fig.cap='An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-d/E4-example-figure.jpeg")
 ```
 
@@ -832,11 +831,6 @@ knitr::include_graphics("group-d/E4-example-figure.jpeg")
 ## Results
 
 ```{r E4-analysis-replication, child='group-d/E4-analysis-replication.Rmd'}
-
-```
-
-
-```{r E4-analysis-comparison-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
 
 ```
 
@@ -910,7 +904,7 @@ Participants were presented with each of the 19 face pairs; task condition was m
 ### Procedure
 
 
-```{r E5 calibration figure, child='group-e/E5-calibration-figure.Rmd'}
+```{r E5 calibration figure, child='group-e/E5-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -925,7 +919,7 @@ each set of faces. Participants were asked to look at this fixation
 cross in order to reset their gaze in between trials. The order of
 the 19 face pairs was random for each participant.
 
-```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5 (text did not appear on each screen).'}
+```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5 (text did not appear on each screen).', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-e/E5-example-figure.jpeg")
 ```
 

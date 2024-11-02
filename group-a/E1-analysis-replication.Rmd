@@ -274,7 +274,7 @@ validation.percent <- validation.accuracy.data %>%
 save(validation.percent, file = "validation.percent.RData")
 ```
 
-```{r plot subjects by validation, eval=F}
+```{r plot subjects by validation, eval=F, out.width="50%", fig.align="center"}
 ggplot(validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
   geom_pointrange() +
   theme_classic()
@@ -393,7 +393,7 @@ cumulative.fixation.data.summary.min <- cumulative.fixation.windows.grouped.aver
 #### Cumulative Fixation Probabilities
 For each sentence, the target time window began at the onset of the verb and ended 2000 milliseconds later. This window was then divided into 50-ms bins; for each participant and each trial, we recorded whether each object was fixated during the 50-ms bin. Collapsing over trials and participants, and averaging across distractors, we calculated the cumulative probability of fixation, shown in Figure \@ref(fig:E1a-spaghetti-fig), Panel (b).
 
-```{r make remote spaghetti plot} 
+```{r make remote spaghetti plot, out.width="50%", fig.align="center"} 
 
 E1_spag_fig_remote <- ggplot(cumulative.fixation.data.summary.min, aes(x=t.window, y=cumulative.fixation.m, fill= object_class, shape=verb_type))+
   geom_line()+
@@ -606,7 +606,7 @@ save(first.fixation.after.verb.onset.summary.min, file = "first.fixation.after.v
 ```
 
 
-```{r eval=FALSE, include=FALSE}
+```{r eval=FALSE, include=FALSE, out.width="50%", fig.align="center"}
 E1_first_fix_plot <- ggplot(first.fixation.after.verb.onset.summary.min, aes(x=verb_type, y=m, ymin=m-se,ymax=m+se))+
   geom_col()+
   geom_errorbar(width=0.2)
@@ -1039,7 +1039,7 @@ m3_diff_cor_r <- m3_diff_cor$estimate
 m3_diff_cor_p <- m3_diff_cor$p.value
 ```
 
-```{r E1-calib-effect, fig.cap='Calibration scores plotted against the verb effect on first fixations (the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition).'}
+```{r E1-calib-effect, fig.cap='Calibration scores plotted against the verb effect on first fixations (the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition).', out.width="50%", fig.align="center"}
 #I picked this one because the DV is easiest to explain, and because it's the DV where the effect comes out once you drop the "bad" participants
 ggplot(cali.analy.3, aes(x=M, y=diff))+
   geom_point()+
@@ -1060,7 +1060,7 @@ The figure makes clear that there is a large proportion of participants with cal
 
 
 
-```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
+```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="50%", fig.align="center"} 
 
 E1_panel_fig <- JMW_spag_fig / E1_spag_fig_remote 
 E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect',  heights = unit(6, 'cm')) 

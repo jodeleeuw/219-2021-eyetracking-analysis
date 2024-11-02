@@ -214,7 +214,7 @@ jh.validation.percent <- jh.validation.accuracy.data %>%
 save(jh.validation.percent, file = "jh.validation.percent.RData")
 ```
 
-```{r plot subjects by validation-JH, eval=F}
+```{r plot subjects by validation-JH, eval=F, out.width="50%", fig.align="center"}
 #printed? No: eval=F
 ggplot(jh.validation.percent, aes(x=subject_id, y=M, ymax = MAX, ymin=MIN))+
   geom_pointrange() +
@@ -641,7 +641,7 @@ jh.m3_diff_cor <- cor.test(jh.cali.analy.3$diff, jh.cali.analy.3$M, use = "pairw
 jh.m3_diff_cor_r <- jh.m3_diff_cor$estimate
 jh.m3_diff_cor_p <- jh.m3_diff_cor$p.value
 ```
-```{r E1b-calib-effect, fig.cap='Calibration scores in Exp. 1b, plotted against the verb effect, operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.'}
+```{r E1b-calib-effect, fig.cap='Calibration scores in Exp. 1b, plotted against the verb effect, operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.', out.width="50%", fig.align="center"}
 #I picked this one because it's the same as in E1a
 ggplot(jh.cali.analy.3, aes(x=M, y=diff))+
   geom_point()+
@@ -901,7 +901,7 @@ E1_model3_verb.aggro.jh = E1_model3_tab.aggro.jh %>% filter(term == "verb_typere
 Again, we re-analyzed the data focusing on participants with validation accuracy of at least `r validation.threshold.aggro.jh`% (N = `r nlevels(droplevels(critical.trials.filtered.aggro.jh$subject_id))`). Across all three models, results were in line with analyses using the minimal exclusion criteria; none of the critical effects were statistically significant, nor were they in the expected direction (Pre-noun-onset window, verb x object interaction: _b_ = `r E1_model1_obj_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model1_obj_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model1_obj_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`; Pre-verb-offset window, verb x object interaction: _b_ = `r E1_model2_obj_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model2_obj_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model2_obj_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`; Verb effect on first target fixation: _b_ = `r E1_model3_verb.aggro.jh %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E1_model3_verb.aggro.jh %>% pull(std.error) %>% round(digits = 2)`, _p_=`r E1_model3_verb.aggro.jh %>% pull(p.value) %>% round(digits = 2)`).
 
 
-```{r E1b-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions."} 
+```{r E1b-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="50%", fig.align="center"} 
 
 E1_panel_fig <- E1_spag_fig_remote / jh_E1_spag_fig
 E1_panel_fig + plot_annotation(tag_levels = 'A') + plot_layout(guides = 'collect',  heights = unit(6, 'cm')) 
