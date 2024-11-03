@@ -3,7 +3,7 @@ title             : "What paradigms can webcam eye-tracking be used for? Attempt
 shorttitle        : "Webcam eye-tracking paradigms"
 
 author:
-   - name: Ariel N. James
+  - name: Ariel N. James
     affiliation: '1'
     role:
       - Conceptualization
@@ -184,7 +184,7 @@ author:
       - Methodology
       - Software
     email: lthompson@vassar.edu
- - name: Joshua R. de Leeuw
+  - name: Joshua R. de Leeuw
     affiliation: '4'
     role:
       - Conceptualization
@@ -203,16 +203,16 @@ author:
     email: jdeleeuw@vassar.edu
     address: 124 Raymond Ave, Poughkeepsie, NY 12604, USA
 
-  affiliation:
-  - id: '4'
-    institution: Cognitive Science Department, Vassar College
+affiliation:
+  - id: '1'
+    institution: Psychology Department, Macalester College
   - id: '2'
     institution: Department of Cognitive & Information Science, University of California,
       Merced
-  - id: '1'
-    institution: Psychology Department, Macalester College
   - id: '3'
     institution: Department of Communication Sciences and Disorders, MGH Institute of Health Professions
+  - id: '4'
+    institution: Cognitive Science Department, Vassar College
 
 authornote: |
   Partial funding for JKH's contributions was provided by NSF2436092. The authors declares no competing interests.
