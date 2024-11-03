@@ -3,8 +3,189 @@ title             : "What paradigms can webcam eye-tracking be used for? Attempt
 shorttitle        : "Webcam eye-tracking paradigms"
 
 author:
-  - name: Joshua R. de Leeuw
+   - name: Ariel N. James
     affiliation: '1'
+    role:
+      - Conceptualization
+      - Formal analysis
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    email: ajames2@macalester.edu
+  - name: Rachel Ryskin
+    affiliation: '2'
+    role:
+      - Conceptualization
+      - Formal analysis
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    email: rryskin@ucmerced.edu
+  - name: Joshua K. Hartshorne
+    affiliation: '3'
+    role:
+      - Conceptualization
+      - Formal analysis
+      - Visualization
+      - Writing - original draft
+      - Writing - review & editing
+    email: joshua.hartshorne@bc.edu
+  - name: Haylee Backs
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: hbacks@vassar.edu
+  - name: Nandeeta Bala
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: nbala@vassar.edu
+  - name: Laila Barcenas-Meade
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: lbarcenasmeade@vassar.edu
+  - name: Samata Bhattarai
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: sbhattarai@vassar.edu
+  - name: Tessa Charles
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: tcharles@vassar.edu
+  - name: Gerasimos Copoulos
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: gcopoulos@vassar.edu
+  - name: Claire Coss
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: ccoss@vassar.edu
+  - name: Alexander Eisert
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: aeisert@vassar.edu
+  - name: Elena Furuhashi
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: efuruhashi@vassar.edu
+  - name: Keara Ginell
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: kginell@vassar.edu
+  - name: Anna Guttman-McCabe
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: aguttmanmccabe@vassar.edu
+  - name: Emma (Chaz) Harrison
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: eharrison@vassar.edu
+  - name: Laura Hoban
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: lhoban@vassar.edu
+  - name: William A. Hwang
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: whwang@vassar.edu
+  - name: Claire Iannetta
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: ciannetta@vassar.edu
+  - name: Kristen M. Koenig
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: kkoenig@vassar.edu
+  - name: Chauncey Lo
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: chaunceylo@vassar.edu
+  - name: Victoria Palone
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: vpalone@vassar.edu
+  - name: Gina Pepitone
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: gpepitone@vassar.edu
+  - name: Margaret Ritzau
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: mritzau@vassar.edu
+  - name: Yi Hua Sung
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: ysung@vassar.edu
+  - name: Lauren Thompson
+    affiliation: '4'
+    role:
+      - Investigation
+      - Methodology
+      - Software
+    email: lthompson@vassar.edu
+ - name: Joshua R. de Leeuw
+    affiliation: '4'
     role:
       - Conceptualization
       - Data curation
@@ -21,201 +202,25 @@ author:
     corresponding: yes
     email: jdeleeuw@vassar.edu
     address: 124 Raymond Ave, Poughkeepsie, NY 12604, USA
-  - name: Rachel Ryskin
-    affiliation: '2'
-    role:
-      - Conceptualization
-      - Formal analysis
-      - Visualization
-      - Writing - original draft
-      - Writing - review & editing
-    email: rryskin@ucmerced.edu
-  - name: Ariel N. James
-    affiliation: '3'
-    role:
-      - Conceptualization
-      - Formal analysis
-      - Visualization
-      - Writing - original draft
-      - Writing - review & editing
-    email: ajames2@macalester.edu
-  - name: Joshua K. Hartshorne
-    affiliation: '4'
-    role:
-      - Conceptualization
-      - Formal analysis
-      - Visualization
-      - Writing - original draft
-      - Writing - review & editing
-    email: joshua.hartshorne@bc.edu
-  - name: Haylee Backs
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: hbacks@vassar.edu
-  - name: Nandeeta Bala
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: nbala@vassar.edu
-  - name: Laila Barcenas-Meade
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: lbarcenasmeade@vassar.edu
-  - name: Samata Bhattarai
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: sbhattarai@vassar.edu
-  - name: Tessa Charles
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: tcharles@vassar.edu
-  - name: Gerasimos Copoulos
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: gcopoulos@vassar.edu
-  - name: Claire Coss
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: ccoss@vassar.edu
-  - name: Alexander Eisert
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: aeisert@vassar.edu
-  - name: Elena Furuhashi
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: efuruhashi@vassar.edu
-  - name: Keara Ginell
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: kginell@vassar.edu
-  - name: Anna Guttman-McCabe
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: aguttmanmccabe@vassar.edu
-  - name: Emma (Chaz) Harrison
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: eharrison@vassar.edu
-  - name: Laura Hoban
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: lhoban@vassar.edu
-  - name: William A. Hwang
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: whwang@vassar.edu
-  - name: Claire Iannetta
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: ciannetta@vassar.edu
-  - name: Kristen M. Koenig
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: kkoenig@vassar.edu
-  - name: Chauncey Lo
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: chaunceylo@vassar.edu
-  - name: Victoria Palone
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: vpalone@vassar.edu
-  - name: Gina Pepitone
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: gpepitone@vassar.edu
-  - name: Margaret Ritzau
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: mritzau@vassar.edu
-  - name: Yi Hua Sung
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: ysung@vassar.edu
-  - name: Lauren Thompson
-    affiliation: '1'
-    role:
-      - Investigation
-      - Methodology
-      - Software
-    email: lthompson@vassar.edu
 
-affiliation:
-  - id: '1'
+  affiliation:
+  - id: '4'
     institution: Cognitive Science Department, Vassar College
   - id: '2'
     institution: Department of Cognitive & Information Science, University of California,
       Merced
-  - id: '3'
+  - id: '1'
     institution: Psychology Department, Macalester College
+<<<<<<< Updated upstream
   - id: '4'
     institution: Department of Communication Sciences and Disorders, MGH Institute of Health Professions
 
 authornote: |
   Partial funding for JKH's contributions was provided by NSF2436092. The authors declares no competing interests.
+=======
+  - id: '3'
+    institution: Department of Psychology & Neuroscience, Boston College
+>>>>>>> Stashed changes
 
 abstract: |
   Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: js.psych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution should be adapted to coarser quadrant or split-half displays. 
@@ -1055,3 +1060,33 @@ We also included a step where if the validation was poor after the first attempt
 ```{=tex}
 \endgroup
 ```
+\newpage
+
+#Contributions
+
+\newpage
+
+#Acknowledgements
+
+\newpage
+
+#Funding information
+Funding for this project was provided by the Vassar College Department of Cognitive Science (JdL) and 
+
+\newpage
+
+#Competing interests
+The authors have no competing interests to declare. 
+
+\newpage
+
+#Supplemental material
+
+\newpage
+
+#Data accessibility statement
+
+\newpage
+
+#Figure titles and legends
+

@@ -271,7 +271,7 @@ validation.percent <- validation.accuracy.data %>%
   select(subject_id, M, calib_num) %>%
   mutate(subject_id = fct_reorder(subject_id, M))
 
-save(validation.percent, file = "validation.percent.RData")
+#save(validation.percent, file = "validation.percent.RData")
 ```
 
 ```{r plot subjects by validation, eval=F}
@@ -447,7 +447,7 @@ pre.noun.first.looks.data.min <- trial.level.cumulative.fixation.data.min %>%
 pre.noun.first.looks.data.min$verb_type <- as.factor(pre.noun.first.looks.data.min$verb_type)
 pre.noun.first.looks.data.min$object_class <- as.factor(pre.noun.first.looks.data.min$object_class)
 
-save(pre.noun.first.looks.data.min, file = "pre.noun.first.looks.data.min.RData")
+#save(pre.noun.first.looks.data.min, file = "pre.noun.first.looks.data.min.RData")
 ```
 <!--Fit the model, with no covariance between random effects because the model cannot converge with full covariance matrix.-->
 
@@ -486,7 +486,7 @@ pre.verb.offset.first.looks.data.min <- trial.level.cumulative.fixation.data.ver
   filter(t.window == max(t.window)) %>%
   filter(object_class %in% c("target.object", "distractor"))
 
-save(pre.verb.offset.first.looks.data.min, file = "pre.verb.offset.first.looks.data.min.RData")
+#save(pre.verb.offset.first.looks.data.min, file = "pre.verb.offset.first.looks.data.min.RData")
 ```
 
 
@@ -573,7 +573,7 @@ first.fixation.after.verb.onset.analysis.data.min <- first.fixation.after.verb.o
   select(subject_id, image_name, verb_type, duration_of_verb, noun_relative.t) %>%
   mutate(dur_verb_ms_c = scale(duration_of_verb, scale = FALSE)*1000) #mean-center verb duration
 
-save(first.fixation.after.verb.onset.analysis.data.min, file = "first.fixation.after.verb.onset.analysis.data.min.RData")
+#save(first.fixation.after.verb.onset.analysis.data.min, file = "first.fixation.after.verb.onset.analysis.data.min.RData")
 ```
 
 
@@ -603,7 +603,7 @@ first.fixation.after.verb.onset.summary.min <- first.fixation.after.verb.onset.s
   group_by(verb_type) %>%
   summarize(m=mean(m.t), sd=sd(m.t), se=sd/sqrt(n()))
 
-save(first.fixation.after.verb.onset.summary.min, file = "first.fixation.after.verb.onset.subject.summary.min.RData")
+#save(first.fixation.after.verb.onset.summary.min, file = "first.fixation.after.verb.onset.subject.summary.min.RData")
 ```
 
 
