@@ -211,16 +211,11 @@ author:
       Merced
   - id: '1'
     institution: Psychology Department, Macalester College
-<<<<<<< Updated upstream
-  - id: '4'
+  - id: '3'
     institution: Department of Communication Sciences and Disorders, MGH Institute of Health Professions
 
 authornote: |
   Partial funding for JKH's contributions was provided by NSF2436092. The authors declares no competing interests.
-=======
-  - id: '3'
-    institution: Department of Psychology & Neuroscience, Boston College
->>>>>>> Stashed changes
 
 abstract: |
   Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: jsPsych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution (like Exp. 1) should be adapted to coarser quadrant or split-half displays. 
