@@ -97,17 +97,19 @@ The mouse click results from both studies are summarized in Figure \@ref(fig:E4-
 The quantitative patterns of clicks were similar to those observed in the original dataset, though for Instrument-biased verbs, clicks were closer to evenly split between the animal and the instrument relative to the in-lab study where they were very clearly biased toward the instrument.
 
 
-```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online."}
+```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.", out.width="65%", fig.align="center"}
 
-ggplot(bind_rows(first.move.orig.summary, first.move.web.summary), 
-       aes(x=bias, fill=target_type, y=M, ymin=M-SE,ymax=M+SE, alpha = study))+
-  geom_col(position=position_dodge(width=0.9), color = "black")+
-  geom_errorbar(position=position_dodge(width=0.9), width=0.2)+
-  scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other"))+
-  scale_alpha_manual(values = c(0.5,1))+
-  coord_cartesian(ylim = c(0,1))+
-  theme_classic()+
-  labs(y = "Proportion of first mouse movements", x = "Bias")
+ggplot(bind_rows(
+  first.move.orig.summary %>% mutate(study_type = "Original"),
+  first.move.web.summary %>% mutate(study_type = "Web")), 
+  aes(x=bias, fill=target_type, y=M, ymin=M-SE, ymax=M+SE)) +
+  geom_col(position=position_dodge(width=0.9), color = "black") +
+  geom_errorbar(position=position_dodge(width=0.9), width=0.2) +
+  scale_fill_brewer(palette = "Set1", name = "Location", labels = c("Animal", "Instrument", "Other")) +
+  coord_cartesian(ylim = c(0,1)) +
+  theme_classic() +
+  labs(y = "Proportion of first mouse movements", x = "Bias") +
+  facet_wrap(~study_type, ncol = 1)  # This creates vertical panels
 ```
 
 The eye-tracking results from both studies are summarized in Figure \@ref(fig:E4-proportion-fix-by-window-both). 
@@ -147,7 +149,7 @@ eyetracking.window.summary.both = eyetracking.window.summary.by.subj.both %>%
 ```
 
 
-```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means"}
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means", , out.width="75%", fig.align="center"}
 
 ggplot(eyetracking.window.summary.by.subj.both)+
   stat_summary(aes(x=time.window, color=condition, y = mean_prop, shape = study), 
@@ -162,8 +164,16 @@ ggplot(eyetracking.window.summary.by.subj.both)+
   scale_linetype_manual(values = c("dashed","solid"))+
   coord_cartesian(ylim = c(0,.8))+
   theme_classic()+
-  labs(y = "Proportion of fixations", x = NULL)
+  labs(y = "Proportion of fixations", x = NULL) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
+
 ```{r, eval  = F}
 orig.data.time.window.1 <- eyetracking.window1.summary.by.trial.orig %>% 
   filter(condition != "filler") %>% 

@@ -1,7 +1,0 @@
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{manuscript_files/figure-latex/E4-mouse-moves-fig-1.pdf}
-\caption{\label{fig:E4-mouse-moves-fig}Proportion of first mouse movements by location and verb bias.}
-\end{figure*}

@@ -1,5 +1,5 @@
 ---
-title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of five “classic” cognitive science experiments"
+title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of five prominent cognitive science experiments"
 shorttitle        : "Webcam eye-tracking paradigms"
 
 author:
@@ -223,7 +223,7 @@ authornote: |
 >>>>>>> Stashed changes
 
 abstract: |
-  Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: js.psych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution should be adapted to coarser quadrant or split-half displays. 
+  Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: jsPsych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution (like Exp. 1) should be adapted to coarser quadrant or split-half displays. 
   
 keywords          : "eye-tracking, online, webcam, jsPsych, cognitive science"
 wordcount         : "X"
@@ -244,6 +244,7 @@ output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 library(papaja)
 library(jsonlite)
 library(dplyr)
@@ -265,6 +266,9 @@ colorize <- function(x, color) { # for adding colored text (e.g., for notes to s
       x)
   } else x
 }
+
+#3 digits for p-values
+options(papaja.precision = list(p_value = 3))
 ```
 
 ```{r analysis-preferences}
@@ -277,31 +281,30 @@ The use of eye-tracking to study cognition took off when Alfred Yarbus used suct
 
 An important limitation of the eye-tracking methodology is that it has typically required costly equipment (eye-trackers can range in price from a few thousand dollars to tens of thousands of dollars), particular laboratory conditions (a quiet room with consistent indoor lighting conditions), and a substantial time investment (e.g., bringing participants into a laboratory one at a time). This limits who can conduct eye-tracking research -- not all researchers have the necessary resources -- and who can participate in eye-tracking research. Most eye-tracking study participants are from western, educated, industrialized, rich, and democratic [WEIRD; @henrich2010weirdest] convenience samples [but see @ryskin2023real], which diminishes the generalizability of the findings and the scope of conclusions that can be drawn about human cognition. Likewise, the sample sizes for in-lab experiments are usually orders of magnitude smaller than what statisticians recommend [@nosek2022replicability].
 
-A robust solution to all these problems is online experiments, particularly with volunteer citizen scientists as participants [@li2024developmental; @hartshorne2019thousand; @reinecke2015labinthewild; @gosling2010wired]. Historically, this option has not been available for eye-tracking. This began to shift with the widespread incorporation of cameras into computers; researchers have long used frame-by-frame analysis of video for low-resolution eyetracking [@snedeker2003using]. Unfortunately, this can be extremely time-intensive, making large-sample studies unrealistic. In recent years, image analysis has improved to the point where this work can be automated with reasonable accuracy [@papoutsaki2016webgazer; @zheng2018rapid; @burton2014comparison; @skovsgaard2011evaluation]. However, webcam-based eyetracking only started to be used regularly in research with the advent of `Webgazer.js` [@papoutsaki2016webgazer], a webcam-based Javascript plug-in that works in the browser and which can be integrated with any Javascript web interface, including `jsPsych` [@deleeuwJsPsychJavaScriptLibrary2015], `Gorilla` [@anwyl2020gorilla], or `lab.js` [@henninger2021lab].
+A robust solution to all these problems is online experiments, particularly with volunteer citizen scientists as participants [@li2024developmental; @hartshorne2019thousand; @reinecke2015labinthewild; @gosling2010wired]. Historically, this option has not been available for eye-tracking, since few potential subjects have expensive eyetrackers at home. In principal, this could be circumvented by using so-called "poor-man's" eye-tracking, in which researchers videotape the subject's face and code eye position frame-by-frame [@snedeker2003using]. Most computers now have high-quality built-in cameras, so recording video is straightforward. Unfortunately, coding images frame-by-frame is extremely time-intensive, making large-sample studies unrealistic. However, in recent years, image analysis has improved to the point where this work can be automated with reasonable accuracy [@papoutsaki2016webgazer; @zheng2018rapid; @burton2014comparison; @skovsgaard2011evaluation]. Nonetheless, webcam-based eyetracking only started to be used regularly in research with the advent of `Webgazer.js` [@papoutsaki2016webgazer], a webcam-based Javascript plug-in that works in the browser and which can be integrated with any Javascript web interface, including `jsPsych` [@deleeuwJsPsychJavaScriptLibrary2015], `Gorilla` [@anwyl2020gorilla], or `lab.js` [@henninger2021lab].
 
-Given the potential game-changing nature of webcam-based eye-tracking, a number of research groups have investigated how well it works. There are two potential limitations to webcam-based eye-tracking. First, the spatial and temporal resolution is less than what is achievable with an infrared system. Second, testing subjects over the Internet involves less control: subjects may be unable or unwilling to calibrate equipment, adjust lighting, etc., to the same level of precision typical of in-lab studies. Nearly all this work has used `Webgazer.js` --- most in combination with jsPsych, but some with Gorilla or hand-built integrations. 
+Given the potential game-changing nature of webcam-based eye-tracking, a number of research groups have investigated how well it works. Nearly all this work has used `Webgazer.js` --- most in combination with jsPsych, but some with Gorilla or hand-built integrations. There are two potential limitations to webcam-based eye-tracking. First, the spatial and temporal resolution is less than what is achievable with an infrared system. This is less a limitation of webcams than a limitation of the information about eyegaze available in an image of a face. Anecdotally, researchers who use poor-man's eyetracking find it difficult to locate the gaze to anything more fine-grained than quadrants. Second, testing subjects over the Internet involves less control: subjects may be unable or unwilling to calibrate equipment, adjust lighting, etc., to the same level of precision typical of in-lab studies.  
 
 Results to date have been encouraging. @semmelmann2018online found data quality was reasonable for fixation location and saccades in fixation, smooth pursuit, and free-viewing tasks, though data collected online through a crowdsourcing platform was slightly more variable and timing was somewhat delayed compared to data collected in the lab. Several researchers successfully replicated well-known findings from the sentence-processing literature involving predictive looks [@degen2021seeing; @prystauka2023online; @vos2022comparing; @van2023validation]. @yang2021webcam successfully replicated a well-established link between value-based decision-making and eye gaze [see also @van2023validation]. 
 
 While promising, there are some salient limitations. First, many of the studies report effects that are smaller or later than what had been previously observed in the lab [@slim2022moving; @degen2021seeing; @van2023validation]. Importantly, accurate timing on a web browser is not trivial [@passell2021cognitive; @de2016psychophysics], and subtle programming choices can significantly affect the accuracy of `WebGazer.js` timing [@yang2021webcam].^[See also discussion at https://github.com/jspsych/jsPsych/discussions/1892] Since most of the prior work did not address these timing issues, it is not clear how many of the reported lab/web differences would resolve.
 
-Second, prior work has focused on studies with relatively coarse-grained regions of interest [but see @semmelmann2018online], dividing the screen either in half or in quadrants. This is particularly salient with [@prystauka2023online], which simplified [@altmannIncrementalInterpretationVerbs1999]'s design so that regions of interest are quadrants rather than the finer-grained ROIs used in the original. Certainly, webcam eyetracking will not be as spatially fine-grained as an infrared eyetracker, but we do not yet have a good sense of the limits.
+Second, prior work has focused on studies with relatively coarse-grained regions of interest [but see @semmelmann2018online], dividing the screen either in half or in quadrants. This is particularly salient with [@prystauka2023online], which simplified @altmannIncrementalInterpretationVerbs1999's design so that regions of interest are quadrants rather than the finer-grained ROIs used in the original. Certainly, webcam eyetracking will not be as spatially fine-grained as an infrared eyetracker, but we do not yet have a good sense of the limits.
 
 Finally, the prior work has focused on a relatively limited range of methods. Different paradigms have different technical requirements and analyze the results differently. As a result, the breadth of utility of webcam eye-tracking is unclear. 
 
 # Present work
 
-In order to validate the online eye-tracking methodology, with the particular configuration known to have the greatest temporal precision, `jsPsych` and a modification of `Webgazer`, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science, across a broad range of research areas. 
-
+In order to broaden the validation of online eye-tracking methodology, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science, across a broad range of research areas. Critically, we used the implementation known to have the greatest temporal precision to date: `jsPsych` and a modification of `Webgazer`.
 
 ## Selection of Studies
 
-Studies with large effect sizes and which are known to replicate are ideal targets for further replication; otherwise, it can be difficult to distinguish a failure of the method from a failure of the original study to replicate. In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several ''sanity check'' analyses, such as the correlation between calibration accuracy and effect size. If the effect is real but there is noise from low-accuracy eye-tracking, this correlation should be substantial. Third, for two of the studies, we had comparison data collected in-lab either using `jsPsych` or a more traditional eyetracker technology, allowing us to directly assess the impact of differences in subject population and equipment/setting.
+Studies with large effect sizes and which are known to replicate are ideal targets for further replication; otherwise, it can be difficult to distinguish a failure of the method from a failure of the original study to replicate. In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several "sanity check" analyses, such as the correlation between calibration accuracy and effect size. If the effect is real but there is noise from low-accuracy eye-tracking, this correlation should be substantial. Third, for two of the studies, we had comparison data collected in-lab either using `jsPsych` or a more traditional eyetracker technology, allowing us to directly assess the impact of differences in subject population and equipment/setting.
 
 <!-- June 2022: shimojo: 964 citations, altmann: 1840, ryskin: 75, johansson 190, 127 -->
 <!-- RR: switched ryskin to Snedeker & trueswell 2004 bcs my 75 looked sad -->
 
-We chose five high-impact eye-tracking studies involving adult subjects [for an investigation of WebGazer's validity for developmental research, see @steffan2024validation for a comparison of remote WebGazer and in-lab anticipatory looking effects in 18-27-month-old participants]. Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "naturalistic" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table \@ref(tab:studies-table) provides an overview of the five studies we selected.
+We chose five high-impact eye-tracking studies involving adult subjects [for an comparison of remote WebGazer and in-lab anticipatory looking effects with 18-27 month-old participants, see @steffan2024validation]. Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "naturalistic" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table \@ref(tab:studies-table) provides an overview of the five studies we selected.
 
 ```{r studies-table, echo=FALSE}
 studies_table <- data.frame(
@@ -421,7 +424,7 @@ These data were collected within the context of an undergraduate research method
 
 ## Data Pre-processing
 
-We used `r cite_r("references.bib")` for all our analyses.
+We used `r cite_r("references.bib")` for our analyses.
 
 # Experiment 1a
 
@@ -447,12 +450,7 @@ pre-registration are available on the Open Science Framework at
 <https://osf.io/s82kz>.
 
 ### Participants
-Sixty participants were paid \$2.60 for their participation. Our sample size
-of participants was determined by the total run time of our experiment,
-\~10 minutes, and the allotted funding from the Vassar College Cognitive
-Science Department. From this information, we calculated a reasonable
-number of participants we could afford to compensate on Prolific. Note
-that the sample size of the original study was 24. For unknown reasons,
+Sixty participants (2.5 times the original sample of 24) were paid \$2.60 for their participation. For unknown reasons,
 2 of the subjects' results were not recorded, so in the analysis, we
 worked with data collected from 58 participants.
 
@@ -476,7 +474,7 @@ response for the critical trials was "yes." Filler trials consisted of
 scenes that also contained an agent surrounded by objects as in the critical trials, but corresponding sentences named an object that was not present in the scene. The correct keyboard response for the filler
 trials was "no."
 
-```{r E1-example-trial, fig.cap='Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.'}
+```{r E1-example-trial, fig.cap='Example trial from Experiment 1. Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-a/E1-example-trial.jpeg")
 ```
 
@@ -490,7 +488,7 @@ subject-by-subject basis.<!-- right?-->
 ### Procedure
 
 
-```{r E1 calibration figure, child = 'group-a/E1-calibration-figure.Rmd' }
+```{r E1 calibration figure, child = 'group-a/E1-calibration-figure.Rmd', out.width="50%", fig.align="center" }
 
 ```
 
@@ -511,8 +509,9 @@ onset of the target noun. ROIs were defined by creating boxes around each object
 ```
 
 ## Discussion
-Across three different tests of the hypothesis that listeners will use verb semantics to anticipate the upcoming referent, we found results that were numerically consistent with the hypothesis but not statistically significant. A comparison to published data [@james2023language] demonstrates that looks to the objects in the scene (relative to background or off-screen looks) were depressed across conditions and objects. After eliminating participants with validation accuracy under 50% and/or 10% or fewer fixations to any ROIs, we were left with only 22 of the original 60 participants. Analyses on this subset resulted in one effect reaching statistical significance (shorter target fixation latencies in the restricting vs. non-restricting verb condition). 
-Given that nearly two-thirds of participants had poor data quality, we ran a follow-up webcam study in a lab setting order to isolate the potential causes. 
+Across three different tests of the hypothesis that listeners will use verb semantics to anticipate the upcoming referent, we found results that were numerically consistent with the hypothesis but not statistically significant. This is unlikely to be because the original effect is unreliable. Indeed, one of us had successfully replicated it previously using traditional methods [@james2023language]. 
+
+An eyeball comparison to published data [@altmannIncrementalInterpretationVerbs1999, @james2023language] suggests that looks to the objects in the scene (relative to background or off-screen looks) were depressed across conditions and objects. After eliminating participants with validation accuracy under 50% and/or 10% or fewer fixations to any ROIs, we were left with only 22 of the original 60 participants. Either of these facts could have resulted in low power to detect effects. Given that nearly two-thirds of participants had poor data quality, we ran a follow-up webcam study in a lab setting order to test whether the failure to replicate was due to using a remote sample or to the technology itself.
 
 # Experiment 1b
 Experiment 1b tested whether the failure to replicate significant condition effects in Experiment 1a was due to features of conducting the study remotely (i.e. varied experimental settings and apparatuses, lower compliance) rather than webcam-based eye-tracking or `webgazer` _per se_. Thus, Experiment 1b took place in a lab setting with undergraduate participants but otherwise used the same Method as Experiment 1a. 
@@ -537,9 +536,9 @@ Subjects were tested on a MacIntosh laptop using the built-in Webcam. The study 
 ```
 
 ## Discussion
-Overall, the results of Experiment 1 paint a sobering picture of web-based eye-tracking. In Experiment 1a, results from the remote samplewere in the expected direction but effects were smaller and delayed relative to previous work and failed to reach statistical significance. To test whether this could be explained by the variability in experimental settings across participants, we replicated our procedure in a lab setting. Surprisingly, the results in the in-lab study were less aligned with previous work; critical effects were not significant nor were they in the expected direction numerically. This suggests the problem was not with running the study online or due to working with a more diverse population via Prolific.
+Overall, the results of Experiment 1 paint a sobering picture of web-based eye-tracking. In Experiment 1a, results from the remote sample were in the expected direction but effects were smaller and delayed relative to previous work and failed to reach statistical significance. This was not due to vagaries of remote samples or working with a more diverse subject population: results from the in-lab study were, if anything, worse. Nor does our failure to replicate seem to be driven by subjects with poor calibration; effect sizes were not correlated with calibration success, and restricting analyses to subjects with good calibration scores only helped in one of the experiments and in only one of the three critical analyses.
 
-Taken together, the instability of these effects might suggest that this paradigm is not well-suited for webcam-based eye-tracking. Notably, the ROIs were tightly drawn around the five to six objects in each scene (drawing larger ROIs in these scenes would have led to overlapping objects) and thus, analyses were unforgiving of inaccurate calibration. Further evidence comes from a recent `webgazer` study that successfully replicated a modified version of the Altmann and Kamide study with only four objects, each in separate quadrants, allowing for larger, more distinct ROIs [@prystauka2023online]. 
+Taken together, the instability of these effects might suggest that this paradigm is not well-suited for webcam-based eye-tracking. Notably, the ROIs were tightly drawn around the five to six objects in each scene (drawing larger ROIs in these scenes would have led to overlapping objects) and thus, analyses were unforgiving of inaccurate calibration. Further evidence comes from a recent `webgazer` study that successfully replicated the original results using modified stimuli consisting of only four objects, each in separate quadrants, allowing for larger, more distinct ROIs [@prystauka2023online]. 
 
 The next four experiments test paradigms with more generous ROIs.
 
@@ -562,9 +561,7 @@ pre-registration are available on the Open Science Framework at
 
 ### Participants
 
-Sixty participants were paid for their participation.
-The sample size was motivated in part by budget constraints, but was
-nonetheless 2.5x larger than the original sample size of 24). 
+Sixty participants were paid for their participation (once again, 2.5x larger than the original sample size of 24). 
 Data from one participant were not properly
 recorded due to unknown technical issues, so data from 59 participants
 were included in all analyses to follow.
@@ -586,14 +583,14 @@ while intraobject statements were those that asked about the orientation
 of a single item (e.g. "The bus is facing right"). There were 48 total
 statements in each block, such that each object was the subject of both an intraobject and an intraobject statement; there were 96 unique statements total across the experiment.
 
-```{r E2-example-trial, fig.cap='Example trial from Experiment 2.'}
+```{r E2-example-trial, fig.cap='Example trial from Experiment 2.', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-b/E2-example-figure.jpeg")
 ```
 
 ### Procedure
 
 
-```{r E2 calibration figure, child='group-b/E2-calibration-figure.Rmd'}
+```{r E2 calibration figure, child='group-b/E2-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -641,16 +638,16 @@ location of the to-be-remembered item.
 
 ## Discussion
 
-As in @johanssonLookHereEye2014 and @spiveyOculomotorMechanismsActivated2001, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located
+We replicated the key eyetracking result: As in @johanssonLookHereEye2014 and @spiveyOculomotorMechanismsActivated2001, during memory retrieval, learners spontaneously look to blank screen locations where pictures were located
 during encoding, suggesting that visuospatial information is integrated into the memory
-for objects. However, we did not observe a memory benefit, in terms of speed or accuracy, of spatial reinstatement via gaze position during retrieval of the picture. We can speculate that this may be due to the fact that participants struggled to maintain their gaze fixed in the center in the fixed-viewing condition, such that the difference between the fixed- and free-viewing conditions was minimal. Crucially for the current purposes, the webcam-based eye-tracking measurements were successful in replicating the key eye-tracking results. 
+for objects. Interestingly, we did not replicate the behavior result: a memory benefit, in terms of speed, of spatial reinstatement via gaze position during retrieval of the picture. For researchers interested in that effect, this is an issue to be followed up on. However, it is not strictly relevant for our evaluation of gaze tracking online.
 
 # Experiment 3
 
 <!-- group c -->
 
-The third study was a partial replication attempt of
-@mannsVisualPairedcomparisonTask2000. This experiment used the visual
+The third study was a partial replication attempt of the "looking group" condition of
+@mannsVisualPairedcomparisonTask2000 (we did not replicate their priming condition). This experiment used the visual
 paired-comparison, which involves presenting a previously-viewed image
 and novel image together and measuring the proportion of time spent
 looking at each image. The expected pattern of results is that
@@ -698,7 +695,7 @@ Stimulus sets were created to present participants with 24 presentation trials a
 ### Procedure
 
 
-```{r E3 calibration figure, child='group-c/E3-calibration-figure.Rmd'}
+```{r E3 calibration figure, child='group-c/E3-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -727,16 +724,10 @@ asked them to rate their confidence in their answer from 1 as a "pure
 guess" to 5 as "very sure." by clicking on the corresponding number on
 the screen. No feedback on their responses was given during the test.
 
-There were two modifications we made to the methods of the original
-experiment. As we were only replicating the declarative memory component
-of the original experiment, we did not have a "priming group."
-Therefore, we followed only the procedure for the "looking group."
-Additionally, for each section of the study, the stimuli were presented
-on a single screen instead of two screens due to the constraints of the
-online experiment format.
+One aspect of the original study that we could not replicate was that we presented all stimuli on a single screen rather than two screens due to the constraints of the online experiment format. We had no *a priori* reason to expect this to matter.
 
 
-```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3'}
+```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3', out.width="35%", fig.align="center"}
 knitr::include_graphics("group-c/E3-example-figure.jpeg")
 ```
 
@@ -746,22 +737,23 @@ knitr::include_graphics("group-c/E3-example-figure.jpeg")
 
 ```
 
-### Calibration
-
-```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
-
-```
-
 ### Effects of ROIs
 
 ```{r E3-analysis-ROIs, child='group-c/E3-analysis-roi.Rmd'}
 
 ```
 
+### Calibration
+
+```{r E3-analysis-calibration, child='group-c/E3-analysis-calibration.Rmd'}
+
+```
 
 ## Discussion
 
-As in @mannsVisualPairedcomparisonTask2000, participants looked more at novel images than previously seen images. This effect was consistent for ROIs based on the images and for the coarser ROIs based on two halves of the display. A day later, participants were also able to discriminate the images they had seen from foil images they had not seen during the previous session. However, there was no evidence that memory performance on day 2 was related to looking time on day 1. Calibration quality did not appear to impact this relationship.
+As in @mannsVisualPairedcomparisonTask2000, participants looked more at novel images than previously seen images. This effect was consistent for ROIs based on the images and for the coarser ROIs based on two halves of the display. A day later, participants were also able to discriminate the images they had seen from foil images they had not seen during the previous session. However, there was no evidence that memory performance on day 2 was related to looking time on day 1. 
+
+Thus, most of the key findings replicated. What should we make of the finding that failed to replicate? Notably, the proportion of looks to the novel object on Day 1 (54% or 55%, depending on analysis) was numerically smaller than in the original (59%), potentially decreasing the ability to detect correlations with eye-gaze. If so, the question is whether that is due to lower-quality eye-gaze tracking. This seems unlikely, because calibration quality did not appear to substantially affect this result (or any of the others). Alternative explanation include the well-documented decline effect (replications tend to find smaller effect sizes than the original) and the common finding that subject accuracy is lower when not testing undergraduates at elite universities.
 
 # Experiment 4
 
@@ -789,7 +781,7 @@ for the study can be found at <https://osf.io/3v4pg>.
 
 ### Participants
 
-Fifty-seven participants were paid \$2.50 for their participation. A sample size of 60 was initially chosen (but not reached in time) because we wanted to replicate the experiment with greater statistical power. Note that Ryskin et al. (2017) Experiment 1 had a sample size of 24. 
+Fifty-seven participants were paid \$2.50 for their participation --- three fewer than the intended sample of 60, which was not reached due to time constraints, but double the sample in Ryskin et al. (2017) Experiment 1. 
 
 ### Materials and Design
 
@@ -808,7 +800,7 @@ properties of the animal or instrument images used. There were 54 critical trial
 ### Procedure
 
 
-```{r E4 calibration figure, child='group-d/E4-calibration-figure.Rmd'}
+```{r E4 calibration figure, child='group-d/E4-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -836,7 +828,7 @@ been moved over at least one object.
     the straw" may not involve any clicking but rather only mousing over
     the camel.
 
-```{r E4-example-trial, fig.cap='An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.'}
+```{r E4-example-trial, fig.cap='An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.” The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-d/E4-example-figure.jpeg")
 ```
 
@@ -844,11 +836,6 @@ knitr::include_graphics("group-d/E4-example-figure.jpeg")
 ## Results
 
 ```{r E4-analysis-replication, child='group-d/E4-analysis-replication.Rmd'}
-
-```
-
-
-```{r E4-analysis-comparison-to-original-study, child='group-d/E4-analysis-comparison-to-original.Rmd'}
 
 ```
 
@@ -922,7 +909,7 @@ Participants were presented with each of the 19 face pairs; task condition was m
 ### Procedure
 
 
-```{r E5 calibration figure, child='group-e/E5-calibration-figure.Rmd'}
+```{r E5 calibration figure, child='group-e/E5-calibration-figure.Rmd', out.width="50%", fig.align="center"}
 
 ```
 
@@ -937,7 +924,7 @@ each set of faces. Participants were asked to look at this fixation
 cross in order to reset their gaze in between trials. The order of
 the 19 face pairs was random for each participant.
 
-```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5 (text did not appear on each screen).'}
+```{r E5-example-trial, fig.cap='An example of a critical trial from Experiment 5 (text did not appear on each screen).', out.width="50%", fig.align="center"}
 knitr::include_graphics("group-e/E5-example-figure.jpeg")
 ```
 
@@ -1005,7 +992,9 @@ The sixth study was a replication attempt of Posner et al. ??.
 
 # General Discussion
 
-We conducted five attempted replication studies using different experimental paradigms from across the cognitive sciences. All were successfully implemented in `jsPsych` using the `webgazer` plugin, but replication success was mixed. Experiment 1 had the smallest ROIs due to the use of an integrated visual scene with five to six ROIs of varying size per scene, as opposed to ROIs corresponding to display halves or quadrants. Both attempts to replicate @altmannIncrementalInterpretationVerbs1999 were unsuccessful, despite the success of previous in-lab replications using infrared eye-tracking [e.g. @james2023language]. A previous conceptual replication of this paradigm using webcam-based eye-tracking [@prystauka2023online] was successful but used a four-quadrant visual world paradigm, rather than the "naturalistic" scenes used in the original study and in the current replication attempts. It is worth noting that removing variability related to participant environments (by conducting the webcam-tracking study in the lab) did not appear to improve the sensitivity of the paradigm. The primary limitation is likely to be the size of the ROIs.
+We conducted five attempted replication studies using different experimental paradigms from across the cognitive sciences. All were successfully implemented in `jsPsych` using the `webgazer` plugin, though replication was not uniform. 
+
+Experiment 1 had the smallest ROIs due to the use of an integrated visual scene with five to six ROIs of varying size per scene, as opposed to ROIs corresponding to display halves or quadrants. Both attempts to replicate @altmannIncrementalInterpretationVerbs1999 were unsuccessful, despite the success of previous in-lab replications using infrared eye-tracking [e.g. @james2023language]. A previous conceptual replication of this paradigm using webcam-based eye-tracking [@prystauka2023online] was successful but used a four-quadrant visual world paradigm, rather than the "naturalistic" scenes used in the original study and in the current replication attempts. It is worth noting that removing variability related to participant environments (by conducting the webcam-tracking study in the lab) did not appear to improve the sensitivity of the paradigm. The primary limitation is likely to be the size of the ROIs.
 
 Experiment 2 used the four quadrants of the participant's screen as ROIs. As in @johanssonLookHereEye2014 and @spiveyOculomotorMechanismsActivated2001, participants spontaneously looked to blank ROIs which previously contained to-be-remembered pictures. These results appeared to be robust to calibration quality. An additional manipulation, instructing participants to keep gaze fixed on a central point, was not successful. One possibility is that participants are less motivated to follow such instructions when an experimenter is not present in the same room with them. It may be possible to improve performance by emphasizing that this is an important aspect of the experiment or by providing additional training/practice in keeping the eyes still on one particular point.  
 
@@ -1014,6 +1003,8 @@ Experiment 3 used two large ROIs (halves of the display in one analysis) and suc
 Experiment 4 used the four quadrants of the participant's screen as ROIs. As in @ryskinVerbBiasesAre2017, listeners used knowledge of the co-occurrence statistics of verbs and syntactic structures to resolve ambiguous linguistic input ("Rub the frog with the mitten"). Across multiple time windows, participants looked more at potential instruments (mitten), when the verb (rub) was one that was more likely to be followed by a prepositional phrase describing an instrument with which to perform the action , as opposed to describing the recipient of the action (frog). Despite the qualitative replication of past findings, the overall rates of looks to various objects were much lower than in an in-lab study using infrared eye-tracking. This reduction may be related to measurement quality: effect sizes were greater for participants with higher calibration accuracy. Using the full quadrants as ROIs, rather than bounding boxes around the four images, also appeared to improve the measurement of the effect. Crucially, there was no evidence of a delay in the onset of effects relative to in-lab work, indicating that the modifications to `webgazer` that are made within the `jsPsych` plug-in successfully address the issues noted by @dijkgraaf2017predicting and suggesting that this methodology can be fruitfully used to investigate research questions related to the timecourse of processing.
  
 Experiment 5, similar to Experiment 3, used two large ROIs (or halves of the display). As in @shimojoGazeBiasBoth2003 and in the recent webcam-based replication by @yang2021webcam, we saw that participants looked more at the face or shape that they ultimately chose during a judgment task. This gaze bias appears to be stronger for decisions about face attractiveness than shape, though this effect was not statistically significant. 
+
+The relatively large number of statistical comparisons means that we would not expect everything to come out significant even in the best-case scenario. Nonetheless, there appears to be some systematicity in the patterns of significant replication. Most of the failures to replicate seem to be due to small ROIs (e.g., Exp. 1) or effects that were small to begin with (e.g., Exp. 3) or involved insensitive statistical tests (e.g., Exp. 5). 
 
 In sum, the `webgazer` plug-in for `jsPsych` can be fruitfully used to conduct a variety of cognitive science experiments on the web, provided the limitations of the methodology are carefully considered. 
 

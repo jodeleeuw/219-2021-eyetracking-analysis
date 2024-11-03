@@ -125,14 +125,28 @@ plot.A<-ggplot(summary.gaze.view[summary.gaze.view$task=="Attractiveness",], aes
   geom_point(color="red") + 
   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "solid") + 
   scale_x_reverse() + theme_classic() + 
-  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 
 plot.R<-ggplot(summary.gaze.view[summary.gaze.view$task=="Roundness",], aes(x=time.window, y=prop.in.target))+
   geom_point(color="turquoise4") + 
   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "dashed") + 
   geom_line(data=fit.R.dat, aes(x=x, y=y), color="turquoise4", lwd=1.25, linetype = "solid") + 
   scale_x_reverse() + theme_classic() + 
-  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 
 ```
 

@@ -93,13 +93,20 @@ eyetracking.effects.by.subj = read_csv( "output/E2_eye-tracking_data_subj.csv") 
 
 ```
 
-```{r E2-calib-effect, fig.cap = 'Calibration scores plotted against gaze bias (the difference between the proportion of looks to the critical quadrant minus the average proportion of looks to the average of the other three quadrants).'}
+```{r E2-calib-effect, fig.cap = 'Calibration scores plotted against gaze bias (the difference between the proportion of looks to the critical quadrant minus the average proportion of looks to the average of the other three quadrants).', out.width="50%", fig.align="center"}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = crit_bias))+
   geom_point()+
   geom_smooth(method = "lm", formula = y ~ x) +
   labs(x="Calibration Score", y="Gaze Bias")+
   theme_bw()+
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank()) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
 
 ```{r}
@@ -169,4 +176,4 @@ E2_RT_model.aggro_cond = E2_RT_model.aggro_tab %>% filter(term == "condition1")
 
 ```
 #### Re-analysis After Exclusions
-There were `r e2.n.bad.subjects.aggro` participants whose calibration score was under 50%. When those participants were removed from the analyses, critical results were in line with the main analyses: there remains a clear gaze bias in the free-viewing condition (first: _b_ =  `r E2_gaze_model.aggro_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model.aggro_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model.aggro_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 ); viewing condition still did not interact with question type to predict either behavioral outcome.
+There were `r e2.n.bad.subjects.aggro` participants whose calibration score was under 50%. When those participants were removed from the analyses, critical results were the same: there remains a clear gaze bias in the free-viewing condition (first: _b_ =  `r E2_gaze_model.aggro_q1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q1 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, second: _b_ =  `r E2_gaze_model.aggro_q2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q2 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001, third: _b_ =  `r E2_gaze_model.aggro_q3 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E2_gaze_model.aggro_q3 %>% pull(std.error) %>% round(digits = 2)`, _p_<0.001 ); viewing condition still did not interact with question type to predict either behavioral outcome.
