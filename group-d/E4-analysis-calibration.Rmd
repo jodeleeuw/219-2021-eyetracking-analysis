@@ -43,13 +43,14 @@ summary.data.calib = all.data.calib %>%
   mutate(calib_num = row_number())
 ```
 
-```{r, eval = F}
+```{r, eval = F, out.width="50%", fig.align="center"}
 ggplot(summary.data.calib)+
   geom_line(aes(x = calib_num, y = mean_percent_in_roi, color=subject))+
   theme_bw()+
   theme(legend.position = "none") 
 ```
-```{r, eval=F}
+
+```{r, eval=F, out.width="50%", fig.align="center"}
 summary.data.calib.wide = summary.data.calib %>% 
   select(-trial_index) %>% 
   pivot_wider(id_cols = subject, names_from=calib_num, values_from = mean_percent_in_roi )
@@ -94,7 +95,7 @@ eyetracking.effects.by.subj = read_csv( "output/E4_eye-tracking_data.csv") %>%
 
 ```
 
-```{r, eval = F}
+```{r, eval = F, out.width="50%", fig.align="center"}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = modifier))+
   geom_point()+
   geom_smooth(method = "lm")
@@ -116,15 +117,22 @@ m_calib_r = m_calib %>% pull(estimate )
 ```
 
 
-```{r E4-calib-corr-plot, fig.cap= 'Calibration scores plotted against the verb bias effect (the difference in target animal fixations between modifier and instrument conditions).'}
+```{r E4-calib-corr-plot, fig.cap= 'Calibration scores plotted against the verb bias effect (the difference in target animal fixations between modifier and instrument conditions).', out.width="50%", fig.align="center"}
 ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = bias_effect))+
   geom_point()+
   geom_smooth(method = "lm") +
   labs(x="Calibration Score", y="Bias Effect") +
   theme_bw()+
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank()) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
-Participants' calibration quality, measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)`%). 
+Participants' calibration quality, measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, varied substantially (`r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)`%). 
 The quality of a participant's calibration significantly correlated with the participant's effect size ( _Pearson's r_= `r m_calib_r`, _p_ < 0.05).
 The difference in target animal fixation proportions between modifier and instrument conditions was higher for participants with better calibration (see Figure \ \@ref(fig:E4-calib-corr-plot)).
 
@@ -175,7 +183,7 @@ m_calib_good_c2 = m_calib_good %>% filter(term == "condition2")
 
 ```
 #### Re-analysis After Exclusions
-Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 35 participants with calibration quality >50% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r m_calib_good_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001) but not significantly so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r m_calib_good_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_good_c2 %>% pull(p.value) %>% round(digits = 2)`). 
+Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 35 participants with calibration quality >50% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants' preference to the target animal relative to the target instrument in the modifier-biased condition and the equi-biased conditions was greater than in the instrument-biased condition ( _b_ =  `r m_calib_good_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001), but the difference betwen the modifier biased condition and the equi-biased condition was not significant ( _b_ =  `r m_calib_good_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_good_c2 %>% pull(p.value) %>% round(digits = 2)`). 
 
 ```{r}
 eyetracking.window.3.great.calib = eyetracking.window.3 %>% 

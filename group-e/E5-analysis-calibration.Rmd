@@ -93,7 +93,7 @@ scorescorrs.R <- cor.test(scores$mean_percent_in_roi[scores$task=="Roundness"], 
 As in the previous experiments, calibration score was defined as the average proportion of samples within 200 pixels of the validation point during the final validation phase before the eye tracking is performed. <!--The distribution across participants is shown in Fig. \@ref(fig:E5cal). 
 (ref:E5cal-caption) Histogram of calibration success in Exp. 5. (AJ: I cut this to be more similar to the other expts)-->Where participants required more than one calibration (N=14), only the final calibration was considered.
 
-```{r E5cal, fig.show="hold", out.width="45%", echo=FALSE,eval=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:E5cal-caption)"}
+```{r E5cal, fig.show="hold", out.width="45%", echo=FALSE,eval=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:E5cal-caption)", , out.width="50%", fig.align="center"}
 ggplot(subject.calibration.score, aes(x=mean_percent_in_roi)) +
   stat_bin(binwidth = 10) +
   labs(x="Calibration Accuracy\n(% of samples within 200px of calibration point)") +
@@ -101,14 +101,21 @@ ggplot(subject.calibration.score, aes(x=mean_percent_in_roi)) +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.minor.y = element_blank(),
-        axis.title.y = element_blank())
+        axis.title.y = element_blank()) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 ```
 
-To determine whether calibration accuracy influenced our key effects, we calculated the proportion of samples during the task in which the participant was fixating the face they ultimately chose. Calibration accuracy significantly correlated with fixations in both the attractiveness condition (r = `r round(scorescorrs.A$estimate, 2)` [`r round(scorescorrs.A$conf.int, 2)[1]`, `r round(scorescorrs.A$conf.int, 2)[2]`], p = `r round(scorescorrs.A$p.value, 2)`) and the roundness condition (r = `r round(scorescorrs.R$estimate, 2)` [`r round(scorescorrs.R$conf.int, 2)[1]`, `r round(scorescorrs.R$conf.int, 2)[2]`], p = `r round(scorescorrs.R$p.value, 2)`). Inspection of Fig. \@ref(fig:E5calcorr) reveals that this correlation is due to a handful of participants with calibration values below 50%.
+To determine whether calibration accuracy influenced our key effects, we calculated the proportion of samples during the task in which the participant was fixating the face they ultimately chose. Calibration accuracy significantly correlated with fixations in the attractiveness condition (r = `r round(scorescorrs.A$estimate, 2)` [`r round(scorescorrs.A$conf.int, 2)[1]`, `r round(scorescorrs.A$conf.int, 2)[2]`], p = `r round(scorescorrs.A$p.value, 2)`) but not the roundness condition (r = `r round(scorescorrs.R$estimate, 2)` [`r round(scorescorrs.R$conf.int, 2)[1]`, `r round(scorescorrs.R$conf.int, 2)[2]`], p = `r round(scorescorrs.R$p.value, 2)`). Inspection of Fig. \@ref(fig:E5calcorr) reveals that this correlation is due to a handful of participants with calibration values below 50%.
 
 (ref:E5calcorr-caption) Correlation between calibration accuracy (x-axis) and proportion of samples fixating target (y-axis) in Exp. 5.
 
-```{r E5calcorr, fig.show="hold", out.width="80%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:E5calcorr-caption)"}
+```{r E5calcorr, fig.show="hold", out.width="80%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:E5calcorr-caption)", out.width="50%", fig.align="center"}
 ggplot(scores, aes(x=mean_percent_in_roi, y=prop.in.target.subject, group=task, color=task))+
   geom_point() + geom_smooth(method="lm") +
   labs(x="Calibration Accuracy", y="Proportion Fixating Chosen Face") +
@@ -118,7 +125,13 @@ ggplot(scores, aes(x=mean_percent_in_roi, y=prop.in.target.subject, group=task, 
         panel.grid.minor.x = element_blank(),
         panel.grid.minor.y = element_blank(),
         #axis.title.y = element_blank()
-        )
+        ) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
 ```
 
 ```{r reanalyzedat, echo=FALSE, warning=FALSE, include=FALSE}
@@ -176,14 +189,28 @@ plot.A<-ggplot(rescore[rescore$task=="Attractiveness",], aes(x=time.window, y=pr
   geom_point(color="red") + 
   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "solid") + 
   scale_x_reverse() + theme_classic() + 
-  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 
 plot.R<-ggplot(rescore[rescore$task=="Roundness",], aes(x=time.window, y=prop.in.target))+
   geom_point(color="turquoise4") + 
   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "dashed") + 
   geom_line(data=fit.R.dat, aes(x=x, y=y), color="turquoise4", lwd=1.25, linetype = "solid") + 
   scale_x_reverse() + theme_classic() + 
-  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1)
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
 
 ```
 #### Re-analysis After Exclusions

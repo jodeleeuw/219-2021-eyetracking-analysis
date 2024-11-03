@@ -3,8 +3,6 @@ title: "Experiment 3: ROI Analysis"
 output: html_notebook
 ---
 
-In the original experiment, the two objects on day 1 were presented on two separate monitors and gaze was coded by manually coding video recordings. In our replication analysis, we analyzed eye movement data using ROIs defined around the two images. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
-
 ```{r E3-roi load libraries, include=FALSE}
 library(dplyr)
 library(tidyr)
@@ -79,19 +77,24 @@ looking.score.correlation.data <- looking.score.data %>%
 ls.cor <- cor(looking.score.correlation.data$looking.score.half, looking.score.correlation.data$looking.score.roi)
 ```
 
-The correlation between looking scores using the ROI method and the halves method is `r ls.cor` (see Figure\ \@ref(fig:E3-roi-correlation-of-looking-score).
+Above we excluded looks that fell outside the ROIs. In contrast, the original experiment simply coded looks as being to the left or right. This may be more appropriate to the limited resolution of camera-based eye-gaze detection. We re-ran analyses based on this split-half coding criterion. The correlation between proportion looks to novel using the ROI method and the halves method is `r ls.cor` (see Figure\ \@ref(fig:E3-roi-correlation-of-looking-score)).
 
-```{r E3-roi-correlation-of-looking-score, echo=FALSE, fig.cap="Correlation between looking scores calculated using ROIs and using screen halves."}
+```{r E3-roi-correlation-of-looking-score, echo=FALSE, fig.cap="Correlation between proportion looks-to-novel calculated using ROIs and using screen halves.", out.width="50%", fig.align="center"}
 ggplot(looking.score.data %>% filter(!is.nan(looking.score.roi)), aes(x=looking.score.roi, y=looking.score.half))+
   geom_point()+
   geom_smooth(method="lm", formula = y~x)+
-  labs(x="Looking Score (ROIs)", y="Looking Score (Halves)")+
+  labs(x="Looks-to-Novel (ROIs)", y="Looks-to-Novel (Halves)")+
   theme_bw()+
   coord_fixed()+
-  theme(panel.grid=element_blank())
-```
+  theme(panel.grid=element_blank()) +     theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
 
-#### Looking Scores
+```
 
 ```{r E3-roi Day 1 t-test looking scores, include=FALSE}
 t.test.data1 <- looking.score.data %>%
@@ -102,7 +105,7 @@ t.test.data1 <- looking.score.data %>%
 t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
 ```
 
-When looking scores are coded as left vs. right half of the screen, we find that participants looked more at the novel object. The mean looking score was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
+We again found that participants looked more at the novel object, though at a slightly lower rate than before (`r mean(t.test.data1$M.looking.score)`; *SD* = `r sd(t.test.data1$M.looking.score)`). As before, this was significantly greater than 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
 
 ```{r E3-roi Create looking over time curve data, include=FALSE}
 
@@ -125,16 +128,14 @@ day.1.looking.by.time.summary <- day.1.looking.by.time %>%
   summarize(M = mean(cumulative.looks.new), SE=sd(cumulative.looks.new) / sqrt(n()))
 ```
 
-```{r E3-roi Plot of cumulative looking score, echo=FALSE, eval = FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
+```{r E3-roi Plot of cumulative looking score, echo=FALSE, eval = FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM.", out.width="50%", fig.align="center"}
 #This (the fig and the DV) isn't referred to in the body of the text, so I'm cutting this for now
 ggplot(day.1.looking.by.time.summary, aes(x=t, y=M, ymin=M-SE, ymax=M+SE))+
   geom_pointrange()+
-  labs(x = "Time (ms)", y = "Cumulative Looking Score (Halves)")+
+  labs(x = "Time (ms)", y = "Cumulative Looks-to-Novel (Halves)")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 ```
-
-#### Correlations with Day 2 Performance
 
 ```{r E3-roi Prepare Day 2 data, include=FALSE}
 day2.test.data <- data.day.2 %>%
@@ -173,4 +174,4 @@ looking.rt.correlations.subjects.filtered <- looking.rt.correlations.subjects %>
 looking.rt.correlation.t.test <-t.test(looking.rt.correlations.subjects.filtered$r.to.z)
 ```
 
-Performance on day 2 remained uncorrelated with day 1 looking scores after switching the coding of gaze. We found no significant different from 0 for the correlation between looking score and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looking score and RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
+Performance on day 2 remained uncorrelated with day 1 looks-to-novel after switching the coding of gaze. We found no significant different from 0 for the correlation between looks-to-novel and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor the the correlation between looks-to-novel and RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.

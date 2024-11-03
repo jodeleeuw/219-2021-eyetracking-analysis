@@ -74,11 +74,9 @@ t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
 
 ### Day 1
 
-During day 1 of the experiment, participants viewed pairs of images, one of which was always familiar and the other unfamiliar. We calculated a looking score for each participant, defined as the proportion of gaze samples in the ROI of the unfamiliar image out of all the gaze samples that were in either ROI. Gaze samples that were not in either ROI were not included in this analysis. A looking score of 0.5 indicates that participants looked equally often at the familiar and unfamiliar images, while a looking score above 0.5 indicates a preference for the unfamiliar object and a looking score below 0.5 indicate a preference for the familiar object. 
+We calculated the proportion of gaze samples in the ROI of the unfamiliar image out of all the gaze samples that were in either ROI. Of the `r looking.score.data %>% nrow()` trials in the experiment, `r looking.score.data %>% filter(is.nan(looking.score)) %>% nrow()` had no fixations in either ROI and so were excluded from this analysis. 
 
-Of the `r looking.score.data %>% nrow()` trials in the experiment, `r looking.score.data %>% filter(is.nan(looking.score)) %>% nrow()` had no fixations in either ROI, and so the looking score was unknown. We removed these trials from this analysis.
-
-The mean looking score was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5 (*t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`), indicating that participants did show a preference for looking at the novel objects.
+The mean proportion looks to the novel object was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5 (*t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`), replicating the finding that participants show a preference for looking at the novel objects.
 
 ```{r Create looking over time curve data, include=FALSE}
 
@@ -101,11 +99,11 @@ day.1.looking.by.time.summary <- day.1.looking.by.time %>%
   summarize(M = mean(cumulative.looks.new), SE=sd(cumulative.looks.new) / sqrt(n()))
 ```
 
-```{r plot-cumulative-looking-score, echo=FALSE, eval=FALSE, fig.cap="Cumulative looking score over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM."}
+```{r plot-cumulative-looking-score, echo=FALSE, eval=FALSE, fig.cap="Cumulative looking to novel over the 5 second exposure during part 2 of day 1. Error bars represent +/- 1 SEM.", out.width="50%", fig.align="center"}
 #This (the fig and the DV) isn't referred to in the body of the text, so I'm cutting this for now
 ggplot(day.1.looking.by.time.summary, aes(x=t, y=M, ymin=M-SE, ymax=M+SE))+
   geom_pointrange()+
-  labs(x = "Time (ms)", y = "Cumulative Looking Score")+
+  labs(x = "Time (ms)", y = "Cumulative Looking to Novel")+
   theme(panel.grid.minor = element_blank())
 ```
 
@@ -164,9 +162,9 @@ rt.t.test <- t.test(
   paired=T)
 ```
 
-In all of these analyses, we excluded the `r day2.test.data %>% filter(rt_recognition > 10000) %>% nrow()` (out of `r day2.test.data %>% nrow()`) trials where the response time for the recognition judgment was greater than 10 seconds. 
+In Day 2 analyses, we excluded the `r day2.test.data %>% filter(rt_recognition > 10000) %>% nrow()` (out of `r day2.test.data %>% nrow()`) trials where the response time for the recognition judgment was greater than 10 seconds. 
 
-Participants correctly identified whether the image was familiar or unfamiliar `r mean(day2.accuracy$accuracy)*100`% (*SD* = `r sd(day2.accuracy$accuracy*100)`) of the time. After excluding the `r length(subjects.100.percent.accurate)` participants who responded correctly to all images, the average confidence rating for correct responses (M = `r confidence.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.confidence) %>% mean()`; SD = `r confidence.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.confidence) %>% sd()`) was significantly higher than their average confidence ratings for incorrect responses (M = `r confidence.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.confidence) %>% mean()`; SD = `r confidence.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.confidence) %>% sd()`), t(`r confidence.t.test$parameter`) = `r confidence.t.test$statistic`, p = `r confidence.t.test$p.value` . Among the same subset of participants, response times for correct responses (M = `r rt.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.rt) %>% mean()`, SD = `r rt.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.rt) %>% sd()`) were also significantly faster than for incorrect responses (M = `r rt.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.rt) %>% mean()`, SD = `r rt.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.rt) %>% sd()`), t(`r rt.t.test$parameter`) = `r rt.t.test$statistic` , p = `r rt.t.test$p.value`).
+Participants correctly identified whether the image was familiar or unfamiliar `r mean(day2.accuracy$accuracy)*100`% (*SD* = `r sd(day2.accuracy$accuracy*100)`) of the time. After excluding the `r length(subjects.100.percent.accurate)` participants who responded correctly to all images, the average confidence rating for correct responses (M = `r confidence.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.confidence) %>% mean()`; SD = `r confidence.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.confidence) %>% sd()`) was significantly higher than their average confidence ratings for incorrect responses (M = `r confidence.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.confidence) %>% mean()`; SD = `r confidence.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.confidence) %>% sd()`), t(`r confidence.t.test$parameter`) = `r confidence.t.test$statistic`, p = `r confidence.t.test$p.value` . Among the same subset of participants, response times for correct responses (M = `r rt.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.rt) %>% mean()`, SD = `r rt.test.data.filtered %>% filter(correct_recognition == TRUE) %>% pull(M.rt) %>% sd()`) were also significantly faster than for incorrect responses (M = `r rt.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.rt) %>% mean()`, SD = `r rt.test.data.filtered %>% filter(correct_recognition == FALSE) %>% pull(M.rt) %>% sd()`), t(`r rt.t.test$parameter`) = `r rt.t.test$statistic` , p = `r rt.t.test$p.value`). These findings replicate the original.
 
 ```{r Calculate Looking Score Correlations, include=FALSE}
 looking.plus.behavioral <- left_join(looking.score.data, day2.test.data)
@@ -198,7 +196,7 @@ looking.rt.correlations.subjects.filtered <- looking.rt.correlations.subjects %>
 looking.rt.correlation.t.test <-t.test(looking.rt.correlations.subjects.filtered$r.to.z)
 ```
 
-To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on Day 2, we computed the correlation coefficient between Day 1 looking scores and Day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, we found no significant difference from 0 for the correlation between looking score and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor the correlation between looking score and RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
+To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on Day 2, we computed the correlation coefficient between Day 1 proportion looks to novel and Day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, failed to replicate the a significant difference from 0 for the correlation between proportion looks to the novel object and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor for the correlation with RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
 
 ```{r Plot Looking Score Correlations, echo=FALSE, warning=FALSE, eval=FALSE}
 # #This isn't referred to in the text--it's between Figs 10 and 11
