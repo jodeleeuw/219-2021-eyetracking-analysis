@@ -338,7 +338,7 @@ fixed.view.summary.condition1.data <- fixed.view.summary.subject.data %>%
   summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
 ```
 
-```{r E2-gaze-fig-fixed, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval.", eval = F, out.width="50%", fig.align="center"}
+```{r E2-gaze-fig-fixed, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants durign memory retrieval in Experiment 2.", eval = F, out.width="50%", fig.align="center"}
 fig.fixed<-ggplot(fixed.view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill = normalized_quadrant == "critical" )) +
   geom_col(position=position_dodge(), color = "black")+
   geom_errorbar(position=position_dodge(width=0.9), width=0.1)+
@@ -433,7 +433,7 @@ rt_fig<-ggplot(rt.summary.condition.data %>%
 
 ```
 
-```{r E2-rt-acc-fig, fig.cap = "Accuracy and response times during memory retrieval.", out.width="50%", fig.align="center"}
+```{r E2-rt-acc-fig, fig.cap = "Accuracy and response times during memory retrieval by statement type and viewing condition in Experiment 2.", out.width="50%", fig.align="center"}
 acc_rt_fig<-acc_fig + rt_fig + plot_layout(guides = "collect")
 acc_rt_fig
 ```

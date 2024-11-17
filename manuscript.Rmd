@@ -214,9 +214,6 @@ affiliation:
   - id: '4'
     institution: Cognitive Science Department, Vassar College
 
-authornote: |
-  Partial funding for JKH's contributions was provided by NSF2436092. The authors declares no competing interests.
-
 abstract: |
   Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: jsPsych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution (like Exp. 1) should be adapted to coarser quadrant or split-half displays. 
   
@@ -722,7 +719,7 @@ the screen. No feedback on their responses was given during the test.
 One aspect of the original study that we could not replicate was that we presented all stimuli on a single screen rather than two screens due to the constraints of the online experiment format. We had no *a priori* reason to expect this to matter.
 
 
-```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3', out.width="35%", fig.align="center"}
+```{r E3-design-schematic, fig.cap='Schematic of the design of Experiment 3.', out.width="35%", fig.align="center"}
 knitr::include_graphics("group-c/E3-example-figure.jpeg")
 ```
 
@@ -1048,31 +1045,92 @@ We also included a step where if the validation was poor after the first attempt
 ```
 \newpage
 
-#Contributions
+# Contributions
+
+
 
 \newpage
 
-#Acknowledgements
+# Funding information
+Funding for data collection was provided by the Vassar College Department of Cognitive Science (JdL). Partial funding for JKH's contributions was provided by NSF2436092. 
 
 \newpage
 
-#Funding information
-Funding for this project was provided by the Vassar College Department of Cognitive Science (JdL) and 
-
-\newpage
-
-#Competing interests
+# Competing interests
 The authors have no competing interests to declare. 
 
 \newpage
 
-#Supplemental material
+# Supplemental material
 
 \newpage
 
-#Data accessibility statement
+# Data accessibility statement
 
 \newpage
 
-#Figure titles and legends
+# Figure titles and legends
+
+1. **Example trial from Experiment 1.** Participants would hear a sentence (e.g., "The boy will eat the cake") and respond according to whether the sentence matched the picture.
+
+2. **Calibration and validation point locations for Experiment 1.** Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.
+
+3. **Calibration scores plotted against the verb effect on first fixations.** This was operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.
+
+4. **Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time.** Results from an in-lab study with an eyetracker (Panel A; @james2023language) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.
+
+5. **Calibration scores in Exp. 1b, plotted against the verb effect** This was operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.
+
+6. **Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time.** Results from our web-based study (Panel A; Experiment 1a) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.
+
+7. **Example trial from Experiment 2.**
+
+8. **Calibration and validation point locations for Experiment 2.** Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration. In this experiment, all the same locations were used for both calibration and validation.
+
+9. **Proportion of eye-gaze to critical quadrant and other three quadrants during memory retrieval in a) fixed and b) free viewing conditions in Experiment 2.**
+
+10. **Accuracy and response times during memory retrieval by statement type and viewing condition in Experiment 2.** 
+
+11. **Calibration scores plotted against gaze bias.** This was operationalized as the difference between the proportion of looks to the critical quadrant minus the average proportion of looks to the average of the other three quadrants.
+
+12. **Calibration and validation point locations for Experiment 3. Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.**
+
+13. **Schematic of the design of Experiment 3.**
+
+14. **Correlation between proportion looks-to-novel calculated using ROIs and using screen halves.**
+
+15. **Experiment 3 calibration scores plotted against proportion looks-to-novel using the left-vs.- right halves coding method.** This was operationalized as the proportion of gaze samples to the half of the screen containing the new image out of all gaze samples.
+
+16. **Experiment 3 calibration scores plotted against proportion looks-to-novel using the ROI coding method.** This was operationalized as the proportion of gaze samples to the new image out of all gaze samples.
+
+17. **The relation between calibration scores and experimental effect size, defined as the correlation between Day 1 looks-to-novel and Day 2 memory performance.** Looks-to-novel were either coded using the halves method (left panels) or ROI method (right panels); memory performance was measured using confidence ratings (top panels) or reaction time for correct recognition judgments (bottom panels).
+
+18. **Calibration and validation point locations for Experiment 4.** Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration. In this experiment, all the same locations were used for both calibration and validation.
+
+19. **An example of a critical trial from Experiment 4 for the sentence “Rub the butterfly with the crayon.”** The butterfly is the target animal, the panda is the distractor animal, the crayon is the target instrument, and the violin is the distractor instrument.
+
+20. **Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.**
+
+21. **Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.** Error bars reflect bootstrapped 95% CIs over subject means.
+
+22. **Timecourse of eye-gaze to target animal and target instrument by verb bias condition.** Vertical lines indicate average onsets of animal and instrument offset by 200ms.
+
+23. **Calibration scores plotted against the verb bias effect (the difference in target animal fixations between modifier and instrument conditions).**
+
+24. **Example participant’s gaze coordinates categorized into ROIs based on a) image bounding boxes and b) screen quadrants.** Magenta points indicate looks that were not categorized into an ROI.
+
+25. **Timecourse of eye-gaze to target animal and target instrument by verb bias condition.** Gaze was categorized based on which quadrant of the screen the coordinates fall in (as opposed to a bounding box around the image). Vertical lines indicate average onsets of animal and instrument offset by 200ms.
+
+26. **Calibration and validation point locations for Experiment 5.** Black points were used for calibration. Red crosses were used for checking the accuracy of the calibration.
+
+27. **An example of a critical trial from Experiment 5.** Text did not appear on each screen.
+
+28. **Primary results from Exp. 5.** The attractiveness judgment along with the best- fitting sigmoid is shown on the left. Results for the roundness judgment are shown on the right, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison.
+
+29. **Correlation between calibration accuracy (x-axis) and proportion of samples fixating target (y-axis) in Exp. 5.**
+
+30. **Revised results for Exp. 5 after removing low-calibration accuracy participants.** *Left*: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. *Right*: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).
+
+
+
 

@@ -1039,7 +1039,7 @@ m3_diff_cor_r <- m3_diff_cor$estimate
 m3_diff_cor_p <- m3_diff_cor$p.value
 ```
 
-```{r E1-calib-effect, fig.cap='Calibration scores plotted against the verb effect on first fixations (the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition).', out.width="50%", fig.align="center"}
+```{r E1-calib-effect, fig.cap='Calibration scores plotted against the verb effect on first fixations. This was operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.', out.width="50%", fig.align="center"}
 #I picked this one because the DV is easiest to explain, and because it's the DV where the effect comes out once you drop the "bad" participants
 ggplot(cali.analy.3, aes(x=M, y=diff))+
   geom_point()+
@@ -1062,7 +1062,7 @@ The figure makes clear that there is a large proportion of participants with cal
 
 
 
-```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. The vertical line marks the mean noun onset time across trials and conditions.", out.width="75%", fig.align="center"} 
+```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. Results from an in-lab study with an eyetracker (Panel A; @james2023language) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.", out.width="75%", fig.align="center"} 
 
 JMW_spag_fig <- JMW_spag_fig +    theme(
     panel.grid.minor = element_blank(),

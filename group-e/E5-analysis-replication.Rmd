@@ -151,12 +151,12 @@ plot.R<-ggplot(summary.gaze.view[summary.gaze.view$task=="Roundness",], aes(x=ti
 ```
 
 
-(ref:groupEMain-caption) Primary results from Exp. 5. *Top* shows the original results from Shimojo and colleagues (Figures reprinted with permission[TODO]). The attractiveness judgment along with the best-fitting sigmoid  is shown in the *top left*. Results for the roundness judgment are show in the *top right*, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison (*top right*). (*Bottom*) shows the analogous results from the replication, with the attractiveness judgments on the *bottom left* and the roundness judgments on the *bottom right*. Again, the best-fitting sigmoid for the attractiveness judgments are plotted with a dashed line alongside the roundness results, for purposes of comparison.
+(ref:groupEMain-caption) Primary results from Exp. 5. The attractiveness judgment along with the best-fitting sigmoid  is shown on the *left*. Results for the roundness judgment are shown on the *right*, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison.
 
 ```{r groupEMain, fig.show="hold", out.width="45%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:groupEMain-caption)"}
 # All defaults
-include_graphics("figGroupEOrigA.png")
-include_graphics("figGroupEOrigB.png")
+#include_graphics("figGroupEOrigA.png")
+#include_graphics("figGroupEOrigB.png")
 plot.A
 plot.R
 ```

@@ -149,7 +149,7 @@ eyetracking.window.summary.both = eyetracking.window.summary.by.subj.both %>%
 ```
 
 
-```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means", , out.width="75%", fig.align="center"}
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means.", , out.width="75%", fig.align="center"}
 
 ggplot(eyetracking.window.summary.by.subj.both)+
   stat_summary(aes(x=time.window, color=condition, y = mean_prop, shape = study), 

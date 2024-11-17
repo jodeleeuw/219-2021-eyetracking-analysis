@@ -193,7 +193,7 @@ E4_mouse_moves_model_c2 = E4_mouse_moves_model_tab %>% filter(term == "compatibi
 
 Participants and items were entered as varying intercepts with by-participant varying slopes for verb bias condition.^[`lme4` syntax: `glmer(is.mouse.over.instrument ~ verb_bias + (1 + verb_bias | participant) + (1 | item), family="binomial", data=d)`] Participants were more likely to first move their mouse over target instruments in the instrument-biased condition relative to the equi-biased and modifier-biased condition (_b_ =  `r E4_mouse_moves_model_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_mouse_moves_model_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01). Further, participants were more likely to first move their mouse over target instruments in the equi-biased condition relative to the modifier-biased condition (_b_ =  `r E4_mouse_moves_model_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_mouse_moves_model_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01)
 
-Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Results were qualitatively similar to those in the original are shown in Figure \@ref(fig:E4-gaze-timecourse-fig), though proportions of fixations to the target animal were much lower in the web version of the study. This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.  Eyegaze results are shown in more detail in Figure \@ref(fig:E4-gaze-timecourse-fig).
+Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Results were qualitatively similar to those in the original as shown in Figure \@ref(fig:E4-proportion-fix-by-window-both), though proportions of fixations to the target animal were much lower in the web version of the study. This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.  Eye-gaze results are shown in more detail in Figure \@ref(fig:E4-gaze-timecourse-fig).
 
 
 ```{r E4-categorizing-gaze-location}
@@ -307,7 +307,7 @@ eyetracking.window.summary.both = eyetracking.window.summary.by.subj.both %>%
 ```
 
 
-```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means", out.width="65%", fig.align="center"}
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means.", out.width="65%", fig.align="center"}
 
 ggplot(eyetracking.window.summary.by.subj.both)+
   stat_summary(aes(x=time.window, color=condition, y = mean_prop, shape = study), 
@@ -331,6 +331,7 @@ ggplot(eyetracking.window.summary.by.subj.both)+
   )
 
 ```
+
 ```{r, eval  = F}
 orig.data.time.window.1 <- eyetracking.window1.summary.by.trial.orig %>% 
   filter(condition != "filler") %>% 

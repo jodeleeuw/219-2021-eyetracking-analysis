@@ -111,16 +111,16 @@ ggplot(subject.calibration.score, aes(x=mean_percent_in_roi))+
 
 <!--#### Correlation with Effects-->
 
-To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within 200 pixels of the validation points during the final validation phase before the eye tracking is performed. Calibration scores were not correlated with proportion looks to novel, regardless of whether scores were computed using ROIs (see Figure\ \@ref(fig:E3-cal-Plot-looking-score-roi-by-calibration)) or split-halves (see Figure\ \@ref(fig:E3-cal-Plot-looking-score-halves-by-calibration).
+To see if calibration success is correlated with the eye tracking effects, we calculated a calibration score for each participant. The calibration score was the average proportion of samples within 200 pixels of the validation points during the final validation phase before the eye tracking is performed. Calibration scores were not correlated with proportion looks to novel, regardless of whether scores were computed using ROIs (see Figure\ \@ref(fig:E3-cal-Plot-looking-score-roi-by-calibration)) or split-halves (see Figure\ \@ref(fig:E3-cal-Plot-looking-score-halves-by-calibration)).
 
 
-```{r E3-cal-Plot-looking-score-halves-by-calibration, echo=FALSE, warning=FALSE, fig.cap = 'Calibration scores plotted against proportion looks to novel using the left-vs.-right halves coding method (proportion of gaze samples to the half of the screen containing the new image out of all gaze samples).', out.width="50%", fig.align="center"}
-ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.half))+
+```{r E3-cal-Plot-looking-score-roi-by-calibration, echo=FALSE, warning=FALSE, fig.cap = 'Experiment 3 calibration scores plotted against proportion looks-to-novel using the ROI coding method. This was operationalized as proportion of gaze samples to the new image out of all gaze samples).', out.width="50%", fig.align="center"}
+ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.roi))+
   geom_point()+
   geom_smooth(method="lm", formula = y ~ x)+
-  labs(x="Calibration Score", y="Looks-to-novel halves")+
+  labs(x="Calibration Score", y="Looks-to-novel (ROIs)") +
   theme_bw()+
-  theme(panel.grid.minor = element_blank()) + theme(
+  theme(panel.grid.minor = element_blank()) +     theme(
     panel.grid.minor = element_blank(),
     axis.title = element_text(size=14),      # Axis titles
     axis.text = element_text(size=14),       # Axis labels
@@ -131,13 +131,13 @@ ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.half))+
 
 ```
 
-```{r E3-cal-Plot-looking-score-roi-by-calibration, echo=FALSE, warning=FALSE, fig.cap = 'Calibration scores plotted against proportion looks to novel using the ROI coding method (proportion of gaze samples to the new image out of all gaze samples).', out.width="50%", fig.align="center"}
-ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.roi))+
+```{r E3-cal-Plot-looking-score-halves-by-calibration, echo=FALSE, warning=FALSE, fig.cap = 'Experiment 3 calibration scores plotted against proportion looks-to-novel using the left-vs.-right halves coding method (proportion of gaze samples to the half of the screen containing the new image out of all gaze samples).', out.width="50%", fig.align="center"}
+ggplot(merged.eyetracking, aes(x=mean_percent_in_roi, y=looking.score.M.half))+
   geom_point()+
   geom_smooth(method="lm", formula = y ~ x)+
-  labs(x="Calibration Score", y="Looks-to-novel (ROIs)") +
+  labs(x="Calibration Score", y="Looks-to-novel halves")+
   theme_bw()+
-  theme(panel.grid.minor = element_blank()) +     theme(
+  theme(panel.grid.minor = element_blank()) + theme(
     panel.grid.minor = element_blank(),
     axis.title = element_text(size=14),      # Axis titles
     axis.text = element_text(size=14),       # Axis labels

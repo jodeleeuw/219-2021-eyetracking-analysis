@@ -293,7 +293,7 @@ eyetracking.figure.3.data <- eyetracking.data.with.time.windows.quadrant %>%
   summarize(M=mean(prop_fixations), SE=sd(prop_fixations)/sqrt(n()))
 ```
 
-```{r E4-gaze-timecourse-fig-quadrants, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition with gaze categorized based on which quadrant of the screen the coordinates fall in (as opposed to a bounding box around the image). Vertical lines indicate average onsets of animal and instrument offset by 200ms.", out.width="50%", fig.align="center"}
+```{r E4-gaze-timecourse-fig-quadrants, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Gaze was categorized based on which quadrant of the screen the coordinates fall in (as opposed to a bounding box around the image). Vertical lines indicate average onsets of animal and instrument offset by 200ms.", out.width="50%", fig.align="center"}
 
 fig3<-ggplot(eyetracking.figure.3.data %>% 
   mutate(compatibility = factor(compatibility, 
