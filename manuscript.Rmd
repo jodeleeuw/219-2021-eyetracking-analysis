@@ -12,6 +12,9 @@ author:
       - Writing - original draft
       - Writing - review & editing
     email: ajames2@macalester.edu
+    corresponding: yes
+    address: 1600 Grand Ave, Saint Paul, MN 550105, USA
+      
   - name: Rachel Ryskin
     affiliation: '2'
     role:
@@ -199,9 +202,7 @@ author:
       - Visualization
       - Writing - original draft
       - Writing - review & editing
-    corresponding: yes
     email: jdeleeuw@vassar.edu
-    address: 124 Raymond Ave, Poughkeepsie, NY 12604, USA
 
 affiliation:
   - id: '1'
@@ -412,7 +413,7 @@ the study.(AJ: I don't think this is true, as there are Ps included that have un
 
 ## Pre-registration
 
-These data were collected within the context of an undergraduate research methods course. Groups of students (co-authors) designed and programmed experiments in jsPsych, pre-registered their planned analyses, and collected data through Prolific under the supervision of the first author. The OSF repositories associated with these experiments are linked in the methods sections of each individual study. Note that in the current paper we expand on those pre-registered analyses (e.g., including analyses of the calibration quality). All analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis 
+These data were collected within the context of an undergraduate research methods course. Groups of students (co-authors) designed and programmed experiments in jsPsych, pre-registered their planned analyses, and collected data through Prolific under the supervision of the last author. The OSF repositories associated with these experiments are linked in the methods sections of each individual study. Note that in the current paper we expand on those pre-registered analyses (e.g., including analyses of the calibration quality). All analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis 
 
 ## Data Pre-processing
 
@@ -1046,7 +1047,31 @@ We also included a step where if the validation was poor after the first attempt
 \newpage
 
 # Contributions
-
+* Joshua R. de Leeuw
+    + Conceptualization
+    + Data curation
+    + Formal analysis
+    + Investigation
+    + Methodology
+    + Project administration
+    + Software
+    + Supervision
+    + Validation
+    + Visualization
+    + Writing - original draft
+    + Writing - review & editing
+    
+* Ariel N. James, Rachel Ryskin, and Joshua K. Hartshorne
+    + Conceptualization
+    + Formal analysis
+    + Visualization
+    + Writing - original draft
+    + Writing - review & editing
+    
+* Undergraduate student authors, listed alphabetically: Haylee Backs, Nandeeta Bala, Laila Barcenas-Meade, Samata Bhattarai, Tessa Charles, Gerasimos Copoulos, Claire Coss, Alexander Eisert, Elena Furuhashi, Keara Ginell, Anna Guttman-McCabe, Emma (Chaz) Harrison, Laura Hoban, William A. Hwang, Claire Iannetta, Kristen M. Koenig, Chauncey Lo, Victoria Palone, Gina Pepitone, Margaret Ritzau, Yi Hua Sung, and Lauren Thompson
+    + Investigation
+    + Methodology
+    + Software
 
 
 \newpage
@@ -1059,13 +1084,17 @@ Funding for data collection was provided by the Vassar College Department of Cog
 # Competing interests
 The authors have no competing interests to declare. 
 
-\newpage
-
-# Supplemental material
 
 \newpage
 
 # Data accessibility statement
+All data and analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis. Study materials and pre-registrations for each experiment are available on Open Science Framework:
+
+* Experiments 1a and 1b: [https://osf.io/g6dum/]
+* Experiment 2: [https://osf.io/xezfu/]
+* Experiment 3: [https://osf.io/k63b9/]
+* Experiment 4: [https://osf.io/x3c49/]
+* Experiment 5: [https://osf.io/eubsc/]
 
 \newpage
 
