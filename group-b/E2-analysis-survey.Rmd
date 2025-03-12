@@ -1,0 +1,81 @@
+---
+title: "Group B Analysis - Survey"
+output: pdf_document
+---
+
+
+```{r message=FALSE}
+library(jsonlite)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(stringr)
+```
+
+
+<!--Read JSON files and bind together into a tibble.-->
+
+```{r}
+data.files <- list.files('data', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+```{r}
+
+survey_questions = c("\n              <p>Were there any distracting notifications?</p>\n              ",
+                     "\n              <p>How many questions were you unable to hear?</p>\n              ",
+                     "\n              <p>Did the experiment window exit full screen during the experiment?</p>\n              ",
+                     "\n              <p>During the memory recall was it difficult to keep your head in a fixed position?</p>\n              ",
+                     "\n              <p>Do you wear glasses during the experiment?</p>\n              "
+                     )
+
+all.data.survey = all.data %>% 
+  filter(stimulus %in% c(survey_questions)) %>% 
+  dplyr::select(subject_id, trial_index,  stimulus, response) %>% 
+  mutate(survey_question = case_when(
+    str_detect(stimulus, "notifications") ~ "notifications",
+    str_detect(stimulus, "hear") ~ "questions_not_heard",
+    str_detect(stimulus, "exit full screen") ~ "exit_full_screen",
+    str_detect(stimulus, "fixed") ~ "head_fixed",
+    str_detect(stimulus, "glasses") ~ "glasses"
+  ))
+  
+```
+
+```{r, message = FALSE, warning = FALSE}
+summary.data.survey = all.data.survey %>% 
+  group_by(survey_question ) %>% 
+  mutate(total_responses = n() ) %>% 
+  group_by(survey_question, response, total_responses) %>% 
+  summarize(num_responses = n(), 
+            prop_response = num_responses/total_responses,
+            perc_response = round(prop_response * 100, digits = 0)) %>% 
+  unique()
+
+# For all Yes/No questions: 0 = 'Yes', 1 = 'No'
+# For number of questions not heard: 0,1,2,3,4 --> '0', '1', '2', '3', 'More than 3'
+```
+
+
+```{r, message = F}
+calib.by.subj = read_csv("output/E2_calib_data_subj.csv")
+
+glasses.data = all.data.survey %>% 
+  filter(survey_question == "glasses") %>% 
+  left_join(calib.by.subj, by = "subject_id")
+
+summary.glasses.data = glasses.data %>% 
+  group_by(response) %>% 
+  summarize(mean_calib_score = round(mean(mean_percent_in_roi), digits = 2))
+```
+
+```{r}
+t_test_glasses = t.test( mean_percent_in_roi ~ response, data = glasses.data)
+```
+Participants were asked a number of debriefing questions. `r summary.data.survey %>% filter(survey_question == 'notifications' & response == 0) %>% pull(perc_response)`% reported experiencing distracting notifications during the experiment. `r summary.data.survey %>% filter(survey_question == 'exit_full_screen' & response == 0) %>% pull(perc_response)`% reported that the experiment exited full screen mode during the experiment. `r summary.data.survey %>% filter(survey_question == 'head_fixed' & response == 0) %>% pull(perc_response)`% reported that it was difficult to keep their head in a fixed position during the memory recall portion of the experiment. `r 100 - summary.data.survey %>% filter(survey_question == 'questions_not_heard' & response == 0) %>% pull(perc_response)`% reported that they were unable to hear at least one question.  `r summary.data.survey %>% filter(survey_question == 'glasses' & response == 0) %>% pull(perc_response)`% reported wearing glasses during the experiment. Average calibration scores were numerically lower for participants who reported wearing glasses (`r summary.glasses.data %>% filter(response == 0) %>% pull(mean_calib_score)`%) compared to those who didn't (`r summary.glasses.data %>% filter(response == 1) %>% pull(mean_calib_score)`%, _t_=`r round(t_test_glasses$statistic, digits = 2)`, _p_=`r round(t_test_glasses$p.value, digits = 2)`).

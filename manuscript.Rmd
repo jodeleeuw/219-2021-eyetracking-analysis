@@ -270,9 +270,9 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-The use of eye-tracking to study cognition took off when Alfred Yarbus used suction cups to affix a mirror system to the sclera of the eye in order to monitor eye position during the perception of images [@yarbus1967eye]. In one study, participants viewed a painting depicting multiple people in a complex interaction inside of a 19th century Russian home. Yarbus showed, among other things, that the scan paths and locations of fixations were largely dependent on the instructions given to participants (e.g., View the picture freely vs. Remember the position of the people and objects in the room). In other words, the cognitive processing that the individual is engaged in drives the visuo-motor system. Since these findings, eye-tracking has become a central method in cognitive science research [for reviews, see @hayhoe2005eye, @richardsonEyeTrackingResearch2004, @rayner1998eye]. For example, gaze location during natural scene perception is used to test theories of visual attention [e.g., @henderson2017meaning], and eye-movements during auditory language comprehension, using the "visual world paradigm," demonstrated the context-dependent and incremental nature of language processing [e.g., @tanenhaus1995].
+The use of eye-tracking to study cognition took off when Alfred Yarbus used suction cups to affix a mirror system to the sclera of the eye in order to monitor eye position during the perception of images [@yarbus1967eye]. In one study, participants viewed a painting depicting multiple people in a complex interaction inside of a 19th century Russian home. Yarbus showed, among other things, that the scan paths and locations of fixations were largely dependent on the instructions given to participants (e.g., View the picture freely vs. Remember the position of the people and objects in the room). In other words, the cognitive processing that the individual is engaged in drives the visuo-motor system. Since these findings, eye-tracking has become a central method in cognitive science research [for reviews see @hayhoe2005eye; @richardsonEyeTrackingResearch2004; @rayner1998eye]. For example, gaze location during natural scene perception is used to test theories of visual attention [e.g., @henderson2017meaning], and eye-movements during auditory language comprehension, using the "visual world paradigm," demonstrated the context-dependent and incremental nature of language processing [e.g., @tanenhaus1995].
 
-An important limitation of the eye-tracking methodology is that it has typically required costly equipment (eye-trackers can range in price from a few thousand dollars to tens of thousands of dollars), particular laboratory conditions (a quiet room with consistent indoor lighting conditions), and a substantial time investment (e.g., bringing participants into a laboratory one at a time). This limits who can conduct eye-tracking research -- not all researchers have the necessary resources -- and who can participate in eye-tracking research. Most eye-tracking study participants are from western, educated, industrialized, rich, and democratic [WEIRD; @henrich2010weirdest] convenience samples [but see @ryskin2023real], which diminishes the generalizability of the findings and the scope of conclusions that can be drawn about human cognition. Likewise, the sample sizes for in-lab experiments are usually orders of magnitude smaller than what statisticians recommend [@nosek2022replicability].
+An important limitation of the eye-tracking methodology is that it has typically required costly equipment (eye-trackers can range in price from a few thousand dollars to tens of thousands of dollars), particular laboratory conditions (a quiet room with consistent indoor lighting conditions), and a substantial time investment (e.g., bringing participants into a laboratory one at a time). This limits who can conduct eye-tracking research -- not all researchers have the necessary resources -- and who can participate in eye-tracking research. Most eye-tracking study participants are from western, educated, industrialized, rich, and democratic [WEIRD, @henrich2010weirdest] convenience samples [but see @ryskin2023real], which diminishes the generalizability of the findings and the scope of conclusions that can be drawn about human cognition. Likewise, the sample sizes for in-lab experiments are usually orders of magnitude smaller than what statisticians recommend [@nosek2022replicability].
 
 A robust solution to all these problems is online experiments, particularly with volunteer citizen scientists as participants [@li2024developmental; @hartshorne2019thousand; @reinecke2015labinthewild; @gosling2010wired]. Historically, this option has not been available for eye-tracking, since few potential subjects have expensive eyetrackers at home. In principal, this could be circumvented by using so-called "poor-man's" eye-tracking, in which researchers videotape the subject's face and code eye position frame-by-frame [@snedeker2003using]. Most computers now have high-quality built-in cameras, so recording video is straightforward. Unfortunately, coding images frame-by-frame is extremely time-intensive, making large-sample studies unrealistic. However, in recent years, image analysis has improved to the point where this work can be automated with reasonable accuracy [@papoutsaki2016webgazer; @zheng2018rapid; @burton2014comparison; @skovsgaard2011evaluation]. Nonetheless, webcam-based eyetracking only started to be used regularly in research with the advent of `Webgazer.js` [@papoutsaki2016webgazer], a webcam-based Javascript plug-in that works in the browser and which can be integrated with any Javascript web interface, including `jsPsych` [@deleeuwJsPsychJavaScriptLibrary2015], `Gorilla` [@anwyl2020gorilla], or `lab.js` [@henninger2021lab].
 
@@ -294,10 +294,7 @@ In order to broaden the validation of online eye-tracking methodology, we set ou
 
 Studies with large effect sizes and which are known to replicate are ideal targets for further replication; otherwise, it can be difficult to distinguish a failure of the method from a failure of the original study to replicate. In practice, replications (successful or otherwise) have only been reported for a small number of studies, so we ultimately included some studies with unknown replicability. We addressed this in several ways. First, replicating five very different studies from different research traditions decreases our reliance on any one study. Second, we include several "sanity check" analyses, such as the correlation between calibration accuracy and effect size. If the effect is real but there is noise from low-accuracy eye-tracking, this correlation should be substantial. Third, for two of the studies, we had comparison data collected in-lab either using `jsPsych` or a more traditional eyetracker technology, allowing us to directly assess the impact of differences in subject population and equipment/setting.
 
-<!-- June 2022: shimojo: 964 citations, altmann: 1840, ryskin: 75, johansson 190, 127 -->
-<!-- RR: switched ryskin to Snedeker & trueswell 2004 bcs my 75 looked sad -->
-
-We chose five high-impact eye-tracking studies involving adult subjects [for an comparison of remote WebGazer and in-lab anticipatory looking effects with 18-27 month-old participants, see @steffan2024validation]. Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "naturalistic" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table \@ref(tab:studies-table) provides an overview of the five studies we selected.
+We chose five high-impact eye-tracking studies involving adult subjects [for a comparison of remote WebGazer and in-lab anticipatory looking effects with 18-27 month-old participants, see @steffan2024validation]. Our goal was to include experiments from a range of topic areas (e.g., memory, decision making, psycholinguistics) and paradigms (two halves of the screen, visual world paradigm with four quadrants, visual world paradigm with "naturalistic" scenes). As noted above, we had a preference for well-established findings that are known to replicate, though for sake of diversity this was not always possible. Table \@ref(tab:studies-table) provides an overview of the five studies we selected.
 
 ```{r studies-table, echo=FALSE}
 studies_table <- data.frame(
@@ -342,6 +339,8 @@ apa_table(
 ```
 
 # General Methods
+
+All data and analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis. The current paper is fully reproducible by rendering `manuscript.Rmd`.
 
 ## Participants
 
@@ -413,7 +412,7 @@ the study.(AJ: I don't think this is true, as there are Ps included that have un
 
 ## Pre-registration
 
-These data were collected within the context of an undergraduate research methods course. Groups of students (co-authors) designed and programmed experiments in jsPsych, pre-registered their planned analyses, and collected data through Prolific under the supervision of the last author. The OSF repositories associated with these experiments are linked in the methods sections of each individual study. Note that in the current paper we expand on those pre-registered analyses (e.g., including analyses of the calibration quality). All analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis 
+These data were collected within the context of an undergraduate research methods course. Groups of students (co-authors) designed and programmed experiments in jsPsych, pre-registered their planned analyses, and collected data through Prolific under the supervision of the last author. The OSF repositories associated with these experiments are linked in the methods sections of each individual study. Note that in the current paper we expand on those pre-registered analyses (e.g., including analyses of the calibration quality). 
 
 ## Data Pre-processing
 
@@ -605,7 +604,7 @@ participants were asked to fixate a small cross in the center of the
 screen throughout the recall phase. In both cases, the mouse was
 obscured from the screen. 
 
-Participants then proceded to the second encoding and recall phases as described above. After completing both encoding-recall blocks, participants were asked to
+Participants then proceeded to the second encoding and recall phases as described above. After completing both encoding-recall blocks, participants were asked to
 answer a few survey questions (such as whether they wore glasses or
 encountered any distractions).
 
@@ -626,6 +625,12 @@ location of the to-be-remembered item.
 ### Calibration
 
 ```{r E2-analysis-calibration, child='group-b/E2-analysis-calibration.Rmd'}
+
+```
+
+### Survey results
+
+```{r E2-analysis-survey, child='group-b/E2-analysis-survey.Rmd'}
 
 ```
 
@@ -763,7 +768,8 @@ it could be describing the instrument that should be used to do the
 "feeling." When both options (a frog holding a feather and a feather by
 itself) are available in the visual display, listeners rely on the
 verb's "bias" (statistical co-occurrence either in norming or corpora)
-to rapidly choose an action while the sentence is unfolding. .
+to rapidly choose an action while the sentence is unfolding. 
+Use of the verb's bias should be reflected in a greater proportion of eye-gaze fixations to the animal (e.g., frog) for verbs that are biased toward modifier structures relative to instrument structures and, conversely, a greater proportion of eye-gaze fixations to the instrument (e.g., feather) for verbs that are biased toward instrument structures relative to modifier structures.
 
 ## Method
 
@@ -1001,9 +1007,11 @@ The relatively large number of statistical comparisons means that we would not e
 
 In sum, the `webgazer` plug-in for `jsPsych` can be fruitfully used to conduct a variety of cognitive science experiments on the web, provided the limitations of the methodology are carefully considered. 
 
+This plug-in (and potentially other webcam-based eye-tracking options) opens the door to including a broader, more diverse sample of participants in cognitive science research. In contrast to the typical in-lab eye-tracking sample, which consists primarily of young university students from WEIRD countries, webcam eye-tracking can reach much larger numbers of participants of all ages, across the globe, as the only prerequisite is access to a computer with a webcam (a standard feature on most modern laptops). Characterizing the diversity of populations that webcam eye-tracking studies can reach is an important avenue for future work.
+
 ## Lessons and Questions
 
-The findings above suggest a few lessons for researchers wishing to conduct eyetracking studies with a Webcam, as well as highlighting a few important methodological questions that need to be addressed going forward.
+The findings above suggest a few lessons for researchers wishing to conduct eyetracking studies with a webcam, as well as highlighting a few important methodological questions that need to be addressed going forward.
 
 First, it appears that current technology is sufficient for studies with relatively large ROIs of half or a quarter of the screen. While this encompasses a large number of common paradigms, it does not cover all of them, even within the Visual World Paradigm. It is possible that even with current technology reasonable sensitivity could be achieved with slightly smaller ROIs, but it will require more systematic investigation to determine what exactly is feasible. Likewise, improving the technology may result in better precision. However, we note that anecdotally, humans -- who have been shaped by evolution to be exquisitely atuned to eyegaze -- have difficulty determining direction with more precision than quadrants. (This observation is based on the experience of many developmental psychology labs that used human coders to identify eyegaze direction frame-by-frame in videos of research subjects' faces.)
 
@@ -1011,7 +1019,7 @@ Note also that while ROIs the size of quadrants are feasible, good calibration i
 
 Second, researchers need to take care with timing accuracy. Running studies on modern computers requires synchronizing multiple clocks, something that does not happen automatically. Failure to synchronize can result in substantial inaccuracies [@slim2022moving]. As indicated by the current work, the current jsPsych implementation of WebGazer.js has reasonably good timing synchronization. We recommend that future researchers use jsPsych or another package with similar documented precision.
 
-Third, it is true for any eyetracker that precise data depends on good callibration, and good callibration depends in part on lighting and background. We suspect that it is possible to give subjects automated feedback on how to improve their own calibration, which could result in higher-quality data and fewer subject exclusions based on poor calibration. 
+Third, it is true for any eyetracker that precise data depends on good calibration, and good calibration depends in part on lighting and background. We suspect that it is possible to give subjects automated feedback on how to improve their own calibration, which could result in higher-quality data and fewer subject exclusions based on poor calibration. 
 
 ```{=html}
 <!-- NOTES FROM EMAILS:

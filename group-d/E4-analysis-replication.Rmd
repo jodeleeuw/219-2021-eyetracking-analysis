@@ -151,7 +151,7 @@ first.move.orig.summary <- first.move.orig.subject.summary %>%
 
 
 
-```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online.", out.width="65%", fig.align="center"}
+```{r E4-mouse-moves-fig-web-and-orig, fig.cap = "Proportion of first mouse movements by location and verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars indicate standard errors over participant means.", out.width="65%", fig.align="center"}
 
 ggplot(bind_rows(
   first.move.orig.summary %>% mutate(study_type = "Original"),
@@ -173,8 +173,8 @@ ggplot(bind_rows(
 
 ```
 
-```{r, eval=FALSE}
-write_csv(first.move, "output/E4_mouse_data.csv")
+```{r}
+write_rds(first.move, "output/E4_mouse_data.rds")
 ```
 
 ```{r E4-mouse-moves-analysis}
@@ -193,7 +193,7 @@ E4_mouse_moves_model_c2 = E4_mouse_moves_model_tab %>% filter(term == "compatibi
 
 Participants and items were entered as varying intercepts with by-participant varying slopes for verb bias condition.^[`lme4` syntax: `glmer(is.mouse.over.instrument ~ verb_bias + (1 + verb_bias | participant) + (1 | item), family="binomial", data=d)`] Participants were more likely to first move their mouse over target instruments in the instrument-biased condition relative to the equi-biased and modifier-biased condition (_b_ =  `r E4_mouse_moves_model_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_mouse_moves_model_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01). Further, participants were more likely to first move their mouse over target instruments in the equi-biased condition relative to the modifier-biased condition (_b_ =  `r E4_mouse_moves_model_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_mouse_moves_model_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01)
 
-Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a rectangle containing the image. In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Results were qualitatively similar to those in the original as shown in Figure \@ref(fig:E4-proportion-fix-by-window-both), though proportions of fixations to the target animal were much lower in the web version of the study. This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.  Eye-gaze results are shown in more detail in Figure \@ref(fig:E4-gaze-timecourse-fig).
+Gaze fixations were time-locked to the auditory stimulus on a trial by trial basis and categorized as being directed towards one of the four items in the display if the x, y coordinates fell within a 400 by 400 pixel rectangular region of interest around each image (a 200 x 200 pixel rectangle containing the image with an additional 100 pixels of padding on all sides). In order to assess how verb bias impacted sentence disambiguation as the sentence unfolded, the proportion of fixations was computed in three time windows: the verb-to-animal window (from verb onset + 200 ms to animal onset + 200 ms), the animal-to-instrument window (from animal onset + 200 ms to instrument onset + 200 ms), and the post-instrument window (from instrument onset + 200 ms to instrument onset + 1500ms + 200 ms). Results were qualitatively similar to those in the original as shown in Figure \@ref(fig:E4-proportion-fix-by-window-both), though proportions of fixations to the target animal were much lower in the web version of the study. This may reflect the fact that participants in the web study are less attentive and/or the quality of the webgazer eye-tracking system is lower, relative to the Eyelink 1000 which was used for the original study.  Eye-gaze results are shown in more detail in Figure \@ref(fig:E4-gaze-timecourse-fig).
 
 
 ```{r E4-categorizing-gaze-location}
@@ -259,6 +259,19 @@ eyetracking.data.with.time.windows <- eyetracking.data.with.time.windows %>%
   mutate(t.window = floor(time.from.verb/50)*50)
 ```
 
+```{r E4-compute-proportion-gaze-data-by-trial}
+#Summarize fixations on target and instrument
+eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
+  group_by(subject, trialID, sound, compatibility, time.window) %>%
+  summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
+            prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
+  mutate(compatibility = factor(compatibility))
+```
+
+```{r}
+write_rds(eyetracking.window.summary.by.trial, "output/E4_eye-tracking_data.rds")
+```
+
 ```{r E4-summarizing-gaze-data-for-plotting}
 #Summarize data for plotting
 eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
@@ -272,16 +285,15 @@ eyetracking.figure.2.data <- eyetracking.data.with.time.windows %>%
 ```
 
 ```{r}
-first.move = read_csv("output/E4_mouse_data.csv")
-eyetracking.window.summary.by.trial = read_csv( "output/E4_eye-tracking_data.csv") %>% 
+eyetracking.window.summary.by.trial.for.fig = eyetracking.window.summary.by.trial %>% 
   rename("condition" = compatibility) %>% 
   select(subject, trialID, condition, time.window, prop.fixations.animal) %>% 
   mutate(study = "web")
 
-eyetracking.window.summary.by.trial.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial) %>% 
-   filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" )
+# eyetracking.window.summary.by.trial.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial.for.fig) %>% 
+#    filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" )
 
-eyetracking.window.summary.by.subj.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial) %>% 
+eyetracking.window.summary.by.subj.both = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial.for.fig) %>% 
    filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" ) %>% 
   group_by(study, condition, time.window, subject) %>% 
   summarize(mean_prop = mean(prop.fixations.animal, na.rm = T)) %>% 
@@ -289,9 +301,9 @@ eyetracking.window.summary.by.subj.both = bind_rows(eyetracking.window1.summary.
                             levels = c("post-verb-onset-pre-animal-onset",
                                        "post-animal-onset-pre-instrument-onset",
                                        "post-instrument-onset"),
-                            labels = c('Verb to animal \n("Rub the")',
-                                       'Animal onset\n("frog with the")',
-                                       'Instrument+1500ms\n(feather...")')),
+                            labels = c('Verb to Animal \n("Rub the")',
+                                       'Animal to Instr.\n("frog with the")',
+                                       'Instr.+1.5s\n(feather...")')),
          condition  = factor(condition, 
                              levels = c("modifier", "equibiased", "instrument"), 
                              labels = c("Modifier", "Equi-biased", "Instrument"))
@@ -307,7 +319,7 @@ eyetracking.window.summary.both = eyetracking.window.summary.by.subj.both %>%
 ```
 
 
-```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect bootstrapped 95% CIs over subject means.", out.width="65%", fig.align="center"}
+```{r E4-proportion-fix-by-window-both, fig.cap = "Proportion of target fixations by verb bias in the original dataset (Ryskin et al., 2017) and the current data collected online. Error bars reflect standard errors over subject means.", out.width="65%", fig.align="center"}
 
 ggplot(eyetracking.window.summary.by.subj.both)+
   stat_summary(aes(x=time.window, color=condition, y = mean_prop, shape = study), 
@@ -315,7 +327,7 @@ ggplot(eyetracking.window.summary.by.subj.both)+
  stat_summary(aes(x=as.numeric(time.window), y = mean_prop, linetype = study, group=paste(condition, study) ),
              geom = 'line', fun = 'mean', alpha = 0.5, color = "grey")+
   stat_summary(aes(x=as.numeric(time.window), y = mean_prop, color = condition, group = paste(condition , study)), 
-                geom = 'errorbar', fun.data = 'mean_cl_boot', width = 0.05)+
+                geom = 'errorbar', fun.data = 'mean_se', width = 0.05)+
   #facet_wrap(~time.window)+
   scale_color_brewer(palette = "Set1")+
   scale_shape_manual(values = c(1,16))+
@@ -344,7 +356,7 @@ summary(model.time.window.1)
 
 
 
-```{r E4-gaze-timecourse-fig, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms.", out.width="50%", fig.align="center"}
+```{r E4-gaze-timecourse-fig, fig.cap = "Timecourse of eye-gaze to target animal and target instrument by verb bias condition. Vertical lines indicate average onsets of animal and instrument offset by 200ms. Shaded ribbons reflect standard errors over subject means.", out.width="50%", fig.align="center"}
 
 fig2<-ggplot(eyetracking.figure.2.data %>% 
   mutate(compatibility = factor(compatibility, 
@@ -375,17 +387,13 @@ saveRDS(fig2, "output/ETfig.rds")
 ggsave("output/ETfig.png", plot = fig2, height = 4, width = 6)
 ```
 
-```{r E4-compute-proportion-gaze-data-by-trial}
+```{r E4-compute-proportion-gaze-data-by-trial-2, eval = F}
 #Summarize fixations on target and instrument
 eyetracking.window.summary.by.trial <- eyetracking.data.with.time.windows %>%
   group_by(subject, trialID, sound, compatibility, time.window) %>%
   summarize(prop.fixations.animal = sum(in.roi.animal) / n(),
             prop.fixations.instrument = sum(in.roi.instrument) / n()) %>%
   mutate(compatibility = factor(compatibility))
-```
-
-```{r, eval=FALSE}
-write_csv(eyetracking.window.summary.by.trial, "output/E4_eye-tracking_data.csv")
 ```
 
 ```{r E4-set-contrasts-for-ET-analysis}
@@ -432,6 +440,6 @@ Mixed-effects linear regression models were used to predict the proportions of f
 
 In the _verb-to-noun_ window, participants did not look more at the target animal in any of the verb bias conditions (Instrument vs. Equi and Modifier: _b_ =  `r E4_ET_model1_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model1_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model1_c1 %>% pull(p.value) %>% round(digits = 2)`; Equi vs. Modifier: _b_ =  `r E4_ET_model1_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model1_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model1_c2 %>% pull(p.value) %>% round(digits = 2)` ). 
 
-In the _noun-to-instrument_ window, participants looked more at the target animal in the modifier-biased condition and equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r E4_ET_model2_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model2_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) and in the  modifier biased relative to the equi-biased condition ( _b_ =  `r E4_ET_model2_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model2_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.05). 
+In the _noun-to-instrument_ window, participants looked more at the target animal in the modifier-biased condition and equi-biased conditions relative to the instrument-biased condition (_b_ =  `r E4_ET_model2_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model2_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) and in the  modifier biased relative to the equi-biased condition (_b_ =  `r E4_ET_model2_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model2_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.05). 
 
-In the _post-instrument_ window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition ( _b_ =  `r E4_ET_model3_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) but not significantly so in the modifier biased condition relative to the equi-biased condition ( _b_ =  `r E4_ET_model3_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model3_c2 %>% pull(p.value) %>% round(digits = 2)`). 
+In the _post-instrument_ window, participants looked more at the target animal in the modifier-biased condition and the equi-biased conditions relative to the instrument-biased condition (_b_ =  `r E4_ET_model3_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.01) but not significantly so in the modifier biased condition relative to the equi-biased condition (_b_ =  `r E4_ET_model3_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r E4_ET_model3_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r E4_ET_model3_c2 %>% pull(p.value) %>% round(digits = 2)`). 

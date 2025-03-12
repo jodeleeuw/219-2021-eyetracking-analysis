@@ -9,7 +9,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
-The task began with a 9-point eye-tracker calibration
+The task began with a 5-point eye-tracker calibration
 and validation (Figure \@ref(fig:E2-calibration-figure)). 
 
 ```{r include=FALSE}
