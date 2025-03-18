@@ -83,7 +83,7 @@ calib.by.subj = summary.data.calib %>%
   group_by(subject) %>% 
   summarize(mean_percent_in_roi = mean(mean_percent_in_roi))
 
-eyetracking.effects.by.subj = read_csv( "output/E4_eye-tracking_data.csv") %>% 
+eyetracking.effects.by.subj = read_rds( "output/E4_eye-tracking_data.rds") %>% 
   rename("condition" = compatibility) %>% 
   filter(time.window == "post-instrument-onset", condition != "filler" ) %>% 
   group_by(condition, time.window, subject) %>% 
@@ -101,8 +101,8 @@ ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = modifier))+
   geom_smooth(method = "lm")
 ```
 
-```{r,eval=F}
-write_csv(calib.by.subj,"output/calib_by_subj.csv")
+```{r}
+write_rds(calib.by.subj,"output/calib_by_subj.rds")
 ```
 
 ```{r}
@@ -132,13 +132,173 @@ ggplot(eyetracking.effects.by.subj, aes(x = mean_percent_in_roi, y = bias_effect
   )
 
 ```
-Participants' calibration quality, measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, varied substantially (`r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)`%). 
-The quality of a participant's calibration significantly correlated with the participant's effect size ( _Pearson's r_= `r m_calib_r`, _p_ < 0.05).
+Participants' calibration quality, measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)`%). 
+The quality of a participant's calibration significantly correlated with the participant's effect size (_Pearson's r_= `r m_calib_r`, _p_ < 0.05).
 The difference in target animal fixation proportions between modifier and instrument conditions was higher for participants with better calibration (see Figure \ \@ref(fig:E4-calib-corr-plot)).
+
+```{r read in orig data for plotting}
+# only need this if we want original data in the figure comparing effect sizes between all data and good calibration subset
+
+eyetracking.window1.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_verb.txt") %>% 
+  mutate(subject = as.character(subj), 
+         prop.fixations.animal = TA/(TA+TI+CA+CI),
+         #sum_dur = TA+TI+CA+CI,
+         condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
+         time.window = "post-verb-onset-pre-animal-onset",
+         study = "original") %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal, study)
+
+eyetracking.window2.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_animal.txt")%>% 
+  mutate(subject = as.character(subj), 
+         prop.fixations.animal = TA/(TA+TI+CA+CI),
+         condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
+         time.window = "post-animal-onset-pre-instrument-onset",
+         study = "original") %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal, study)
+
+eyetracking.window3.summary.by.trial.orig = read_tsv("original_study_data/Experiment1_eye-tracking_instrument.txt")%>% 
+  mutate(subject = as.character(subj), 
+         prop.fixations.animal = TA/(TA+TI+CA+CI),
+         condition = factor(cond, levels = c(0, 2, 1, 9), labels = c("instrument", "equibiased", "modifier", "filler")),
+         time.window = "post-instrument-onset",
+         study = "original") %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal, study)
+```
+```{r read web data}
+eyetracking.window.summary.by.trial = read_rds("output/E4_eye-tracking_data.rds")
+```
+
+```{r}
+
+
+eyetracking.window.summary.by.trial.all = eyetracking.window.summary.by.trial %>% 
+  rename("condition" = compatibility) %>% 
+  select(subject, trialID, condition, time.window, prop.fixations.animal) %>% 
+  mutate(study = "web") %>% 
+  left_join(calib.by.subj, by = "subject") 
+
+eyetracking.window.summary.by.trial.good.calib = eyetracking.window.summary.by.trial.all %>% 
+ filter(mean_percent_in_roi >= 50) %>% 
+  mutate(study = "web (calib. > 50%)")
+
+
+eyetracking.window.summary.by.subj.three = bind_rows(eyetracking.window1.summary.by.trial.orig, eyetracking.window2.summary.by.trial.orig, eyetracking.window3.summary.by.trial.orig, eyetracking.window.summary.by.trial.good.calib, eyetracking.window.summary.by.trial.all) %>% 
+   filter(time.window != "end", time.window != "pre-verb-onset", condition != "filler" ) %>% 
+  group_by(study, condition, time.window, subject) %>% 
+  summarize(mean_prop = mean(prop.fixations.animal, na.rm = T)) %>% 
+  mutate(time.window = factor(time.window, 
+                            levels = c("post-verb-onset-pre-animal-onset",
+                                       "post-animal-onset-pre-instrument-onset",
+                                       "post-instrument-onset"),
+                            labels = c('Verb to Anim. \n("Rub the")',
+                                       'Anim. to Instr.\n("frog with the")',
+                                       'Instr.+1.5s\n(feather...")')),
+         condition  = factor(condition, 
+                             levels = c("modifier", "equibiased", "instrument"), 
+                             labels = c("Modifier", "Equi-biased", "Instrument"))
+         ) %>% 
+  ungroup()
+
+summary.eyetracking.window.summary.by.subj.three = eyetracking.window.summary.by.subj.three %>% 
+  group_by(time.window, condition, study) %>% 
+  summarize(prop_mean = mean(mean_prop),
+            prop_se = sd(mean_prop)/sqrt(n())
+            )
+  
+```
+```{r E4-proportion-fix-by-window-both-post-exclusion, fig.cap = "Proportion of target fixations by verb bias in the full dataset collected online and for the subset of participants with calibration quality >50%. Error bars reflect standard errors over subject means.", out.width="75%", fig.align="center"}
+
+shapes_legend <- c("original" = 1, "web" = 16, "web (calib. > 50%)" = 4)
+linetypes_legend <- c("original" = "dashed", "web" = "solid", "web (calib. > 50%)" = "dotted")
+
+ggplot()+
+  # geom_errorbar(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "original"),
+  #               aes(x=time.window,
+  #                  ymin = prop_mean-prop_se,
+  #                  ymax = prop_mean+prop_se,
+  #                  color = condition),
+  #               width = 0.1,
+  #               position = position_dodge(width = .5))+
+  geom_errorbar(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "web"),
+                aes(x=time.window,
+                   ymin = prop_mean-prop_se,
+                   ymax = prop_mean+prop_se,
+                   color = condition),
+                width = 0.1,
+                position = position_dodge(width = .5))+
+  geom_errorbar(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "web (calib. > 50%)"),
+                aes(x=time.window,
+                   ymin = prop_mean-prop_se,
+                   ymax = prop_mean+prop_se,
+                   color = condition),
+                width = 0.1,
+                position = position_dodge(width = .5))+
+  # geom_line(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "original"),
+  #          aes(x=as.numeric(time.window),
+  #              group = condition,
+  #              y = prop_mean,
+  #              linetype = "original"),
+  #            alpha = 0.5,
+  #           color = "grey",
+  #            position = position_dodge(width = 0.5))+
+ geom_line(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "web"),
+           aes(x=as.numeric(time.window),
+               group = condition,
+               y = prop_mean,
+               linetype = "web"),
+             alpha = 0.5,
+            color = "grey",
+             position = position_dodge(width = 0.5))+
+  geom_line(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "web (calib. > 50%)"),
+           aes(x=as.numeric(time.window),
+               group = condition,
+               y = prop_mean,
+               linetype = "web (calib. > 50%)"),
+             alpha = 0.5,
+            color = "grey",
+             position = position_dodge(width = 0.5))+
+  # geom_point(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "original"),
+  #           aes(x=time.window, 
+  #               color=condition, 
+  #               y = prop_mean,
+  #               shape = "original"),
+  #           size = 3, 
+  #           position = position_dodge(width = 0.5))+
+  geom_point(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "web"),
+            aes(x=time.window, 
+                color=condition, 
+                y = prop_mean,
+                shape = "web"),
+            size = 3, 
+            position = position_dodge(width = 0.5))+
+  geom_point(data = summary.eyetracking.window.summary.by.subj.three %>% filter(study == "web (calib. > 50%)"),
+            aes(x=time.window, 
+                color=condition, 
+                y = prop_mean,
+                shape = "web (calib. > 50%)"),
+            size = 3, 
+            position = position_dodge(width = 0.5))+
+   scale_color_brewer(palette = "Set1")+
+   scale_shape_manual(values = shapes_legend)+
+   scale_linetype_manual(values = linetypes_legend)+
+  # coord_cartesian(ylim = c(0,.8))+
+   theme_classic()+
+   labs(y = "Proportion of fixations", x = NULL, color = "Condition", shape = "Study", linetype = "Study") +     
+  theme(
+    panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=13),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
+
+
+```
+
 
 
 ```{r}
-eyetracking.window.3 = read_csv( "output/E4_eye-tracking_data.csv") %>% 
+eyetracking.window.3 = eyetracking.window.summary.by.trial %>% 
   filter(time.window == "post-instrument-onset", compatibility != "filler" ) %>% 
   mutate(condition = factor(compatibility, levels = c('instrument', 'equibiased', 'modifier'))) %>% 
   left_join(calib.by.subj, by = "subject")
@@ -182,8 +342,9 @@ m_calib_good_c1 = m_calib_good %>% filter(term == "condition1")
 m_calib_good_c2 = m_calib_good %>% filter(term == "condition2")
 
 ```
+
 #### Re-analysis After Exclusions
-Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on a subset of 35 participants with calibration quality >50% suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants' preference to the target animal relative to the target instrument in the modifier-biased condition and the equi-biased conditions was greater than in the instrument-biased condition ( _b_ =  `r m_calib_good_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001), but the difference betwen the modifier biased condition and the equi-biased condition was not significant ( _b_ =  `r m_calib_good_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_good_c2 %>% pull(p.value) %>% round(digits = 2)`). 
+A subset of 35 participants had calibration quality >50%. Figure \@ref(fig:E4-proportion-fix-by-window-both-post-exclusion) shows proportions of fixations to the target animal for this subset alongside the full dataset. Though the overall proportions of fixations to the target animal in this subset were higher than in the full dataset, they were still much lower than in the original study. Replicating the linear mixed-effects analysis (in the post-instrument onset time window only) on this subset of participants suggests that the effect of verb bias condition was larger in this subset than in the full dataset. Participants' preference to the target animal relative to the target instrument in the modifier-biased condition and the equi-biased conditions was greater than in the instrument-biased condition (_b_ =  `r m_calib_good_c1 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c1 %>% pull(std.error) %>% round(digits = 2)`, _p_ <  0.001), but the difference betwen the modifier biased condition and the equi-biased condition was not significant (_b_ =  `r m_calib_good_c2 %>% pull(estimate) %>% round(digits = 2)`, _SE_ =  `r m_calib_good_c2 %>% pull(std.error) %>% round(digits = 2)`, _p_ =  `r m_calib_good_c2 %>% pull(p.value) %>% round(digits = 2)`). 
 
 ```{r}
 eyetracking.window.3.great.calib = eyetracking.window.3 %>% 

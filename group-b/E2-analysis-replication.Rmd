@@ -313,7 +313,8 @@ view.summary.condition1.data <- view.summary.subject.data %>%
   group_by(normalized_quadrant, condition) %>%
   summarize(M = mean(proportion), SE = sd(proportion) / sqrt(n()))
 ```
-```{r E2-gaze-fig-both-conds, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants during memory retrieval in a) fixed and b) free viewing conditions.", out.width="50%", fig.align="center"}
+
+```{r E2-gaze-fig-both-conds, fig.cap = "Proportion of eye-gaze to critical quadrant and other three quadrants during memory retrieval in a) fixed and b) free viewing conditions. Error bars indicate standard errors over participant means.", out.width="50%", fig.align="center"}
 
 ggplot(view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, ymin=M-SE, fill = normalized_quadrant == "critical" )) +
   geom_col(position=position_dodge(), color = "black")+
@@ -325,7 +326,8 @@ ggplot(view.summary.condition1.data, aes(x=normalized_quadrant, y=M, ymax=M+SE, 
   theme(legend.position = "none") +     theme(
     panel.grid.minor = element_blank(),
     axis.title = element_text(size=14),  
-    axis.text = element_text(size=14)
+    axis.text = element_text(size=14),
+    strip.text.x = element_text(size = 14)
   )
 
 
@@ -424,6 +426,7 @@ rt_fig<-ggplot(rt.summary.condition.data %>%
   geom_line()+
   geom_errorbar(width=0.2)+
   scale_color_manual(values=c("orange2","royalblue4"))+
+  guides(color = "none")+
   labs(x="Statement Type", y="Response Time (ms)", color=NULL)+
   theme_classic() +     theme(
     panel.grid.minor = element_blank(),
@@ -433,7 +436,7 @@ rt_fig<-ggplot(rt.summary.condition.data %>%
 
 ```
 
-```{r E2-rt-acc-fig, fig.cap = "Accuracy and response times during memory retrieval by statement type and viewing condition in Experiment 2.", out.width="50%", fig.align="center"}
+```{r E2-rt-acc-fig, fig.cap = "Accuracy and response times during memory retrieval by statement type and viewing condition in Experiment 2. Error bars indicate standard errors over participant means.", out.width="50%", fig.align="center"}
 acc_rt_fig<-acc_fig + rt_fig + plot_layout(guides = "collect")
 acc_rt_fig
 ```
