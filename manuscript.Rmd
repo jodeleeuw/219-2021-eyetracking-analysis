@@ -280,7 +280,7 @@ Given the potential game-changing nature of webcam-based eye-tracking, a number 
 
 Results to date have been encouraging. @semmelmann2018online found data quality was reasonable for fixation location and saccades in fixation, smooth pursuit, and free-viewing tasks, though data collected online through a crowdsourcing platform was slightly more variable and timing was somewhat delayed compared to data collected in the lab. Several researchers successfully replicated well-known findings from the sentence-processing literature involving predictive looks [@degen2021seeing; @prystauka2023online; @vos2022comparing; @van2023validation]. @yang2021webcam successfully replicated a well-established link between value-based decision-making and eye gaze [see also @van2023validation]. 
 
-While promising, there are some salient limitations. First, many of the studies report effects that are smaller or later than what had been previously observed in the lab [@van2024validation; @slim2022moving; @degen2021seeing; @van2023validation; @bogdan2024investigating; @kandel2024assessing]. Some of this is likely due to programming errors rather than inherent limitations in the technology: Importantly, accurate timing on a web browser is not trivial [@passell2021cognitive; @de2016psychophysics], and subtle programming choices can significantly affect the accuracy of `WebGazer.js` timing [@yang2021webcam].^[See also discussion at https://github.com/jspsych/jsPsych/discussions/1892] Since most of the prior work did not address these timing issues, it is not clear how many of the reported lab/web differences would resolve.
+While promising, there are some salient limitations. First, many of the studies report effects that are smaller or later than what had been previously observed in the lab [@slim2024webcams; @van2024validation; @slim2022moving; @degen2021seeing; @van2023validation; @bogdan2024investigating; @kandel2024assessing]. Some of this is likely due to programming errors rather than inherent limitations in the technology: Importantly, accurate timing on a web browser is not trivial [@passell2021cognitive; @de2016psychophysics], and subtle programming choices can significantly affect the accuracy of `WebGazer.js` timing [@yang2021webcam].^[See also discussion at https://github.com/jspsych/jsPsych/discussions/1892] Since most of the prior work did not address these timing issues, it is not clear how many of the reported lab/web differences would resolve.
 
 Second, prior work has focused on studies with relatively coarse-grained regions of interest [but see @semmelmann2018online; @bogdan2024investigating], dividing the screen either in half or in quadrants. This is particularly salient with [@prystauka2023online], which simplified @altmannIncrementalInterpretationVerbs1999's design so that regions of interest are quadrants rather than the finer-grained ROIs used in the original. Certainly, webcam eyetracking will not be as spatially fine-grained as an infrared eyetracker, but we do not yet have a good sense of the limits.
 
@@ -288,7 +288,7 @@ Finally, the prior work has focused on a relatively limited range of methods. Di
 
 # Present work
 
-In order to broaden the validation of online eye-tracking methodology, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science, across a broad range of research areas. Critically, we used the implementation known to have the greatest temporal precision to date: `jsPsych` and a modification of `Webgazer`.
+In order to broaden the validation of online eye-tracking methodology, we set out to reproduce five previously published studies representing a variety of questions, topics, and paradigms. The goal was to examine the strengths and weaknesses of webcam eye-tracking for common paradigms in cognitive science, across a broad range of research areas. Critically, we used the only implementation known to have addressed a critical bug in the timing precision of WebGazer.js, specifically the one in `jsPsych`, a package which is known in general for having particularly good timing precision [@de2016psychophysics; @bridges2020timing].
 
 ## Selection of Studies
 
@@ -367,7 +367,7 @@ missing due to technical failures.
 We used a fork of the `webgazer.js` library for webcam eye-tracking
 [@papoutsaki2016webgazer], implemented in `jsPsych`, a Javascript
 library for running behavioral experiments in a web browser
-[@deleeuwJsPsychJavaScriptLibrary2015]. Our fork included changes to
+[@deleeuwJsPsychJavaScriptLibrary2015].[^1] Our fork included changes to
 `webgazer.js` in order to improve data quality for experiments in which
 the precise timing of stimulus onsets is relevant. Specifically, we
 implemented a polling mode so that gaze predictions could be requested
@@ -406,7 +406,7 @@ fixated the dots as they appeared in different locations on the screen.
 If accuracy on the validation was too low (fewer than 50% of looks
 landed within a 200 px radius of the validation points),
 participants were given an opportunity to re-start the calibration and
-validation steps. <!--If the second attempt also lead to low validation
+validation steps. However, even participants with low calibration accuracy were allowed to complete the experiment, because we specifically wanted to study the consequences of low calibration accuracy.<!--If the second attempt also lead to low validation
 accuracy, participants were informed that they could not participate in
 the study.(AJ: I don't think this is true, as there are Ps included that have under 50% on the second round of calibration)-->
 
@@ -807,9 +807,9 @@ During a trial, four pictures were displayed (target animal, target
 instrument, distractor animal, distractor instrument), one in each
 corner of the screen, and participants heard an audio prompt that
 contained instructions about the action they needed to act out (e.g.,
-"Rub the butterfly with the crayon"; see Figure\ \@ref(fig:E4-example-trial))[^1]. Using their
+"Rub the butterfly with the crayon"; see Figure\ \@ref(fig:E4-example-trial))[^2]. Using their
 cursor, participants could act out the instructions by clicking on
-objects and moving them or motioning over the objects[^2]. After the
+objects and moving them or motioning over the objects[^3]. After the
 action was completed, the participants were instructed to press the
 space bar which led to a screen that said "Click Here" in the middle in
 order to remove bias in the eye and mouse movements from the previous
@@ -817,11 +817,13 @@ trial. The experiment only allowed the participants to move on to the
 next trial once the audio was completely done playing and the mouse had
 been moved over at least one object.
 
-[^1]: In the original study, the pictures appeared one by one on the
+[^1]: The WebGazer.js patch can be found at https://github.com/brownhci/WebGazer/commit/35301e56c192ef265bb270873a6526205f183711. 
+
+[^2]: In the original study, the pictures appeared one by one on the
     screen and their names were played as they appeared. We removed this
     introductory portion of the trial to save time
 
-[^2]:  As opposed to the original study we recorded mouse movement
+[^3]:  As opposed to the original study we recorded mouse movement
     instead of clicking behavior since not all of the audio prompts
     required clicking. For example, the sentence "locate the camel with
     the straw" may not involve any clicking but rather only mousing over
