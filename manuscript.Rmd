@@ -651,8 +651,7 @@ The third study was a partial replication attempt of the "looking group" conditi
 paired-comparison, which involves presenting a previously-viewed image
 and novel image together and measuring the proportion of time spent
 looking at each image. The expected pattern of results is that
-participants will look more at novel objects. They
-@mannsVisualPairedcomparisonTask2000 hypothesized that this pattern of
+participants will look more at novel objects. @mannsVisualPairedcomparisonTask2000 hypothesized that this pattern of
 behavior could be used to measure the strength of memories. If a viewer
 has a weak memory of the old image, then they may look at the old and
 new images roughly the same amount of time. They tested this in two
@@ -753,7 +752,7 @@ knitr::include_graphics("group-c/E3-example-figure.jpeg")
 
 As in @mannsVisualPairedcomparisonTask2000, participants looked more at novel images than previously seen images. This effect was consistent for ROIs based on the images and for the coarser ROIs based on two halves of the display. A day later, participants were also able to discriminate the images they had seen from foil images they had not seen during the previous session. However, there was no evidence that memory performance on day 2 was related to looking time on day 1. 
 
-Thus, most of the key findings replicated. What should we make of the finding that failed to replicate? Notably, the proportion of looks to the novel object on Day 1 (54% or 55%, depending on analysis) was numerically smaller than in the original (59%), potentially decreasing the ability to detect correlations with eye-gaze. If so, the question is whether that is due to lower-quality eye-gaze tracking. This seems unlikely, because calibration quality did not appear to substantially affect this result (or any of the others). Alternative explanation include the well-documented decline effect (replications tend to find smaller effect sizes than the original) and the common finding that subject accuracy is lower when not testing undergraduates at elite universities.
+Thus, most of the key findings replicated. What should we make of the finding that failed to replicate? Notably, the proportion of looks to the novel object on Day 1 (54% or 55%, depending on analysis) was numerically smaller than in the original (59%), potentially decreasing the ability to detect correlations with eye-gaze. If so, the question is whether that is due to lower-quality eye-gaze tracking. This seems unlikely, because calibration quality did not appear to substantially affect this result (or any of the others). Alternative explanation include the well-documented decline effect [replications tend to find smaller effect sizes than the original, @schooler2011unpublished; @open2015estimating; @hartshorne2012tracking] and the common finding that subject accuracy is lower when not testing undergraduates at elite universities [@hartshorne2019meta; @germine2012web].
 
 # Experiment 4
 
@@ -1023,8 +1022,9 @@ Note also that while ROIs the size of quadrants are feasible, good calibration i
 
 There are a number of other interventions that might increase precision and should be investigated. For instance, it is possible to monitor head distance in real time [for an example, see @jiang2021easyeyes]; doing so and providing real-time feedback to participants should diminish noise. It may also be possible to automatically detect challenges to calibration accuracy (such as poor lighting) and provide targeted feedback. Similarly, it may be profitable to systematically study the parameters of eyegaze validation, for instance the number of validation points and the maximum distance allowed between gaze and target (set to 200px in the present study). These and other options should be investigated in order to determine how much they might improve precision. 
 
-Second, researchers need to take care with timing accuracy. Running studies on modern computers requires synchronizing multiple clocks, something that does not happen automatically. Failure to synchronize can result in substantial inaccuracies [@slim2022moving]. As indicated by the current work, the current jsPsych implementation of WebGazer.js has reasonably good timing synchronization. We urge researchers to avoid using the current release of WebGazer.js as is, and instead either use jsPsych, our patch to WebGazer.js (https://github.com/brownhci/WebGazer/commit/35301e56c192ef265bb270873a6526205f183711), or other software that has been specifically documented as addressing common issues in timing for web-based eye-tracking.
-Third, it is true for any eyetracker that precise data depends on good calibration, and good calibration depends in part on lighting and background. We suspect that it is possible to give subjects automated feedback on how to improve their own calibration, which could result in higher-quality data and fewer subject exclusions based on poor calibration. 
+Second, researchers need to take care with timing accuracy. Running studies on modern computers requires synchronizing multiple clocks, something that does not happen automatically. Failure to synchronize can result in substantial inaccuracies [@slim2022moving]. As indicated by the current work, the current jsPsych implementation of WebGazer.js has timing synchronization sufficient for many studies. We urge researchers to avoid using the current release of WebGazer.js as is, and instead either use jsPsych, our patch to WebGazer.js (https://github.com/brownhci/WebGazer/commit/35301e56c192ef265bb270873a6526205f183711), or other software that has been specifically documented as addressing common issues in timing for web-based eye-tracking.
+
+Third, it is true for any eyetracker that precise data depends on good calibration, and good calibration depends in part on lighting and background [see, for instance, @yuksel2023investigation]. We suspect that it is possible to give subjects automated feedback on how to improve their own calibration, which could result in higher-quality data and fewer subject exclusions based on poor calibration. 
 
 ```{=html}
 <!-- NOTES FROM EMAILS:
