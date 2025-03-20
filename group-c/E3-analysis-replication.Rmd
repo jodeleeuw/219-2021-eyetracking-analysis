@@ -74,7 +74,7 @@ t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
 
 ### Day 1
 
-We calculated the proportion of gaze samples in the ROI of the unfamiliar image out of all the gaze samples that were in either ROI. Of the `r looking.score.data %>% nrow()` trials in the experiment, `r looking.score.data %>% filter(is.nan(looking.score)) %>% nrow()` had no fixations in either ROI and so were excluded from this analysis. 
+We calculated the proportion of gaze samples in the ROI of the unfamiliar image out of all the gaze samples that were in either ROI. Of the `r looking.score.data %>% nrow()` total trials in the experiment across all subjects, `r looking.score.data %>% filter(is.nan(looking.score)) %>% nrow()` had no fixations in either ROI and so were excluded from this analysis. 
 
 The mean proportion looks to the novel object was `r mean(t.test.data1$M.looking.score)` (*SD* = `r sd(t.test.data1$M.looking.score)`). This was significantly greater than 0.5 (*t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`), replicating the finding that participants show a preference for looking at the novel objects.
 
@@ -196,7 +196,7 @@ looking.rt.correlations.subjects.filtered <- looking.rt.correlations.subjects %>
 looking.rt.correlation.t.test <-t.test(looking.rt.correlations.subjects.filtered$r.to.z)
 ```
 
-To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on Day 2, we computed the correlation coefficient between Day 1 proportion looks to novel and Day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, failed to replicate the a significant difference from 0 for the correlation between proportion looks to the novel object and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor for the correlation with RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
+To see whether preferentially looking an the unfamiliar object on day 1 was correlated with confidence and response time for correct responses on Day 2, we computed the correlation coefficient between Day 1 proportion looks to novel and Day 2 confidence/RT for each participant. Following the original analysis, we transformed these values using the Fisher p-to-z transformation. Using one-sample t-tests, we failed to replicate the a significant difference from 0 for the correlation between proportion looks to the novel object and confidence ratings, t(`r looking.confidence.correlation.t.test$parameter`) = `r looking.confidence.correlation.t.test$statistic`, p = `r looking.confidence.correlation.t.test$p.value` (excluding the subjects who gave the same confidence judgment for all images), nor for the correlation with RT, t(`r  looking.rt.correlation.t.test$parameter`) = `r looking.rt.correlation.t.test$statistic`, p = `r looking.rt.correlation.t.test$p.value`.
 
 ```{r Plot Looking Score Correlations, echo=FALSE, warning=FALSE, eval=FALSE}
 # #This isn't referred to in the text--it's between Figs 10 and 11
