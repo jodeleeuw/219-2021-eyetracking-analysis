@@ -1010,7 +1010,7 @@ The relatively large number of statistical comparisons means that we would not e
 
 In sum, the `webgazer` plug-in for `jsPsych` can be fruitfully used to conduct a variety of cognitive science experiments on the web, provided the limitations of the methodology are carefully considered. 
 
-This plug-in (and potentially other webcam-based eye-tracking options) opens the door to including a broader, more diverse sample of participants in cognitive science research. In contrast to the typical in-lab eye-tracking sample, which consists primarily of young university students from WEIRD countries, webcam eye-tracking can reach much larger numbers of participants of all ages, across the globe, as the only prerequisite is access to a computer with a webcam (a standard feature on most modern laptops). Characterizing the diversity of populations that webcam eye-tracking studies can reach is an important avenue for future work.
+This plug-in (and potentially other webcam-based eye-tracking options) opens the door to including a broader, more diverse sample of participants in cognitive science research. In contrast to the typical in-lab eye-tracking sample, which consists primarily of young university students from WEIRD countries [@henrich2010weirdest; @linxen2021weird; @de2023psychology; @rad2018toward], webcam eye-tracking can reach a much more diverse population, as the only prerequisite is access to a computer with a webcam (a standard feature on most modern laptops and tablets). While webcam eyetracking cannot by itself eliminate all demographic biases, some of which are in any case baked in by history [@henrich2020weirdest], it can help to reduce them, at least for studies amenable to the paradigm.
 
 ## Lessons and Questions
 
@@ -1119,7 +1119,7 @@ All data and analysis code underlying this paper can be found in the Github repo
 
 3. **Calibration scores plotted against the verb effect on first fixations.** This was operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.
 
-4. **Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time.** Results from an in-lab study with an eyetracker (Panel A; @james2023language) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.
+4. **Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time.** Results from an in-lab study with an eyetracker (Panel A; James et al. 2023) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.
 
 5. **Calibration scores in Exp. 1b, plotted against the verb effect** This was operationalized as the latency of the first target fixation in the non-restricting verb condition minus that in the restricting verb condition.
 
