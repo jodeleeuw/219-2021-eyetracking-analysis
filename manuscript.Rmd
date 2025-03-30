@@ -1,7 +1,6 @@
 ---
-title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of five prominent cognitive science experiments"
+title             : "What paradigms can webcam eye-tracking be used for? Attempted replications of five cognitive science experiments"
 shorttitle        : "Webcam eye-tracking paradigms"
-
 author:
   - name: Ariel N. James
     affiliation: '1'
@@ -13,7 +12,7 @@ author:
       - Writing - review & editing
     email: ajames2@macalester.edu
     corresponding: yes
-    address: 1600 Grand Ave, Saint Paul, MN 550105, USA
+    address: 1600 Grand Ave, Saint Paul, MN 55105, USA
       
   - name: Rachel Ryskin
     affiliation: '2'
@@ -32,7 +31,7 @@ author:
       - Visualization
       - Writing - original draft
       - Writing - review & editing
-    email: joshua.hartshorne@bc.edu
+    email: jkhartshorne@mghihp.edu
   - name: Haylee Backs
     affiliation: '4'
     role:
@@ -203,7 +202,6 @@ author:
       - Writing - original draft
       - Writing - review & editing
     email: jdeleeuw@vassar.edu
-
 affiliation:
   - id: '1'
     institution: Psychology Department, Macalester College
@@ -214,15 +212,12 @@ affiliation:
     institution: Department of Communication Sciences and Disorders, MGH Institute of Health Professions
   - id: '4'
     institution: Cognitive Science Department, Vassar College
-
 abstract: |
-  Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: jsPsych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution (like Exp. 1) should be adapted to coarser quadrant or split-half displays. 
   
+  Web-based data collection allows researchers to recruit large and diverse samples with fewer resources than lab-based studies require. Recent innovations have expanded the set of methodolgies that are possible online, but ongoing work is needed to test the suitability of web-based tools for various research paradigms. Here, we focus on webcam-based eye-tracking; we tested whether the results of five different eye-tracking experiments in the cognitive psychology literature would replicate in a webcam-based format. Specifically, we carried out five experiments by integrating two javascript-based tools: jsPsych and a modified version of Webgazer.js. In order to represent a wide range of applications of eye-tracking to cognitive psychology, we chose two psycholinguistic experiments, two memory experiments, and a decision-making experiment. These studies also varied in the type of eye-tracking display, including screens split into halves (Exps. 3 and 5) or quadrants (Exps. 2 and 4), or composed scenes with regions of interest that varied in size (Exp. 1). Outcomes were mixed. The least successful replication attempt was Exp. 1; we did not obtain a condition effect in our remote sample (1a), nor in an in-lab follow-up (1b). However, the other four experiments were more successful, replicating a blank-screen effect (Exp. 2), a novelty preference (Exp. 3), a verb bias effect (Exp. 4), and a gaze-bias effect in decision-making (Exp. 5). These results suggest that webcam-based eye tracking can be used to detect a variety of cognitive phenomena, including those with sensitive time, although paradigms that require high spatial resolution (like Exp. 1) should be adapted to coarser quadrant or split-half displays. 
 keywords          : "eye-tracking, online, webcam, jsPsych, cognitive science"
-wordcount         : "X"
-
+wordcount         : "13,115"
 bibliography      : ["references.bib"]
-
 floatsintext      : yes
 figurelist        : no
 tablelist         : no
@@ -230,10 +225,12 @@ footnotelist      : no
 linenumbers       : yes
 mask              : no
 draft             : no
-
 documentclass     : "apa6"
 classoption       : "man"
 output            : papaja::apa6_pdf
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include = FALSE, message=FALSE, warning=FALSE}
@@ -1472,6 +1469,15 @@ We also included a step where if the validation was poor after the first attempt
 Funding for data collection was provided by the Vassar College
 Department of Cognitive Science (JdL). Partial funding for JKH's
 contributions was provided by NSF2436092.
+
+\newpage
+
+# Ethics statement
+
+The remote experiments (1a, 2-5) were conducted with approval by the
+Vassar College Institutional Review Board. The laboratory experiment
+(1b) was conducted with approval by the Boston College Institutional
+Review Board.
 
 \newpage
 
