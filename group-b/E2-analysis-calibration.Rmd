@@ -5,6 +5,7 @@ output: pdf_document
 
 ```{r message=FALSE}
 library(jsonlite)
+library(readr)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -81,6 +82,8 @@ calib.by.subj = summary.data.calib %>%
   summarize(mean_percent_in_roi = mean(mean_percent_in_roi),
             calib_total = max(calib_num))
 
+write_csv(calib.by.subj,"output/E2_calib_data_subj.csv") # for survey results analysis
+
 eyetracking.effects.by.subj = read_csv( "output/E2_eye-tracking_data_subj.csv") %>% 
  # rename("condition" = compatibility) %>% 
   filter(condition == "fixed" ) %>% 
@@ -121,7 +124,7 @@ m_calib_p = m_calib %>% pull(p.value )
 
 ```
 
-Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, averaging initial calibration (or re-calibration for participants who repeated calibration) and calibration at the halfway point. Calibration scores varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)` %). 
+Participants' calibration quality was measured as the mean percentage of fixations that landed within 200 pixels of the calibration point, averaging initial calibration (or re-calibration for participants who repeated calibration) and calibration at the halfway point. Calibration scores varied substantially (between `r range(calib.by.subj$mean_percent_in_roi) %>% round(digits = 2)`%). 
 The quality of a participant's calibration was not significantly correlated with the participant's effect size ( _Pearson's r_= `r m_calib_r`, _p_ = `r m_calib_p`) as measured by the difference between the proportion of looks to the critical quadrant minus the average proportion of looks to the average of the other three quadrants (see Figure\ \@ref(fig:E2-calib-effect)).
 
 ```{r aggro exclusion}

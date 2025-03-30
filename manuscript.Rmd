@@ -463,6 +463,8 @@ apa_table(
 
 # General Methods
 
+All data and analysis code underlying this paper can be found in the Github repository: https://github.com/jodeleeuw/219-2021-eyetracking-analysis. The current paper is fully reproducible by rendering `manuscript.Rmd`.
+
 ## Participants
 
 Participants completed the experiment remotely and were recruited
@@ -490,7 +492,7 @@ was missing due to technical failures.
 We used a fork of the `webgazer.js` library for webcam eye-tracking
 [@papoutsaki2016webgazer], implemented in `jsPsych`, a Javascript
 library for running behavioral experiments in a web browser
-[@deleeuwJsPsychJavaScriptLibrary2015]. Our fork included changes to
+[@deleeuwJsPsychJavaScriptLibrary2015].[^1] Our fork included changes to
 `webgazer.js` in order to improve data quality for experiments in which
 the precise timing of stimulus onsets is relevant. Specifically, we
 implemented a polling mode so that gaze predictions could be requested
@@ -532,6 +534,8 @@ were given an opportunity to re-start the calibration and validation
 steps. <!--If the second attempt also lead to low validation
 accuracy, participants were informed that they could not participate in
 the study.(AJ: I don't think this is true, as there are Ps included that have under 50% on the second round of calibration)-->
+
+Upon finishing calibration, participants were reminded to keep their head still for the remainder of the study.
 
 ## Pre-registration
 
@@ -828,6 +832,12 @@ location of the to-be-remembered item.
 
 ```
 
+### Survey results
+
+```{r E2-analysis-survey, child='group-b/E2-analysis-survey.Rmd'}
+
+```
+
 ## Discussion
 
 We replicated the key eyetracking result: As in
@@ -851,8 +861,7 @@ their priming condition). This experiment used the visual
 paired-comparison, which involves presenting a previously-viewed image
 and novel image together and measuring the proportion of time spent
 looking at each image. The expected pattern of results is that
-participants will look more at novel objects. They
-@mannsVisualPairedcomparisonTask2000 hypothesized that this pattern of
+participants will look more at novel objects. @mannsVisualPairedcomparisonTask2000 hypothesized that this pattern of
 behavior could be used to measure the strength of memories. If a viewer
 has a weak memory of the old image, then they may look at the old and
 new images roughly the same amount of time. They tested this in two
@@ -1009,7 +1018,8 @@ it could be describing the instrument that should be used to do the
 "feeling." When both options (a frog holding a feather and a feather by
 itself) are available in the visual display, listeners rely on the
 verb's "bias" (statistical co-occurrence either in norming or corpora)
-to rapidly choose an action while the sentence is unfolding. .
+to rapidly choose an action while the sentence is unfolding. 
+Use of the verb's bias should be reflected in a greater proportion of eye-gaze fixations to the animal (e.g., frog) for verbs that are biased toward modifier structures relative to instrument structures and, conversely, a greater proportion of eye-gaze fixations to the instrument (e.g., feather) for verbs that are biased toward instrument structures relative to modifier structures.
 
 ## Method
 
@@ -1349,6 +1359,8 @@ statistical tests (e.g., Exp. 5).
 In sum, the `webgazer` plug-in for `jsPsych` can be fruitfully used to
 conduct a variety of cognitive science experiments on the web, provided
 the limitations of the methodology are carefully considered.
+
+This plug-in (and potentially other webcam-based eye-tracking options) opens the door to including a broader, more diverse sample of participants in cognitive science research. In contrast to the typical in-lab eye-tracking sample, which consists primarily of young university students from WEIRD countries [@henrich2010weirdest; @linxen2021weird; @de2023psychology; @rad2018toward], webcam eye-tracking can reach a much more diverse population, as the only prerequisite is access to a computer with a webcam (a standard feature on most modern laptops and tablets). While webcam eyetracking cannot by itself eliminate all demographic biases, some of which are in any case baked in by history [@henrich2020weirdest], it can help to reduce them, at least for studies amenable to the paradigm.
 
 ## Lessons and Questions
 
