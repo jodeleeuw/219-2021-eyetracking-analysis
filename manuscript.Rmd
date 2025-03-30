@@ -228,9 +228,6 @@ draft             : no
 documentclass     : "apa6"
 classoption       : "man"
 output            : papaja::apa6_pdf
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ```{r setup, include = FALSE, message=FALSE, warning=FALSE}
