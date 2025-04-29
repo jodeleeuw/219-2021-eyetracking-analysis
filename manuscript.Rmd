@@ -343,7 +343,12 @@ through the Prolific platform. In order to have access to the
 experiment, participants had to meet the following criteria: 18 years of
 age or older, fluency in English, and access to a webcam. All
 participants provided informed consent. The online studies were approved by the
-Vassar College Institutional Review Board.
+Vassar College Institutional Review Board. Across all five online experiments,
+42% of participants returned the study without completing it. We were unable
+to record specific reasons for attrition, but we suspect that it was a combination
+of unwillingness to use their webcam for eye tracking in an online experiment, 
+technical problems with the webcam, and trying to complete the study on unsupported
+devices (mobile phones and tablets).
 
 In addition, an in-lab replication was conducted for Experiment 1. 
 Information about the sample is given in the Experiment 1 Method sections. This study was approved by the Institutional Review Board at Boston College. 
