@@ -205,7 +205,7 @@ polling.rate.all <- polling.rate.E1 %>%
   bind_rows(polling.rate.E5 %>% mutate(study = "E5"))
 ```
 
-```{r plot-polling-rate, include=TRUE, echo=FALSE, fig.cap="Achieved polling rate across all studies. We attempted to sample at 30Hz, which is a standard webcam refresh rate. The plurality of participants met this rate, but there was a long tail of slower rates.}
+```{r plot-polling-rate, include=TRUE, echo=FALSE, fig.cap="Achieved polling rate across all studies. We attempted to sample at 30Hz, which is a standard webcam refresh rate. The plurality of participants met this rate, but there was a long tail of slower rates."}
 ggplot(polling.rate.all, aes(x = M)) +
   geom_histogram(bins=15) + 
   theme_bw() +

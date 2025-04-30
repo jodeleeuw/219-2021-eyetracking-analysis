@@ -373,7 +373,7 @@ implemented a polling mode so that gaze predictions could be requested
 at a regular interval, which improved the sampling rate considerably in
 informal testing. We aimed for a 30Hz sampling rate in all experiments, 
 which was achievable for about 37% of the participants 
-(Figure\ \@ref(fig:AS-polling-rate)).
+(Figure\ \@ref(fig:AS-polling-rate-figure)).
 This modification is similar to what Yang and Krajbich
 [-@yang2021webcam] reported improved the sampling rate in their study of
 webgazer. We also adjusted the mechanism for recording time stamps of
@@ -381,42 +381,15 @@ each gaze prediction, so that the time stamp reported by webgazer is
 based on when the video frame is received and not when the computation
 of the gaze point is finished.
 
-```{r AS-polling-rate, child = 'across-study-analysis/AS-polling-rate.Rmd'}
+```{r AS-polling-rate-figure, child = 'across-study-analysis/AS-polling-rate.Rmd'}
 
 ```
 
 ## Eye-tracking Calibration and Validation
 
-<!--took paragraph below from group D's methods -->
+```{r AS-repeat-calibration-analysis, child='across-study-analysis/AS-repeat-calibration.Rmd'}
 
-When participants began the experiment, they were notified the webcam
-would be used for eye tracking but no video would be saved. They were
-asked to remove glasses if possible, close any other tabs or apps, turn
-off notifications, and make sure their face was lit from the front. The
-webcam's view of the participant popped up on the screen, and
-participants were asked to center their face in the box and keep their
-head still. The experiment window then expanded to full screen, and
-participants began the eye-tracking calibration.
-
-During the calibration, dots appeared on the screen one at a time in
-different locations, and the participants had to fixate them and click
-on each one. Once they clicked on a dot, it would disappear and a new
-one would appear in a different location on the screen. The locations of
-calibration dots were specific to each experiment (details below) and
-appeared in the areas of the screen where the visual stimuli would
-appear during the main task in order to ensure that eye movements were
-accurately recorded in the relevant regions of interest. After the
-calibration was completed, the validation began. Participants were asked
-to go through the same steps as the calibration, except that they only
-fixated the dots as they appeared in different locations on the screen.
-If accuracy on the validation was too low (fewer than 50% of looks
-landed within a 200 px radius of the validation points),
-participants were given an opportunity to re-start the calibration and
-validation steps. However, even participants with low calibration accuracy were allowed to complete the experiment, because we specifically wanted to study the consequences of low calibration accuracy.<!--If the second attempt also lead to low validation
-accuracy, participants were informed that they could not participate in
-the study.(AJ: I don't think this is true, as there are Ps included that have under 50% on the second round of calibration)-->
-
-Upon finishing calibration, participants were reminded to keep their head still for the remainder of the study.
+```
 
 ## Pre-registration
 
