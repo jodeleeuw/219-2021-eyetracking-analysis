@@ -371,12 +371,19 @@ library for running behavioral experiments in a web browser
 the precise timing of stimulus onsets is relevant. Specifically, we
 implemented a polling mode so that gaze predictions could be requested
 at a regular interval, which improved the sampling rate considerably in
-informal testing. This modification is similar to what Yang and Krajbich
+informal testing. We aimed for a 30Hz sampling rate in all experiments, 
+which was achievable for about 37% of the participants 
+(Figure\ \@ref(fig:AS-polling-rate)).
+This modification is similar to what Yang and Krajbich
 [-@yang2021webcam] reported improved the sampling rate in their study of
 webgazer. We also adjusted the mechanism for recording time stamps of
 each gaze prediction, so that the time stamp reported by webgazer is
 based on when the video frame is received and not when the computation
 of the gaze point is finished.
+
+```{r AS-polling-rate, child = 'across-study-analysis/AS-polling-rate.Rmd'}
+
+```
 
 ## Eye-tracking Calibration and Validation
 
