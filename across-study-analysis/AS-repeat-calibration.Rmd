@@ -1,0 +1,154 @@
+---
+title: "AS-repeat-calibration"
+output: html_document
+---
+
+```{r AS-repeat-calibration, include=FALSE}
+library(dplyr)
+library(jsonlite)
+library(tidyr)
+library(ggplot2)
+
+
+knitr::opts_chunk$set(include = FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r recalibration-load-data-E1}
+data.files <- list.files('../group-a/data', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+
+all.data <- all.data %>%
+  mutate(subject_id = factor(subject_id)) 
+```
+
+```{r calculate-recalibration-rate-E1}
+recalibration.rate.E1 <- all.data %>%
+  filter(trial_type %in% c("webgazer-calibrate", "webgazer-validate")) %>%
+  select(subject_id, phase) %>%
+  group_by(subject_id) %>%
+  summarize(recalibrated = "recalibration" %in% phase)
+```
+
+```{r recalibration-load-data-E2}
+data.files <- list.files('../group-b/data', full.names = TRUE, pattern=".json")
+
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+
+all.data <- bind_rows(data.tables)
+```
+
+```{r calculate-recalibration-rate-E2}
+recalibration.rate.E2 <- all.data %>%
+  filter(trial_type %in% c("webgazer-calibrate", "webgazer-validate")) %>%
+  select(subject_id, phase) %>%
+  group_by(subject_id) %>%
+  summarize(recalibrated = "recalibration" %in% phase)
+```
+
+```{r recalibration-load-data-E3}
+data.files <- list.files('../group-c/data', full.names = TRUE, pattern=".json")
+
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  data.table$response <- as.character(data.table$response)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+```{r calculate-recalibration-rate-E3}
+recalibration.rate.E3 <- all.data %>%
+  filter(trial_type %in% c("webgazer-calibrate", "webgazer-validate")) %>%
+  select(subject_id, phase) %>%
+  group_by(subject_id) %>%
+  summarize(recalibrated = "recalibration" %in% phase)
+```
+
+```{r recalibration-load-data-E4}
+data.files <- list.files('../group-d/data/run-2', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+all.data <- bind_rows(data.tables)
+```
+
+```{r calculate-recalibration-rate-E4}
+recalibration.rate.E4 <- all.data %>%
+  filter(trial_type %in% c("webgazer-calibrate", "webgazer-validate")) %>%
+  select(subject, phase) %>%
+  group_by(subject) %>%
+  summarize(recalibrated = "recalibration" %in% phase)
+```
+
+```{r recalibration-load-data-E5}
+data.files <- list.files('../group-e/data', full.names = TRUE, pattern=".json")
+data.tables <- lapply(data.files, function(file){
+  data.table <- fromJSON(file)
+  return(data.table)
+})
+
+all.data <- bind_rows(data.tables)
+
+all.data <- all.data %>% filter(subject_id!="603ea6a51c38def3e4140ba6")
+
+```
+
+```{r calculate-recalibration-rate-E5}
+recalibration.rate.E5 <- all.data %>%
+  filter(trial_type %in% c("webgazer-calibrate", "webgazer-validate")) %>%
+  select(subject_id, phase) %>%
+  group_by(subject_id) %>%
+  summarize(recalibrated = "recalibration" %in% phase)
+```
+
+```{r combine-recalibration-rates}
+recalibration.rate.all <- recalibration.rate.E1 %>%
+  mutate(study = "E1") %>%
+  bind_rows(recalibration.rate.E2 %>% mutate(study = "E2")) %>%
+  bind_rows(recalibration.rate.E3 %>% mutate(study = "E3")) %>%
+  bind_rows(recalibration.rate.E4 %>% mutate(study = "E4", subject_id = subject) %>% select(-subject)) %>%
+  bind_rows(recalibration.rate.E5 %>% mutate(study = "E5"))
+
+recalibration.rate <- round(100* mean(recalibration.rate.all$recalibrated), digits=2)
+```
+
+
+<!--took paragraph below from group D's methods -->
+
+When participants began the experiment, they were notified the webcam
+would be used for eye tracking but no video would be saved. They were
+asked to remove glasses if possible, close any other tabs or apps, turn
+off notifications, and make sure their face was lit from the front. The
+webcam's view of the participant popped up on the screen, and
+participants were asked to center their face in the box and keep their
+head still. The experiment window then expanded to full screen, and
+participants began the eye-tracking calibration.
+
+During the calibration, dots appeared on the screen one at a time in
+different locations, and the participants had to fixate them and click
+on each one. Once they clicked on a dot, it would disappear and a new
+one would appear in a different location on the screen. The locations of
+calibration dots were specific to each experiment (details below) and
+appeared in the areas of the screen where the visual stimuli would
+appear during the main task in order to ensure that eye movements were
+accurately recorded in the relevant regions of interest. After the
+calibration was completed, the validation began. Participants were asked
+to go through the same steps as the calibration, except that they only
+fixated the dots as they appeared in different locations on the screen.
+If accuracy on the validation was too low (fewer than 50% of looks
+landed within a 200 px radius of the validation points),
+participants were given an opportunity to re-start the calibration and
+validation steps. Across all of the experiments reported, `r recalibration.rate`%
+of participants required recalibration. However, even participants with low 
+calibration accuracy were allowed to complete the experiment, because we 
+specifically wanted to study the consequences of low calibration accuracy.
+
+Upon finishing calibration, participants were reminded to keep their head still for the remainder of the study.
