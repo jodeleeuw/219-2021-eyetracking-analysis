@@ -29,7 +29,7 @@ jobs:
         run: |
           Rscript -e 'rmarkdown::render("manuscript.Rmd")'
       - name: Upload rendered PDF as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rendered-manuscript
           path: manuscript.pdf
