@@ -1,6 +1,8 @@
 ---
-title: "Experiment 5: Replication Analysis"
-output: html_notebook
+title: 'Experiment 5: Replication Analysis'
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r E5 load libraries, include=FALSE}
@@ -147,18 +149,35 @@ plot.R<-ggplot(summary.gaze.view[summary.gaze.view$task=="Roundness",], aes(x=ti
     legend.text = element_text(size=14)      # Legend text
   )
 
+plot.AR<-ggplot(summary.gaze.view, aes(x=time.window, y=prop.in.target, color=task))+
+  geom_point(aes(color = task))+ 
+  scale_fill_manual(name = "Task",values=c("red", "turquoise4"), labels = c("Attractiveness", "Roundness")) +
+  geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "dashed") + 
+  geom_line(data=fit.R.dat, aes(x=x, y=y), color="turquoise4", lwd=1.25, linetype = "solid") + 
+  scale_x_reverse() + theme_classic() + 
+  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+    #panel.grid.minor = element_blank(),
+    axis.title = element_text(size=14),      # Axis titles
+    axis.text = element_text(size=14),       # Axis labels
+    legend.title = element_text(size=14),    # Legend title
+    legend.text = element_text(size=14)      # Legend text
+  )
 
 ```
 
 
-(ref:groupEMain-caption) Primary results from Exp. 5. The attractiveness judgment along with the best-fitting sigmoid  is shown on the *left*. Results for the roundness judgment are shown on the *right*, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison.
+(ref:groupEMain-caption-separate) Primary results from Exp. 5. The attractiveness judgment along with the best-fitting sigmoid  is shown on the *left*. Results for the roundness judgment are shown on the *right*, with the best-fitting sigmoid for the attractiveness judgment depicted in a dashed line for comparison.
 
-```{r groupEMain, fig.show="hold", out.width="45%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:groupEMain-caption)"}
+(ref:groupEMain-caption) Primary results from Exp. 5. The proportion of fixations to the target in the two seconds prior to the judgment are shown for the attractiveness (red) and roundness (blue) conditions along with their best-fitting sigmoids. 
+
+```{r groupEMain, fig.align="center", echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "(ref:groupEMain-caption)"}
+
 # All defaults
 #include_graphics("figGroupEOrigA.png")
 #include_graphics("figGroupEOrigB.png")
-plot.A
-plot.R
+#plot.A
+#plot.R
+plot.AR
 ```
 
 Following Shimojo and colleagues, data for each condition were fit using a four-parameter sigmoid (Fig. \@ref(fig:groupEMain)). These fit less well than in the original paper for both the attractiveness judgment (R^2^ = `r round(R2.A,2)` vs. 0.91) and the roundness judgment (R^2^ = `r round(R2.R,2)` vs. 0.91). 

@@ -1,6 +1,8 @@
 ---
-title: "Experiment 5: Calibration Analysis"
-output: html_notebook
+title: 'Experiment 5: Calibration Analysis'
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r E5-cal load libraries, include=FALSE}
@@ -185,40 +187,56 @@ R2 <- function(fit, y){
 R2.A<-R2(fit.A, rescore$prop.in.target[rescore$task=="Attractiveness"])
 R2.R<-R2(fit.R, rescore$prop.in.target[rescore$task=="Roundness"])
 
-plot.A<-ggplot(rescore[rescore$task=="Attractiveness",], aes(x=time.window, y=prop.in.target)) +
-  geom_point(color="red") + 
-  geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "solid") + 
-  scale_x_reverse() + theme_classic() + 
-  labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
-    panel.grid.minor = element_blank(),
-    axis.title = element_text(size=14),      # Axis titles
-    axis.text = element_text(size=14),       # Axis labels
-    legend.title = element_text(size=14),    # Legend title
-    legend.text = element_text(size=14)      # Legend text
-  )
+# plot.A<-ggplot(rescore[rescore$task=="Attractiveness",], aes(x=time.window, y=prop.in.target)) +
+#   geom_point(color="red") + 
+#   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "solid") + 
+#   scale_x_reverse() + theme_classic() + 
+#   labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+#     panel.grid.minor = element_blank(),
+#     axis.title = element_text(size=14),      # Axis titles
+#     axis.text = element_text(size=14),       # Axis labels
+#     legend.title = element_text(size=14),    # Legend title
+#     legend.text = element_text(size=14)      # Legend text
+#   )
+# 
+# 
+# plot.R<-ggplot(rescore[rescore$task=="Roundness",], aes(x=time.window, y=prop.in.target))+
+#   geom_point(color="turquoise4") + 
+#   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "dashed") + 
+#   geom_line(data=fit.R.dat, aes(x=x, y=y), color="turquoise4", lwd=1.25, linetype = "solid") + 
+#   scale_x_reverse() + theme_classic() + 
+#   labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
+#     panel.grid.minor = element_blank(),
+#     axis.title = element_text(size=14),      # Axis titles
+#     axis.text = element_text(size=14),       # Axis labels
+#     legend.title = element_text(size=14),    # Legend title
+#     legend.text = element_text(size=14)      # Legend text
+#   )
 
-
-plot.R<-ggplot(rescore[rescore$task=="Roundness",], aes(x=time.window, y=prop.in.target))+
-  geom_point(color="turquoise4") + 
+plot.AR<-ggplot(rescore, aes(x=time.window, y=prop.in.target, color=task))+
+  geom_point(aes(color = task))+ 
+  scale_fill_manual(name = "Task",values=c("red", "turquoise4"), labels = c("Attractiveness", "Roundness")) +
   geom_line(data=fit.A.dat, aes(x=x, y=y), color="red", lwd=1.25, linetype = "dashed") + 
   geom_line(data=fit.R.dat, aes(x=x, y=y), color="turquoise4", lwd=1.25, linetype = "solid") + 
   scale_x_reverse() + theme_classic() + 
   labs(x="Time until decision (ms)", y="Proportion of gaze in target", color="Task", fill="Task") + ylim(.4, 1) +     theme(
-    panel.grid.minor = element_blank(),
+    #panel.grid.minor = element_blank(),
     axis.title = element_text(size=14),      # Axis titles
     axis.text = element_text(size=14),       # Axis labels
     legend.title = element_text(size=14),    # Legend title
     legend.text = element_text(size=14)      # Legend text
   )
-
 
 ```
 #### Re-analysis After Exclusions
 As in the previous experiments, we re-analyzed the data, removing the participants whose calibration accuracy was not greater than 50%. This slightly improved the fits of the sigmoids (Attractiveness: R^2^ = `r round(R2.A,2)`; Roundness: R^2^ = `r round(R2.R,2)`). However, the difference between sigmoids remained non-significant using the Kolmogorov-Smirnov test (D = `r round(KS$statistic, 2)`, p = `r round(KS$p.value, 2)`). Descriptively, the results do not look substantially different (Fig. \@ref(fig:groupEMainrev)).
 
-(ref:groupEMainrev-caption) Revised results for Exp. 5 after removing low-calibration accuracy participants. *Left*: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. *Right*: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).
+(ref:groupEMainrev-caption-separate) Revised results for Exp. 5 after removing low-calibration accuracy participants. *Left*: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. *Right*: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).
 
-```{r groupEMainrev, fig.show="hold", out.width="45%", echo=FALSE, message=FALSE, warning=FALSE, fig.cap="(ref:groupEMainrev-caption)"}
-plot.A
-plot.R
+(ref:groupEMain-caption) Revised results for Exp. 5 after removing low-calibration accuracy participants. The proportion of fixations to the target in the two seconds prior to the judgment are shown for the attractiveness (red) and roundness (blue) conditions along with their best-fitting sigmoids.
+
+```{r groupEMainrev, fig.show="hold", out.width="45%", fig.align="center", echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "(ref:groupEMainrev-caption)"}
+#plot.A
+#plot.R
+plot.AR
 ```
