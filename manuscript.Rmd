@@ -390,19 +390,17 @@ During the calibration, dots appeared on the screen one at a time in
 different locations, and the participants had to fixate them and click
 on each one. Once they clicked on a dot, it would disappear and a new
 one would appear in a different location on the screen. The locations of
-calibration dots were specific to each experiment (details below) and
+calibration dots were specific to each experiment (details in each experiment's Procedure section) and
 appeared in the areas of the screen where the visual stimuli would
 appear during the main task in order to ensure that eye movements were
 accurately recorded in the relevant regions of interest. After the
 calibration was completed, the validation began. Participants were asked
 to go through the same steps as the calibration, except that they only
-fixated the dots as they appeared in different locations on the screen.
+fixated the dots as they appeared in different locations on the screen. Validation points were the same as or a subset of the calibration points, with one exception in which two points were slightly offset by mistake (see Experiment 1a Procedure). We chose to align the calibration and validation points (rather than test the calibration model on new points) because we were interested in the most basic test of consistency. 
 If accuracy on the validation was too low (fewer than 50% of looks
 landed within a 200 px radius of the validation points),
 participants were given an opportunity to re-start the calibration and
-validation steps. However, even participants with low calibration accuracy were allowed to complete the experiment, because we specifically wanted to study the consequences of low calibration accuracy.<!--If the second attempt also lead to low validation
-accuracy, participants were informed that they could not participate in
-the study.(AJ: I don't think this is true, as there are Ps included that have under 50% on the second round of calibration)-->
+validation steps. However, even participants with low calibration accuracy after their second attempt were allowed to complete the experiment, because we specifically wanted to study the consequences of low calibration accuracy.
 
 Upon finishing calibration, participants were reminded to keep their head still for the remainder of the study.
 
