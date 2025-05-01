@@ -77,7 +77,7 @@ looking.score.correlation.data <- looking.score.data %>%
 ls.cor <- cor(looking.score.correlation.data$looking.score.half, looking.score.correlation.data$looking.score.roi)
 ```
 
-Above we excluded looks that fell outside the ROIs. In contrast, the original experiment simply coded looks as being to the left or right. This may be more appropriate to the limited resolution of camera-based eye-gaze detection. We re-ran analyses based on this split-half coding criterion. The correlation between proportion looks to novel using the ROI method and the halves method is `r ls.cor` (see Figure\ \@ref(fig:E3-roi-correlation-of-looking-score)).
+Above we excluded looks that fell outside the ROIs. In contrast, the original experiment simply coded looks as being to the left or right. This may be more appropriate to the limited resolution of camera-based eye gaze detection. We re-ran analyses based on this split-half coding criterion. The correlation between proportion looks to novel using the ROI method and the halves method is `r ls.cor` (see Figure\ \@ref(fig:E3-roi-correlation-of-looking-score)).
 
 ```{r E3-roi-correlation-of-looking-score, echo=FALSE, fig.cap="Correlation between proportion looks-to-novel calculated using ROIs and using screen halves.", out.width="50%", fig.align="center"}
 ggplot(looking.score.data %>% filter(!is.nan(looking.score.roi)), aes(x=looking.score.roi, y=looking.score.half))+
@@ -105,7 +105,7 @@ t.test.data1 <- looking.score.data %>%
 t.test.day1 <- t.test(t.test.data1$M.looking.score, mu = 0.5)
 ```
 
-We again found that participants looked more at the novel object, though at a slightly lower rate than before (`r mean(t.test.data1$M.looking.score)`; *SD* = `r sd(t.test.data1$M.looking.score)`). As before, this was significantly greater than 0.5, *t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* = `r t.test.day1$p.value`.
+We again found that participants looked more at the novel object, though at a slightly lower rate than before (`r mean(t.test.data1$M.looking.score)`; *SD* = `r sd(t.test.data1$M.looking.score)`). As before, this was significantly greater than 0.5 (*t*(`r t.test.day1$parameter`) = `r t.test.day1$statistic`, *p* < 0.001).
 
 ```{r E3-roi Create looking over time curve data, include=FALSE}
 

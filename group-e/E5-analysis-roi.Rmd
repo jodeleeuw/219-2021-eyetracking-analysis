@@ -3,7 +3,7 @@ title: "Experiment 5: ROI Analysis"
 output: html_notebook
 ---
 
-In the original experiment, eye gazes that did not directly fixate one or other of the faces were excluded. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. The coarser coding may be more appropriate for webcam-based eyetracking.
+In the original experiment, eye-gazes that did not directly fixate one or other of the faces were excluded. In this section we explore an alternative coding of the eye movement data by coding simply left half vs. right half of the screen. The coarser coding may be more appropriate for webcam-based eye-tracking.
 
 ```{r E5-roi load all data, include=FALSE, warning=FALSE, echo=FALSE}
 data.files <- list.files('data', full.names = TRUE)

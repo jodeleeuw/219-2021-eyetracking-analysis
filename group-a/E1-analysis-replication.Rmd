@@ -1062,7 +1062,7 @@ The figure makes clear that there is a large proportion of participants with cal
 
 
 
-```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. Results from an in-lab study with an eyetracker (Panel A; @james2023language) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.", out.width="75%", fig.align="center"} 
+```{r E1a-spaghetti-fig, fig.cap = "Cumulative probability of fixating distractor and target objects across conditions over time, with 0 ms aligned to the verb onset time. Results from an in-lab study with an eyetracker (Panel A; James et al., 2023) are contrasted with the current results (Panel B). The vertical line marks the mean noun onset time across trials and conditions.", out.width="75%", fig.align="center"} 
 
 JMW_spag_fig <- JMW_spag_fig +    theme(
     panel.grid.minor = element_blank(),

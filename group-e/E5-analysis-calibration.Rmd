@@ -233,9 +233,9 @@ As in the previous experiments, we re-analyzed the data, removing the participan
 
 (ref:groupEMainrev-caption-separate) Revised results for Exp. 5 after removing low-calibration accuracy participants. *Left*: Eyegaze during attractiveness judgments, along with the best-fitting sigmoid. *Right*: Eyegze during roundness judgments, along with best-fitting sigmoid (best-fitting sigmoid for attractiveness is re-plotted with a dashed line for comparison).
 
-(ref:groupEMain-caption) Revised results for Exp. 5 after removing low-calibration accuracy participants. The proportion of fixations to the target in the two seconds prior to the judgment are shown for the attractiveness (red) and roundness (blue) conditions along with their best-fitting sigmoids.
+(ref:groupEMainrev-caption) Revised results for Exp. 5 after removing low-calibration accuracy participants. The proportion of fixations to the target in the two seconds prior to the judgment are shown for the attractiveness (red) and roundness (blue) conditions along with their best-fitting sigmoids.
 
-```{r groupEMainrev, fig.show="hold", out.width="45%", fig.align="center", echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "(ref:groupEMainrev-caption)"}
+```{r groupEMainrev, fig.show="hold", fig.align="center", echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "(ref:groupEMainrev-caption)"}
 #plot.A
 #plot.R
 plot.AR
