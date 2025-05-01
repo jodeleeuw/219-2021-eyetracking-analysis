@@ -13,6 +13,7 @@ library(ggplot2)
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 ```
 
+
 ```{r load-data-E1}
 data.files <- list.files('../group-a/data', full.names = TRUE, pattern=".json")
 data.tables <- lapply(data.files, function(file){
@@ -203,9 +204,34 @@ polling.rate.all <- polling.rate.E1 %>%
   bind_rows(polling.rate.E3 %>% mutate(study = "E3")) %>%
   bind_rows(polling.rate.E4 %>% mutate(study = "E4", subject_id = subject) %>% select(-subject)) %>%
   bind_rows(polling.rate.E5 %>% mutate(study = "E5"))
+
+within.1Hz.of.target <- polling.rate.all %>%
+  mutate(within.1Hz = if_else(M >= 29 & M <= 31, 1, 0)) %>%
+  pull(within.1Hz) %>%
+  mean() %>%
+  round(digits=3)*100
 ```
 
-```{r plot-polling-rate, include=TRUE, echo=FALSE, fig.cap="Achieved polling rate across all studies. We attempted to sample at 30Hz, which is a standard webcam refresh rate. The plurality of participants met this rate, but there was a long tail of slower rates."}
+We used a fork of the `webgazer.js` library for webcam eye-tracking
+[@papoutsaki2016webgazer], implemented in `jsPsych`, a Javascript
+library for running behavioral experiments in a web browser
+[@deleeuwJsPsychJavaScriptLibrary2015].[^1] Our fork included changes to
+`webgazer.js` in order to improve data quality for experiments in which
+the precise timing of stimulus onsets is relevant. Specifically, we
+implemented a polling mode so that gaze predictions could be requested
+at a regular interval, which improved the sampling rate considerably in
+informal testing. We aimed for a 30Hz sampling rate in all experiments, 
+which was achievable for about `r round(mean(polling.rate.all$M), digits=1` of the participants 
+(Figure\ \@ref(fig:polling-rate-figure)).
+This modification is similar to what Yang and Krajbich
+[-@yang2021webcam] reported improved the sampling rate in their study of
+webgazer. We also adjusted the mechanism for recording time stamps of
+each gaze prediction, so that the time stamp reported by webgazer is
+based on when the video frame is received and not when the computation
+of the gaze point is finished.
+
+
+```{r polling-rate-figure, include=TRUE, echo=FALSE, fig.cap="Achieved polling rate across all studies. We attempted to sample at 30Hz, which is a standard webcam refresh rate. The plurality of participants met this rate, but there was a long tail of slower rates."}
 ggplot(polling.rate.all, aes(x = M)) +
   geom_histogram(bins=15) + 
   theme_bw() +
