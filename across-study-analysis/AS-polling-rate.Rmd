@@ -221,7 +221,7 @@ the precise timing of stimulus onsets is relevant. Specifically, we
 implemented a polling mode so that gaze predictions could be requested
 at a regular interval, which improved the sampling rate considerably in
 informal testing. We aimed for a 30Hz sampling rate in all experiments, 
-which was achievable for about `r within.1HZ.of.target` of the participants 
+which was achievable for about `r within.1Hz.of.target` of the participants 
 (Figure\ \@ref(fig:polling-rate-figure)).
 This modification is similar to what Yang and Krajbich
 [-@yang2021webcam] reported improved the sampling rate in their study of
